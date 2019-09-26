@@ -1,0 +1,55 @@
+Thread 2 (Thread 0xf74aeb70 (LWP 38036)):
+#0  0xf77b6430 in __kernel_vsyscall ()
+#1  0x00433936 in nanosleep () from /lib/libc.so.6
+#2  0x00433760 in sleep () from /lib/libc.so.6
+#3  0x0ac7213a in LicenseCheckUtility ()
+#4  0x00532bc9 in start_thread () from /lib/libpthread.so.0
+#5  0x00474dee in clone () from /lib/libc.so.6
+Thread 1 (Thread 0xf76c06c0 (LWP 38030)):
+#0  0xf77b6430 in __kernel_vsyscall ()
+#1  0x00433423 in __waitpid_nocancel () from /lib/libc.so.6
+#2  0x003f4648 in _IO_proc_close@@GLIBC_2.1 () from /lib/libc.so.6
+#3  0x003ff133 in _IO_new_file_close_it () from /lib/libc.so.6
+#4  0x003f2738 in fclose@@GLIBC_2.1 () from /lib/libc.so.6
+#5  0x003fb03d in pclose@@GLIBC_2.1 () from /lib/libc.so.6
+#6  0x0beead9b in _sys_pclose ()
+#7  0x0bed3413 in system ()
+#8  0x0bec76fb in sysiCrash ()
+#9  0x0bec7acd in actUnexpectAction ()
+#10 0x0bec7af7 in catchSignalCB ()
+#11 <signal handler called>
+#12 0x0bec6c7b in hug_inflate ()
+#13 0x0bec5de8 in bcDCompress ()
+#14 0x0bec62d2 in ffCmpDecompress ()
+#15 0x0bd045e9 in ffrDisk::DecompressBlk(ffrScanBuf*) ()
+#16 0x0bd6af1f in ffrObject::LoadNavDB_Off32(ffrLoadNavDBMode, unsigned int, int*, fsdbXTag&) ()
+#17 0x0bd6c771 in ffrObject::LoadSignalLOD_Off32() ()
+#18 0x0bd6c736 in ffrObject::LoadSignalLOD() ()
+#19 0x0bd6418f in ffrObject::ffrLoadSignals() ()
+#20 0x0b7adfeb in fsdbFile_C::load_pending_signals() ()
+#21 0x098319f4 in twDataBox_C::_load_vc_from_files(Container_C&) ()
+#22 0x09831734 in twDataBox_C::_load_waveform_data(int, int, char) ()
+#23 0x0983156d in twDataBox_C::load_waveform_data(int, int, char) ()
+#24 0x0985a789 in twMainWindow_C::YankCutFromFile(char*, char) ()
+#25 0x0985a57c in twMainWindow_C::restore_signal_from_file(char**, int, char, char) ()
+#26 0x097c8065 in turboWave_C::turboWave_reload(char) ()
+#27 0x09878ce9 in twMainWindow_C::wave_reload(char) ()
+#28 0x09798f4f in rereadUI(_wtWindowRec*, int, char**, void*) ()
+#29 0x0be146b0 in cmdiMapFunc ()
+#30 0x0be146e3 in cmdMapFunc ()
+#31 0x0ac786ba in wtiKeyPressed ()
+#32 0x0ac78746 in wtiKeyPressedCB ()
+#33 0x0ae903ec in XtDispatchEventToWidget ()
+#34 0x0ae90d08 in _XtDefaultDispatcher ()
+#35 0x0ae90e92 in XtDispatchEvent ()
+#36 0x0ac73791 in wtMainLoop ()
+#37 0x08dba832 in main ()
+---------------
+branchName=2011.01 cnlDate=01/05/2011 cnlEnv=Linux.0
+uname(Linux A22994082 2.6.32-358.el6.x86_64 #1 SMP Fri Feb 22 00:31:26 UTC 2013 x86_64)
+---------------
+Process Size: 948924416 bytes
+verdi detected abnormal termination.
+Log information written to
+/home/wgb/project/609/VER/ethernet/sim_shim_dcn/verdiLog/sysinfo.tar.
+Please send this file to customer support.

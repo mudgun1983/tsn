@@ -1,0 +1,4 @@
+-o test2.txt -s /pcs_tb_top/dcn_top/dcn_rx_top/dcn_rx_shim0/block_data_i[65:0] -w 64 
+-exp "/pcs_tb_top/dcn_top/dcn_rx_top/dcn_rx_shim0/block_valid_i==1" 
+-w 1 -of h
+## comment

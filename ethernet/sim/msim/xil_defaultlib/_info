@@ -1,0 +1,367 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/home/wgb/project/609/VER/ethernet/sim
+vgtwizard_ultrascale_0
+!i10b 1
+!s100 ZKM=`=h@AQC[iPY3ROf@;3
+IlWaRLKnzlG0f4hA:[ekl<3
+V5V<IJ?h^`EMT:797zRaEU1
+Z1 d/home/wgb/project/609/VER/ethernet/sim
+Z2 w1495353274
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0.v
+L0 56
+Z3 OL;L;10.1c;51
+r1
+!s85 0
+31
+Z4 !s108 1508911408.497075
+Z5 !s107 ../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_wrapper_functions.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top_sim.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0_vio_0/sim/gtwizard_ultrascale_0_vio_0.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_wrapper.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_stimulus_raw.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_init.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_checking_raw.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_prbs_any.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_reset_sync.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_tx.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_rx.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_bit_sync.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_top.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_gtye4.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_common_wrapper.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_common.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_channel_wrapper.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_channel.v|
+Z6 !s90 -incr|-work|xil_defaultlib|+incdir+../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_channel.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_channel_wrapper.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_common.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_common_wrapper.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_gtye4.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_top.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_bit_sync.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_rx.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_tx.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_reset_sync.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_prbs_any.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_checking_raw.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_init.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_stimulus_raw.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_wrapper.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0_vio_0/sim/gtwizard_ultrascale_0_vio_0.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top.v|../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top_sim.v|
+Z7 o-work xil_defaultlib -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+Z8 !s92 -work xil_defaultlib +incdir+../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+vgtwizard_ultrascale_0_example_bit_synchronizer
+!i10b 1
+!s100 X[e<H_E@DnCTeKLXXGjR72
+ILI0K[d8i1mFQZnOWS5ZE_1
+Vk4=^H7J`8DEL[`Pi=<>6S1
+R1
+Z9 w1495192455
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_bit_sync.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_bit_sync.v
+L0 58
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_checking_raw
+!i10b 1
+!s100 IjfBl0KD0V<;REQ6VXK9P3
+IWVek<Cj<1lhkcT_aW[3Re3
+VKzUa@>jLU2oF[A5QDmbNA3
+R1
+R9
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_checking_raw.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_checking_raw.v
+L0 58
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_gtwiz_userclk_rx
+!i10b 1
+!s100 3j43SK2P8mD]ZZlcGJKCL3
+I0ZVWJ5SQZ4`NROZbfcX3n3
+VNfG;F=cSM=4FBcm94KHLP1
+R1
+Z10 w1495192456
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_rx.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_rx.v
+L0 60
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_gtwiz_userclk_tx
+!i10b 1
+!s100 U9CRl@aZ[cM9Z=LdL4aB<3
+I[1ST63`f9Ja8l_E[e@Y?U2
+VJAm9CC5PNL2dCLbD@Phz@2
+R1
+R10
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_tx.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_gtwiz_userclk_tx.v
+L0 60
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_init
+!i10b 1
+!s100 <JB[U<7]5c9m9?^H;>RFW3
+IMei<fM0b[i:i3hgWBiffO0
+V7^6VhTDcKHGEKMWEPLKUo3
+R1
+R10
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_init.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_init.v
+L0 59
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_reset_synchronizer
+!i10b 1
+!s100 ObE0B;2f2B^ff3GFJcC272
+I<^B;LFfgSmT=W>I6Da5SE0
+VFX:OzC4eoo@a9a[V8I0i10
+R1
+Z11 w1495192458
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_reset_sync.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_reset_sync.v
+L0 58
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_stimulus_raw
+!i10b 1
+!s100 c9PJN^BGNXoRl>9Jz_zTh3
+IUjz87VT=?oWIMed;4^V;<2
+VLTKV<Qkb;;8^MA0?V0ZU`3
+R1
+R10
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_stimulus_raw.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_stimulus_raw.v
+L0 58
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_top
+!i10b 1
+!s100 a==O4Gcz0H[jJ]O>Q==WT1
+IiR^S?8ZLfd5QZikIkWgTD0
+V:L^>ifAW851Ga=2Nzj^kO0
+R1
+w1495248307
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top.v
+L0 58
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_top_sim
+!i10b 1
+!s100 3W:`JLR=?83HaiicHj9W<0
+I1zIL[G207_Gdn?TkDmJ<L3
+VlDXjg7IGm[`a<[GZ==nco0
+R1
+w1495192464
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top_sim.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_top_sim.v
+L0 58
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_example_wrapper
+!i10b 1
+!s100 1LXzDkVIN[YiA2@4SC=lU2
+IP]TNCPZHnMdCBkVUNXZjX3
+VDiz9H@:00`R1=H1Bbl_QK0
+R1
+w1495244805
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_wrapper.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_wrapper.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_example_wrapper_functions.v
+L0 57
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_gtwizard_gtye4
+!i10b 1
+!s100 a`7zS@I@:zZPgz8MH=JF;0
+IA]>W=V0MB23]U_K]FeZa:2
+VE1@_TRd`L?`^IGORI93=b2
+R1
+w1495353272
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_gtye4.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_gtye4.v
+L0 133
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_gtwizard_top
+!i10b 1
+!s100 3A5QXdWJA1lO`H1?SHM:z2
+IjS[3gobeD^zcMF75_CTAX3
+VzL6TEe?3JQQ<JM6Oi7J4l0
+R1
+R2
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_top.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtwizard_top.v
+L0 170
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_gtye4_channel_wrapper
+!i10b 1
+!s100 VnHHk>SH44U_349o=j87>0
+I8fK@fP6z5S3?8JW2nfhEi0
+V;le7Hk9U<QLh?h]o=831S2
+R1
+Z12 w1495353270
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_channel_wrapper.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_channel_wrapper.v
+L0 56
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_gtye4_common_wrapper
+!i10b 1
+!s100 a]B<>IZnTYCbHMUbU81`K1
+IkB8Q6ViFfLDkT`0:Kg`L:0
+V5U0_nX6D`=5<>;B`YX9V:0
+R1
+R12
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_common_wrapper.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_0_gtye4_common_wrapper.v
+L0 56
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_prbs_any
+!i10b 1
+!s100 KaL>XDY=f<no;znoHA1UG3
+IYn?L_Co7M:>E?U<AIcm^i1
+V1S5lWU:eN`a:k03>CK6AM1
+R1
+R11
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_prbs_any.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/imports/gtwizard_ultrascale_0_prbs_any.v
+L0 136
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_0_vio_0
+!i10b 1
+!s100 ]bATRG`YfOK0ldR[MOM892
+I^EiNjC;j6TzJ?^lSZ=d3j2
+VMgPoO2U]Y4GSSoz5zjl>n2
+R1
+w1495192513
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0_vio_0/sim/gtwizard_ultrascale_0_vio_0.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0_vio_0/sim/gtwizard_ultrascale_0_vio_0.v
+L0 49
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_v1_6_5_gtye4_channel
+!i10b 1
+!s100 I0]KGESa3nk8ga5_G6eeh3
+IPNfK2zY1I_gC;MdEfJdff2
+V;9MNHWDKP5hf:VZ09<?h:2
+R1
+R12
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_channel.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_channel.v
+L0 55
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8
+vgtwizard_ultrascale_v1_6_5_gtye4_common
+!i10b 1
+!s100 :5B0jEi`c4VFknK:10VRk2
+ITm2lVl@n2_9G>9=laH8@V1
+VKmcH2LP=e5;:OVj6f]3l[0
+R1
+R12
+8../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_common.v
+F../../../local_project/PCIE_serdes_clk/PCIE_serdes_clk/gtwizard_ultrascale_0_ex/gtwizard_ultrascale_0_ex.srcs/sources_1/ip/gtwizard_ultrascale_0/sim/gtwizard_ultrascale_v1_6_gtye4_common.v
+L0 55
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+R7
+R8

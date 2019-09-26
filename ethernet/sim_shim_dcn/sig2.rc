@@ -1,0 +1,206 @@
+Magic 271485
+Revision 2011.01
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 27 1592 922 429 163
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / -i 0 "" "/home/wgb/project/609/VER/pcs/sim/sim_000.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 3
+
+; windowTimeUnit is used for zoom, cursor & marker
+windowTimeUnit 1ns
+
+; waveform viewport range
+zoom 0.000000 150.642000 1n
+cursor 44996.235000
+marker 44996.24099999999
+; visible top row signal index
+top 5
+; marker line index
+markerPos 17
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/wgb/project/609/VER/pcs/sim/sim_000.fsdb"
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/example_top_inst_0/example_wrapper_inst/rxpmaresetdone_out[3:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope txpmaresetdone_out[3:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope txprgdivresetdone_out[3:0]
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/tb_top/cgpcs_core/cgeth_mac_csr/rx_mk_locked[19:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope rx_synced[19:0]
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/data_pma[319:0]
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_align_ctrl_a/rx_frame[1:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope sh_cnt[9:0]
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/cgmii_rx_block_if/sig_data[319:0]
+addSignal -h 15 /pcs_tb_top/tb_top/caui_rx_clk
+addSignal -h 15 -holdScope caui_rx_inter_clk
+addSignal -h 15 -holdScope caui_tx_clk
+addSignal -h 15 -holdScope caui_tx_inter_clk
+addSignal -h 15 -holdScope sys_rx_clk
+addSignal -h 15 -holdScope sys_tx_clk
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/example_top_inst_0/example_wrapper_inst/gtwizard_ultrascale_0_inst/inst/rxslide_in[3:0]
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/example_top_inst_1/example_wrapper_inst/gtwizard_ultrascale_0_inst/inst/rxslide_in[3:0]
+addGroup "G2"
+addGroup "G3"
+addGroup "G4"
+addGroup "G5"
+addGroup "G6"
+addGroup "G7"
+addGroup "G8"
+addGroup "G9"
+addGroup "G10"
+addGroup "G11"
+addGroup "G12"
+addGroup "G13"
+addGroup "G14"
+addGroup "G15"
+addGroup "G16"
+addGroup "G17"
+addGroup "G18"
+addSignal -h 15 /pcs_tb_top/example_top_inst_0/hb_gtwiz_reset_all_in
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/example_top_inst_0/example_wrapper_inst/gtwiz_userdata_tx_in[319:0]
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/tb_top/gtwiz_userdata_tx_out[319:0]
+addSignal -h 15 /pcs_tb_top/example_top_inst_0/example_wrapper_inst/gtwiz_userclk_rx_srcclk_out[0]
+addSignal -h 15 -holdScope gtwiz_userclk_rx_usrclk2_out[0]
+addSignal -h 15 -holdScope gtwiz_userclk_rx_usrclk_out[0]
+addGroup "G19"
+addSignal -h 15 /pcs_tb_top/example_top_inst_0/example_wrapper_inst/gtwiz_reset_all_in[0]
+addSignal -h 15 -holdScope gtwiz_reset_clk_freerun_in[0]
+addSignal -h 15 -holdScope gtwiz_reset_rx_datapath_in[0]
+addSignal -h 15 -holdScope gtwiz_reset_rx_pll_and_datapath_in[0]
+addSignal -h 15 -holdScope gtwiz_reset_tx_datapath_in[0]
+addSignal -h 15 -holdScope gtwiz_reset_tx_pll_and_datapath_in[0]
+addSignal -h 15 -holdScope gtwiz_userclk_rx_reset_in[0]
+addSignal -h 15 -holdScope gtwiz_userclk_tx_reset_in[0]
+addGroup "G20"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/home/wgb/project/609/VER/pcs/sim/sim_000.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/pcs_tb_top"
+"/pcs_tb_top/cgmii_rx_block_if"
+"/pcs_tb_top/example_top_inst_1"
+"/pcs_tb_top/example_top_inst_1/example_wrapper_inst"
+"/pcs_tb_top/example_top_inst_1/example_wrapper_inst/gtwizard_ultrascale_0_inst"
+"/pcs_tb_top/tb_top"
+"/pcs_tb_top/tb_top/cgpcs_core"
+
+SCOPE_LIST_BEGIN
+"/pcs_tb_top"
+"/pcs_tb_top/tb_top"
+"/pcs_tb_top/tb_top_2"
+"/pcs_tb_top/tb_top_2/cgpcs_core"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_tx_core"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pma_rx_top"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_gearbox_a"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_align_ctrl_b"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_align_ctrl_a"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgeth_mac_csr"
+"/pcs_tb_top/tb_top/cgpcs_core"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pma_tx_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_lanestrip"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/ipe_rx_cgmii_monitor"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top/cgeth_pcs_tx_mark_asyncfifo"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_lanestrip"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_lanefifo_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_lanefifo_top/xil_async_fifo67x128_00"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_deskew_ctrl"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_lanefifo_top/xil_async_fifo67x128_11"
+"/pcs_tb_top/tb_top/cgpcs_core/cgeth_mac_csr"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_decode_scramble"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane00"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane00/cgeth_pcs_rx_mark_detect"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane00"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane00/cgeth_pcs_rx_mark_ctrl"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane00/cgeth_pcs_rx_mark_detect"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane01"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pma_rx_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane01/cgeth_pcs_rx_mark_detect"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane19"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane19/cgeth_pcs_rx_mark_detect"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane18"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane18/cgeth_pcs_rx_mark_detect"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top/cgeth_pcs_rx_alignmark_lane00/cgeth_pcs_rx_mark_ctrl"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/ipe_rx_cgmii_monitor"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top/cgeth_pcs_tx_mark_fsm"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top/cgeth_pcs_tx_mark_gearbox_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top/cgeth_pcs_tx_mark_gearbox_top/cgeth_pcs_tx_mark_gearbox00"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top/cgeth_pcs_tx_mark_gearbox_top/cgeth_pcs_tx_mark_gearbox00/cgeth_pcs_tx_mark"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top/cgeth_pcs_tx_mark_gearbox_top/cgeth_pcs_tx_mark_gearbox00/cgeth_pcs_tx_gearbox"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_tx_core/cgeth_pcs_tx_mark_top/cgeth_pcs_tx_mark_gearbox_top/cgeth_pcs_tx_mark_gearbox18"
+"/pcs_tb_top/example_top_inst_0"
+"/pcs_tb_top/example_top_inst_0/gtwizard_ultrascale_0_vio_0_inst"
+"/pcs_tb_top/example_top_inst_0/reset_synchronizer_prbs_match_all_inst"
+"/pcs_tb_top/example_top_inst_1"
+"/pcs_tb_top/example_top_inst_0/ibuf_hb_gtwiz_reset_all_inst"
+"/pcs_tb_top/example_top_inst_0/example_init_inst"
+"/pcs_tb_top/example_top_inst_0/example_wrapper_inst"
+"/pcs_tb_top/example_top_inst_1/example_wrapper_inst"
+"/pcs_tb_top/example_top_inst_1/example_init_inst"
+"/pcs_tb_top/example_top_inst_1/example_checking_inst0"
+"/pcs_tb_top/example_top_inst_1/example_stimulus_inst0"
+"/pcs_tb_top/example_top_inst_1/ibuf_hb_gtwiz_reset_all_inst"
+"/pcs_tb_top/example_top_inst_1/reset_synchronizer_prbs_match_all_inst"
+"/pcs_tb_top/example_top_inst_1/gtwizard_ultrascale_0_vio_0_inst"
+"/pcs_tb_top/example_top_inst_1/example_stimulus_inst3"
+"/pcs_tb_top/example_top_inst_1/example_stimulus_inst2"
+"/pcs_tb_top/example_top_inst_0/example_checking_inst0"
+"/pcs_tb_top/example_top_inst_0/bufg_clk_freerun_inst"
+"/pcs_tb_top/example_top_inst_0/bit_synchronizer_link_down_latched_reset_inst"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_deskew"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_data_merge_inst"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_laneswap"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_read_ctrl"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_align_ctrl_a"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_gearbox_b"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_gearbox_a"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_align_ctrl_b"
+"/pcs_tb_top/cgmii_rx_block_if"
+"/pcs_tb_top/example_top_inst_0/example_wrapper_inst/gtwizard_ultrascale_0_inst"
+"/pcs_tb_top/example_top_inst_0/example_wrapper_inst/gtwizard_ultrascale_0_inst/inst"
+"/pcs_tb_top/example_top_inst_1/example_wrapper_inst/gtwizard_ultrascale_0_inst"
+"/pcs_tb_top/example_top_inst_1/example_wrapper_inst/gtwizard_ultrascale_0_inst/inst"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

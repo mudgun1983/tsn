@@ -1,0 +1,114 @@
+Magic 271485
+Revision 2011.01
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 27 1592 922 335 65
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / -i 0 "" "/home/wgb/project/609/VER/ethernet/sim/sim_000.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 3
+
+; windowTimeUnit is used for zoom, cursor & marker
+windowTimeUnit 1ns
+
+; waveform viewport range
+zoom 0.000000 78177.344000 1n
+cursor 432024.000000
+marker 0.000000
+
+; visible top row signal index
+top 0
+; marker line index
+markerPos 16
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/wgb/project/609/VER/ethernet/sim/sim_000.fsdb"
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/m_cpu_if/cpu_addr[31:0]
+addSignal -h 15 -holdScope cpu_clk
+addSignal -h 15 -holdScope cpu_cs
+addSignal -h 15 -UNSIGNED -HEX -holdScope cpu_data[31:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope cpu_data_in[15:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope cpu_data_out[15:0]
+addSignal -h 15 -holdScope cpu_rd
+addSignal -h 15 -holdScope cpu_wr
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 /pcs_tb_top/reset_b
+addGroup "G2"
+addGroup "G3"
+addSignal -h 15 -UNSIGNED -HEX /pcs_tb_top/dcn_top/data_o[7:0]
+addSignal -h 15 -holdScope valid_o
+addSignal -h 15 -UNSIGNED -HEX -holdScope data_i[7:0]
+addSignal -h 15 -holdScope valid_i
+addGroup "G4"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/home/wgb/project/609/VER/ethernet/sim/sim_000.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/pcs_tb_top"
+"/pcs_tb_top/cgmii_rx_block_if"
+
+SCOPE_LIST_BEGIN
+"/pcs_tb_top"
+"/pcs_tb_top/cgmii_rx_block_if"
+"/pcs_tb_top/tb_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgeth_mac_csr"
+"/pcs_tb_top/tb_top/cgpcs_core"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_alignmark_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_laneswap"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_deskew_ctrl"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_deskew"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00"
+"/pcs_tb_top/tb_top/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign01_00/cgeth_pcs_rx_align_ctrl_a"
+"/pcs_tb_top/tb_top_2"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgeth_mac_csr"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign19_18"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign19_18/cgeth_pcs_rx_align_ctrl_a"
+"/pcs_tb_top/tb_top_2/cgpcs_core"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign19_18/cgeth_pcs_rx_align_ctrl_b"
+"/pcs_tb_top/tb_top_2/cgpcs_core/cgpcs_rx_core/cgeth_pcs_rx_swap_deskew/cgeth_pcs_rx_wordalign_top/cgeth_pcs_rx_wordalign19_18/cgeth_pcs_rx_gearbox_b"
+"/pcs_tb_top/xgmii64_rx_if"
+"/pcs_tb_top/dcn_to"
+"/pcs_tb_top/m_cpu_if"
+"/pcs_tb_top/dcn_to/dcn_cpu_main"
+"/pcs_tb_top/dcn_to/dcn_tx_top"
+"/pcs_tb_top/dcn_to/dcn_rx_top"
+"/pcs_tb_top/dcn_top"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

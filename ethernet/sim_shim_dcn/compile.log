@@ -1,0 +1,138 @@
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling module crc32_d8
+-- Compiling module dcn_tx_shim
+-- Compiling module packet_restore
+-- Compiling module dcn_tx_top
+-- Compiling module packet_classify
+-- Compiling module block_to_shim_buf
+-- Compiling module insert_s_t_block
+-- Compiling module sect_data_robin
+-- Compiling module sync_fifo
+-- Compiling module dcn_cpu_main
+-- Compiling module sync_fifo_ctrl
+-- Compiling module block_ram_no_reg
+-- Compiling module data_latch
+-- Compiling module dcn_rx_shim
+-- Compiling module dcn_rx_top
+-- Compiling module decode_64b66b_dcn
+-- Compiling module delete_s_t_block
+-- Compiling module packet_reassemble
+** Warning: ../../../RTL/core_logic/rtl/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+-- Compiling module dcn_rx_top
+-- Compiling module dcn_top
+-- Compiling module gmii_packet_gen
+-- Compiling module ge_mac
+-- Compiling module mac_rx_crc32
+-- Compiling module crc32_cal
+-- Compiling module cnt_module_16
+-- Compiling module cpu_interface_re
+-- Compiling module crc16_d144
+-- Compiling module overhead_receive_pro_top
+-- Compiling module overhead_filter
+-- Compiling module ovhead_info_manage_re
+-- Compiling module crc16_d136
+-- Compiling module overhead_send_pro_top
+-- Compiling module cpu_interfac_se
+-- Compiling module ovhead_send_pro
+-- Compiling module decode_64b66b_shim
+-- Compiling module fault_detect
+-- Compiling module shim_rx
+-- Compiling module get_client_bitmap
+-- Compiling module cross_client_recover
+-- Compiling module decode_64b66b_flexe
+-- Compiling module down_client_recover
+-- Compiling module client_recover_cpu_intf
+-- Compiling module cross_get_client_bitmap
+-- Compiling module slot_switch
+-- Compiling module dist_ram_reg
+-- Compiling module dist_ram_reg_m10k
+-- Compiling module pkt_stat
+-- Compiling module client_rcv
+-- Compiling module client_pro
+-- Compiling module slot_buf
+-- Compiling module register_pro
+-- Compiling module slot_gen
+-- Compiling module shim_tx
+-- Compiling module client_slot_num_calculate
+-- Compiling module slot_map
+-- Compiling module slot_map_cpu_intf
+-- Compiling module shim_mux_or_cell
+-- Compiling module encode_66b
+-- Compiling module slot_map_controller
+-- Compiling module shim_mux_or
+-- Compiling module background_traffic_insert
+-- Compiling module bg_tc_tx_blk_no_gen
+-- Compiling module shim_top
+-- Compiling module shim_cpu_intf
+-- Compiling module flexe_in_pcs_frm_gen
+-- Compiling module shim_loopback
+-- Compiling module data_delay
+-- Compiling module client_distribute
+-- Compiling module client_slot_map
+-- Compiling module client_aggregate
+-- Compiling module vld_blk_ahead
+-- Compiling module block_ram_reg
+-- Compiling module asyn_fifo
+-- Compiling module multi_blk_fifo
+-- Compiling module novas_vlog
+
+Top level modules:
+	crc32_d8
+	dcn_top
+	ge_mac
+	crc16_d144
+	decode_64b66b_shim
+	cross_client_recover
+	down_client_recover
+	dist_ram_reg
+	dist_ram_reg_m10k
+	slot_map
+	shim_mux_or
+	shim_top
+	client_distribute
+	novas_vlog
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling package uvm_pkg (uvm-1.1b Built-in)
+-- Compiling interface cpu_if
+** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+-- Compiling interface cpu_if
+-- Compiling package cpu_pkg
+-- Importing package uvm_pkg (uvm-1.1b Built-in)
+-- Compiling interface gmii_tx_if
+-- Compiling interface gmii_rx_if
+-- Compiling interface xgmii64_tx_if
+-- Compiling interface xgmii64_rx_if
+-- Compiling package mac_pkg
+** Warning: ../../common/mac_uvc/item/eth_frame.sv(441): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+** Warning: ../../common/mac_uvc/item/eth_frame.sv(427): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+-- Compiling package pcs_env_pkg
+-- Importing package cpu_pkg
+-- Importing package mac_pkg
+** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(44): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+-- Compiling interface pcs_xilinx_serdes_if
+-- Compiling module pcs_tb_top
+-- Importing package pcs_env_pkg
+-- Compiling module glbl
+-- Compiling module novas_vlog
+
+Top level modules:
+	pcs_tb_top
+	glbl
+	novas_vlog

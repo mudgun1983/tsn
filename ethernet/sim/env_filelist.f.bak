@@ -1,0 +1,14 @@
++incdir+/opt/modelsim/modeltech/verilog_src/uvm-1.1b/src   
+/opt/modelsim/modeltech/verilog_src/uvm-1.1b/src/uvm_pkg.sv
+../uvc/interface/pcs_xilinx_serdes_vif.sv
+../uvc/interface/pcs_xilinx_serdes_if.sv
+../uvc/sequence/pcs_base_seq.sv
+../uvc/component/pcs_base_sequencer.sv
+../uvc/component/pcs_agent.sv
+../uvc/component/pcs_env.sv
+../uvc/component/pcs_item.sv
+../uvc/component/pcs_base_driver.sv
+../uvc/component/pcs_driver.sv
+../env/pcs_env.sv
+../test_lib/pcs_base_test.sv
+../tb/pcs_tb_top.sv

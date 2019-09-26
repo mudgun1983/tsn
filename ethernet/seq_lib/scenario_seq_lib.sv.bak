@@ -1,0 +1,3712 @@
+//FILE_HEADER------------------------------------------------------------------------------------------
+// ZTE  Copyright
+// ZTE Company Confidential
+//-----------------------------------------------------------------------------------------------------
+// FILE NAME:       label_frame.sv
+// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
+// AUTHOR:           
+// AUTHOR'S EMAIL:   
+//-----------------------------------------------------------------------------------------------------
+// RELEASE HISTORY: N/A
+// VERSION      DATE         AUTHOR       DESCRIPTION
+// 1.1         2011-9-13    
+// 1.2         2012-3-8     Wang Guobing    Change the label identify
+//-----------------------------------------------------------------------------------------------------
+// KEYWORDS: label_frame
+//-----------------------------------------------------------------------------------------------------
+// PURPOSE: 
+//--------------------------------------------------------------------------------------------------
+// PARAMETERS
+//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
+
+//-----------------------------------------------------------------------------------------------------
+//REUSE ISSUES
+// Reset Strategy:  N/A
+// Clock  Domains:  N/A
+// Critical Timing: N/A
+// Test   Features: N/A
+// Asynchronous I/F:N/A
+// Scan Methodology:N/A
+// Instaniations:   N/A
+// Synthesizable:   N/A
+// Other:   
+// END_HEADER---------------------------------------------------------------------------------------------
+
+`ifndef SCENARIO_SEQ_LIB_SV
+`define SCENARIO_SEQ_LIB_SV
+
+
+//------------------------------------------------------------------------------
+//
+// CLASS: XXXX
+//
+//------------------------------------------------------------------------------
+class scenario_reg_test extends uvm_sequence;
+
+//==================== Attribute =================//
+seq_reg_pcs_basic seq_reg; 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_reg_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_reg_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        begin
+        	//===========================aps reg config=============== 
+        	   #500us
+        	  `uvm_do_on(seq_global_config_seq,p_sequencer.rgm_sqr)
+//        	  `uvm_do_on(seq_reg_aps_config_seq,p_sequencer.rgm_sqr)
+//        	  `uvm_do_on(seq_reg_msp_config_seq,p_sequencer.rgm_sqr)
+/*        	  `uvm_do_on_with(seq_reg_lag_config_seq,p_sequencer.rgm_sqr,
+        	                  {foreach(seq_reg_lag_config_seq.index_to_dni_pw[key])
+        	                           {seq_reg_lag_config_seq.index_to_dni_pw[key].dni_pw_size==1;
+        	                            seq_reg_lag_config_seq.index_to_dni_pw[key].dni_pw[0]==key;}
+        	                  })*/
+//        	  ->p_sequencer.timing_trigger;
+        	  //===========================cpu cmd======================
+//        	  while(1)
+//        	    begin
+//        	    	#4000000
+//        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+//        	    	                {seq_reg.pg_id==0;})
+//        	    end
+        end
+      endtask    
+endclass
+
+
+class scenario_base_seq extends scenario_reg_test;
+ 
+  
+//==================== Enum ======================//
+//typedef typedef enum {,,} enum_name
+//==================== Enum ======================//
+
+
+//==================== Knob ======================//
+//randc enum_name kind_name;   
+//==================== Knob ======================//
+
+
+//==================== Attribute =================// 
+//seq_reg_base seq_reg;   
+//seq_reg_aps_config seq_reg_aps_config_seq;   
+seq_gmii_rx_line_upper_normal seq_gmii;
+//alarm_random_seq alarm_seq;
+//==================== Attribute =================//
+
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_base_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+
+
+//==================== Constraint ================//
+//constraint c_name { ;}         
+//==================== Constraint ================//                           
+                        
+                 
+                                
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_base_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();
+        	  
+        	  begin
+        	  	#3000000;  
+            while(1)
+              begin
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  #3000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end  
+            end  
+            
+//            while(1)
+//                 `uvm_do_on(alarm_seq,p_sequencer.d_a_sqr)  
+        join            
+   endtask
+ 
+ //==================================    
+ 
+endclass : scenario_base_seq
+
+
+class scenario_cpu_lockout_seq extends scenario_reg_test;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_lockout_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_lockout_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       super.body();
+        	  //===========================cpu cmd======================
+        	  fork
+        	  	begin
+        	    	#500000
+        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;
+        	    	                 seq_reg.reg_value=={12'h1,3'b001,1'b1};}) //001: lockout
+        	    end
+        	    
+        	    while(1)
+        	      begin
+        	      	#2000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #1000000;
+        	      end
+        	   join
+      endtask           
+endclass
+
+class scenario_cpu_forced_switch_seq extends scenario_reg_test;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_forced_switch_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_forced_switch_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       super.body();
+        	  //===========================cpu cmd======================
+        	  fork
+        	  	begin
+        	    	#500000
+        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;
+        	    	                 seq_reg.reg_value=={12'h1,3'b010,1'b1};}) //001: lockout
+        	    end
+        	    
+        	    while(1)
+        	      begin
+        	      	#2000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #1000000;
+        	      end
+        	   join
+      endtask           
+endclass
+
+class scenario_cpu_ms_to_protection_seq extends scenario_reg_test;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_ms_to_protection_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_ms_to_protection_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       super.body();
+        	  //===========================cpu cmd======================
+        	  fork
+        	  	begin
+        	    	#500000
+        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;
+        	    	                 seq_reg.reg_value=={12'h1,3'b011,1'b1};}) //001: lockout
+        	    end
+        	    
+        	    while(1)
+        	      begin
+        	      	#2000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #1000000;
+        	      end
+        	   join
+      endtask           
+endclass
+
+class scenario_cpu_ms_to_working_seq extends scenario_reg_test;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_ms_to_working_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_ms_to_working_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       super.body();
+        	  //===========================cpu cmd======================
+        	  fork
+        	  	begin
+        	    	#500000
+        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;
+        	    	                 seq_reg.reg_value=={12'h1,3'b100,1'b1};}) //001: lockout
+        	    end
+        	    
+        	    while(1)
+        	      begin
+        	      	#2000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #1000000;
+        	      end
+        	   join
+      endtask           
+endclass
+
+class scenario_cpu_clear_seq extends scenario_reg_test;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_clear_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_clear_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       super.body();
+        	  //===========================cpu cmd======================
+        	  fork
+        	  	begin
+        	    	#500000
+        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;
+        	    	                 seq_reg.reg_value=={12'h1,3'b101,1'b1};}) //001: lockout
+        	    end
+        	    
+        	    while(1)
+        	      begin
+        	      	#2000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #1000000;
+        	      end
+        	   join
+      endtask           
+endclass
+
+class scenario_cpu_exercise_seq extends scenario_reg_test;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_exercise_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_exercise_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       super.body();
+        	  //===========================cpu cmd======================
+        	  fork
+        	  	begin
+        	    	#500000
+        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;
+        	    	                 seq_reg.reg_value=={12'h1,3'b110,1'b1};}) //001: lockout
+        	    end
+        	    
+        	    while(1)
+        	      begin
+        	      	#2000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #1000000;
+        	      end
+        	   join
+      endtask           
+endclass
+
+class scenario_sf_seq extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+alarm_random_seq alarm_seq;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_sf_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_sf_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();
+        	    
+            while(1)
+              begin
+              	  #500000
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  #3000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end    
+            
+            while(1)
+                 `uvm_do_on_with(alarm_seq,p_sequencer.d_a_sqr,
+                                 {alarm_seq.sf==1;
+                                  alarm_seq.sd==0;})  
+        join            
+   endtask   
+endclass
+
+class scenario_sd_seq extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+alarm_random_seq alarm_seq;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_sd_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_sd_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();
+        	    
+            while(1)
+              begin
+              	  #500000
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  #3000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end    
+            
+            while(1)
+                 `uvm_do_on_with(alarm_seq,p_sequencer.d_a_sqr,
+                                 {alarm_seq.sf==0;
+                                  alarm_seq.sd==1;})  
+        join            
+   endtask 
+endclass
+
+class scenario_sf_recover_seq extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+alarm_random_seq alarm_seq;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_sf_recover_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_sf_recover_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();  
+        	  
+            while(1)
+              begin
+              	  #500000;
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  #3000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end    
+            
+            begin
+            `uvm_do_on_with(alarm_seq,p_sequencer.d_a_sqr,
+                            {alarm_seq.sf==1;
+                             alarm_seq.sd==0;})  
+             #8000000;                      
+            `uvm_do_on_with(alarm_seq,p_sequencer.d_a_sqr,
+                                 {alarm_seq.sf==0;
+                                  alarm_seq.sd==0;}) 
+             end                       
+        join            
+   endtask   
+endclass
+
+class scenario_sd_recover_seq extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+alarm_random_seq alarm_seq;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_sd_recover_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_sd_recover_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();  
+        	  
+            while(1)
+              begin
+              	  #500000;
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  #3000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end    
+            
+            begin
+            `uvm_do_on_with(alarm_seq,p_sequencer.d_a_sqr,
+                            {alarm_seq.sf==0;
+                             alarm_seq.sd==1;})  
+             #8000000;                      
+            `uvm_do_on_with(alarm_seq,p_sequencer.d_a_sqr,
+                                 {alarm_seq.sf==0;
+                                  alarm_seq.sd==0;}) 
+             end                       
+        join            
+   endtask   
+endclass
+
+class scenario_alarm_seq extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+alarm_random_seq alarm_seq;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_alarm_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_alarm_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();  
+
+            begin
+            	#2000000
+            while(1)
+              begin
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  #2000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end    
+            end
+           //======================alarm sf sd random================//
+            while(1) 
+            begin
+            `uvm_do_on(alarm_seq,p_sequencer.d_a_sqr)  
+            end                       
+        join            
+   endtask 
+   
+endclass
+
+class scenario_cpu_cmd_random_seq extends scenario_reg_test;
+
+alarm_random_seq alarm_seq;
+seq_gmii_rx_line_upper_normal seq_gmii;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_cmd_random_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_cmd_random_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();
+        	  //===========================cpu cmd======================        
+        	  begin
+        	  	#3000000
+        	  while(1)
+        	    begin        	    	
+        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;})
+        	    	  #3000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+        	    end
+        	  end  
+              begin
+              	 #500000
+              	 `uvm_do_on_with(alarm_seq,p_sequencer.d_a_sqr,
+              	                  {alarm_seq.sf==0;
+              	                   alarm_seq.sd==0;})  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              end
+             
+        join
+      endtask
+endclass
+
+class scenario_aps_random_seq extends scenario_base_seq;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_aps_random_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_aps_random_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   
+endclass
+
+class scenario_cpu_and_alarm_seq extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+alarm_random_seq alarm_seq;
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_cpu_and_alarm_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_cpu_and_alarm_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+        fork
+            super.body();  
+
+            begin
+            	#3000000
+            while(1)
+              begin
+              	 //======================cpu rand cmd====================//
+              	 `uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;})
+        	    	  #500000       	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  #3000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end    
+            end
+           //======================alarm sf sd random================//
+            while(1) 
+            begin
+            `uvm_do_on(alarm_seq,p_sequencer.d_a_sqr)  
+            end                       
+        join            
+   endtask    
+endclass
+
+class scenario_global_random_seq extends scenario_reg_test;
+                                       
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_fixed_oam_id_seq seq_label;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_global_random_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_global_random_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();        
+         super.body();  
+         fork
+            begin
+            	#100000
+            	  fork
+                 `uvm_do_on_with(seq_label,p_sequencer.label_sqr,
+        	    	                {seq_label.pdu_type==label_base_seq::ALARM;
+        	    	                 seq_label.count==1;
+        	    	                 seq_label.oam_id==1;})      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	join
+              #100000
+            while(1)
+              begin
+              	 //======================cpu rand cmd====================//
+              	 `uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
+        	    	                {seq_reg.pg_id==0;})
+        	    	  #500000 
+        	    	  fork      	    	  	
+        	    	 `uvm_do_on_with(seq_label,p_sequencer.label_sqr,
+        	    	                {seq_label.pdu_type==label_base_seq::ALARM;
+        	    	                 seq_label.count==1;
+        	    	                 seq_label.oam_id==1;})      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	 
+              	  fork
+              	 `uvm_do_on_with(seq_label,p_sequencer.label_sqr,
+        	    	                {seq_label.pdu_type==label_base_seq::APS;
+        	    	                 seq_label.count==1;
+        	    	                 seq_label.oam_id==1;})      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	  #1000000;
+              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              end    
+            end
+         join
+        endtask
+endclass
+
+class scenario_global_random_count_oamid_seq extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_base_seq seq_label0;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_global_random_count_oamid_seq, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_global_random_count_oamid_seq");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();        
+       //fork  
+         super.body();  
+         
+//         for(int i=0;i<10;i++)
+//          begin
+//          fork                                      
+//           `uvm_do_on_with(seq_label0,p_sequencer.label_sqr,
+//        	                {seq_label0.pdu_type==label_base_seq::ALARM;
+//        	                 //seq_label.count==1;
+//        	                 }
+//        	                 )      	    	  
+//           `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+//         join
+//         end
+         
+         fork
+            begin
+            	#10000000
+                fork
+            	   `uvm_do_on_with(seq_label0,p_sequencer.label_sqr,
+        	    	                {seq_label0.pdu_type==label_base_seq::ALARM;
+        	    	                 //seq_label.count==1;
+        	    	                 }
+        	    	                 )      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	join
+              #100000 
+            while(1)
+              begin
+              	 //======================cpu rand cmd====================//
+              	 for(int i=0;i<100;i++)
+              	  begin
+              	 `uvm_do_on(seq_reg,p_sequencer.rgm_sqr
+        	    	                //{seq_reg.pg_id==0;}
+        	    	                )
+        	    	  end
+        	    	  #500000 
+        	    	  fork      	    	  	
+        	    	 `uvm_do_on_with(seq_label0,p_sequencer.label_sqr,
+        	    	                {seq_label0.pdu_type==label_base_seq::ALARM;
+        	    	                 //seq_label.count==1;
+        	    	                 }
+        	    	                 )      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	 
+              	  fork
+              	 `uvm_do_on_with(seq_label0,p_sequencer.label_sqr,
+        	    	                {seq_label0.pdu_type==label_base_seq::APS;
+        	    	                 //seq_label.count==1;
+        	    	                 }
+        	    	                 )      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	  #3000000;
+              	  ->p_sequencer.timing_trigger_aps;
+              	  ->p_sequencer.decision_trigger_aps;
+              	  #500000;
+              end    
+            end
+         join
+         
+        //join
+        endtask
+        
+endclass
+
+class scenario_msp_cpu_cmd extends scenario_reg_test;
+
+msp_cpu_cmd_reg_seq cpu_cmd_reg_seq;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_cpu_cmd, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_cpu_cmd");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+         super.body();  
+         while(1)
+              begin
+              	 //======================cpu rand cmd====================//
+              	 for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;}
+        	    	                )
+        	    	  end              	 
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  #100000;                  
+            end 
+   endtask
+endclass
+
+class scenario_msp_base extends scenario_reg_test;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base seq_label_msp;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_base, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_base");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+         super.body();  
+         while(1)
+              begin
+              	 //======================cpu rand cmd====================//
+//              	 for(int i=0;i<100;i++)
+//              	  begin
+//              	 `uvm_do_on(seq_reg,p_sequencer.rgm_sqr
+//        	    	                //{seq_reg.pg_id==0;}
+//        	    	                )
+//        	    	  end
+//        	    	  #1000000 
+        	    	  fork      	    	  	        	    	  
+        	    	 `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                {seq_label_msp.pdu_type==label_seq_msp_base::MSP;}
+        	    	                 )      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	 
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  #100000;                  
+            end 
+   endtask
+endclass
+
+class scenario_msp_alarm_test extends scenario_reg_test;
+
+alarm_random_seq seq_alarm_random;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base seq_label_msp;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_alarm_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_alarm_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+         super.body();  
+         while(1)
+              begin
+              	 //======================cpu rand cmd====================//
+//              	 for(int i=0;i<100;i++)
+//              	  begin
+//              	 `uvm_do_on(seq_reg,p_sequencer.rgm_sqr
+//        	    	                //{seq_reg.pg_id==0;}
+//        	    	                )
+//        	    	  end
+//        	    	  #1000000 
+        	    	  fork      	  
+        	    	 `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==1;
+        	    	                 seq_alarm_random.sd==0;}) 	  	  	        	    	  
+        	    	 `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                 seq_label_msp.seat_no==1;
+        	    	                 seq_label_msp.port_num_alarm==1;}
+        	    	                 )      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	 
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  #100000;    
+                	->p_sequencer.cal_trigger;
+                	#100000;
+              	  fork            
+              	 for(int i=0;i<1;i++)begin
+              	 `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==1;})end
+        	    	 `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                 seq_label_msp.seat_no==33;
+        	    	                 seq_label_msp.port_num_alarm==1;}
+        	    	                 )      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	  #100000;
+                	->p_sequencer.cal_trigger;
+                	#100000;
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  #100000; 
+              	    
+            end 
+   endtask
+endclass    
+
+
+class scenario_msp_global_rand extends scenario_reg_test;
+
+msp_cpu_cmd_reg_seq cpu_cmd_reg_seq;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base seq_label_msp;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_global_rand, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_global_rand");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+         super.body();  
+         while(1)
+              begin
+              	 //======================cpu rand cmd====================//
+              	 for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;}
+        	    	                )
+        	    	  end
+        	    	  #1000000 
+        	    	  fork      	    	  	        	    	  
+        	    	 `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                {seq_label_msp.pdu_type==label_seq_msp_base::MSP;}
+        	    	                 )      	    	  
+              	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+              	  #100000;
+                	->p_sequencer.cal_trigger;
+                	#100000;
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  #100000;                  
+            end 
+   endtask
+endclass
+
+
+class scenario_msp_rr_global_rand extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_rr_global_rand, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_rr_global_rand");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+         super.body();  
+         while(1)
+              begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+              	 //======================cpu rand cmd====================//
+              	 for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;}
+        	    	                )
+        	    	  end
+        	    	  #1000000 
+        	    	  
+        	    	  //===================WORK path alarm===================//
+        	    	  for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(int i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		sf =$random;        
+                      sd =$random; 
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf;
+        	    	                 seq_alarm_random.sd==sd;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b0000;} // far end NR
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key;  
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#100000;
+                	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+        	    	  		sf_p[pg_id] =$random;        
+                      sd_p[pg_id] =$random; 
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b0000;} // far end NR
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+//              	  #1500000;
+//              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  #100000;                  
+            end 
+   endtask
+endclass
+
+class scenario_msp_full_rand extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_aps_msp_dni_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_full_rand, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_full_rand");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+         super.body();  
+         while(1)
+              begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+              	 //======================cpu rand cmd====================//
+              	 for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;}
+        	    	                )
+        	    	  end
+        	    	  #1000000 
+        	    	  
+        	    	  //===================WORK path alarm===================//
+        	    	  for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(int i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		sf =$random;        
+                      sd =$random; 
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf;
+        	    	                 seq_alarm_random.sd==sd;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on(seq_msp_constraint,p_sequencer.msp_sqr
+        	    	                   //{//seq_msp_constraint.far_end_state==4'b0000;} // far end NR
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_aps_msp_dni_base::MSP;
+        	    	                    seq_label_msp.seat_no==key;  
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#100000;
+                	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+        	    	  		sf_p[pg_id] =$random;        
+                      sd_p[pg_id] =$random; 
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on(seq_msp_constraint,p_sequencer.msp_sqr
+        	    	                   //{//seq_msp_constraint.far_end_state==4'b0000;} // far end NR
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_aps_msp_dni_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+//              	  #1500000;
+//              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              	  //=================================tran TWO RR_packet=================================//
+              	  for(int loop=0;loop<2;loop++)
+              	  begin
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_aps_msp_dni_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                  end
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  #100000;                  
+            end 
+   endtask
+endclass
+
+//===========================================MSP direct testcase=========================================//
+class scenario_msp_rr_p_state_test extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_rr_p_state_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_rr_p_state_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+     super.body();
+        while(1)
+         begin
+         	for(int loop=0;loop<3;loop++)
+             begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+              	 //======================cpu rand cmd====================//
+//              	 for(int i=0;i<64;i++)
+//              	  begin
+//              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+//        	    	                {cpu_cmd_reg_seq.pg_id==i;}
+//        	    	                )
+//        	    	  end
+//        	    	  #1000000 
+        	    	  
+        	    	  //===================WORK path alarm===================//
+        	    	  for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(int i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		if(loop!=2)
+        	    	  	 	 begin
+        	    	  		  sf =0;        
+                        sd =0; 
+                       end
+                      else
+                       begin
+                       	sf =0;//$random;        
+                        sd =0;//$random; 
+                       end
+                   
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf;
+        	    	                 seq_alarm_random.sd==sd;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on(seq_msp_constraint,p_sequencer.msp_sqr)  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key;  
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#100000;
+                	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+        	    	  		if(loop!=2)
+        	    	  	 	 begin
+        	    	  		  sf_p[pg_id] =0;        
+                        sd_p[pg_id] =0; 
+                       end
+                      else
+                       begin
+                       	sf_p[pg_id] =$random;        
+                        sd_p[pg_id] =$random; 
+                       end
+        	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {if(loop==0)
+        	    	                      {seq_msp_constraint.far_end_state==4'b0001;} // DNR
+        	    	                    else if(loop==1)
+        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+        	    	                       seq_msp_constraint.requested_signal==1;
+        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+//              	  #1500000;
+//              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              	  //=================================RR_packet=================================//
+              	  if(loop==2)
+              	  begin
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  end
+              	  #100000;                  
+            end 
+          end
+   endtask  
+endclass
+
+class scenario_msp_rr_p_direct_state_test extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_rr_p_direct_state_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_rr_p_direct_state_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+     super.body();
+        while(1)
+         begin
+         	for(int loop=0;loop<3;loop++)
+             begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+              	 //======================cpu rand cmd====================//
+//              	 for(int i=0;i<64;i++)
+//              	  begin
+//              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+//        	    	                {cpu_cmd_reg_seq.pg_id==i;}
+//        	    	                )
+//        	    	  end
+//        	    	  #1000000 
+        	    	  
+                	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+        	    	  		if(loop!=2)
+        	    	  	 	 begin
+        	    	  		  sf_p[pg_id] =0;        
+                        sd_p[pg_id] =0; 
+                       end
+                      else
+                       begin
+                       	sf_p[pg_id] =0;//$random;        
+                        sd_p[pg_id] =0;//$random; 
+                       end
+        	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {if(loop==0)
+        	    	                      {seq_msp_constraint.far_end_state==4'b0001;} // DNR
+        	    	                    else if(loop==1)
+        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+        	    	                       seq_msp_constraint.requested_signal==1;
+        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+//              	  #1500000;
+//              	  ->p_sequencer.timing_trigger;
+              	  #500000;       
+              	  
+              	  
+              	  //======================cpu rand cmd====================//
+              	  if(loop==2)
+              	   for(int i=0;i<64;i++)
+              	    begin
+              	   `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                  {cpu_cmd_reg_seq.pg_id==i;}
+        	    	                  )
+        	    	    end
+        	    	    #1000000 
+              	  //=================================RR_packet=================================//
+              	  if(loop==2)
+              	  begin
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  end
+              	  #100000;                  
+            end 
+          end
+   endtask  
+endclass
+
+class scenario_msp_rr_w_state_test extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_rr_w_state_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_rr_w_state_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+     super.body();
+     while(1)
+      begin
+      	port_alarm=4;
+        port_k1k2=4;
+                 //===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;   //SD_W or Working recover
+        	    	                 })
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b1111;} // LO
+//        	    	                    else if(loop==1)
+//        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+//        	    	                       seq_msp_constraint.requested_signal==1;
+//        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // work seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;    
+              	  
+                //===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b0100;
+        	    	                    seq_msp_constraint.requested_signal==0;
+        	    	                    seq_msp_constraint.bridged_signal==1;} // EXER_P to get RR_W state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;
+              	  
+              	//===================WORKING path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		  sf=$random;
+      	    	  		  sd=$random;
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf;
+        	    	                 seq_alarm_random.sd==sd;     
+        	    	                 })
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b1111;} // LO
+//        	    	                    else if(loop==1)
+//        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+//        	    	                       seq_msp_constraint.requested_signal==1;
+//        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key;  // work seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;    
+              	  //=================================PROTECT path alarm=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+        	    	  	sf_p[pg_id]=$random;
+        	    	  	sd_p[pg_id]=$random;
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                      {seq_msp_constraint.far_end_state==4'b0000; //NR
+        	    	                       })  //FS_W or MS_P
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;             	  
+              	  #100000;          
+      end
+   endtask
+endclass
+
+class scenario_msp_exer_p_state_test extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_exer_p_state_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_exer_p_state_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+     super.body();
+        while(1)
+         begin
+             begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+        	    	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b1111;} // LO
+//        	    	                    else if(loop==1)
+//        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+//        	    	                       seq_msp_constraint.requested_signal==1;
+//        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;
+              	    
+                //===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b0001;} // DNR
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;
+              	  
+              	  //======================cpu rand cmd====================//
+              	  for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;
+        	    	                 cpu_cmd_reg_seq.reg_value==3'b110;} //Exercise
+        	    	                )
+        	    	  end
+        	    	  #600000 
+              	  //=================================FAR_end_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	      `uvm_do_on(seq_msp_constraint,p_sequencer.msp_sqr)  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  
+              	  #100000;                  
+            end 
+          end
+   endtask                
+endclass
+
+class scenario_msp_exer_p_direct_state_test extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_exer_p_direct_state_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_exer_p_direct_state_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+     super.body();
+        while(1)
+         begin
+             begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+        	    	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b1111;} // LO
+//        	    	                    else if(loop==1)
+//        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+//        	    	                       seq_msp_constraint.requested_signal==1;
+//        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;
+              	
+              	//===================WORKING path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 //seq_alarm_random.sd==0;})   //SD_W or Working recover
+        	    	                 })
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b1111;} // LO
+//        	    	                    else if(loop==1)
+//        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+//        	    	                       seq_msp_constraint.requested_signal==1;
+//        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key;  // work seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;    
+              	  
+                //===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b0001;} // DNR
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;
+              	  
+              	  //======================cpu rand cmd====================//
+              	  for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;
+        	    	                 cpu_cmd_reg_seq.reg_value==3'b110;} //Exercise
+        	    	                )
+        	    	  end
+        	    	  #600000 
+              	  //=================================FAR_end_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                      {seq_msp_constraint.far_end_state inside {4'b1110,4'b1000};
+        	    	                       })  //FS_W or MS_P
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  
+              	  #100000;                  
+            end 
+          end
+   endtask                
+endclass
+
+class scenario_msp_ms_p_state_test extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_ms_p_state_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_ms_p_state_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+     super.body();
+        while(1)
+         begin
+             begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+        	    	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b1111;} // LO
+//        	    	                    else if(loop==1)
+//        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+//        	    	                       seq_msp_constraint.requested_signal==1;
+//        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;
+              	                              	  
+              	  //======================cpu rand cmd====================//
+              	  for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;
+        	    	                 cpu_cmd_reg_seq.reg_value==3'b011;} //Manual switch to protection
+        	    	                )
+        	    	  end
+        	    	  #600000 
+              	  //=================================FAR_end_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	      `uvm_do_on(seq_msp_constraint,p_sequencer.msp_sqr)  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  
+              	  #100000;                  
+            end 
+          end
+   endtask                
+endclass
+
+class scenario_msp_ms_w_state_test extends scenario_reg_test;
+
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_seq_msp_base            seq_label_msp;
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_msp_ms_w_state_test, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_msp_ms_w_state_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+     super.body();
+        while(1)
+         begin
+             begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+        	    	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+      	    	  		
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                   {seq_msp_constraint.far_end_state==4'b1111;} // LO
+//        	    	                    else if(loop==1)
+//        	    	                      {seq_msp_constraint.far_end_state==4'b0100;
+//        	    	                       seq_msp_constraint.requested_signal==1;
+//        	    	                       seq_msp_constraint.bridged_signal==1;}} // EXER_P}  ==> to get RR_P state
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+              	  #500000;
+              	                              	  
+              	  //======================cpu rand cmd====================//
+              	  for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;
+        	    	                 cpu_cmd_reg_seq.reg_value==3'b100;} //Manual switch to work
+        	    	                )
+        	    	  end
+        	    	  #600000 
+              	  //=================================FAR_end_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	      `uvm_do_on(seq_msp_constraint,p_sequencer.msp_sqr)  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==0;
+        	    	                 seq_alarm_random.sd==0;})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_seq_msp_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                	//=================================RR_packet=================================//
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  
+              	  #100000;                  
+            end 
+          end
+   endtask                
+endclass
+//===========================================MSP direct testcase=========================================//
+
+//===========================================DNI_PW base scenario========================================//
+class  scenario_dni_pw_base extends scenario_reg_test;
+  
+//==================== Attribute =================// 
+typedef enum {APS,ALARM} pdu_kind;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_aps_msp_dni_base label_aps_msp_dni_seq;
+alarm_base_seq alarm_base_seq0;
+alarm_random_seq   seq_alarm_random;
+rand pdu_kind pdu_type;
+rand int count;
+
+//==================== Attribute =================// 
+
+//==================== Constraint ================//
+//constraint c_name { ;} 
+constraint c_count {
+                 if(pdu_type==APS)
+                   {count inside {[1:287]};}
+                 else if(pdu_type==ALARM)
+                   {count inside {[1:502]};}
+                   }        
+//==================== Constraint ================//  
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_dni_pw_base, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_dni_pw_base");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+//     	super.body();
+//     `uvm_info(get_type_name(),$psprintf("scenario_dni_pw_base START"),uvm_LOW);
+     
+//     begin
+//        #1ms;
+//        fork
+//         `uvm_do_on_with(label_aps_msp_dni_seq,p_sequencer.label_sqr,
+//                        {label_aps_msp_dni_seq.pdu_type==label_aps_msp_dni_base::APS;//label_aps_msp_dni_base::ALARM;
+//                         //label_aps_msp_dni_seq.count==1;
+//                         label_aps_msp_dni_seq.info_type==8'b0000_0010;
+//                         }
+//                         )      	    	  
+//         `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+//        join
+//        #100us; 
+//     end
+     
+    // while(1)
+     begin
+     	 //======================cpu rand cmd====================//
+       for(int i=0;i<1;i++)//100
+        begin
+        p_sequencer.pg_id=p_sequencer.pg_id++;
+        `uvm_info(get_type_name(),$psprintf("p_sequencer.pg_id=%0d",p_sequencer.pg_id),uvm_LOW)
+       `uvm_do_on(seq_reg,p_sequencer.rgm_sqr
+                      //{seq_reg.pg_id ==p_sequencer.pg_id[5:0];}
+                      )
+        end
+        #500us; 
+        	    	  
+       fork
+       	 if(pdu_type==ALARM)
+       	 begin
+         for(int i=0;i<count;i++)
+       	  begin
+       	  `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	         {seq_alarm_random.sf==0;
+        	    	          seq_alarm_random.sd==1;}
+        	    	          )
+       	  end
+       	end
+
+//           `uvm_do_on(alarm_base_seq0,p_sequencer.d_a_sqr)
+
+       	 `uvm_do_on_with(label_aps_msp_dni_seq,p_sequencer.label_sqr,
+       	                 {if(pdu_type==APS)
+       	                   {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::APS;}
+       	                  else if(pdu_type==ALARM)
+       	                   {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::ALARM;}//==label_aps_msp_dni_base::ALARM;//
+       	                  label_aps_msp_dni_seq.count==count;
+       	                  label_aps_msp_dni_seq.info_type==8'b0000_0010;
+       	                  })
+       	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+       join
+       	 //#1ms;
+                	//->p_sequencer.cal_trigger;
+         #1ms;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;             	  
+         #100us;        	      
+     end
+    
+    
+    endtask
+endclass
+//===========================================DNI_PW base scenario========================================//
+
+
+//===========================================DNI_PW msp scenario=========================================//
+class scenario_dni_msp extends scenario_reg_test;
+//==================== Attribute =================// 
+msp_cpu_cmd_reg_seq           cpu_cmd_reg_seq;
+alarm_random_seq              seq_alarm_random;
+msp_constraint_seq            seq_msp_constraint;
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_aps_msp_dni_base        seq_label_msp;
+aps_dni_pw_seq                seq_aps_dni_pw;
+
+rand bit[7:0] seat_no;    
+rand bit      sf;
+rand bit      sd;
+rand bit      sf_p[64];
+rand bit      sd_p[64];
+rand bit[15:0] port_alarm;
+rand bit[15:0] port_k1k2;
+bit [3:0] bridged_signal;
+bit [3:0] requested_signal;
+msp_item msp_req;
+uvm_sequence_item t;
+bit[7:0] pg_id;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_dni_msp, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_dni_msp");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+         //super.body();  
+         //->p_sequencer.configure_done;
+           begin
+           	#100us;
+             fork
+             	//`uvm_do_on(seq_aps_dni_pw,p_sequencer.aps_sqr)
+//        	    begin 
+//        	    	`uvm_do_on_with(seq_aps_dni_pw,p_sequencer.aps_sqr,
+//        	                    {seq_aps_dni_pw.sf==0;
+//        	                     seq_aps_dni_pw.sd==0;
+//        	                     seq_aps_dni_pw.rdi==0;
+//        	                     seq_aps_dni_pw.csf==0;})
+//        	    end
+              `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+                             {seq_label_msp.pdu_type==label_aps_msp_dni_base::APS;//label_aps_msp_dni_base::ALARM;
+                              seq_label_msp.count==1;
+                              seq_label_msp.info_type==8'b00000110;
+                              }
+                              )      	    	  
+              `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+             join
+             #100us; 
+           end
+          `uvm_info(get_type_name(),$psprintf("cpu rand cmd start"),uvm_LOW)  
+         while(1)
+              begin
+              	 randomize(seat_no) with {seat_no inside {[1:16]};};    //seat_no=1~16 means max pg_id=seat_no*4=64 , set to work path
+//                 randomize(port_alarm) with {port_alarm inside {[1:4]};};        
+//                 randomize(port_k1k2) with {port_k1k2 inside {[1:4]};};     
+                 port_alarm=4;
+                 port_k1k2=4;
+              	 //======================msp cpu rand cmd====================//
+              	 //#500us;
+              	 `uvm_info(get_type_name(),$psprintf("cpu rand cmd start"),uvm_LOW)
+              	 for(int i=0;i<64;i++)
+              	  begin
+              	 `uvm_do_on_with(cpu_cmd_reg_seq,p_sequencer.rgm_sqr,
+        	    	                {cpu_cmd_reg_seq.pg_id==i;}
+        	    	                )
+        	    	  end
+        	    	  
+        	    	  //======================aps cpu rand cmd====================//
+              	 for(int i=0;i<100;i++)
+              	  begin
+              	 `uvm_do_on(seq_reg,p_sequencer.rgm_sqr)
+              	  end
+        	    	  #1ms; 
+        	    	  
+        	    	  //===================WORK path alarm===================//
+        	    	  fork
+//        	    	  	while(1)
+//        	    	  	 begin 
+//        	    	  	 	sf=$random;
+//        	    	  	 	sd=$random;
+//        	    	  	 	`uvm_do_on_with(seq_aps_dni_pw,p_sequencer.aps_sqr,
+//        	    	  	                 {seq_aps_dni_pw.sf==sf;
+//        	    	  	                  seq_aps_dni_pw.sd==sd;
+//        	    	  	                  seq_aps_dni_pw.rdi==0;
+//        	    	  	                  seq_aps_dni_pw.csf==0;})
+//        	    	  	 end
+       	            `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+       	                 {seq_label_msp.pdu_type ==label_aps_msp_dni_base::APS;//inside {label_aps_msp_dni_base::APS,label_aps_msp_dni_base::ALARM};
+       	                  //seq_label_msp.count==1;
+       	                  seq_label_msp.info_type ==8'b00000110;//dist {8'b00000110:/50,8'b0:/50};//dist {8'b00000110:/80,8'b0:/20};
+       	                  })
+       	             `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+                  join
+
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#100000;
+                	//===================PROTECT path alarm===================//
+                	for(bit[5:0] key=1;key<=16;key++)
+        	    	  begin
+        	    	  fork      	
+        	    	  	for(bit[2:0] i=0;i<port_alarm;i++)  //alarm packet
+        	    	  	begin
+        	    	  		pg_id={key[5:0]-1,i[1:0]};
+        	    	  		sf_p[pg_id] =$random;        
+                      sd_p[pg_id] =$random; 
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    for(int i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	    `uvm_do_on(seq_msp_constraint,p_sequencer.msp_sqr
+        	    	                   //{//seq_msp_constraint.far_end_state==4'b0000;} // far end NR
+        	    	                    )  
+        	    	     end    	  	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_aps_msp_dni_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;  // protect seat no
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )      	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	#100000;
+                	->p_sequencer.cal_trigger;
+//              	  #1500000;
+//              	  ->p_sequencer.timing_trigger;
+              	  #500000;
+              	  //=================================tran TWO RR_packet=================================//
+              	  for(int loop=0;loop<2;loop++)
+              	  begin
+              	  for(bit[5:0] key=1;key<=16;key++)
+              	  begin
+              	  fork      	
+        	    	    for(bit[2:0] i=0;i<port_alarm;i++)       //alarm packet
+        	    	  	begin
+        	    	  	pg_id={key[5:0]-1,i[1:0]};
+              	    `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+        	    	                {seq_alarm_random.sf==sf_p[pg_id];
+        	    	                 seq_alarm_random.sd==sd_p[pg_id];})
+        	    	    end
+        	    	    
+        	    	    for(bit[2:0] i=0;i<port_k1k2;i++)   //k1k2 packet
+        	    	     begin
+        	    	       	pg_id={key[5:0]-1,i[1:0]};
+        	    	       	
+        	    	       	while(p_sequencer.req_get_port[pg_id].try_get(t))
+        	    	       	      begin 
+        	    	       	      	assert($cast(msp_req,t));
+        	    	       	      end
+        	    	       	requested_signal=msp_req.requested_signal;
+        	    	       	bridged_signal=msp_req.bridged_signal;
+        	    	       	
+        	    	       	$display("pg_id=%0d,requested_signal=%0d,bridged_signal=%0d",pg_id,requested_signal,bridged_signal);
+        	    	       	
+        	    	      `uvm_do_on_with(seq_msp_constraint,p_sequencer.msp_sqr,
+        	    	                     {seq_msp_constraint.far_end_state==4'b0010;
+        	    	                      seq_msp_constraint.requested_signal==requested_signal;
+        	    	                      seq_msp_constraint.bridged_signal==bridged_signal;} // far end RR
+        	    	                      )  
+        	    	     end    	
+        	    	       	        	    	  
+        	    	    `uvm_do_on_with(seq_label_msp,p_sequencer.label_sqr,
+        	    	                   {seq_label_msp.pdu_type==label_aps_msp_dni_base::MSP;
+        	    	                    seq_label_msp.seat_no==key+32;//seat_no=33~48 means max pg_id=1~64 , set to protect path
+        	    	                    seq_label_msp.port_num_alarm==port_alarm;
+        	    	                    seq_label_msp.port_num_k1k2==port_k1k2;}
+        	    	                    )       	    	  
+              	    `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+              	  join
+                	end
+                	
+                	#100000;
+                	->p_sequencer.cal_trigger;
+                	#500000;
+                  end
+              	  #1500000;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;
+              	  #100000;                  
+            end 
+   endtask
+endclass
+//===========================================DNI_PW msp scenario=========================================//
+
+
+//===========================================RAPS scenario begin===============================================//
+class  scenario_raps_base extends scenario_reg_test;
+  
+//==================== Attribute =================// 
+typedef enum {RAPS,ALARM} pdu_kind;
+
+seq_gmii_rx_line_upper_normal seq_gmii;
+label_aps_msp_dni_base label_aps_msp_dni_seq;
+alarm_base_seq alarm_base_seq0;
+alarm_random_seq   seq_alarm_random;
+rand pdu_kind pdu_type;
+rand int count;
+bit [5:0] cmd_pg_id;
+//==================== Attribute =================// 
+
+//==================== Constraint ================//
+//constraint c_name { ;} 
+constraint c_count {
+                 if(pdu_type==RAPS)
+                    {count inside {[1:63]};}//{count inside {[1:287]};}
+                 else if(pdu_type==ALARM)
+                    {count inside {[1:128]};}//{count inside {[1:502]};}
+                   }        
+//==================== Constraint ================//  
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_raps_base, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_raps_base");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();         
+//     	super.body();
+//     `uvm_info(get_type_name(),$psprintf("scenario_dni_pw_base START"),uvm_LOW);
+     
+   
+//     while(1)
+     begin
+     	 //======================cpu rand cmd====================//
+       for(int i=0;i<64;i++)//100
+        begin
+        p_sequencer.pg_id=p_sequencer.pg_id++;
+        cmd_pg_id=i;
+        `uvm_info(get_type_name(),$psprintf("p_sequencer.pg_id=%0d",cmd_pg_id),uvm_LOW)
+       `uvm_do_on_with(raps_cmd_seq_reg,p_sequencer.rgm_sqr,
+                      {raps_cmd_seq_reg.pg_id ==cmd_pg_id;}
+                      )
+        end
+        #50us; 
+
+//                  ->p_sequencer.cal_trigger;
+//         #1us;
+//                  ->p_sequencer.cal_trigger;
+//         #1us;
+//                  ->p_sequencer.cal_trigger;
+
+//      for(int i=0;i<64;i++)                       	    	  
+       begin
+       fork
+//       	 if(pdu_type==ALARM)
+//       	 begin
+//         for(int i=0;i<count;i++)
+//       	  begin
+//       	  `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+//        	    	         {seq_alarm_random.sf==0;
+//        	    	          seq_alarm_random.sd==1;}
+//        	    	          )
+//       	  end
+//       	end
+
+//           `uvm_do_on(alarm_base_seq0,p_sequencer.d_a_sqr)
+
+       	 `uvm_do_on_with(label_aps_msp_dni_seq,p_sequencer.label_sqr,
+       	                 {if(pdu_type==RAPS)
+       	                   {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::APS;}
+       	                  else if(pdu_type==ALARM)
+       	                   {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::ALARM;}//==label_aps_msp_dni_base::ALARM;//
+       	                  label_aps_msp_dni_seq.count==count;
+       	                  label_aps_msp_dni_seq.info_type==8'b0000_0000;
+       	                  })
+       	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+       join
+       
+       
+       end
+       	 #100us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;             	  
+         #100us;        	      
+     end
+    
+    
+    endtask
+endclass
+//===========================================RAPS scenario end===============================================/
+
+//===========================================DNI_PW aps msp mix scenario==================================//
+class scenario_dni_aps_msp_mix extends uvm_sequence;
+
+//==================== Attribute =================// 
+scenario_reg_test    scenario_reg_test_seq0;
+scenario_dni_msp     scenario_dni_msp_seq0;
+scenario_dni_pw_base scenario_dni_pw_seq0;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_dni_aps_msp_mix, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_dni_aps_msp_mix");               
+        super.new();             
+    endfunction:new
+
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();  
+      `uvm_do(scenario_reg_test_seq0);
+       ->p_sequencer.configure_done;
+       fork
+       	//`uvm_do(scenario_dni_msp_seq0);
+       	while(1)
+         begin	
+         	`uvm_do_with(scenario_dni_pw_seq0,
+         	            {scenario_dni_pw_seq0.count==64;});
+         end
+       join
+   endtask
+//===========================================DNI_PW aps msp mix scenario==================================//
+endclass:scenario_dni_aps_msp_mix
+
+//===========================================RAPS mix scenario==================================//
+class scenario_raps_engine extends uvm_sequence;
+
+//==================== Attribute =================// 
+scenario_reg_test    scenario_reg_test_seq0;
+//scenario_dni_msp     scenario_dni_msp_seq0;
+scenario_raps_base scenario_raps_seq0;
+raps_config_reg_seq seq_reg_raps_config_seq;
+//==================== Attribute =================// 
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_raps_engine, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_raps_engine");               
+        super.new();             
+    endfunction:new
+
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       #10us;
+       ->p_sequencer.configure_done;//to delay the eth receive   
+      `uvm_do(scenario_reg_test_seq0);
+      `uvm_do_on(seq_reg_raps_config_seq,p_sequencer.rgm_sqr);
+
+       fork
+       	//`uvm_do(scenario_dni_msp_seq0);
+       	while(1)
+         begin	
+         	`uvm_do(scenario_raps_seq0)
+         end
+       join
+   endtask
+//===========================================RAPS aps msp mix scenario==================================//
+endclass:scenario_raps_engine
+
+//================================================================================================//
+//输入报文的目的节点与本节点匹配，但是源节点不等于东向或西向的相邻节点，这种报文应该丢弃，不做处理
+//================================================================================================//
+class scenario_source_id_mismatch extends scenario_raps_base;
+
+scenario_reg_test    scenario_reg_test_seq0;
+raps_config_reg_seq seq_reg_raps_config_seq;
+raps_seq_fixed   raps_fixed_seq;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_source_id_mismatch, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+constraint c_count {
+                    count inside {[1:63]};//{count inside {[1:287]};}
+                   }
+                   
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_source_id_mismatch");               
+        super.new();             
+    endfunction:new
+    
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       #10us;
+       ->p_sequencer.configure_done;//to delay the eth receive   
+      `uvm_do(scenario_reg_test_seq0);
+      `uvm_do_on(seq_reg_raps_config_seq,p_sequencer.rgm_sqr);
+      
+      while(1)
+      begin
+      //======================cpu rand cmd====================//
+//       for(int i=0;i<64;i++)//100
+//        begin
+//        p_sequencer.pg_id=p_sequencer.pg_id++;
+//        cmd_pg_id=i;
+//        `uvm_info(get_type_name(),$psprintf("p_sequencer.pg_id=%0d",cmd_pg_id),uvm_LOW)
+//        `uvm_do_on_with(raps_cmd_seq_reg,p_sequencer.rgm_sqr,
+//                       {raps_cmd_seq_reg.pg_id ==cmd_pg_id;}
+//                       )
+//        end
+//        #50us; 
+        
+        fork
+            begin
+             for(int i=0;i<63;i++)
+       	      begin
+       	      `uvm_do_on_with(raps_fixed_seq,p_sequencer.aps_sqr,
+            	    	         {raps_fixed_seq.source_node_id dist {1:/5,127:/5,3:/90} ;//for tmp test;
+            	    	          raps_fixed_seq.destination_node_id==64;}
+            	    	          )
+       	      end
+       	    end
+        	
+          `uvm_do_on_with(label_aps_msp_dni_seq,p_sequencer.label_sqr,
+        	                  {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::APS;
+        	                  label_aps_msp_dni_seq.count==63;
+        	                  label_aps_msp_dni_seq.info_type==8'b0000_0000;
+        	                  }
+        	                  )
+        	`uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+        join
+         #100us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;             	  
+         #100us;    
+      end
+   endtask    
+   
+endclass
+
+
+//================================================================================================//
+//用于验证DUT的超时计算是否正确，该功能是重要的故障自恢复功能。脚本中需设置+define+TIME_OUT +define+DEBUG
+//================================================================================================//
+class scenario_time_out extends scenario_raps_base;
+
+scenario_reg_test    scenario_reg_test_seq0;
+raps_config_reg_seq seq_reg_raps_config_seq;
+raps_seq_fixed   raps_fixed_seq;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_time_out, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+constraint c_count {
+                    count inside {[1:63]};//{count inside {[1:287]};}
+                   }
+                   
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_time_out");               
+        super.new();             
+    endfunction:new
+    
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       #10us;
+       ->p_sequencer.configure_done;//to delay the eth receive   
+      `uvm_do(scenario_reg_test_seq0);
+      `uvm_do_on(seq_reg_raps_config_seq,p_sequencer.rgm_sqr);
+      
+      while(1)
+      begin
+
+        
+        fork
+            begin
+             for(int i=0;i<1;i++)
+       	      begin
+       	      `uvm_do_on_with(raps_fixed_seq,p_sequencer.aps_sqr,
+            	    	         {raps_fixed_seq.source_node_id inside {1,127} ;//for tmp test;
+            	    	          raps_fixed_seq.destination_node_id==64;}
+            	    	          )
+       	      end
+       	    end
+        	
+          `uvm_do_on_with(label_aps_msp_dni_seq,p_sequencer.label_sqr,
+        	                  {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::APS;
+        	                  label_aps_msp_dni_seq.count==1;
+        	                  label_aps_msp_dni_seq.info_type==8'b0000_0000;
+        	                  }
+        	                  )
+        	`uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+        join
+         #100us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;             	  
+         #100us;    
+      end
+   endtask    
+   
+endclass
+
+//================================================================================================//
+//只验证人工命令，目的在于快速提升state和人工命令的交叉覆盖率
+//================================================================================================//
+class scenario_rand_cmd extends scenario_raps_base;
+
+scenario_reg_test    scenario_reg_test_seq0;
+raps_config_reg_seq seq_reg_raps_config_seq;
+raps_seq_fixed   raps_fixed_seq;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_rand_cmd, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+constraint c_count {
+                    count inside {[1:63]};//{count inside {[1:287]};}
+                   }
+                   
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_source_id_mismatch");               
+        super.new();             
+    endfunction:new
+    
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       #10us;
+       ->p_sequencer.configure_done;//to delay the eth receive   
+      `uvm_do(scenario_reg_test_seq0);
+      `uvm_do_on(seq_reg_raps_config_seq,p_sequencer.rgm_sqr);
+      
+      while(1)
+      begin
+      //======================cpu rand cmd====================//
+       for(int i=0;i<64;i++)//100
+        begin
+        p_sequencer.pg_id=p_sequencer.pg_id++;
+        cmd_pg_id=i;
+        `uvm_info(get_type_name(),$psprintf("p_sequencer.pg_id=%0d",cmd_pg_id),uvm_LOW)
+        `uvm_do_on_with(raps_cmd_seq_reg,p_sequencer.rgm_sqr,
+                       {raps_cmd_seq_reg.pg_id ==cmd_pg_id;}
+                       )
+        end
+        #50us; 
+               
+         #100us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;             	  
+         #100us;    
+      end
+   endtask    
+   
+endclass
+
+//================================================================================================//
+//用于验证运行过程中改配保护组配置的情况，软hw报文中oam_id也必须支持16k
+//================================================================================================//
+class scenario_pg_id_reconfig extends scenario_raps_base;
+
+scenario_reg_test    scenario_reg_test_seq0;
+raps_config_reg_seq seq_reg_raps_config_seq;
+raps_config_reg_seq_beta seq_raps_config_reg_seq_beta;
+raps_seq_fixed   raps_fixed_seq;
+bit reconfig_trigger;
+event stim_trigger;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_pg_id_reconfig, aps_virtual_sequencer)
+//==================== Registration ==============//
+
+constraint c_count {
+                    count inside {[1:63]};//{count inside {[1:287]};}
+                   }
+                   
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_pg_id_reconfig");               
+        super.new();             
+    endfunction:new
+    
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+   virtual task body();
+       #10us;
+       ->p_sequencer.configure_done;//to delay the eth receive   
+      `uvm_do(scenario_reg_test_seq0);
+      `uvm_do_on(seq_raps_config_reg_seq_beta,p_sequencer.rgm_sqr);
+    fork  
+      while(1)             	      
+      begin
+      	@p_sequencer.cfg_refresh
+      	//@stim_trigger;
+      	reconfig_trigger=1;
+      	`uvm_do_on(seq_raps_config_reg_seq_beta,p_sequencer.rgm_sqr);
+      	reconfig_trigger=0;
+      end     
+     
+      while(1)
+      begin
+      begin   
+      //======================cpu rand cmd====================//
+       for(int i=0;i<64;i++)//100
+        begin
+        if(reconfig_trigger)
+         continue;         
+        else
+        begin
+        p_sequencer.pg_id=p_sequencer.pg_id++;
+        cmd_pg_id=i;
+        `uvm_info(get_type_name(),$psprintf("p_sequencer.pg_id=%0d",cmd_pg_id),uvm_LOW)
+        `uvm_do_on_with(raps_cmd_seq_reg,p_sequencer.rgm_sqr,
+                       {raps_cmd_seq_reg.pg_id ==cmd_pg_id;}
+                       )
+        end
+        end
+        #50us; 
+        
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+
+      for(int i=0;i<250;i++)
+       begin
+       if(reconfig_trigger)
+         continue;
+       else
+       begin
+       fork
+//       	 if(pdu_type==ALARM)
+//       	 begin
+//         for(int i=0;i<count;i++)
+//       	  begin
+//       	  `uvm_do_on_with(seq_alarm_random,p_sequencer.d_a_sqr,
+//        	    	         {seq_alarm_random.sf==0;
+//        	    	          seq_alarm_random.sd==1;}
+//        	    	          )
+//       	  end
+//       	end
+
+//           `uvm_do_on(alarm_base_seq0,p_sequencer.d_a_sqr)
+
+       	 `uvm_do_on_with(label_aps_msp_dni_seq,p_sequencer.label_sqr,
+       	                 {if(pdu_type==RAPS)
+       	                   {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::APS;}
+       	                  else if(pdu_type==ALARM)
+       	                   {label_aps_msp_dni_seq.pdu_type ==label_aps_msp_dni_base::ALARM;}//==label_aps_msp_dni_base::ALARM;//
+       	                  label_aps_msp_dni_seq.count==count;
+       	                  label_aps_msp_dni_seq.info_type==8'b0000_0000;
+       	                  })
+       	 `uvm_do_on(seq_gmii,p_sequencer.mac_seqencer)
+       join
+         #8us;  //因为DUT每个保护组轮询处理一轮的最快时间是8us
+       end       
+       end
+         #100us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+                  ->p_sequencer.cal_trigger;
+         #1us;
+              	  ->p_sequencer.timing_trigger;
+              	  ->p_sequencer.decision_trigger;             	  
+         #100us;  
+         ->stim_trigger;  
+      end
+      end
+      
+     join
+   endtask    
+   
+endclass
+
+`endif // LABEL_FRAME_SV

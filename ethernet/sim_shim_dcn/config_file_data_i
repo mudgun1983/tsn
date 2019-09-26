@@ -1,0 +1,4 @@
+-o test.txt -s /pcs_tb_top/dcn_top/dcn_tx_top/packet_classify/data_i[7:0] -w 64 
+-exp "/pcs_tb_top/dcn_top/dcn_tx_top/packet_classify/valid_i==1 & /pcs_tb_top/dcn_top/dcn_tx_top/packet_classify/sys_clk_125 == 1" 
+-w 1 -of h
+## comment

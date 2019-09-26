@@ -1,0 +1,325 @@
+# vsim +acc=rmb +UVM_TESTNAME=pcs_base_test -do vsim.do -l vsim.log -c -sv_seed 0 -sv_lib c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# ** Warning: (vsim-8689) Ignoring plusarg '+acc=rmb'.  Did you mean '-voptargs=+acc=rmb'?
+# 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(441): (vopt-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(427): (vopt-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(156): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# Loading sv_std.std
+# Loading work.uvm_pkg(fast)
+# Loading work.mac_pkg(fast)
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# 
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# 
+# different random seeds from your non-debug simulations.
+# 
+# Loading work.cpu_pkg(fast)
+# Loading work.pcs_env_pkg(fast)
+# Loading work.pcs_tb_top(fast)
+# Loading work.cpu_if(fast)
+# Loading work.ge_mac(fast)
+# Loading work.glbl(fast)
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(304): [TOFD] - System task or function '$fsdbAutoSwitchDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(305): [TOFD] - System task or function '$fsdbDumpvarsToFile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(317): [TOFD] - System task or function '$fsdbDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(318): [TOFD] - System task or function '$fsdbDumpvars' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(130): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(124): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_tx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(135): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(132): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_tx_driver
+# Loading c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi.dll
+# do vsim.do 
+# 0
+# 5000000
+# resume
+# ----------------------------------------------------------------
+# UVM-1.1b
+# (C) 2007-2012 Mentor Graphics Corporation
+# (C) 2007-2012 Cadence Design Systems, Inc.
+# (C) 2006-2012 Synopsys, Inc.
+# (C) 2011-2012 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# test start
+# UVM_INFO @ 0: reporter [RNTST] Running test pcs_base_test...
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(483) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] count config parameter is deprecated and not part of the UVM standard
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(483) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] count config parameter is deprecated and not part of the UVM standard
+# UVM_INFO ../test_lib/pcs_base_test.sv(77) @ 0: uvm_test_top [pcs_base_test] Printing the test topology :
+# ------------------------------------------------------------------------------
+# Name                             Type                        Size  Value      
+# ------------------------------------------------------------------------------
+# uvm_test_top                     pcs_base_test               -     @595       
+#   pcs_tx_rx_env0                 pcs_tx_rx_env               -     @603       
+#     cpu_agent0                   cpu_agent                   -     @741       
+#       driver                     cpu_driver                  -     @1013      
+#         rsp_port                 uvm_analysis_port           -     @1030      
+#         sqr_pull_port            uvm_seq_item_pull_port      -     @1021      
+#         cfg                      object                      -     <null>     
+#       monitor                    cpu_monitor                 -     @1039      
+#         aport                    uvm_analysis_port           -     @1047      
+#       sequencer                  cpu_sequencer               -     @890       
+#         rsp_export               uvm_analysis_export         -     @898       
+#         seq_item_export          uvm_seq_item_pull_imp       -     @1004      
+#         arbitration_queue        array                       0     -          
+#         lock_queue               array                       0     -          
+#         num_last_reqs            integral                    32    'd1        
+#         num_last_rsps            integral                    32    'd1        
+#       sequencer                  cpu_sequencer               -     @890       
+#         rsp_export               uvm_analysis_export         -     @898       
+#         seq_item_export          uvm_seq_item_pull_imp       -     @1004      
+#         arbitration_queue        array                       0     -          
+#         lock_queue               array                       0     -          
+#         num_last_reqs            integral                    32    'd1        
+#         num_last_rsps            integral                    32    'd1        
+#       driver                     cpu_driver                  -     @1013      
+#         rsp_port                 uvm_analysis_port           -     @1030      
+#         sqr_pull_port            uvm_seq_item_pull_port      -     @1021      
+#         cfg                      object                      -     <null>     
+#       monitor                    cpu_monitor                 -     @1039      
+#         aport                    uvm_analysis_port           -     @1047      
+#     dcn_scb0                     dcn_scb                     -     @880       
+#       dcn_to_shim_get_port       uvm_blocking_get_port       -     @1065      
+#       shim_to_dcn_get_port       uvm_blocking_get_port       -     @1074      
+#     dcn_to_shim_fifo             uvm_tlm_analysis_fifo #(T)  -     @627       
+#       analysis_export            uvm_analysis_imp            -     @671       
+#       get_ap                     uvm_analysis_port           -     @662       
+#       get_peek_export            uvm_get_peek_imp            -     @644       
+#       put_ap                     uvm_analysis_port           -     @653       
+#       put_export                 uvm_put_imp                 -     @635       
+#     mac_env0                     mac_env                     -     @749       
+#       mac_rx_agent0              mac_rx_agent                -     @1091      
+#         driver                   gmii_rx_driver              -     @1224      
+#           rsp_port               uvm_analysis_port           -     @1241      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1232      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         monitor                  gmii_rx_monitor             -     @1252      
+#           item_collected_port    uvm_analysis_port           -     @1260      
+#         sequencer                mac_rx_base_sequencer       -     @1101      
+#           rsp_export             uvm_analysis_export         -     @1109      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1215      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         driver                   gmii_rx_driver              -     @1224      
+#           rsp_port               uvm_analysis_port           -     @1241      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1232      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         sequencer                mac_rx_base_sequencer       -     @1101      
+#           rsp_export             uvm_analysis_export         -     @1109      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1215      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         monitor                  gmii_rx_monitor             -     @1252      
+#           item_collected_port    uvm_analysis_port           -     @1260      
+#         mac_rx_agent_id          integral                    32    'h0        
+#       mac_tx_agent0              mac_tx_agent                -     @1083      
+#         monitor                  gmii_tx_monitor             -     @1282      
+#           item_collected_port    uvm_analysis_port           -     @1290      
+#         monitor                  gmii_tx_monitor             -     @1282      
+#           item_collected_port    uvm_analysis_port           -     @1290      
+#         mac_tx_agent_id          integral                    32    'h0        
+#       mac_tx_agent0              mac_tx_agent                -     @1083      
+#         monitor                  gmii_tx_monitor             -     @1282      
+#           item_collected_port    uvm_analysis_port           -     @1290      
+#         monitor                  gmii_tx_monitor             -     @1282      
+#           item_collected_port    uvm_analysis_port           -     @1290      
+#         mac_tx_agent_id          integral                    32    'h0        
+#       mac_rx_agent0              mac_rx_agent                -     @1091      
+#         driver                   gmii_rx_driver              -     @1224      
+#           rsp_port               uvm_analysis_port           -     @1241      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1232      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         monitor                  gmii_rx_monitor             -     @1252      
+#           item_collected_port    uvm_analysis_port           -     @1260      
+#         sequencer                mac_rx_base_sequencer       -     @1101      
+#           rsp_export             uvm_analysis_export         -     @1109      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1215      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         driver                   gmii_rx_driver              -     @1224      
+#           rsp_port               uvm_analysis_port           -     @1241      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1232      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         sequencer                mac_rx_base_sequencer       -     @1101      
+#           rsp_export             uvm_analysis_export         -     @1109      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1215      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         monitor                  gmii_rx_monitor             -     @1252      
+#           item_collected_port    uvm_analysis_port           -     @1260      
+#         mac_rx_agent_id          integral                    32    'h0        
+#     pcs_rx_env0                  pcs_env                     -     @733       
+#       pcs_active_agent0          pcs_agent                   -     @1301      
+#         pcs_driver0              pcs_driver                  -     @1322      
+#           rsp_port               uvm_analysis_port           -     @1339      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1330      
+#           vif                    <unknown>                   -     @565       
+#         pcs_monitor0             pcs_monitor                 -     @1471      
+#           item_collected_port    uvm_analysis_port           -     @1479      
+#           vif                    <unknown>                   -     @565       
+#         pcs_ref_model0           pcs_ref_model               -     @1492      
+#           item_collected_export  uvm_analysis_imp            -     @1512      
+#           disable_scoreboard     integral                    1     'h0        
+#           num_writes             integral                    32    'd0        
+#           num_init_reads         integral                    32    'd0        
+#           num_uninit_reads       integral                    32    'd0        
+#         pcs_sequencer0           pcs_base_sequencer          -     @1348      
+#           rsp_export             uvm_analysis_export         -     @1356      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1462      
+#           pcs_seqr_id            integral                    32    'h0        
+#           pcs_block_count        integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         is_active                uvm_active_passive_enum     1     UVM_ACTIVE 
+#       pcs_passive_agent0         pcs_agent                   -     @1309      
+#         pcs_monitor0             pcs_monitor                 -     @1536      
+#           item_collected_port    uvm_analysis_port           -     @1544      
+#           vif                    <unknown>                   -     @565       
+#         pcs_ref_model0           pcs_ref_model               -     @1557      
+#           item_collected_export  uvm_analysis_imp            -     @1577      
+#           disable_scoreboard     integral                    1     'h0        
+#           num_writes             integral                    32    'd0        
+#           num_init_reads         integral                    32    'd0        
+#           num_uninit_reads       integral                    32    'd0        
+#         is_active                uvm_active_passive_enum     1     UVM_PASSIVE
+#     shim_to_dcn_fifo             uvm_tlm_analysis_fifo #(T)  -     @680       
+#       analysis_export            uvm_analysis_imp            -     @724       
+#       get_ap                     uvm_analysis_port           -     @715       
+#       get_peek_export            uvm_get_peek_imp            -     @697       
+#       put_ap                     uvm_analysis_port           -     @706       
+#       put_export                 uvm_put_imp                 -     @688       
+#     virt_seqr                    pcs_virtual_sequencer       -     @757       
+#       rsp_export                 uvm_analysis_export         -     @765       
+#       seq_item_export            uvm_seq_item_pull_imp       -     @871       
+#       arbitration_queue          array                       0     -          
+#       lock_queue                 array                       0     -          
+#       num_last_reqs              integral                    32    'd1        
+#       num_last_rsps              integral                    32    'd1        
+# ------------------------------------------------------------------------------
+# 
+# UVM_INFO ../uvc/sequence/pcs_base_seq.sv(130) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0@@pcs_base_seq [pcs_base_seq] [START_SEQUENCE]
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(92) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@mac_user_sequence [mac_user_sequence] [START_SEQUENCE]
+# T=0,test in mac seq
+# test in gmii_rx_driver
+# req.tagged_data[1].data.size=1194
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(152) @ 16000: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@mac_user_sequence [mac_user_sequence] uvm_do done
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(154) @ 16000: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@mac_user_sequence [mac_user_sequence] get_response done
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(163) @ 16000: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@mac_user_sequence [mac_user_sequence] [STOP_SEQUENCE]
+# test in gmii_rx_driver
+# T=400000,test in mac seq
+# req.tagged_data[1].data.size=278
+# time=480000,test in gmii_rx_driver in gmii_rx  m_state=TX_PKT_State
+# UVM_WARNING @ 600000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [uvm_sequence_base] Body definition undefined
+# UVM_INFO ../seq_lib/rgm_seq_lib.sv(225) @ 600000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [seq_dcn_statics_reg] 
+# -----------------STATICS begin---------------
+# test in gmii_rx_driver in TX_PKT_State
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(152) @ 2904000: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@scenario_reg_test.mac_seq [mac_user_sequence] uvm_do done
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(154) @ 2904000: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@scenario_reg_test.mac_seq [mac_user_sequence] get_response done
+# test in gmii_rx_driver
+# T=3204000,test in mac seq
+# req.tagged_data[1].data.size=148
+# time=3280000,test in gmii_rx_driver in gmii_rx  m_state=TX_PKT_State
+# test in gmii_rx_driver in TX_PKT_State
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(152) @ 4712000: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@scenario_reg_test.mac_seq [mac_user_sequence] uvm_do done
+# UVM_INFO ../seq_lib/mac_user_seq_lib.sv(154) @ 4712000: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer@@scenario_reg_test.mac_seq [mac_user_sequence] get_response done
+# test in gmii_rx_driver
+# T=5012000,test in mac seq
+# req.tagged_data[1].data.size=1051
+# time=5088000,test in gmii_rx_driver in gmii_rx  m_state=TX_PKT_State
+# UVM_WARNING @ 6468000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [uvm_sequence_base] Body definition undefined
+# UVM_INFO ../seq_lib/rgm_seq_lib.sv(225) @ 6468000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [seq_dcn_statics_reg] 
+# -----------------STATICS begin---------------
+# Break key hit 
+# Break in Function pcs_env_pkg/pcs_monitor::gen_trans_collected at ../uvc/component/pcs_monitor.sv line 127
