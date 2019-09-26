@@ -1,34 +1,4 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       mac_seq_lib.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:          Song Gaoqian
-// AUTHOR'S EMAIL:  song.gaoqian123@zte.com.cn
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.0         2016-7-18     Song Gaoqian    UVM
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: mac_seq_lib
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
+
 
 //------------------------------------------------------------------------------
 // CLASS: mac_base_sequence

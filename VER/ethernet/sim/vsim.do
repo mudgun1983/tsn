@@ -6,7 +6,7 @@ onElabError resume
 onfinish final
   
 file delete -force PASS_FAIL.txt 
-#add wave sim:/pcs_tb_top/gmii_rx_if0/*
+add wave sim:/pcs_tb_top/gmii_rx_if0/*
 run -all 
 
 #set fileID [open {PASS_FAIL.txt} {RDWR CREAT}]

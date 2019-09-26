@@ -43,6 +43,8 @@ class eth_preamble extends uvm_sequence_item;
 //==================== Attribute =================//
   rand bit [7:0]     data_preamble[];
   rand bit [7:0]     sfd            ;
+  rand bit [7:0]     smd            ;
+  rand bit [7:0]     frag_cnt       ;
   rand int unsigned  preamble_length;
 //==================== Attribute =================//
 
@@ -52,6 +54,8 @@ class eth_preamble extends uvm_sequence_item;
     `uvm_field_array_int (data_preamble  , UVM_ALL_ON);
     `uvm_field_int       (sfd            , UVM_ALL_ON); 
     `uvm_field_int       (preamble_length, UVM_ALL_ON);  
+	`uvm_field_int       (smd            , UVM_ALL_ON); 
+	`uvm_field_int       (frag_cnt       , UVM_ALL_ON); 
   `uvm_object_utils_end
 //==================== Registration ==============//
 

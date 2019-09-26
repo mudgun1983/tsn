@@ -1,36 +1,3 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       label_frame.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:           
-// AUTHOR'S EMAIL:   
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.1         2011-9-13    
-// 1.2         2012-3-8     Wang Guobing    Change the label identify
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: label_frame
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
-
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
 
 `ifndef PCS_SCENARIO_SEQ_LIB_SV
 `define PCS_SCENARIO_SEQ_LIB_SV
@@ -91,12 +58,37 @@ bit [47:0] local_da_cnt;
             fork
              
              begin
-             forever
+             //forever
              begin
              #300ns
+			 //SMD_S0
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==local_da_cnt;})
-             local_da_cnt++;               
+                            {mac_seq.c_da_cnt==local_da_cnt;
+							 mac_seq.c_preemptable==1;
+							 mac_seq.c_start_or_frag==1;
+							 mac_seq.c_smd==8'hE6;
+							})
+             local_da_cnt++;    
+			 //SMD_C0_FRAG0
+             `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                            {mac_seq.c_da_cnt==local_da_cnt;
+							 mac_seq.c_preemptable==1;
+							 mac_seq.c_start_or_frag==0;
+							 mac_seq.c_preamble_length == 6;
+							 mac_seq.c_smd==8'h61;
+							 mac_seq.c_frag_cnt==8'hE6;
+							 })
+             local_da_cnt++; 
+			 //SMD_C0_FRAG1
+             `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                            {mac_seq.c_da_cnt==local_da_cnt;
+							 mac_seq.c_preemptable==1;
+							 mac_seq.c_start_or_frag==0;
+							 mac_seq.c_preamble_length == 6;
+							 mac_seq.c_smd==8'h61;
+							 mac_seq.c_frag_cnt==8'h4C;
+							 })
+             local_da_cnt++; 			 
              end
              end
              

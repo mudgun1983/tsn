@@ -90,6 +90,8 @@ class eth_frame extends uvm_sequence_item;
   rand eth_tag_kind                   tag_kind                  ;
   rand eth_packet_format              packet_format             ;
   rand eth_dest_addr_kind             dest_addr_kind            ;
+  rand bit preemptable   ;
+  rand bit start_or_frag ;
 //==================== Knob ======================// 
 
 
@@ -309,7 +311,15 @@ class eth_frame extends uvm_sequence_item;
       foreach(preamble.data_preamble[key])
         packer.pack_field_int (preamble.data_preamble[key],8);
     end
-    packer.pack_field_int (preamble.sfd,8);
+	if(preemptable && (~start_or_frag))
+	  begin
+	   packer.pack_field_int (preamble.smd,8);
+	   packer.pack_field_int (preamble.frag_cnt,8);
+	  end
+	else if(preemptable)
+	       packer.pack_field_int (preamble.smd,8);
+	     else
+           packer.pack_field_int (preamble.sfd,8);
     
     packer.pack_field_int (destination_address,48);
     packer.pack_field_int (source_address     ,48);
@@ -340,7 +350,8 @@ class eth_frame extends uvm_sequence_item;
     
     preamble.preamble_length = 0;
     for(int i=0; i<frame_data.size(); i++) begin
-    	if(frame_data[i]!=8'hd5)
+    	//if(frame_data[i]!=8'hd5)
+		if(frame_data[i]==8'h55)
     	    preamble.preamble_length++;
         else
       	break;
@@ -443,7 +454,10 @@ class eth_frame extends uvm_sequence_item;
       data_crc[i] = data_crc[i+preamble.data_preamble.size()+1];
 //      data_crc[i] = data_crc[i+8];
 //    data_crc = new[data_crc.size()-12](data_crc);//delete preamble,sfd and fcs
-    data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-4](data_crc);//delete preamble,sfd and fcs
+    if(preemptable && (~start_or_frag))
+	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-1-4](data_crc);//delete preamble,smd,frag_cnt and fcs
+    else
+	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-4](data_crc);//delete preamble,sfd and fcs
     do_crc32 = ~crc_cal.do_crc32_se(data_crc,32'hffff_ffff);
     temp_crc32 = do_crc32;
     do_crc32[31:24] = temp_crc32[7:0]  ;

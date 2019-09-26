@@ -1,34 +1,4 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       mac_seq_lib.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:          Song Gaoqian
-// AUTHOR'S EMAIL:  song.gaoqian123@zte.com.cn
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.0         2016-7-18     Song Gaoqian    UVM
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: mac_seq_lib
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
+
 
 //------------------------------------------------------------------------------
 // CLASS: mac_base_sequence
@@ -42,6 +12,11 @@ class mac_user_sequence extends mac_base_sequence;
   rand bit [47:0] da_frame_cnt;
   rand bit [47:0] sa_frame_cnt;
   rand bit  vlan_choose;
+  rand bit [7:0]     c_smd            ;
+  rand bit [7:0]     c_frag_cnt       ;
+  rand bit           c_preemptable    ;
+  rand bit           c_start_or_frag  ;
+  rand int unsigned  c_preamble_length;
   
   parameter [15:0]     VLAN_VALUE0 = 16'd500;
   parameter [15:0]     VLAN_VALUE1 = 16'd501;
@@ -103,7 +78,8 @@ class mac_user_sequence extends mac_base_sequence;
 //                   	req.preamble.min_pre_len         == p_sequencer.static_cfg.cfg_min_pre_len;
 //                   	req.preamble.max_sfd_len         == p_sequencer.static_cfg.cfg_max_sfd_len;
 //                   	req.preamble.min_sfd_len         == p_sequencer.static_cfg.cfg_min_sfd_len;
-                   	
+                   	req.preemptable    == c_preemptable   ;            
+					req.start_or_frag  == c_start_or_frag ;
                    	req.inter_frame_gap              == 12;//p_sequencer.static_cfg.cfg_MinIPG;
 //                   	req.preamble.data_preamble[0]    == 8'h55;
 //                   	req.preamble.data_preamble[1]    == 8'h55;
@@ -112,7 +88,9 @@ class mac_user_sequence extends mac_base_sequence;
 //                   	req.preamble.data_preamble[4]    == 8'h55;
 //                   	req.preamble.data_preamble[5]    == 8'h55;
 //                   	req.preamble.data_preamble[6]    == 8'h55;
-//                   	req.preamble.sfd                 == 8'hd5;
+                    //req.preamble.preamble_length     == c_preamble_length;
+                   	req.preamble.smd                 == c_smd;
+					req.preamble.frag_cnt            == c_frag_cnt;
                    	
                    	req.destination_address          == c_da_cnt;//48'h01_02_03_04_05_06;//p_sequencer.static_cfg.da;
                    	req.source_address               == 48'h07_08_09_0a_0b_0c;//p_sequencer.static_cfg.sa;
