@@ -128,7 +128,7 @@ class gmii_rx_driver extends mac_rx_base_driver;
     		$display("test in gmii_rx_driver");
         seq_item_port.get_next_item(req);
         req.pack_bytes(req.frame_data);
-        req.print();
+        `uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),req.sprint()},UVM_HIGH);
         gmii_rx(req);
 		//$display("test in gmii_rx_driver after gmii_rx");
         $cast(rsp, req.clone());

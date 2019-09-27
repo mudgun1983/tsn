@@ -360,7 +360,12 @@ class eth_frame extends uvm_sequence_item;
     for(int i=0;i<preamble.preamble_length;i++)
       preamble.data_preamble[i] = packer.unpack_field_int(8);
     preamble.sfd = packer.unpack_field_int(8);
-      
+    if(preamble.sfd !=8'hd5)  
+	  begin
+	    preamble.smd = preamble.sfd;
+		preamble.frag_cnt = packer.unpack_field_int(8);
+	  end
+	  
     destination_address = packer.unpack_field_int(48);
     source_address      = packer.unpack_field_int(48);
     

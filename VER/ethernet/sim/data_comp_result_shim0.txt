@@ -1,0 +1,2 @@
+COMP_START:comp_destination_address=2 vlan=1f4
+COMP_START:comp_destination_address=3 vlan=1f4

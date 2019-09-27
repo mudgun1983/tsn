@@ -1,35 +1,3 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       pcs_tb_top.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:          Wang Guobing
-// AUTHOR'S EMAIL:  wang.guobing@zte.com.cn
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.0         2016-4-25    wang guobing   
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: oam protocal  mac_dsp packet
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
-
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
 
 `timescale 1ns/1ps
                 
@@ -368,6 +336,10 @@ dcn_top dcn_top (
 //------------DUT connect end  ---------------------//
 
 */
+
+assign    gmii_tx_if0.tx_en =gmii_rx_if0.rx_dv;
+assign    gmii_tx_if0.txd   =gmii_rx_if0.rxd  ; 
+
 ge_mac   ge_mac0
 (
  //global signals

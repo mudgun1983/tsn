@@ -28,6 +28,11 @@ class mac_user_sequence extends mac_base_sequence;
     `uvm_sequence_utils(mac_user_sequence,mac_rx_base_sequencer)
   `endif
 
+//==================== Constraint ================//
+  constraint c_preamble_len{ 
+      c_preamble_length inside {[1:7]};//== 7;
+  }
+  
   //================================================//
   //FUNCTION    : new
   //================================================//
@@ -88,7 +93,7 @@ class mac_user_sequence extends mac_base_sequence;
 //                   	req.preamble.data_preamble[4]    == 8'h55;
 //                   	req.preamble.data_preamble[5]    == 8'h55;
 //                   	req.preamble.data_preamble[6]    == 8'h55;
-                    //req.preamble.preamble_length     == c_preamble_length;
+                    req.preamble.preamble_length     == c_preamble_length;
                    	req.preamble.smd                 == c_smd;
 					req.preamble.frag_cnt            == c_frag_cnt;
                    	
