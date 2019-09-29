@@ -42,9 +42,11 @@
 
 class mac_rx_base_sequencer extends uvm_sequencer #(eth_frame);
   protected int unsigned       mac_rx_base_sqr_id;
-
+  bit  [31:0]  init_crc;
+  int          store_value0 = 0;
   `uvm_sequencer_utils_begin(mac_rx_base_sequencer)
     `uvm_field_int(mac_rx_base_sqr_id, UVM_ALL_ON)
+	`uvm_field_int(init_crc          , UVM_ALL_ON)
   `uvm_sequencer_utils_end
 
   //--------------------------------------------------------------------

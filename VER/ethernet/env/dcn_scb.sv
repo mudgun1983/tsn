@@ -131,8 +131,10 @@ class dcn_scb extends uvm_scoreboard;
             `uvm_info(get_type_name(),{$psprintf("get eth_frame_exp_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
             
             write_exp_data_fd=$fopen("dcn_tran_exp.txt","a+"); 
+			$fwrite(write_exp_data_fd,$psprintf(" S "));	
             foreach(eth_frame_exp_tr.frame_data[key])
-              $fwrite(write_exp_data_fd,$psprintf("eth_frame_exp_trans.data[%0d]=%0h\n",key,eth_frame_exp_tr.frame_data[key]));                                              
+              //$fwrite(write_exp_data_fd,$psprintf("eth_frame_exp_trans.data[%0d]=%0h\n",key,eth_frame_exp_tr.frame_data[key])); 
+              $fwrite(write_exp_data_fd,$psprintf("%2h",eth_frame_exp_tr.frame_data[key]));			  
             $fclose(write_exp_data_fd);
         end
     endtask:dcn_to_shim_get_exp_trans
@@ -150,7 +152,8 @@ class dcn_scb extends uvm_scoreboard;
             
             write_col_data_fd=$fopen("dcn_tran_col.txt","a+"); 
             foreach(eth_frame_col_tr.frame_data[key])
-              $fwrite(write_col_data_fd,$psprintf("eth_frame_col_trans.data[%0d]=%0h\n",key,eth_frame_col_tr.frame_data[key]));                                              
+              //$fwrite(write_col_data_fd,$psprintf("eth_frame_col_trans.data[%0d]=%0h\n",key,eth_frame_col_tr.frame_data[key]));     
+                $fwrite(write_col_data_fd,$psprintf("%0h",eth_frame_col_tr.frame_data[key]));   			  
             $fclose(write_col_data_fd);
             
             if({eth_frame_col_tr.tagged_data[0].data[0],eth_frame_col_tr.tagged_data[0].data[1]}==SHIM_0_VLAN)

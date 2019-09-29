@@ -12,11 +12,15 @@ class mac_user_sequence extends mac_base_sequence;
   rand bit [47:0] da_frame_cnt;
   rand bit [47:0] sa_frame_cnt;
   rand bit  vlan_choose;
+  rand int unsigned  c_packet_len     ;
+  rand bit [15:0]    c_tpid     ;
   rand bit [7:0]     c_smd            ;
   rand bit [7:0]     c_frag_cnt       ;
   rand bit           c_preemptable    ;
   rand bit           c_start_or_frag  ;
   rand int unsigned  c_preamble_length;
+  rand bit [31:0]    c_init_crc;
+  rand bit [31:0]    c_xor_value;
   
   parameter [15:0]     VLAN_VALUE0 = 16'd500;
   parameter [15:0]     VLAN_VALUE1 = 16'd501;
@@ -48,17 +52,17 @@ class mac_user_sequence extends mac_base_sequence;
      bit [63:0] block_data;
      bit [7:0] random_data;
      int  data_len;
-     
-     data_len=$urandom_range(1518,46);
+ /*    
+     data_len=46;//$urandom_range(1518,46);
 //     req.tagged_data[1].data_length=data_len;
      req.tagged_data[1].data=new[data_len];
      $display("req.tagged_data[1].data.size=%0d", req.tagged_data[1].data.size);
      foreach(req.tagged_data[1].data[key])
-       req.tagged_data[1].data[key]=key;
+       req.tagged_data[1].data[key]=key + p_sequencer.store_value0;
          
-
+    p_sequencer.store_value0 = req.tagged_data[1].data[data_len-1]+1;
       req.tagged_data[1].data.rand_mode(0);
-      
+ */     
 //      req.tagged_data[1].data_length.rand_mode(0);
 //      req.tagged_data[1].c_data_length.constraint_mode(0);
   endtask
@@ -83,7 +87,17 @@ class mac_user_sequence extends mac_base_sequence;
 //                   	req.preamble.min_pre_len         == p_sequencer.static_cfg.cfg_min_pre_len;
 //                   	req.preamble.max_sfd_len         == p_sequencer.static_cfg.cfg_max_sfd_len;
 //                   	req.preamble.min_sfd_len         == p_sequencer.static_cfg.cfg_min_sfd_len;
-                   	req.preemptable    == c_preemptable   ;            
+                    if(c_preemptable && (c_start_or_frag)) //1: start
+					{
+					 req.init_crc    == 32'hffff_ffff  ;
+					}
+					else if(c_start_or_frag && (~c_start_or_frag))
+					{
+					 req.init_crc    == p_sequencer.init_crc  ; 
+					}
+                   	            
+					req.xor_value   == c_xor_value ;
+					req.preemptable    == c_preemptable   ;            
 					req.start_or_frag  == c_start_or_frag ;
                    	req.inter_frame_gap              == 12;//p_sequencer.static_cfg.cfg_MinIPG;
 //                   	req.preamble.data_preamble[0]    == 8'h55;
@@ -114,11 +128,12 @@ class mac_user_sequence extends mac_base_sequence;
                    	}
                    	req.tagged_data[1].max_data_len  == 1518   ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
                     req.tagged_data[1].min_data_len  == 46 ;//p_sequencer.static_cfg.cfg_min_tagged_data_len; 
-//                    foreach(req.tagged_data[1].data[key])   
-//                    {req.tagged_data[1].data[key]==key;
-//                    }
+                    foreach(req.tagged_data[1].data[key])   
+                    {req.tagged_data[1].data[key]==key;
+                    }
                    	req.tagged_data[1].data_tag_kind == eth_tagged_data::DATA_TAG;  
-                   	
+					req.tagged_data[1].data_length   == c_packet_len;
+                   	req.tagged_data[1].tpid   == c_tpid;
                    	req.directed_protocol_error_size == 0;
                    	req.protocol_error_size          == 0;
                    	req.protocol_error_mode          == NO_PROT_ERROR;
@@ -144,8 +159,26 @@ class mac_user_sequence extends mac_base_sequence;
   virtual task post_body();
       uvm_test_done.drop_objection(this);
       `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
+	  p_sequencer.init_crc[31:24]  = req.fcs[7:0]  ;
+	  p_sequencer.init_crc[23:16]  = req.fcs[15:8] ;
+	  p_sequencer.init_crc[15:8]   = req.fcs[23:16];
+	  p_sequencer.init_crc[7:0]    = req.fcs[31:24];
+	  
+	  p_sequencer.init_crc = p_sequencer.init_crc ^ c_xor_value;
+	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_LOW);
   endtask : post_body
 
+  virtual function void post_do(uvm_sequence_item this_item);
+    `uvm_info(get_type_name(),"[STOP_SEQUENCE] in post do",UVM_LOW)
+	  p_sequencer.init_crc[31:24]  = req.fcs[7:0]  ;
+	  p_sequencer.init_crc[23:16]  = req.fcs[15:8] ;
+	  p_sequencer.init_crc[15:8]   = req.fcs[23:16];
+	  p_sequencer.init_crc[7:0]    = req.fcs[31:24];
+	  
+	  p_sequencer.init_crc = p_sequencer.init_crc ^ c_xor_value;
+	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_LOW);
+  endfunction
+  
 
 endclass : mac_user_sequence
 /*}}}*/

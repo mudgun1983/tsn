@@ -146,9 +146,9 @@ class eth_tagged_data extends uvm_sequence_item;
              	 if(vlan_tag_kind == VLAN_TAG) {
              	 	 tpid == 16'h8100;
              	 }
-             	 else if(data_tag_kind == DATA_TAG) {
-             	 	 tpid == data_length ;//data_length + 2???
-             	 }
+             	 //else if(data_tag_kind == DATA_TAG) {
+             	 //	 tpid == data_length ;//data_length + 2???
+             	 //}
              	 else if(eth_oam_tag_kind == ETH_OAM_TAG) {
              	 	 tpid inside {16'h8902,16'hFF02,16'hFE02};
              	 }

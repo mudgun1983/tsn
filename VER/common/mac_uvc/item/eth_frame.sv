@@ -127,6 +127,9 @@ class eth_frame extends uvm_sequence_item;
   rand eth_tagged_data                tagged_data[]             ;  
   rand eth_protocol_error             protocol_errors[]         ;
   rand eth_directed_protocol_error    directed_protocol_errors[]; 
+  
+  rand bit [31:0] init_crc;
+  rand bit [31:0] xor_value;
 //==================== Attribute =================//
 
 
@@ -159,6 +162,8 @@ class eth_frame extends uvm_sequence_item;
     `uvm_field_int          (smii_invalid_last_nibble    , UVM_ALL_ON|UVM_NOPACK)    
     `uvm_field_int          (pause_time                  , UVM_ALL_ON|UVM_NOPACK)
     `uvm_field_int          (port_num                    , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (init_crc                    , UVM_ALL_ON|UVM_NOPACK)
+    `uvm_field_int          (xor_value                   , UVM_ALL_ON|UVM_NOPACK)
     
     `uvm_field_object       (preamble                    , UVM_ALL_ON|UVM_NOPACK)
     `uvm_field_array_object (tagged_data                 , UVM_ALL_ON|UVM_NOPACK)
@@ -455,15 +460,28 @@ class eth_frame extends uvm_sequence_item;
     crc_cal  crc_cal = new();
     
     this.pack_bytes(data_crc);
-    foreach(data_crc[i])
-      data_crc[i] = data_crc[i+preamble.data_preamble.size()+1];
+	if(preemptable && (~start_or_frag))
+	  begin
+       foreach(data_crc[i])
+        data_crc[i] = data_crc[i+preamble.data_preamble.size()+1+1];  //SMD and FRAG CNT
+	  end
+	else
+	  begin
+	   foreach(data_crc[i])
+        data_crc[i] = data_crc[i+preamble.data_preamble.size()+1];
+	  end
+	  
 //      data_crc[i] = data_crc[i+8];
 //    data_crc = new[data_crc.size()-12](data_crc);//delete preamble,sfd and fcs
     if(preemptable && (~start_or_frag))
 	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-1-4](data_crc);//delete preamble,smd,frag_cnt and fcs
     else
 	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-4](data_crc);//delete preamble,sfd and fcs
-    do_crc32 = ~crc_cal.do_crc32_se(data_crc,32'hffff_ffff);
+    if(preemptable)
+	  do_crc32 = crc_cal.do_crc32_se(data_crc,init_crc)^ (xor_value);
+	else
+	  do_crc32 = ~crc_cal.do_crc32_se(data_crc,32'hffff_ffff);
+	  
     temp_crc32 = do_crc32;
     do_crc32[31:24] = temp_crc32[7:0]  ;
     do_crc32[23:16] = temp_crc32[15:8] ;

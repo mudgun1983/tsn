@@ -59,50 +59,73 @@ bit [47:0] local_da_cnt;
              
              begin
              //forever
+			 /*begin
+			  #500ns
+			  `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                            {mac_seq.c_da_cnt==local_da_cnt;
+							 mac_seq.c_preemptable==0;
+							})
+              local_da_cnt++; 
+			 end*/
+			 
              begin
              //#300ns
+			 // `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                            // {mac_seq.c_da_cnt==0;//local_da_cnt;
+							 // mac_seq.c_packet_len == 'd138;
+							 // mac_seq.c_preemptable==0;
+							// })
+              // local_da_cnt++; 
+			  
 			 //SMD_S0
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==local_da_cnt;
+                            {mac_seq.c_da_cnt==0;//local_da_cnt;
+							 mac_seq.c_packet_len == 'd46;
+							 mac_seq.c_tpid == 'd138;
 							 mac_seq.c_preemptable==1;
-							 mac_seq.c_start_or_frag==1;
+							 mac_seq.c_start_or_frag==1; //1:start
 							 mac_seq.c_smd==8'hE6;
+							 mac_seq.c_xor_value == 32'h0000ffff;
 							})
              local_da_cnt++;  
 			 
 			 //EXPRESS PACKET
-             `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==local_da_cnt;
-							 mac_seq.c_preemptable==0;
-							})
-             local_da_cnt++; 
+             // `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                            // {mac_seq.c_da_cnt==local_da_cnt;
+							 // mac_seq.c_preemptable==0;
+							// })
+             // local_da_cnt++; 
 			 
 			 //SMD_C0_FRAG0
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==local_da_cnt;
+                            {mac_seq.c_da_cnt==0;//local_da_cnt;
+							 mac_seq.c_packet_len == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'hE6;
+							 mac_seq.c_xor_value == 32'h0000ffff;
 							 })
              local_da_cnt++; 
 			 
 			 //EXPRESS PACKET
-             `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==local_da_cnt;
-							 mac_seq.c_preemptable==0;
-							})
-             local_da_cnt++; 
+             // `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                            // {mac_seq.c_da_cnt==local_da_cnt;
+							 // mac_seq.c_preemptable==0;
+							// })
+             // local_da_cnt++; 
 			 
 			 //SMD_C0_FRAG1
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==local_da_cnt;
+                            {mac_seq.c_da_cnt==0;//local_da_cnt;
+							 mac_seq.c_packet_len == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'h4C;
+							 mac_seq.c_xor_value == 32'hffffffff;
 							 })
              local_da_cnt++; 			 
              end

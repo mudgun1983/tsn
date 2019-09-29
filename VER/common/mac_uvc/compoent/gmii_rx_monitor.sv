@@ -124,7 +124,7 @@ class gmii_rx_monitor extends mac_rx_base_monitor;
         		trans_collected[0].port_num = 0;
         		trans_collected[0].unpack_bytes(trans_collected[0].frame_data);
         		//trans_collected[0].print();
-        		`uvm_info(get_type_name(),{$psprintf("get exp eth_frame_exp_trans:\n"),trans_collected[0].sprint()},UVM_LOW);
+        		`uvm_info(get_type_name(),{$psprintf("get exp eth_frame_exp_trans:\n"),trans_collected[0].sprint()},UVM_HIGH);
       	    ->cov_transaction;
       	    item_collected_port.write(trans_collected[0]);
       	    trans_collected[0] = new();

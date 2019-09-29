@@ -52,11 +52,10 @@ class pcs_base_test extends uvm_test;
 //================================pcs_seq===================================================    
 
 //================================mac_seq===================================================
-//       set_config_string("pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0","default_sequence","pcs_base_seq");  
-       uvm_config_db#(uvm_object_wrapper)::set(this,"*mac_env0.mac_rx_agent0.sequencer.run_phase", 
-			       "default_sequence",
-				mac_user_sequence::type_id::get());
-				set_config_int("*mac_env0.mac_rx_agent0.sequencer","count",0);
+        // uvm_config_db#(uvm_object_wrapper)::set(this,"*mac_env0.mac_rx_agent0.sequencer.run_phase", 
+			        // "default_sequence",
+				 // mac_user_sequence::type_id::get());
+				 // set_config_int("*mac_env0.mac_rx_agent0.sequencer","count",0);
 //================================pcs_seq=================================================== 
        
 //================================ set_type_override =======================================

@@ -59,7 +59,7 @@ class mac_rx_sequencer extends uvm_sequencer #(eth_frame);
   shortint unsigned cfg_MaxFrameSize;
   shortint unsigned cfg_MaxJumboFrameSize;
   shortint unsigned cfg_MinIPG;
-  
+  bit  [31:0]  init_crc;
   bit  long_frame_flag;
   bit  short_frame_flag;
 //  bit  pause_flag;
