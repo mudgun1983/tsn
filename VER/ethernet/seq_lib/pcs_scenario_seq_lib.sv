@@ -90,11 +90,13 @@ bit [47:0] local_da_cnt;
              local_da_cnt++;  
 			 
 			 //EXPRESS PACKET
-             // `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            // {mac_seq.c_da_cnt==local_da_cnt;
-							 // mac_seq.c_preemptable==0;
-							// })
-             // local_da_cnt++; 
+              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                             {mac_seq.c_da_cnt==local_da_cnt;
+							  mac_seq.c_packet_len == 'd46;
+							  mac_seq.c_tpid == 'd46;
+							  mac_seq.c_preemptable==0;
+							 })
+              local_da_cnt++; 
 			 
 			 //SMD_C0_FRAG0
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
@@ -110,11 +112,13 @@ bit [47:0] local_da_cnt;
              local_da_cnt++; 
 			 
 			 //EXPRESS PACKET
-             // `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            // {mac_seq.c_da_cnt==local_da_cnt;
-							 // mac_seq.c_preemptable==0;
-							// })
-             // local_da_cnt++; 
+              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
+                             {mac_seq.c_da_cnt==local_da_cnt;
+							  mac_seq.c_packet_len == 'd46;
+							  mac_seq.c_tpid == 'd46;
+							  mac_seq.c_preemptable==0;
+							 })
+              local_da_cnt++; 
 			 
 			 //SMD_C0_FRAG1
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,

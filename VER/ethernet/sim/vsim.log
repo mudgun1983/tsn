@@ -30156,3 +30156,2068 @@ do run_questa
 # -----------------STATICS begin---------------
 # Break key hit 
 # Break in Function pcs_env_pkg/pcs_monitor::push_bit_queue at ../uvc/component/pcs_monitor.sv line 135
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# pcs_base_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Error: ../../common/mac_uvc/item/eth_frame.sv(481): (vlog-2730) Undefined variable: 'UVM_HIHG'.
+# 
+# ** Error: ../../common/mac_uvc/item/eth_frame.sv(483): (vlog-2730) Undefined variable: 'UVM_HIHG'.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# ** Error: ../seq_lib/mac_user_seq_lib.sv(161): (vlog-2730) Undefined variable: 'UVM_HIHG'.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# ** Error: C:/questasim64_10.1d/win64/vlog failed.
+# Error in macro ./run_questa line 6
+# C:/questasim64_10.1d/win64/vlog failed.
+#     while executing
+# "vlog +define+ALIGN_MARKER_FAST_SIMULATE -f pcs_env_filelist.f  -work work"
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# pcs_base_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# 
+# Top level modules:
+# 	pcs_tb_top
+# 	glbl
+# vsim +acc=rmb +UVM_TESTNAME=pcs_base_test -do vsim.do -l vsim.log -c -sv_seed 0 -sv_lib c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# ** Warning: (vsim-8689) Ignoring plusarg '+acc=rmb'.  Did you mean '-voptargs=+acc=rmb'?
+# 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vopt-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vopt-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# Loading sv_std.std
+# Loading work.uvm_pkg(fast)
+# Loading work.mac_pkg(fast)
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# 
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# 
+# different random seeds from your non-debug simulations.
+# 
+# Loading work.cpu_pkg(fast)
+# Loading work.pcs_env_pkg(fast)
+# Loading work.pcs_tb_top(fast)
+# Loading work.cpu_if(fast)
+# Loading work.ge_mac(fast)
+# Loading work.glbl(fast)
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(272): [TOFD] - System task or function '$fsdbAutoSwitchDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(273): [TOFD] - System task or function '$fsdbDumpvarsToFile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(285): [TOFD] - System task or function '$fsdbDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(286): [TOFD] - System task or function '$fsdbDumpvars' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(130): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(124): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_tx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(135): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(132): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_tx_driver
+# Loading c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi.dll
+# do vsim.do 
+# 0
+# 5000000
+# resume
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+# 
+#           File in use by: kexin  Hostname: DESKTOP-0LTH7D5  ProcessID: 30616
+# 
+#           Attempting to use alternate WLF file "./wlftxjz8n3".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+# 
+#           Using alternate file: ./wlftxjz8n3
+# 
+# hexadecimal
+# ----------------------------------------------------------------
+# UVM-1.1b
+# (C) 2007-2012 Mentor Graphics Corporation
+# (C) 2007-2012 Cadence Design Systems, Inc.
+# (C) 2006-2012 Synopsys, Inc.
+# (C) 2011-2012 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# test start
+# UVM_INFO @ 0: reporter [RNTST] Running test pcs_base_test...
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(483) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] count config parameter is deprecated and not part of the UVM standard
+# UVM_INFO ../test_lib/pcs_base_test.sv(76) @ 0: uvm_test_top [pcs_base_test] Printing the test topology :
+# ------------------------------------------------------------------------------
+# Name                             Type                        Size  Value      
+# ------------------------------------------------------------------------------
+# uvm_test_top                     pcs_base_test               -     @595       
+#   pcs_tx_rx_env0                 pcs_tx_rx_env               -     @603       
+#     cpu_agent0                   cpu_agent                   -     @737       
+#       driver                     cpu_driver                  -     @1009      
+#         rsp_port                 uvm_analysis_port           -     @1026      
+#         sqr_pull_port            uvm_seq_item_pull_port      -     @1017      
+#         cfg                      object                      -     <null>     
+#       monitor                    cpu_monitor                 -     @1035      
+#         aport                    uvm_analysis_port           -     @1043      
+#       sequencer                  cpu_sequencer               -     @886       
+#         rsp_export               uvm_analysis_export         -     @894       
+#         seq_item_export          uvm_seq_item_pull_imp       -     @1000      
+#         arbitration_queue        array                       0     -          
+#         lock_queue               array                       0     -          
+#         num_last_reqs            integral                    32    'd1        
+#         num_last_rsps            integral                    32    'd1        
+#       sequencer                  cpu_sequencer               -     @886       
+#         rsp_export               uvm_analysis_export         -     @894       
+#         seq_item_export          uvm_seq_item_pull_imp       -     @1000      
+#         arbitration_queue        array                       0     -          
+#         lock_queue               array                       0     -          
+#         num_last_reqs            integral                    32    'd1        
+#         num_last_rsps            integral                    32    'd1        
+#       driver                     cpu_driver                  -     @1009      
+#         rsp_port                 uvm_analysis_port           -     @1026      
+#         sqr_pull_port            uvm_seq_item_pull_port      -     @1017      
+#         cfg                      object                      -     <null>     
+#       monitor                    cpu_monitor                 -     @1035      
+#         aport                    uvm_analysis_port           -     @1043      
+#     dcn_scb0                     dcn_scb                     -     @876       
+#       dcn_to_shim_get_port       uvm_blocking_get_port       -     @1061      
+#       shim_to_dcn_get_port       uvm_blocking_get_port       -     @1070      
+#     dcn_to_shim_fifo             uvm_tlm_analysis_fifo #(T)  -     @623       
+#       analysis_export            uvm_analysis_imp            -     @667       
+#       get_ap                     uvm_analysis_port           -     @658       
+#       get_peek_export            uvm_get_peek_imp            -     @640       
+#       put_ap                     uvm_analysis_port           -     @649       
+#       put_export                 uvm_put_imp                 -     @631       
+#     mac_env0                     mac_env                     -     @745       
+#       mac_rx_agent0              mac_rx_agent                -     @1087      
+#         driver                   gmii_rx_driver              -     @1220      
+#           rsp_port               uvm_analysis_port           -     @1237      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1228      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         monitor                  gmii_rx_monitor             -     @1248      
+#           item_collected_port    uvm_analysis_port           -     @1256      
+#         sequencer                mac_rx_base_sequencer       -     @1097      
+#           rsp_export             uvm_analysis_export         -     @1105      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1211      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           init_crc               integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         driver                   gmii_rx_driver              -     @1220      
+#           rsp_port               uvm_analysis_port           -     @1237      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1228      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         sequencer                mac_rx_base_sequencer       -     @1097      
+#           rsp_export             uvm_analysis_export         -     @1105      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1211      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           init_crc               integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         monitor                  gmii_rx_monitor             -     @1248      
+#           item_collected_port    uvm_analysis_port           -     @1256      
+#         mac_rx_agent_id          integral                    32    'h0        
+#       mac_tx_agent0              mac_tx_agent                -     @1079      
+#         monitor                  gmii_tx_monitor             -     @1277      
+#           item_collected_port    uvm_analysis_port           -     @1285      
+#         monitor                  gmii_tx_monitor             -     @1277      
+#           item_collected_port    uvm_analysis_port           -     @1285      
+#         mac_tx_agent_id          integral                    32    'h0        
+#       mac_tx_agent0              mac_tx_agent                -     @1079      
+#         monitor                  gmii_tx_monitor             -     @1277      
+#           item_collected_port    uvm_analysis_port           -     @1285      
+#         monitor                  gmii_tx_monitor             -     @1277      
+#           item_collected_port    uvm_analysis_port           -     @1285      
+#         mac_tx_agent_id          integral                    32    'h0        
+#       mac_rx_agent0              mac_rx_agent                -     @1087      
+#         driver                   gmii_rx_driver              -     @1220      
+#           rsp_port               uvm_analysis_port           -     @1237      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1228      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         monitor                  gmii_rx_monitor             -     @1248      
+#           item_collected_port    uvm_analysis_port           -     @1256      
+#         sequencer                mac_rx_base_sequencer       -     @1097      
+#           rsp_export             uvm_analysis_export         -     @1105      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1211      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           init_crc               integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         driver                   gmii_rx_driver              -     @1220      
+#           rsp_port               uvm_analysis_port           -     @1237      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1228      
+#           gmii_rx_driver_id      integral                    32    'h0        
+#           m_state                state_e                     32    IPG_State  
+#           frame_data             da(integral)                0     -          
+#         sequencer                mac_rx_base_sequencer       -     @1097      
+#           rsp_export             uvm_analysis_export         -     @1105      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1211      
+#           mac_rx_base_sqr_id     integral                    32    'h0        
+#           init_crc               integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         monitor                  gmii_rx_monitor             -     @1248      
+#           item_collected_port    uvm_analysis_port           -     @1256      
+#         mac_rx_agent_id          integral                    32    'h0        
+#     pcs_rx_env0                  pcs_env                     -     @729       
+#       pcs_active_agent0          pcs_agent                   -     @1296      
+#         pcs_driver0              pcs_driver                  -     @1317      
+#           rsp_port               uvm_analysis_port           -     @1334      
+#           sqr_pull_port          uvm_seq_item_pull_port      -     @1325      
+#           vif                    <unknown>                   -     @565       
+#         pcs_monitor0             pcs_monitor                 -     @1466      
+#           item_collected_port    uvm_analysis_port           -     @1474      
+#           vif                    <unknown>                   -     @565       
+#         pcs_ref_model0           pcs_ref_model               -     @1487      
+#           item_collected_export  uvm_analysis_imp            -     @1507      
+#           disable_scoreboard     integral                    1     'h0        
+#           num_writes             integral                    32    'd0        
+#           num_init_reads         integral                    32    'd0        
+#           num_uninit_reads       integral                    32    'd0        
+#         pcs_sequencer0           pcs_base_sequencer          -     @1343      
+#           rsp_export             uvm_analysis_export         -     @1351      
+#           seq_item_export        uvm_seq_item_pull_imp       -     @1457      
+#           pcs_seqr_id            integral                    32    'h0        
+#           pcs_block_count        integral                    32    'h0        
+#           arbitration_queue      array                       0     -          
+#           lock_queue             array                       0     -          
+#           num_last_reqs          integral                    32    'd1        
+#           num_last_rsps          integral                    32    'd1        
+#         is_active                uvm_active_passive_enum     1     UVM_ACTIVE 
+#       pcs_passive_agent0         pcs_agent                   -     @1304      
+#         pcs_monitor0             pcs_monitor                 -     @1531      
+#           item_collected_port    uvm_analysis_port           -     @1539      
+#           vif                    <unknown>                   -     @565       
+#         pcs_ref_model0           pcs_ref_model               -     @1552      
+#           item_collected_export  uvm_analysis_imp            -     @1572      
+#           disable_scoreboard     integral                    1     'h0        
+#           num_writes             integral                    32    'd0        
+#           num_init_reads         integral                    32    'd0        
+#           num_uninit_reads       integral                    32    'd0        
+#         is_active                uvm_active_passive_enum     1     UVM_PASSIVE
+#     shim_to_dcn_fifo             uvm_tlm_analysis_fifo #(T)  -     @676       
+#       analysis_export            uvm_analysis_imp            -     @720       
+#       get_ap                     uvm_analysis_port           -     @711       
+#       get_peek_export            uvm_get_peek_imp            -     @693       
+#       put_ap                     uvm_analysis_port           -     @702       
+#       put_export                 uvm_put_imp                 -     @684       
+#     virt_seqr                    pcs_virtual_sequencer       -     @753       
+#       rsp_export                 uvm_analysis_export         -     @761       
+#       seq_item_export            uvm_seq_item_pull_imp       -     @867       
+#       arbitration_queue          array                       0     -          
+#       lock_queue                 array                       0     -          
+#       num_last_reqs              integral                    32    'd1        
+#       num_last_rsps              integral                    32    'd1        
+# ------------------------------------------------------------------------------
+# 
+# UVM_INFO ../uvc/sequence/pcs_base_seq.sv(130) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0@@pcs_base_seq [pcs_base_seq] [START_SEQUENCE]
+# test in gmii_rx_driver
+# T=100000,test in mac seq
+# UVM_WARNING @ 600000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [uvm_sequence_base] Body definition undefined
+# UVM_INFO ../seq_lib/rgm_seq_lib.sv(225) @ 600000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [seq_dcn_statics_reg] 
+# -----------------STATICS begin---------------
+# T=768000,test in mac seq
+# test in gmii_rx_driver
+# UVM_ERROR @ 776000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_ERROR @ 776000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(129) @ 776000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] FATAL_ERROR! EXP unexpect VLAN vlaue
+# 
+# UVM_INFO ../env/dcn_scb.sv(170) @ 776000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] FATAL_ERROR! COL unexpect VLAN vlaue
+# T=1456000,test in mac seq
+# test in gmii_rx_driver
+# UVM_INFO ../env/dcn_scb.sv(200) @ 1464000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=1
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 1464000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 1464000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# T=2160000,test in mac seq
+# UVM_ERROR @ 2168000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# test in gmii_rx_driver
+# UVM_ERROR @ 2168000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(200) @ 2168000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=0
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 2168000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 2168000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# T=2848000,test in mac seq
+# test in gmii_rx_driver
+# UVM_INFO ../env/dcn_scb.sv(200) @ 2856000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=3
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 2856000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 2856000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# UVM_ERROR @ 3560000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# test in gmii_rx_driver
+# UVM_ERROR @ 3560000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(200) @ 3560000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=0
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 3560000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 3560000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# UVM_WARNING @ 6468000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [uvm_sequence_base] Body definition undefined
+# UVM_INFO ../seq_lib/rgm_seq_lib.sv(225) @ 6468000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [seq_dcn_statics_reg] 
+# -----------------STATICS begin---------------
+# UVM_WARNING @ 12340000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [uvm_sequence_base] Body definition undefined
+# UVM_INFO ../seq_lib/rgm_seq_lib.sv(225) @ 12340000: uvm_test_top.pcs_tx_rx_env0.cpu_agent0.sequencer@@scenario_reg_test.seq_dcn_statics_reg [seq_dcn_statics_reg] 
+# -----------------STATICS begin---------------
+# Break key hit 
+# Break in Function pcs_env_pkg/pcs_monitor::push_bit_queue at ../uvc/component/pcs_monitor.sv line 137
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# simple_preemptable_pakcet_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(22): (vlog-2164) Class or package 'scenario_simple_preemptable_pakcet_test' not found.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(22): near "::": syntax error, unexpected ::, expecting ')'
+# ** Error: ../test_lib/user_test_lib.sv(69): (vlog-2164) Class or package 'scenario_simple_express_pakcet_test' not found.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(69): near "::": syntax error, unexpected ::, expecting ')'
+# ** Error: ../test_lib/user_test_lib.sv(115): (vlog-2164) Class or package 'scenario_simple_e_p_mix_pakcet_test' not found.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(115): near "::": syntax error, unexpected ::, expecting ')'
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# ** Error: C:/questasim64_10.1d/win64/vlog failed.
+# Error in macro ./run_questa line 11
+# C:/questasim64_10.1d/win64/vlog failed.
+#     while executing
+# "vlog +define+ALIGN_MARKER_FAST_SIMULATE -f pcs_env_filelist.f  -work work"
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# simple_preemptable_pakcet_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(22): (vlog-2164) Class or package 'scenario_simple_preemptable_pakcet_test' not found.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(22): near "::": syntax error, unexpected ::, expecting ')'
+# ** Error: ../test_lib/user_test_lib.sv(69): (vlog-2164) Class or package 'scenario_simple_express_pakcet_test' not found.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(69): near "::": syntax error, unexpected ::, expecting ')'
+# ** Error: ../test_lib/user_test_lib.sv(115): (vlog-2164) Class or package 'scenario_simple_e_p_mix_pakcet_test' not found.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(115): near "::": syntax error, unexpected ::, expecting ')'
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# ** Error: C:/questasim64_10.1d/win64/vlog failed.
+# Error in macro ./run_questa line 11
+# C:/questasim64_10.1d/win64/vlog failed.
+#     while executing
+# "vlog +define+ALIGN_MARKER_FAST_SIMULATE -f pcs_env_filelist.f  -work work"
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# simple_preemptable_pakcet_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(69): (vlog-2164) Class or package 'scenario_simple_express_pakcet_test' not found.
+# 
+# ** Error: ../test_lib/user_test_lib.sv(69): near "::": syntax error, unexpected ::, expecting ')'
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# ** Error: C:/questasim64_10.1d/win64/vlog failed.
+# Error in macro ./run_questa line 11
+# C:/questasim64_10.1d/win64/vlog failed.
+#     while executing
+# "vlog +define+ALIGN_MARKER_FAST_SIMULATE -f pcs_env_filelist.f  -work work"
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# simple_preemptable_pakcet_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# 
+# Top level modules:
+# 	pcs_tb_top
+# 	glbl
+# vsim +acc=rmb +UVM_TESTNAME=simple_preemptable_pakcet_test -do vsim.do -l vsim.log -c -sv_seed 0 -sv_lib c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# ** Warning: (vsim-8689) Ignoring plusarg '+acc=rmb'.  Did you mean '-voptargs=+acc=rmb'?
+# 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# Loading sv_std.std
+# Loading work.uvm_pkg(fast)
+# Loading work.mac_pkg(fast)
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# 
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# 
+# different random seeds from your non-debug simulations.
+# 
+# Loading work.cpu_pkg(fast)
+# Loading work.pcs_env_pkg(fast)
+# Loading work.pcs_tb_top(fast)
+# Loading work.cpu_if(fast)
+# Loading work.ge_mac(fast)
+# Loading work.glbl(fast)
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(272): [TOFD] - System task or function '$fsdbAutoSwitchDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(273): [TOFD] - System task or function '$fsdbDumpvarsToFile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(285): [TOFD] - System task or function '$fsdbDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(286): [TOFD] - System task or function '$fsdbDumpvars' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(130): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(124): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_tx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(135): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(132): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_tx_driver
+# Loading c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi.dll
+# do vsim.do 
+# 0
+# 5000000
+# resume
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+# 
+#           File in use by: kexin  Hostname: DESKTOP-0LTH7D5  ProcessID: 30616
+# 
+#           Attempting to use alternate WLF file "./wlft5rtn78".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+# 
+#           Using alternate file: ./wlft5rtn78
+# 
+# hexadecimal
+# ----------------------------------------------------------------
+# UVM-1.1b
+# (C) 2007-2012 Mentor Graphics Corporation
+# (C) 2007-2012 Cadence Design Systems, Inc.
+# (C) 2006-2012 Synopsys, Inc.
+# (C) 2011-2012 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# test start
+# UVM_WARNING @ 0: reporter [BDTYP] Cannot create a component of type 'simple_preemptable_pakcet_test' because it is not registered with the factory.
+# UVM_FATAL @ 0: reporter [INVTST] Requested test from command line +UVM_TESTNAME=simple_preemptable_pakcet_test not found.
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :    0
+# UVM_WARNING :    1
+# UVM_ERROR :    0
+# UVM_FATAL :    1
+# ** Report counts by id
+# [BDTYP]     1
+# [INVTST]     1
+# ** Note: $finish    : c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/base/uvm_report_object.svh(277)
+#    Time: 0 ps  Iteration: 0  Instance: /pcs_tb_top
+# Break at c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh line 1280
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# simple_preemptable_packet_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# 
+# Top level modules:
+# 	pcs_tb_top
+# 	glbl
+# vsim +acc=rmb +UVM_TESTNAME=simple_preemptable_packet_test -do vsim.do -l vsim.log -c -sv_seed 0 -sv_lib c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# ** Warning: (vsim-8689) Ignoring plusarg '+acc=rmb'.  Did you mean '-voptargs=+acc=rmb'?
+# 
+# Loading sv_std.std
+# Loading work.uvm_pkg(fast)
+# Loading work.mac_pkg(fast)
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# 
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# 
+# different random seeds from your non-debug simulations.
+# 
+# Loading work.cpu_pkg(fast)
+# Loading work.pcs_env_pkg(fast)
+# Loading work.pcs_tb_top(fast)
+# Loading work.cpu_if(fast)
+# Loading work.ge_mac(fast)
+# Loading work.glbl(fast)
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(272): [TOFD] - System task or function '$fsdbAutoSwitchDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(273): [TOFD] - System task or function '$fsdbDumpvarsToFile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(285): [TOFD] - System task or function '$fsdbDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(286): [TOFD] - System task or function '$fsdbDumpvars' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(130): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(124): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_tx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(135): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(132): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_tx_driver
+# Loading c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi.dll
+# do vsim.do 
+# 0
+# 5000000
+# resume
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+# 
+#           File in use by: kexin  Hostname: DESKTOP-0LTH7D5  ProcessID: 30616
+# 
+#           Attempting to use alternate WLF file "./wlft3s7vtt".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+# 
+#           Using alternate file: ./wlft3s7vtt
+# 
+# hexadecimal
+# ----------------------------------------------------------------
+# UVM-1.1b
+# (C) 2007-2012 Mentor Graphics Corporation
+# (C) 2007-2012 Cadence Design Systems, Inc.
+# (C) 2006-2012 Synopsys, Inc.
+# (C) 2011-2012 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# test start
+# UVM_INFO @ 0: reporter [RNTST] Running test simple_preemptable_packet_test...
+# UVM_FATAL c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/base/uvm_component.svh(1744) @ 0: pcs_tx_rx_env0 [CLDEXT] Cannot set 'pcs_tx_rx_env0' as a child of 'uvm_test_top', which already has a child by that name.
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :    1
+# UVM_WARNING :    0
+# UVM_ERROR :    0
+# UVM_FATAL :    1
+# ** Report counts by id
+# [CLDEXT]     1
+# [RNTST]     1
+# ** Note: $finish    : c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/base/uvm_report_object.svh(277)
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+# Break at c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh line 1280
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# simple_preemptable_packet_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# 
+# Top level modules:
+# 	pcs_tb_top
+# 	glbl
+# vsim +acc=rmb +UVM_TESTNAME=simple_preemptable_packet_test -do vsim.do -l vsim.log -c -sv_seed 0 -sv_lib c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# ** Warning: (vsim-8689) Ignoring plusarg '+acc=rmb'.  Did you mean '-voptargs=+acc=rmb'?
+# 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# Loading sv_std.std
+# Loading work.uvm_pkg(fast)
+# Loading work.mac_pkg(fast)
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# 
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# 
+# different random seeds from your non-debug simulations.
+# 
+# Loading work.cpu_pkg(fast)
+# Loading work.pcs_env_pkg(fast)
+# Loading work.pcs_tb_top(fast)
+# Loading work.cpu_if(fast)
+# Loading work.ge_mac(fast)
+# Loading work.glbl(fast)
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(272): [TOFD] - System task or function '$fsdbAutoSwitchDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(273): [TOFD] - System task or function '$fsdbDumpvarsToFile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(285): [TOFD] - System task or function '$fsdbDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(286): [TOFD] - System task or function '$fsdbDumpvars' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(130): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(124): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_tx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(135): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(132): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_tx_driver
+# Loading c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi.dll
+# do vsim.do 
+# 0
+# 5000000
+# resume
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+# 
+#           File in use by: kexin  Hostname: DESKTOP-0LTH7D5  ProcessID: 30616
+# 
+#           Attempting to use alternate WLF file "./wlft7j8nv0".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+# 
+#           Using alternate file: ./wlft7j8nv0
+# 
+# hexadecimal
+# ----------------------------------------------------------------
+# UVM-1.1b
+# (C) 2007-2012 Mentor Graphics Corporation
+# (C) 2007-2012 Cadence Design Systems, Inc.
+# (C) 2006-2012 Synopsys, Inc.
+# (C) 2011-2012 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# test start
+# UVM_INFO @ 0: reporter [RNTST] Running test simple_preemptable_packet_test...
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(483) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] count config parameter is deprecated and not part of the UVM standard
+# UVM_INFO ../test_lib/user_test_lib.sv(23) @ 0: uvm_test_top [simple_preemptable_packet_test] Printing the test topology :
+# ----------------------------------------------------------------------------------
+# Name                             Type                            Size  Value      
+# ----------------------------------------------------------------------------------
+# uvm_test_top                     simple_preemptable_packet_test  -     @601       
+#   pcs_tx_rx_env0                 pcs_tx_rx_env                   -     @609       
+#     cpu_agent0                   cpu_agent                       -     @745       
+#       driver                     cpu_driver                      -     @1017      
+#         rsp_port                 uvm_analysis_port               -     @1034      
+#         sqr_pull_port            uvm_seq_item_pull_port          -     @1025      
+#         cfg                      object                          -     <null>     
+#       monitor                    cpu_monitor                     -     @1043      
+#         aport                    uvm_analysis_port               -     @1051      
+#       sequencer                  cpu_sequencer                   -     @894       
+#         rsp_export               uvm_analysis_export             -     @902       
+#         seq_item_export          uvm_seq_item_pull_imp           -     @1008      
+#         arbitration_queue        array                           0     -          
+#         lock_queue               array                           0     -          
+#         num_last_reqs            integral                        32    'd1        
+#         num_last_rsps            integral                        32    'd1        
+#       sequencer                  cpu_sequencer                   -     @894       
+#         rsp_export               uvm_analysis_export             -     @902       
+#         seq_item_export          uvm_seq_item_pull_imp           -     @1008      
+#         arbitration_queue        array                           0     -          
+#         lock_queue               array                           0     -          
+#         num_last_reqs            integral                        32    'd1        
+#         num_last_rsps            integral                        32    'd1        
+#       driver                     cpu_driver                      -     @1017      
+#         rsp_port                 uvm_analysis_port               -     @1034      
+#         sqr_pull_port            uvm_seq_item_pull_port          -     @1025      
+#         cfg                      object                          -     <null>     
+#       monitor                    cpu_monitor                     -     @1043      
+#         aport                    uvm_analysis_port               -     @1051      
+#     dcn_scb0                     dcn_scb                         -     @884       
+#       dcn_to_shim_get_port       uvm_blocking_get_port           -     @1069      
+#       shim_to_dcn_get_port       uvm_blocking_get_port           -     @1078      
+#     dcn_to_shim_fifo             uvm_tlm_analysis_fifo #(T)      -     @631       
+#       analysis_export            uvm_analysis_imp                -     @675       
+#       get_ap                     uvm_analysis_port               -     @666       
+#       get_peek_export            uvm_get_peek_imp                -     @648       
+#       put_ap                     uvm_analysis_port               -     @657       
+#       put_export                 uvm_put_imp                     -     @639       
+#     mac_env0                     mac_env                         -     @753       
+#       mac_rx_agent0              mac_rx_agent                    -     @1095      
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         mac_rx_agent_id          integral                        32    'h0        
+#       mac_tx_agent0              mac_tx_agent                    -     @1087      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         mac_tx_agent_id          integral                        32    'h0        
+#       mac_tx_agent0              mac_tx_agent                    -     @1087      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         mac_tx_agent_id          integral                        32    'h0        
+#       mac_rx_agent0              mac_rx_agent                    -     @1095      
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         mac_rx_agent_id          integral                        32    'h0        
+#     pcs_rx_env0                  pcs_env                         -     @737       
+#       pcs_active_agent0          pcs_agent                       -     @1304      
+#         pcs_driver0              pcs_driver                      -     @1325      
+#           rsp_port               uvm_analysis_port               -     @1342      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1333      
+#           vif                    <unknown>                       -     @571       
+#         pcs_monitor0             pcs_monitor                     -     @1474      
+#           item_collected_port    uvm_analysis_port               -     @1482      
+#           vif                    <unknown>                       -     @571       
+#         pcs_ref_model0           pcs_ref_model                   -     @1495      
+#           item_collected_export  uvm_analysis_imp                -     @1515      
+#           disable_scoreboard     integral                        1     'h0        
+#           num_writes             integral                        32    'd0        
+#           num_init_reads         integral                        32    'd0        
+#           num_uninit_reads       integral                        32    'd0        
+#         pcs_sequencer0           pcs_base_sequencer              -     @1351      
+#           rsp_export             uvm_analysis_export             -     @1359      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1465      
+#           pcs_seqr_id            integral                        32    'h0        
+#           pcs_block_count        integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         is_active                uvm_active_passive_enum         1     UVM_ACTIVE 
+#       pcs_passive_agent0         pcs_agent                       -     @1312      
+#         pcs_monitor0             pcs_monitor                     -     @1539      
+#           item_collected_port    uvm_analysis_port               -     @1547      
+#           vif                    <unknown>                       -     @571       
+#         pcs_ref_model0           pcs_ref_model                   -     @1560      
+#           item_collected_export  uvm_analysis_imp                -     @1580      
+#           disable_scoreboard     integral                        1     'h0        
+#           num_writes             integral                        32    'd0        
+#           num_init_reads         integral                        32    'd0        
+#           num_uninit_reads       integral                        32    'd0        
+#         is_active                uvm_active_passive_enum         1     UVM_PASSIVE
+#     shim_to_dcn_fifo             uvm_tlm_analysis_fifo #(T)      -     @684       
+#       analysis_export            uvm_analysis_imp                -     @728       
+#       get_ap                     uvm_analysis_port               -     @719       
+#       get_peek_export            uvm_get_peek_imp                -     @701       
+#       put_ap                     uvm_analysis_port               -     @710       
+#       put_export                 uvm_put_imp                     -     @692       
+#     virt_seqr                    pcs_virtual_sequencer           -     @761       
+#       rsp_export                 uvm_analysis_export             -     @769       
+#       seq_item_export            uvm_seq_item_pull_imp           -     @875       
+#       arbitration_queue          array                           0     -          
+#       lock_queue                 array                           0     -          
+#       num_last_reqs              integral                        32    'd1        
+#       num_last_rsps              integral                        32    'd1        
+# ----------------------------------------------------------------------------------
+# 
+# UVM_INFO ../uvc/sequence/pcs_base_seq.sv(130) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0@@pcs_base_seq [pcs_base_seq] [START_SEQUENCE]
+# T=0,test in mac seq
+# test in gmii_rx_driver
+# T=16000,test in mac seq
+# test in gmii_rx_driver
+# T=760000,test in mac seq
+# UVM_ERROR @ 768000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# test in gmii_rx_driver
+# UVM_ERROR @ 768000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(200) @ 768000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=1
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 768000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 768000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# UVM_ERROR @ 1472000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# test in gmii_rx_driver
+# UVM_ERROR @ 1472000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(200) @ 1472000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=2
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 1472000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 1472000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# Break key hit 
+# Break in Function pcs_env_pkg/pcs_item::do_self_define_pack at ../uvc/component/pcs_item.sv line 160
+do run_questa
+# c:/questasim64_10.1d/uvm-1.1b/win64
+# simple_preemptable_packet_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(462): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(448): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(125): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(11): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# 
+# Top level modules:
+# 	pcs_tb_top
+# 	glbl
+# vsim +acc=rmb +UVM_TESTNAME=simple_preemptable_packet_test -do vsim.do -l vsim.log -c -sv_seed 0 -sv_lib c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# ** Warning: (vsim-8689) Ignoring plusarg '+acc=rmb'.  Did you mean '-voptargs=+acc=rmb'?
+# 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# Loading sv_std.std
+# Loading work.uvm_pkg(fast)
+# Loading work.mac_pkg(fast)
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# 
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# 
+# different random seeds from your non-debug simulations.
+# 
+# Loading work.cpu_pkg(fast)
+# Loading work.pcs_env_pkg(fast)
+# Loading work.pcs_tb_top(fast)
+# Loading work.cpu_if(fast)
+# Loading work.ge_mac(fast)
+# Loading work.glbl(fast)
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(272): [TOFD] - System task or function '$fsdbAutoSwitchDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(273): [TOFD] - System task or function '$fsdbDumpvarsToFile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(285): [TOFD] - System task or function '$fsdbDumpfile' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-PLI-3003) ../tb/pcs_tb_top.sv(286): [TOFD] - System task or function '$fsdbDumpvars' is not defined.
+# 
+#         Region: /pcs_tb_top
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(130): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(124): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::gmii_tx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(135): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_rx_driver
+# ** Warning: (vsim-3764) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(132): Stand-alone call to function 'pack_bytes' treated as implicit void cast.
+# 
+#         Region: /mac_pkg::xgmii64_tx_driver
+# Loading c:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi.dll
+# do vsim.do 
+# 0
+# 5000000
+# resume
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+# 
+#           File in use by: kexin  Hostname: DESKTOP-0LTH7D5  ProcessID: 30616
+# 
+#           Attempting to use alternate WLF file "./wlftggjfkn".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+# 
+#           Using alternate file: ./wlftggjfkn
+# 
+# hexadecimal
+# ----------------------------------------------------------------
+# UVM-1.1b
+# (C) 2007-2012 Mentor Graphics Corporation
+# (C) 2007-2012 Cadence Design Systems, Inc.
+# (C) 2006-2012 Synopsys, Inc.
+# (C) 2011-2012 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# test start
+# UVM_INFO @ 0: reporter [RNTST] Running test simple_preemptable_packet_test...
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.virt_seqr [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.virt_seqr' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.mac_env0.mac_rx_agent0.sequencer' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_random_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_exhaustive_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(1436) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] Registering sequence 'uvm_simple_sequence' with sequencer 'uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0' is deprecated. 
+# UVM_WARNING c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/seq/uvm_sequencer_base.svh(483) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0 [UVM_DEPRECATED] count config parameter is deprecated and not part of the UVM standard
+# UVM_INFO ../test_lib/user_test_lib.sv(23) @ 0: uvm_test_top [simple_preemptable_packet_test] Printing the test topology :
+# ----------------------------------------------------------------------------------
+# Name                             Type                            Size  Value      
+# ----------------------------------------------------------------------------------
+# uvm_test_top                     simple_preemptable_packet_test  -     @601       
+#   pcs_tx_rx_env0                 pcs_tx_rx_env                   -     @609       
+#     cpu_agent0                   cpu_agent                       -     @745       
+#       driver                     cpu_driver                      -     @1017      
+#         rsp_port                 uvm_analysis_port               -     @1034      
+#         sqr_pull_port            uvm_seq_item_pull_port          -     @1025      
+#         cfg                      object                          -     <null>     
+#       monitor                    cpu_monitor                     -     @1043      
+#         aport                    uvm_analysis_port               -     @1051      
+#       sequencer                  cpu_sequencer                   -     @894       
+#         rsp_export               uvm_analysis_export             -     @902       
+#         seq_item_export          uvm_seq_item_pull_imp           -     @1008      
+#         arbitration_queue        array                           0     -          
+#         lock_queue               array                           0     -          
+#         num_last_reqs            integral                        32    'd1        
+#         num_last_rsps            integral                        32    'd1        
+#       sequencer                  cpu_sequencer                   -     @894       
+#         rsp_export               uvm_analysis_export             -     @902       
+#         seq_item_export          uvm_seq_item_pull_imp           -     @1008      
+#         arbitration_queue        array                           0     -          
+#         lock_queue               array                           0     -          
+#         num_last_reqs            integral                        32    'd1        
+#         num_last_rsps            integral                        32    'd1        
+#       driver                     cpu_driver                      -     @1017      
+#         rsp_port                 uvm_analysis_port               -     @1034      
+#         sqr_pull_port            uvm_seq_item_pull_port          -     @1025      
+#         cfg                      object                          -     <null>     
+#       monitor                    cpu_monitor                     -     @1043      
+#         aport                    uvm_analysis_port               -     @1051      
+#     dcn_scb0                     dcn_scb                         -     @884       
+#       dcn_to_shim_get_port       uvm_blocking_get_port           -     @1069      
+#       shim_to_dcn_get_port       uvm_blocking_get_port           -     @1078      
+#     dcn_to_shim_fifo             uvm_tlm_analysis_fifo #(T)      -     @631       
+#       analysis_export            uvm_analysis_imp                -     @675       
+#       get_ap                     uvm_analysis_port               -     @666       
+#       get_peek_export            uvm_get_peek_imp                -     @648       
+#       put_ap                     uvm_analysis_port               -     @657       
+#       put_export                 uvm_put_imp                     -     @639       
+#     mac_env0                     mac_env                         -     @753       
+#       mac_rx_agent0              mac_rx_agent                    -     @1095      
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         mac_rx_agent_id          integral                        32    'h0        
+#       mac_tx_agent0              mac_tx_agent                    -     @1087      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         mac_tx_agent_id          integral                        32    'h0        
+#       mac_tx_agent0              mac_tx_agent                    -     @1087      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         monitor                  gmii_tx_monitor                 -     @1285      
+#           item_collected_port    uvm_analysis_port               -     @1293      
+#         mac_tx_agent_id          integral                        32    'h0        
+#       mac_rx_agent0              mac_rx_agent                    -     @1095      
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         driver                   gmii_rx_driver                  -     @1228      
+#           rsp_port               uvm_analysis_port               -     @1245      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1236      
+#           gmii_rx_driver_id      integral                        32    'h0        
+#           m_state                state_e                         32    IPG_State  
+#           frame_data             da(integral)                    0     -          
+#         sequencer                mac_rx_base_sequencer           -     @1105      
+#           rsp_export             uvm_analysis_export             -     @1113      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1219      
+#           mac_rx_base_sqr_id     integral                        32    'h0        
+#           init_crc               integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         monitor                  gmii_rx_monitor                 -     @1256      
+#           item_collected_port    uvm_analysis_port               -     @1264      
+#         mac_rx_agent_id          integral                        32    'h0        
+#     pcs_rx_env0                  pcs_env                         -     @737       
+#       pcs_active_agent0          pcs_agent                       -     @1304      
+#         pcs_driver0              pcs_driver                      -     @1325      
+#           rsp_port               uvm_analysis_port               -     @1342      
+#           sqr_pull_port          uvm_seq_item_pull_port          -     @1333      
+#           vif                    <unknown>                       -     @571       
+#         pcs_monitor0             pcs_monitor                     -     @1474      
+#           item_collected_port    uvm_analysis_port               -     @1482      
+#           vif                    <unknown>                       -     @571       
+#         pcs_ref_model0           pcs_ref_model                   -     @1495      
+#           item_collected_export  uvm_analysis_imp                -     @1515      
+#           disable_scoreboard     integral                        1     'h0        
+#           num_writes             integral                        32    'd0        
+#           num_init_reads         integral                        32    'd0        
+#           num_uninit_reads       integral                        32    'd0        
+#         pcs_sequencer0           pcs_base_sequencer              -     @1351      
+#           rsp_export             uvm_analysis_export             -     @1359      
+#           seq_item_export        uvm_seq_item_pull_imp           -     @1465      
+#           pcs_seqr_id            integral                        32    'h0        
+#           pcs_block_count        integral                        32    'h0        
+#           arbitration_queue      array                           0     -          
+#           lock_queue             array                           0     -          
+#           num_last_reqs          integral                        32    'd1        
+#           num_last_rsps          integral                        32    'd1        
+#         is_active                uvm_active_passive_enum         1     UVM_ACTIVE 
+#       pcs_passive_agent0         pcs_agent                       -     @1312      
+#         pcs_monitor0             pcs_monitor                     -     @1539      
+#           item_collected_port    uvm_analysis_port               -     @1547      
+#           vif                    <unknown>                       -     @571       
+#         pcs_ref_model0           pcs_ref_model                   -     @1560      
+#           item_collected_export  uvm_analysis_imp                -     @1580      
+#           disable_scoreboard     integral                        1     'h0        
+#           num_writes             integral                        32    'd0        
+#           num_init_reads         integral                        32    'd0        
+#           num_uninit_reads       integral                        32    'd0        
+#         is_active                uvm_active_passive_enum         1     UVM_PASSIVE
+#     shim_to_dcn_fifo             uvm_tlm_analysis_fifo #(T)      -     @684       
+#       analysis_export            uvm_analysis_imp                -     @728       
+#       get_ap                     uvm_analysis_port               -     @719       
+#       get_peek_export            uvm_get_peek_imp                -     @701       
+#       put_ap                     uvm_analysis_port               -     @710       
+#       put_export                 uvm_put_imp                     -     @692       
+#     virt_seqr                    pcs_virtual_sequencer           -     @761       
+#       rsp_export                 uvm_analysis_export             -     @769       
+#       seq_item_export            uvm_seq_item_pull_imp           -     @875       
+#       arbitration_queue          array                           0     -          
+#       lock_queue                 array                           0     -          
+#       num_last_reqs              integral                        32    'd1        
+#       num_last_rsps              integral                        32    'd1        
+# ----------------------------------------------------------------------------------
+# 
+# UVM_INFO ../uvc/sequence/pcs_base_seq.sv(130) @ 0: uvm_test_top.pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0@@pcs_base_seq [pcs_base_seq] [START_SEQUENCE]
+# test in gmii_rx_driver
+# T=500000,test in mac seq
+# T=1168000,test in mac seq
+# test in gmii_rx_driver
+# UVM_ERROR @ 1176000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_ERROR @ 1176000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(129) @ 1176000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] FATAL_ERROR! EXP unexpect VLAN vlaue
+# 
+# UVM_INFO ../env/dcn_scb.sv(170) @ 1176000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] FATAL_ERROR! COL unexpect VLAN vlaue
+# T=1872000,test in mac seq
+# UVM_ERROR @ 1880000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# test in gmii_rx_driver
+# UVM_ERROR @ 1880000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(200) @ 1880000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=1
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 1880000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 1880000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# UVM_ERROR @ 2584000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# test in gmii_rx_driver
+# UVM_ERROR @ 2584000: reporter [PCKSZ] 32 bits needed to unpack integral, yet only 24 available.
+# UVM_INFO ../env/dcn_scb.sv(200) @ 2584000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] COMPARE START eth_frame_col_tr.destination_address=2
+# 
+# UVM_INFO ../env/dcn_scb.sv(244) @ 2584000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COMPARE
+# 
+# UVM_INFO ../env/dcn_scb.sv(273) @ 2584000: uvm_test_top.pcs_tx_rx_env0.dcn_scb0 [dcn_scb] comp_state=COM_FINISH
+# 
+# Break key hit 
+# Break in Function pcs_env_pkg/pcs_monitor::push_bit_queue at ../uvc/component/pcs_monitor.sv line 135

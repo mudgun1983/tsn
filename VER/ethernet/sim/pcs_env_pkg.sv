@@ -50,9 +50,11 @@ package pcs_env_pkg;
   `include "../seq_lib/mac_user_seq_lib.sv"
   `include "../seq_lib/rgm_seq_lib.sv"
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
+  `include "../seq_lib/scenario_user_seq_lib.sv"
   
-  
+  //test
   `include "../test_lib/pcs_base_test.sv"
+  `include "../test_lib/user_test_lib.sv"
    
 endpackage
 `endif

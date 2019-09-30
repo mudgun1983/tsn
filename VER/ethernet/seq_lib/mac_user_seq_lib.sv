@@ -165,7 +165,7 @@ class mac_user_sequence extends mac_base_sequence;
 	  p_sequencer.init_crc[7:0]    = req.fcs[31:24];
 	  
 	  p_sequencer.init_crc = p_sequencer.init_crc ^ c_xor_value;
-	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_LOW);
+	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_HIGH);
   endtask : post_body
 
   virtual function void post_do(uvm_sequence_item this_item);
@@ -182,7 +182,7 @@ class mac_user_sequence extends mac_base_sequence;
 	    //begin
 		  //p_sequencer.init_crc[i] = tmp_crc[31-i] ;
 		//end
-	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_LOW);
+	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_HIGH);
   endfunction
   
 
