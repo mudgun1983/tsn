@@ -25,7 +25,7 @@ class simple_preemptable_packet_test extends pcs_base_test;
     
    task run_phase(uvm_phase phase);
        phase.phase_done.set_drain_time(this, 50);
-       #20ms;
+       #10us;
        $stop;
        
    endtask:run_phase

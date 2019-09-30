@@ -85,7 +85,7 @@ class pcs_base_test extends uvm_test;
 //          #10ns;
 //          end
        phase.phase_done.set_drain_time(this, 50);
-       #20ms;
+       #1ms;
        $stop;
        
    endtask:run_phase

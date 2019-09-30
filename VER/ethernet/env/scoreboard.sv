@@ -1,23 +1,23 @@
 
 
 
-class dcn_scb extends uvm_scoreboard;
+class scoreboard extends uvm_scoreboard;
     
 
-    uvm_blocking_get_port#(eth_frame)      dcn_to_shim_get_port;  ///< rm to scb
-    uvm_blocking_get_port#(eth_frame)      shim_to_dcn_get_port;       ///< rm to scb
+    uvm_blocking_get_port#(eth_frame)      expect_get_port;  ///< rm to scb
+    uvm_blocking_get_port#(eth_frame)      monitor_get_port;       ///< rm to scb
     
 
     uvm_comparer                           comparer;
-    
-    parameter    SHIM_0_VLAN = 16'd500;
+	parameter    SHIM_0_VLAN = 16'd500;
     parameter    SHIM_1_VLAN = 16'd501;
     
     typedef enum {EXP_POP,COMPARE,EXP_QUEUE_CHECK,COM_FINISH}    comp_state_enum           ;
     
     comp_state_enum                        comp_state;
     eth_frame                              eth_exp_que[$];
-    eth_frame                              eth_exp_que_shim0[$];
+    eth_frame                              eth_exp_que_merge[$];
+	eth_frame                              eth_exp_que_shim0[$];
     eth_frame                              eth_exp_que_shim1[$];
     
     eth_frame                              eth_col_que[$];
@@ -29,7 +29,7 @@ class dcn_scb extends uvm_scoreboard;
     local event                            comp_event_shim1;
     local event                            pcs_comp_event;
 
-    `uvm_component_utils_begin(dcn_scb)
+    `uvm_component_utils_begin(scoreboard)
     `uvm_component_utils_end
      
     string file_name;
@@ -39,17 +39,17 @@ class dcn_scb extends uvm_scoreboard;
 //================================================//
 //FUNCTION    : new
 //================================================//
-    function new (string name ="dcn_scb",uvm_component parent);
+    function new (string name ="scoreboard",uvm_component parent);
         super.new(name,parent);
         comparer = uvm_default_comparer;
         //comparer.policy = UVM_SHALLOW;//UVM_DEEP;UVM_DEFAULT_POLICY;
-        write_exp_data_fd=$fopen("dcn_tran_exp.txt","w+");                                               
+        write_exp_data_fd=$fopen("tran_exp.txt","w+");                                               
         $fclose(write_exp_data_fd);
         
-        write_col_data_fd=$fopen("dcn_tran_col.txt","w+");                                               
+        write_col_data_fd=$fopen("tran_col.txt","w+");                                               
         $fclose(write_col_data_fd);
         
-        write_comp_data_fd=$fopen("data_comp_result_shim0.txt","w+");                                               
+        write_comp_data_fd=$fopen("data_comp_result.txt","w+");                                               
         $fclose(write_comp_data_fd);
         
         write_comp_data_fd=$fopen("data_comp_result_shim1.txt","w+");                                               
@@ -66,8 +66,8 @@ class dcn_scb extends uvm_scoreboard;
         //eth_exp_que  = new();
         //eth_col_que  = new();
         // port 
-        dcn_to_shim_get_port = new("dcn_to_shim_get_port",this);
-        shim_to_dcn_get_port = new("shim_to_dcn_get_port",this);
+        expect_get_port = new("expect_get_port",this);
+        monitor_get_port = new("monitor_get_port",this);
        
     endfunction : build
 //================================================//
@@ -76,62 +76,48 @@ class dcn_scb extends uvm_scoreboard;
     virtual task run();
         super.run();
         fork
-            dcn_to_shim_get_exp_trans();
-            shim_to_dcn_get_col_trans();
+            get_exp_trans();
+            get_col_trans();
             //eth_frame_compare();
             eth_frame_compare(0,"shim0");
             eth_frame_compare(1,"shim1");
-            
-        //    shim5x68_get_act_trans();
-        //    shim5x68_compare();
-        //    pcs_get_exp_trans();
-        //    pcs_get_act_trans();
-        //    pcs_compare();
-        //    cmac_get_exp_trans();
-        //    cmac_get_act_trans();
-        //    cmac_compare();
         join
     endtask: run
 
 ////================================================//
-////TASK    : dcn_to_shim_get_exp_trans
+////TASK    : get_exp_trans
 ////================================================//
-    task dcn_to_shim_get_exp_trans();
+    task get_exp_trans();
         while(1) begin
             eth_frame eth_frame_exp_tr;
             eth_frame_exp_tr =new();
-            dcn_to_shim_get_port.get(eth_frame_exp_tr);
+            expect_get_port.get(eth_frame_exp_tr);
             
-            if({eth_frame_exp_tr.tagged_data[0].data[0],eth_frame_exp_tr.tagged_data[0].data[1]}==SHIM_0_VLAN)
-               eth_exp_que_shim0.push_back(eth_frame_exp_tr);
-            else if({eth_frame_exp_tr.tagged_data[0].data[0],eth_frame_exp_tr.tagged_data[0].data[1]}==SHIM_1_VLAN)
-               eth_exp_que_shim1.push_back(eth_frame_exp_tr);
-            else
-               `uvm_info(get_type_name(),$psprintf("FATAL_ERROR! EXP unexpect VLAN vlaue\n"),UVM_LOW);
+			eth_exp_que_shim1.push_back(eth_frame_exp_tr);
             
             `uvm_info(get_type_name(),{$psprintf("get eth_frame_exp_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
             
-            write_exp_data_fd=$fopen("dcn_tran_exp.txt","a+"); 
+            write_exp_data_fd=$fopen("tran_exp.txt","a+"); 
 			$fwrite(write_exp_data_fd,$psprintf(" S "));	
             foreach(eth_frame_exp_tr.frame_data[key])
               //$fwrite(write_exp_data_fd,$psprintf("eth_frame_exp_trans.data[%0d]=%0h\n",key,eth_frame_exp_tr.frame_data[key])); 
               $fwrite(write_exp_data_fd,$psprintf("%2h",eth_frame_exp_tr.frame_data[key]));			  
             $fclose(write_exp_data_fd);
         end
-    endtask:dcn_to_shim_get_exp_trans
+    endtask:get_exp_trans
 
 //================================================//
-//TASK    : shim_to_dcn_get_col_trans
+//TASK    : get_col_trans
 //================================================//
-    task shim_to_dcn_get_col_trans();
+    task get_col_trans();
         while(1) begin
             eth_frame eth_frame_col_tr;
             eth_frame_col_tr =new();
-            shim_to_dcn_get_port.get(eth_frame_col_tr);
+            monitor_get_port.get(eth_frame_col_tr);
             
             `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_HIGH);
             
-            write_col_data_fd=$fopen("dcn_tran_col.txt","a+"); 
+            write_col_data_fd=$fopen("tran_col.txt","a+"); 
             foreach(eth_frame_col_tr.frame_data[key])
               //$fwrite(write_col_data_fd,$psprintf("eth_frame_col_trans.data[%0d]=%0h\n",key,eth_frame_col_tr.frame_data[key]));     
                 $fwrite(write_col_data_fd,$psprintf("%0h",eth_frame_col_tr.frame_data[key]));   			  
@@ -154,7 +140,7 @@ class dcn_scb extends uvm_scoreboard;
 
             ->comp_event;
         end
-    endtask:shim_to_dcn_get_col_trans
+    endtask:get_col_trans
     
 //================================================//
 //TASK    : eth_frame_compare
@@ -509,4 +495,4 @@ class dcn_scb extends uvm_scoreboard;
 //        end
 //    endfunction: check
 
-endclass : dcn_scb
+endclass : scoreboard
