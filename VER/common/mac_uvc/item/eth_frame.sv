@@ -477,7 +477,11 @@ class eth_frame extends uvm_sequence_item;
 	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-1-4](data_crc);//delete preamble,smd,frag_cnt and fcs
     else
 	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-4](data_crc);//delete preamble,sfd and fcs
-    if(preemptable)
+   
+   `uvm_info(get_type_name(),{$psprintf("init_crc=%h\n",init_crc)},UVM_LOW);
+	foreach(data_crc[key])
+	  `uvm_info(get_type_name(),{$psprintf("data_crc[%0d]=%h\n",key,data_crc[key])},UVM_LOW);
+	if(preemptable)
 	  do_crc32 = crc_cal.do_crc32_se(data_crc,init_crc)^ (xor_value);
 	else
 	  do_crc32 = ~crc_cal.do_crc32_se(data_crc,32'hffff_ffff);

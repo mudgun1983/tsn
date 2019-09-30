@@ -91,7 +91,7 @@ class mac_user_sequence extends mac_base_sequence;
 					{
 					 req.init_crc    == 32'hffff_ffff  ;
 					}
-					else if(c_start_or_frag && (~c_start_or_frag))
+					else if(c_preemptable && (~c_start_or_frag))
 					{
 					 req.init_crc    == p_sequencer.init_crc  ; 
 					}
@@ -147,9 +147,9 @@ class mac_user_sequence extends mac_base_sequence;
                                                                       
                    })
 
-     `uvm_info(get_type_name(),"uvm_do done",UVM_LOW)
+     `uvm_info(get_type_name(),"uvm_do done",UVM_HIGH)
      get_response(rsp);
-     `uvm_info(get_type_name(),"get_response done",UVM_LOW)
+     `uvm_info(get_type_name(),"get_response done",UVM_HIGH)
      
      //c_da_cnt++;
      
@@ -158,7 +158,7 @@ class mac_user_sequence extends mac_base_sequence;
  
   virtual task post_body();
       uvm_test_done.drop_objection(this);
-      `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
+      `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_HIGH)
 	  p_sequencer.init_crc[31:24]  = req.fcs[7:0]  ;
 	  p_sequencer.init_crc[23:16]  = req.fcs[15:8] ;
 	  p_sequencer.init_crc[15:8]   = req.fcs[23:16];
@@ -169,13 +169,19 @@ class mac_user_sequence extends mac_base_sequence;
   endtask : post_body
 
   virtual function void post_do(uvm_sequence_item this_item);
-    `uvm_info(get_type_name(),"[STOP_SEQUENCE] in post do",UVM_LOW)
+     bit [31:0] tmp_crc;
+    `uvm_info(get_type_name(),"[STOP_SEQUENCE] in post do",UVM_HIGH)
 	  p_sequencer.init_crc[31:24]  = req.fcs[7:0]  ;
 	  p_sequencer.init_crc[23:16]  = req.fcs[15:8] ;
 	  p_sequencer.init_crc[15:8]   = req.fcs[23:16];
 	  p_sequencer.init_crc[7:0]    = req.fcs[31:24];
 	  
 	  p_sequencer.init_crc = p_sequencer.init_crc ^ c_xor_value;
+	  tmp_crc = p_sequencer.init_crc;
+	  //for(int i=0;i<32;i++)
+	    //begin
+		  //p_sequencer.init_crc[i] = tmp_crc[31-i] ;
+		//end
 	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_LOW);
   endfunction
   

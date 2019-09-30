@@ -193,7 +193,7 @@ class gmii_rx_driver extends mac_rx_base_driver;
       end
       
       TX_PKT_State : begin
-	  $display("time=%0t,test in gmii_rx_driver in gmii_rx  m_state=%0s",$time,m_state);
+	  //$display("time=%0t,test in gmii_rx_driver in gmii_rx  m_state=%0s",$time,m_state);
       	for(int i=0; i<=trans.frame_data.size(); i++) begin
       		@(posedge m_gmii_rx_if.clk);
       		if(m_gmii_rx_if.reset==1'b1) begin
@@ -211,7 +211,7 @@ class gmii_rx_driver extends mac_rx_base_driver;
       		m_gmii_rx_if.rxd   <= trans.frame_data[i];  		
       	end
       	m_state          = IPG_State;
-		$display("test in gmii_rx_driver in TX_PKT_State");
+		//$display("test in gmii_rx_driver in TX_PKT_State");
       	break;
       end
       
