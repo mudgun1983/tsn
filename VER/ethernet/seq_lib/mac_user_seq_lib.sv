@@ -18,6 +18,7 @@ class mac_user_sequence extends mac_base_sequence;
   rand bit [7:0]     c_frag_cnt       ;
   rand bit           c_preemptable    ;
   rand bit           c_start_or_frag  ;
+  rand bit           c_last_frag      ;
   rand int unsigned  c_preamble_length;
   rand bit [31:0]    c_init_crc;
   rand bit [31:0]    c_xor_value;
@@ -171,6 +172,8 @@ class mac_user_sequence extends mac_base_sequence;
   virtual function void post_do(uvm_sequence_item this_item);
      bit [31:0] tmp_crc;
     `uvm_info(get_type_name(),"[STOP_SEQUENCE] in post do",UVM_HIGH)
+	if(c_preemptable && (~c_last_frag))
+	  begin
 	  p_sequencer.init_crc[31:24]  = req.fcs[7:0]  ;
 	  p_sequencer.init_crc[23:16]  = req.fcs[15:8] ;
 	  p_sequencer.init_crc[15:8]   = req.fcs[23:16];
@@ -178,6 +181,11 @@ class mac_user_sequence extends mac_base_sequence;
 	  
 	  p_sequencer.init_crc = p_sequencer.init_crc ^ c_xor_value;
 	  tmp_crc = p_sequencer.init_crc;
+	  end
+	else if(c_preemptable && (c_last_frag))
+	  begin
+	     p_sequencer.init_crc = 32'hffff_ffff;
+	  end
 	  //for(int i=0;i<32;i++)
 	    //begin
 		  //p_sequencer.init_crc[i] = tmp_crc[31-i] ;

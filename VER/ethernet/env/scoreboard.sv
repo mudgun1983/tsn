@@ -137,11 +137,10 @@ class scoreboard extends uvm_scoreboard;
 
           	@comp_event;   	
           	//============pop col frame=============//
+			eth_frame_col_tr=eth_col_que.pop_front();
 			`uvm_info(get_type_name(),{$psprintf("COMPARE START eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address)},UVM_LOW);
 			`uvm_info(get_type_name(),{$psprintf("exp_queue_size=%0d,col_queue_size=%0d\n",eth_exp_que.size,eth_col_que.size,)},UVM_LOW);
-			
-          	eth_frame_col_tr=eth_col_que.pop_front();
-          	
+			         	
           	
           	while(1)begin
           	

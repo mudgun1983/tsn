@@ -36,6 +36,7 @@ class scenario_simple_preemptable_packet_test extends scenario_reg_test;
 							 mac_seq.c_tpid == 'd138;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==1; //1:start
+							 mac_seq.c_last_frag == 0;   //not last frag
 							 mac_seq.c_smd==8'hE6;
 							 mac_seq.c_xor_value == 32'h0000ffff;
 							})
@@ -46,6 +47,7 @@ class scenario_simple_preemptable_packet_test extends scenario_reg_test;
 							 mac_seq.c_packet_len == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
+							 mac_seq.c_last_frag == 0;   //not last frag
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'hE6;
@@ -59,6 +61,7 @@ class scenario_simple_preemptable_packet_test extends scenario_reg_test;
 							 mac_seq.c_packet_len == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
+							 mac_seq.c_last_frag == 1;   //is last frag
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'h4C;
@@ -133,6 +136,7 @@ class scenario_simple_e_p_mix_packet_test extends scenario_reg_test;
 							 mac_seq.c_tpid == 'd138;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==1; //1:start
+							 mac_seq.c_last_frag == 0;   //not last frag
 							 mac_seq.c_smd==8'hE6;
 							 mac_seq.c_xor_value == 32'h0000ffff;
 							})
@@ -153,6 +157,7 @@ class scenario_simple_e_p_mix_packet_test extends scenario_reg_test;
 							 mac_seq.c_packet_len == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
+							 mac_seq.c_last_frag == 0;   //not last frag
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'hE6;
@@ -175,6 +180,7 @@ class scenario_simple_e_p_mix_packet_test extends scenario_reg_test;
 							 mac_seq.c_packet_len == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
+							 mac_seq.c_last_frag == 1;   //is last frag
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'h4C;

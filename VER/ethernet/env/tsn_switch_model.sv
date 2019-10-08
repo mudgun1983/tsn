@@ -1,4 +1,4 @@
-class tsn_switch_model extends uvm_component;
+class tsn_switch_model #(string file_name = "expect") extends uvm_component;
 
     uvm_blocking_get_port#(eth_frame)              get_port;
     uvm_analysis_port #(eth_frame)                 item_collected_port;
@@ -63,7 +63,7 @@ typedef enum bit[7:0]{
 //================================================//
     function new (string name ="tsn_switch_model",uvm_component parent);
         super.new(name,parent);
-		write_data_fd=$fopen("merge_frame.txt","w+");                                               
+		write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"w+");                                               
         $fclose(write_data_fd);
     endfunction
 
@@ -218,7 +218,7 @@ typedef enum bit[7:0]{
 			     frame_data_merge.push_back(data_payload[i]);			     
 			   end
 			//file IO
-            write_data_fd=$fopen("merge_frame.txt","a+"); 	
+            write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
             foreach(frame_data_merge[key])
             $fwrite(write_data_fd,$psprintf("frame_data_merge[%0d]=%2h\n",key,frame_data_merge[key]));			  
             $fclose(write_data_fd);			
@@ -226,13 +226,13 @@ typedef enum bit[7:0]{
 			data_payload = frame_data_merge;
 			temp_crc32 = crc_cal.do_crc32_se(data_payload,32'hffff_ffff)^ (32'hffff_ffff);
 			
-			 `uvm_info(get_type_name(),{$psprintf("temp_crc32=%0h  eth_frame_exp_tr.fcs=%0h",temp_crc32,eth_frame_exp_tr.fcs)},UVM_LOW);
+			 `uvm_info(get_type_name(),{$psprintf("temp_crc32=%0h  eth_frame_exp_tr.fcs=%0h",temp_crc32,eth_frame_exp_tr.fcs)},UVM_HIGH);
 			
 			local_crc32[31:24] = temp_crc32[7:0]  ;
             local_crc32[23:16] = temp_crc32[15:8] ;
             local_crc32[15:8]  = temp_crc32[23:16];
             local_crc32[7:0]   = temp_crc32[31:24];
-	
+	         `uvm_info(get_type_name(),{$psprintf("local_crc32=%0h  eth_frame_exp_tr.fcs=%0h",local_crc32,eth_frame_exp_tr.fcs)},UVM_LOW);
 			if(local_crc32 == eth_frame_exp_tr.fcs)
 			  merge_finish = 1;
 			else
@@ -244,7 +244,7 @@ typedef enum bit[7:0]{
 		     eth_frame_exp_tr.frame_data  = new[data_payload.size()](eth_frame_exp_tr.frame_data);
 			 eth_frame_exp_tr.frame_data  = data_payload;
 			 //file IO
-			        write_data_fd=$fopen("merge_frame.txt","a+"); 	
+			        write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
                     $fwrite(write_data_fd,$psprintf("frame_data_merge finish\n"));			  
                     $fclose(write_data_fd);
 		   end

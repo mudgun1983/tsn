@@ -1,9 +1,8 @@
 set LIBDIR c:/questasim64_10.1d/uvm-1.1b/win64
 
-#set TEST_NAME pcs_base_test
-#set TEST_NAME eth_base_test
-set TEST_NAME simple_preemptable_packet_test
-#set TEST_NAME simple_express_packet_test
+
+#set TEST_NAME simple_preemptable_packet_test
+set TEST_NAME simple_express_packet_test
 #set TEST_NAME simple_e_p_mix_packet_test
 
 vlib work

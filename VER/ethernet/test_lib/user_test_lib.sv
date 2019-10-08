@@ -24,7 +24,7 @@ class simple_preemptable_packet_test extends pcs_base_test;
   endfunction : end_of_elaboration    
     
    task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50);
+       phase.phase_done.set_drain_time(this, 50000);
        #10us;
        $stop;
        
@@ -66,7 +66,7 @@ class simple_express_packet_test extends pcs_base_test;
   endfunction : end_of_elaboration    
     
    task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50);
+       phase.phase_done.set_drain_time(this, 50000);
        #20ms;
        $stop;      
    endtask:run_phase
@@ -107,7 +107,7 @@ class simple_e_p_mix_packet_test extends pcs_base_test;
   endfunction : end_of_elaboration    
     
    task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50);
+       phase.phase_done.set_drain_time(this, 50000);
        #20ms;
        $stop;      
    endtask:run_phase
