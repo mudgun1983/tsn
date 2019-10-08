@@ -1,2 +1,0 @@
-ERROR! PACKET LOSS, exp frame eth_frame_exp_tr.destination_address=7 is MISSING
-COMP_START:comp_destination_address=1 vlan=1f5

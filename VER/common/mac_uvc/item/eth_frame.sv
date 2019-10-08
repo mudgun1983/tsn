@@ -319,6 +319,7 @@ class eth_frame extends uvm_sequence_item;
   function void do_unpack(uvm_packer packer);
     int data_cnt;
     int tag_cnt;
+	bit frag_ind;
     super.do_unpack(packer);
     
     preamble.preamble_length = 0;
@@ -336,13 +337,29 @@ class eth_frame extends uvm_sequence_item;
     if(preamble.sfd !=8'hd5)  
 	  begin
 	    preamble.smd = preamble.sfd;
-		preamble.frag_cnt = packer.unpack_field_int(8);
+		//preamble.frag_cnt = packer.unpack_field_int(8);
 	  end
+	
+    if(preamble.smd == 8'h61 ||
+	   preamble.smd == 8'h52 ||
+	   preamble.smd == 8'h9E ||
+	   preamble.smd == 8'h2A	
+	)	
+	  frag_ind = 1;
+	else
+	  frag_ind = 0;
+	
+	if(frag_ind)
+	  preamble.frag_cnt = packer.unpack_field_int(8);
 	  
     destination_address = packer.unpack_field_int(48);
     source_address      = packer.unpack_field_int(48);
     
-    data_cnt = preamble.preamble_length+13;//sfd(1)+da(6)+sa(6)
+	if(~frag_ind)
+      data_cnt = preamble.preamble_length+13;//sfd(1)+da(6)+sa(6)
+	else
+	  data_cnt = preamble.preamble_length+14;//sfd(1)+frag_cnt(1)+da(6)+sa(6) 
+	  
     tag_cnt  = 0;
     while(data_cnt < frame_data.size()) begin
 //    	if({frame_data[data_cnt],frame_data[data_cnt+1]} == 16'h8100) begin//VLAN_TAG

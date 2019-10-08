@@ -1,7 +1,7 @@
 class tsn_switch_model extends uvm_component;
 
     uvm_blocking_get_port#(eth_frame)              get_port;
-    uvm_analysis_port #(eth_frame)                 push_port;
+    uvm_analysis_port #(eth_frame)                 item_collected_port;
 	
 `uvm_component_utils_begin(tsn_switch_model)
     `uvm_component_utils_end
@@ -75,7 +75,7 @@ typedef enum bit[7:0]{
         super.build();
 		
         get_port    =  new("get_port",this);
-        push_port   =  new("push_port",this);
+        item_collected_port   =  new("item_collected_port",this);
        
     endfunction : build
 
@@ -98,10 +98,11 @@ typedef enum bit[7:0]{
             eth_frame eth_frame_exp_tr;
             eth_frame_exp_tr =new();
             get_port.get(eth_frame_exp_tr);
+			`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
 			//classify and merge the packet
 			classify_merge(eth_frame_exp_tr);
 			if(merge_finish)
-			  push_port.write(eth_frame_exp_tr);
+			  item_collected_port.write(eth_frame_exp_tr);
 			end
     endtask	
 	
@@ -114,6 +115,7 @@ typedef enum bit[7:0]{
 		bit       merge_en = 0;
 		bit [7:0] data_payload[];
 		bit [31:0] temp_crc32;
+		bit [31:0] local_crc32;
 		smd_e     smd_t;
 		frag_e    frag_t;
 		
@@ -179,6 +181,12 @@ typedef enum bit[7:0]{
 		
     // extract the payload in frame_data 
 	data_payload = eth_frame_exp_tr.frame_data;
+	//debug
+	  foreach(data_payload[i])
+	    begin
+		  `uvm_info(get_type_name(),{$psprintf("origin data_payload[%0d]=%0h\n",i,data_payload[i])},UVM_HIGH);
+		end
+	
 	if((~express_packet) && (frag_packet))
 	  begin
        foreach(data_payload[i])
@@ -195,24 +203,37 @@ typedef enum bit[7:0]{
 	  end
 	// extract the payload in frame_data 
     
+	//debug
+	  foreach(data_payload[i])
+	    begin
+		  `uvm_info(get_type_name(),{$psprintf("origin data_payload[%0d]=%0h\n",i,data_payload[i])},UVM_HIGH);
+		end
+		
     // start merge the payload	
         //		
         if(merge_en==1)		 
 		   begin
 		     foreach(data_payload[i])
 		       begin
-			     frame_data_merge.push_back(data_payload[i]);
-			     //file IO
-			        write_data_fd=$fopen("merge_frame.txt","a+"); 	
-                    foreach(frame_data_merge[key])
-                      $fwrite(write_data_fd,$psprintf("frame_data_merge[%0d]=%2h\n",key,frame_data_merge[key]));			  
-                    $fclose(write_data_fd);
+			     frame_data_merge.push_back(data_payload[i]);			     
 			   end
-			 
+			//file IO
+            write_data_fd=$fopen("merge_frame.txt","a+"); 	
+            foreach(frame_data_merge[key])
+            $fwrite(write_data_fd,$psprintf("frame_data_merge[%0d]=%2h\n",key,frame_data_merge[key]));			  
+            $fclose(write_data_fd);			
 			//cal the crc
 			data_payload = frame_data_merge;
 			temp_crc32 = crc_cal.do_crc32_se(data_payload,32'hffff_ffff)^ (32'hffff_ffff);
-			if(temp_crc32 == eth_frame_exp_tr.fcs)
+			
+			 `uvm_info(get_type_name(),{$psprintf("temp_crc32=%0h  eth_frame_exp_tr.fcs=%0h",temp_crc32,eth_frame_exp_tr.fcs)},UVM_LOW);
+			
+			local_crc32[31:24] = temp_crc32[7:0]  ;
+            local_crc32[23:16] = temp_crc32[15:8] ;
+            local_crc32[15:8]  = temp_crc32[23:16];
+            local_crc32[7:0]   = temp_crc32[31:24];
+	
+			if(local_crc32 == eth_frame_exp_tr.fcs)
 			  merge_finish = 1;
 			else
 			  merge_finish = 0;
@@ -220,7 +241,8 @@ typedef enum bit[7:0]{
 		
 		if(merge_finish)
 		   begin
-		     eth_frame_exp_tr.frame_data  = new[data_payload.size()+4](eth_frame_exp_tr.frame_data);
+		     eth_frame_exp_tr.frame_data  = new[data_payload.size()](eth_frame_exp_tr.frame_data);
+			 eth_frame_exp_tr.frame_data  = data_payload;
 			 //file IO
 			        write_data_fd=$fopen("merge_frame.txt","a+"); 	
                     $fwrite(write_data_fd,$psprintf("frame_data_merge finish\n"));			  

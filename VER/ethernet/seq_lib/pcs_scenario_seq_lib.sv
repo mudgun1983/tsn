@@ -29,6 +29,16 @@ bit [47:0] local_da_cnt;
         super.new();             
     endfunction:new
 
+ virtual task pre_body();/*{{{*/
+       uvm_test_done.raise_objection(this);
+       `uvm_info(get_type_name(),"[START_SEQUENCE]",UVM_LOW)
+  endtask : pre_body
+
+  virtual task post_body();
+      uvm_test_done.drop_objection(this);
+      `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
+  endtask : post_body
+  
 //================================================//
 //TASK        : body
 //DESCRIPTION : construct

@@ -44,11 +44,10 @@ class pcs_base_test extends uvm_test;
 //           //
 //===========//
 //================================pcs_seq===================================================
-//       set_config_string("pcs_tx_rx_env0.pcs_rx_env0.pcs_active_agent0.pcs_sequencer0","default_sequence","pcs_base_seq");  
-       uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.*.pcs_active_agent0.pcs_sequencer0.run_phase", 
+        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.*.pcs_active_agent0.pcs_sequencer0.run_phase", 
 			       "default_sequence",
 				pcs_base_seq::type_id::get());
-				set_config_int("pcs_tx_rx_env0.*.pcs_active_agent0.pcs_sequencer0","count",0);
+				set_config_int("pcs_tx_rx_env0.*.pcs_active_agent0.pcs_sequencer0","count",0); 
 //================================pcs_seq===================================================    
 
 //================================mac_seq===================================================
@@ -73,7 +72,7 @@ class pcs_base_test extends uvm_test;
    
   function void end_of_elaboration();
     `uvm_info(get_type_name(),
-      $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
+      $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_HIGH)
   endfunction : end_of_elaboration    
     
    task run_phase(uvm_phase phase);
