@@ -129,12 +129,15 @@ class mac_user_sequence extends mac_base_sequence;
                    	}
                    	req.tagged_data[1].max_data_len  == 1518   ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
                     req.tagged_data[1].min_data_len  == 46 ;//p_sequencer.static_cfg.cfg_min_tagged_data_len; 
-                    foreach(req.tagged_data[1].data[key])   
-                    {req.tagged_data[1].data[key]==key;
-                    }
+                    
                    	req.tagged_data[1].data_tag_kind == eth_tagged_data::DATA_TAG;  
 					req.tagged_data[1].data_length   == c_packet_len;
+					//req.tagged_data[1].data.size()   == c_packet_len;
                    	req.tagged_data[1].tpid   == c_tpid;
+					
+					foreach(req.tagged_data[1].data[key])   
+                    {req.tagged_data[1].data[key]==key;
+                    }
                    	req.directed_protocol_error_size == 0;
                    	req.protocol_error_size          == 0;
                    	req.protocol_error_mode          == NO_PROT_ERROR;
@@ -172,6 +175,7 @@ class mac_user_sequence extends mac_base_sequence;
   virtual function void post_do(uvm_sequence_item this_item);
      bit [31:0] tmp_crc;
     `uvm_info(get_type_name(),"[STOP_SEQUENCE] in post do",UVM_HIGH)
+
 	if(c_preemptable && (~c_last_frag))
 	  begin
 	  p_sequencer.init_crc[31:24]  = req.fcs[7:0]  ;

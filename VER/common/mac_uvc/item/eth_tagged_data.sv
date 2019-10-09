@@ -64,7 +64,7 @@ class eth_tagged_data extends uvm_sequence_item;
 
 //==================== Attribute =================//
   rand bit [15:0]    tpid         ;
-  rand bit [7:0]     data[]       ;
+  rand bit [15:0]    data[]       ;
   rand int unsigned  data_length  ;
   
   rand int unsigned  max_data_len ;
@@ -197,7 +197,6 @@ class eth_tagged_data extends uvm_sequence_item;
 //==================== Constraint ================//
 
 
-  
 //================================================//
 //FUNCTION    : new
 //DESCRIPTION : construct

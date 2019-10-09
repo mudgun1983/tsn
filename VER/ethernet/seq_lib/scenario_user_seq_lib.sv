@@ -245,7 +245,7 @@ typedef enum bit[7:0]{
             fork		
 			 begin
              //EXPRESS PACKET
-			 express_data_len = $urandom_range(46,46);
+			 express_data_len = $urandom_range(1518,46);
 			 $display("express_data_len=%0d",express_data_len);
               `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
                              {mac_seq.c_da_cnt==express_da_cnt;
