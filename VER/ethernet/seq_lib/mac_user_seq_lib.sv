@@ -81,7 +81,7 @@ class mac_user_sequence extends mac_base_sequence;
      //forever 
      begin
      	vlan_choose = $random;
-     	$display("T=%0t,test in mac seq",$time);
+     	//$display("T=%0t,test in mac seq",$time);
      `uvm_do_with(req,
             {
 //                   	req.preamble.max_pre_len         == p_sequencer.static_cfg.cfg_max_pre_len;

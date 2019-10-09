@@ -139,7 +139,7 @@ class scoreboard extends uvm_scoreboard;
           	//============pop col frame=============//
 			eth_frame_col_tr=eth_col_que.pop_front();
 			`uvm_info(get_type_name(),{$psprintf("COMPARE START eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address)},UVM_LOW);
-			`uvm_info(get_type_name(),{$psprintf("exp_queue_size=%0d,col_queue_size=%0d\n",eth_exp_que.size,eth_col_que.size,)},UVM_LOW);
+			`uvm_info(get_type_name(),{$psprintf("exp_queue_size=%0d,col_queue_size=%0d\n",eth_exp_que.size,eth_col_que.size,)},UVM_HIGH);
 			         	
           	
           	while(1)begin
@@ -209,7 +209,7 @@ class scoreboard extends uvm_scoreboard;
                           end
                      endcase   
                 end
-          `uvm_info(get_type_name(),{$psprintf("comp_state=%0s\n",comp_state)},UVM_LOW);                         	
+          `uvm_info(get_type_name(),{$psprintf("comp_state=%0s\n",comp_state)},UVM_HIGH);                         	
           end
     endtask: eth_frame_compare
 
