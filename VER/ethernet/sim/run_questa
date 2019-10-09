@@ -2,8 +2,9 @@ set LIBDIR c:/questasim64_10.1d/uvm-1.1b/win64
 
 
 #set TEST_NAME simple_preemptable_packet_test
-set TEST_NAME simple_express_packet_test
+#set TEST_NAME simple_express_packet_test
 #set TEST_NAME simple_e_p_mix_packet_test
+set TEST_NAME simple_e_p_mix_random_test
 
 vlib work
 vlog  +define+ALIGN_MARKER_FAST_SIMULATE+SIM_USE -f dut_filelist.f  -work work
