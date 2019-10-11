@@ -289,7 +289,9 @@ always #(CLOCK_1us/2)
   // $fsdbDumpfile("filename_you_want.fsdb");
   // $fsdbDumpvars;
 // end
-   
+initial begin
+$vcdpluson;
+end   
 //------------DUT connect begin---------------------//
 /*
 dcn_top dcn_top (   

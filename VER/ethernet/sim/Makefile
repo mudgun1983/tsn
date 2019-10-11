@@ -1,10 +1,10 @@
 UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
 #TEST_NAME= simple_preemptable_packet_test
 #TEST_NAME= simple_express_packet_test
-#TEST_NAME= simple_e_p_mix_packet_test
-TEST_NAME= simple_e_p_mix_random_test
+TEST_NAME= simple_e_p_mix_packet_test
+#TEST_NAME= simple_e_p_mix_random_test
 
-all: clean comp run
+all: comp run
 
 comp:
 	vcs -full64 -work work \
@@ -21,7 +21,7 @@ comp:
 	-timescale=1ns/1ps \
 	-debug_access+all \
 	+error+10 \
-	-l comp.log -CFLAGS -DVCS
+	-l comp.log -CFLAGS -DVCS 
 
 run:
 	./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=${TEST_NAME} 
