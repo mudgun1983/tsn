@@ -50,12 +50,12 @@ class gmii_rx_driver extends mac_rx_base_driver;
   virtual       gmii_rx_if         m_gmii_rx_if;
   protected int unsigned  gmii_rx_driver_id              ;  
   local     state_e       m_state                        ;  
-  bit [7:0]               frame_data[$]                  ;
+  bit [7:0]               frame_data[]                  ;
 
   `uvm_component_utils_begin(gmii_rx_driver)
     `uvm_field_int       (gmii_rx_driver_id , UVM_ALL_ON)
     `uvm_field_enum      (state_e,m_state   , UVM_ALL_ON)
-    `uvm_field_array_int (frame_data        , UVM_ALL_ON)
+   // `uvm_field_array_int (frame_data        , UVM_ALL_ON)
  //   `uvm_field_object    (vif           , UVM_ALL_ON)
   `uvm_component_utils_end
   

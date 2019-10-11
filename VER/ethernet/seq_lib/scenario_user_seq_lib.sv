@@ -294,7 +294,7 @@ bit [7:0] frag[4]   = '{FRAG_CNT_0,FRAG_CNT_1,FRAG_CNT_2,FRAG_CNT_3};
 							 else
 							 {mac_seq.c_smd==smd_c[i];
 							  mac_seq.c_preamble_length == 6;
-							  mac_seq.c_frag_cnt==frag[j-1];
+							  mac_seq.c_frag_cnt==frag[(j-1)%4];
 							 }
 							 
 							 if(j==(preempt_cnt-1))

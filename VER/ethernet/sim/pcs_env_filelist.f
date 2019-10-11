@@ -1,5 +1,4 @@
-+incdir+c:/questasim64_10.1d/verilog_src/uvm-1.1b/src   
-c:/questasim64_10.1d/verilog_src/uvm-1.1b/src/uvm_pkg.sv
+
 #+incdir+../../common/uvm-1.2/src 
 #../../common/uvm-1.2/src/uvm_pkg.sv
 +incdir+../../common/cpu_uvc/

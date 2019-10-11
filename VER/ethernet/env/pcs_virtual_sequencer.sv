@@ -34,7 +34,7 @@
 `ifndef PCS_VIRTUAL_SEQUENCER_SV
 `define PCS_VIRTUAL_SEQUENCER_SV
 
-typedef class cpu_sequencer;
+//typedef class cpu_sequencer;
 class pcs_virtual_sequencer extends uvm_sequencer;
 
 //uvm_get_port #(uvm_sequence_item) req_get_port[];

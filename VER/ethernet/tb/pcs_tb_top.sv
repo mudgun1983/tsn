@@ -1,17 +1,21 @@
 
 `timescale 1ns/1ps
-                
+   
+
+   
 module pcs_tb_top;
 
 import uvm_pkg::*;
   `include "uvm_macros.svh"
   
 import pcs_env_pkg::*; 
-
-`include "gmii_rx_vif.sv"
+import cpu_pkg::*;
+import mac_pkg::*;
+/* `include "gmii_rx_vif.sv"
 `include "gmii_tx_vif.sv"
 `include "xgmii64_rx_vif.sv"
-`include "xgmii64_tx_vif.sv"
+`include "xgmii64_tx_vif.sv" */
+
 
 `define shim_loop
 //`define serdes_looop
@@ -267,11 +271,11 @@ always #(CLOCK_1us/2)
 
 
 //------------wave store begin-----------------------//
-initial
-   begin
-              $fsdbAutoSwitchDumpfile(500, {"sim.fsdb"},4);
-              $fsdbDumpvarsToFile("dump.list");
-   end
+// initial
+   // begin
+              // $fsdbAutoSwitchDumpfile(500, {"sim.fsdb"},4);
+              // $fsdbDumpvarsToFile("dump.list");
+   // end
 //------------wave store end------------------------//  
 
 //=======================TEST START======================  
@@ -280,11 +284,11 @@ initial
         run_test();
     end
 
-initial
-begin
-  $fsdbDumpfile("filename_you_want.fsdb");
-  $fsdbDumpvars;
-end
+// initial
+// begin
+  // $fsdbDumpfile("filename_you_want.fsdb");
+  // $fsdbDumpvars;
+// end
    
 //------------DUT connect begin---------------------//
 /*

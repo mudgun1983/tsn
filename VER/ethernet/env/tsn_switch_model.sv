@@ -241,14 +241,14 @@ typedef enum bit[7:0]{
 			 eth_frame_exp_tr.frame_data  = data_payload;
 			 
 			 //file IO
-                write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
-                foreach(frame_data_merge[key])
-                $fwrite(write_data_fd,$psprintf("frame_data_merge[%0d]=%2h\n",key,frame_data_merge[key]));			  
-                $fclose(write_data_fd);		
+                // write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
+                // foreach(frame_data_merge[key])
+                // $fwrite(write_data_fd,$psprintf("frame_data_merge[%0d]=%2h\n",key,frame_data_merge[key]));			  
+                // $fclose(write_data_fd);		
 			 
-			    write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
-                $fwrite(write_data_fd,$psprintf("frame_data_merge finish\n"));			  
-                $fclose(write_data_fd);
+			    // write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
+                // $fwrite(write_data_fd,$psprintf("frame_data_merge finish\n"));			  
+                // $fclose(write_data_fd);
 					
 			 data_payload.delete();	
              frame_data_merge.delete();			 

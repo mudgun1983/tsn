@@ -54,7 +54,7 @@ class gmii_tx_driver extends mac_tx_base_driver;
   `uvm_component_utils_begin(gmii_tx_driver)
     `uvm_field_int       (gmii_tx_driver_id , UVM_ALL_ON)
     `uvm_field_enum      (state_e,m_state   , UVM_ALL_ON)
-    `uvm_field_array_int (frame_data        , UVM_ALL_ON)
+   // `uvm_field_array_int (frame_data        , UVM_ALL_ON)
   `uvm_component_utils_end
   
   //--------------------------------------------------------------------

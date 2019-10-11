@@ -20,10 +20,10 @@ package mac_pkg;
   //parameter,enum define
   `include "mac_define.sv"
   //interface class
-  `include "interface/gmii_rx_vif.sv" 
-  `include "interface/gmii_tx_vif.sv" 
-  `include "interface/xgmii64_rx_vif.sv" 
-  `include "interface/xgmii64_tx_vif.sv" 
+   `include "interface/gmii_rx_vif.sv" 
+   `include "interface/gmii_tx_vif.sv" 
+   `include "interface/xgmii64_rx_vif.sv" 
+   `include "interface/xgmii64_tx_vif.sv" 
  
   `include "crc_cal.sv"
   //item

@@ -1,4 +1,4 @@
-`include "cpu_if.sv"
+//`include "cpu_if.sv"
 
 package cpu_pkg; 
 

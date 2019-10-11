@@ -54,7 +54,7 @@ class xgmii64_rx_driver extends mac_rx_base_driver;
   `uvm_component_utils_begin(xgmii64_rx_driver)
     `uvm_field_int       (xgmii64_rx_driver_id , UVM_ALL_ON)
     `uvm_field_enum      (state_e,m_state      , UVM_ALL_ON)
-    `uvm_field_array_int (frame_data           , UVM_ALL_ON)
+ //   `uvm_field_array_int (frame_data           , UVM_ALL_ON)
   `uvm_component_utils_end
   
   //--------------------------------------------------------------------
