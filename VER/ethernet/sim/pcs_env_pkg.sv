@@ -39,7 +39,10 @@ package pcs_env_pkg;
   `include "../uvc/component/pcs_agent.sv"
   `include "../uvc/component/pcs_env.sv"
   
-
+ //register config
+  `include "../env/register_config.sv"
+  `include "../env/PHY_PORT_TABLE.sv"
+  
   `include "../env/pcs_virtual_sequencer.sv" 
   `include "../env/dcn_scb.sv" 
   `include "../env/tsn_switch_model.sv"
@@ -51,7 +54,8 @@ package pcs_env_pkg;
   `include "../seq_lib/rgm_seq_lib.sv"
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
-  
+  `include "../seq_lib/rgm_user_seq_lib.sv"
+ 
   //test
   `include "../test_lib/pcs_base_test.sv"
   `include "../test_lib/user_test_lib.sv"

@@ -7,7 +7,7 @@ class pcs_base_test extends uvm_test;
     uvm_table_printer          printer;  
 
     pcs_tx_rx_env pcs_tx_rx_env0;
-    
+    register_config register_config0;
     integer file_id;
     event tc_finish;
     event tc_fail;
@@ -17,6 +17,7 @@ class pcs_base_test extends uvm_test;
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
 //       set_config_object("*","static_cfg",env_ec,0);     
+         register_config0 = new();
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -25,7 +26,10 @@ class pcs_base_test extends uvm_test;
        printer.knobs.depth = 6;
             
        pcs_tx_rx_env0 = pcs_tx_rx_env::type_id::create("pcs_tx_rx_env0", this); 
- 
+//set config//
+       uvm_config_db #(register_config0)::set(this, "*", "register_config",
+       register_config0);
+
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",
