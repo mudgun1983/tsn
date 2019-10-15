@@ -38,7 +38,9 @@ package pcs_env_pkg;
   `include "../uvc/component/pcs_monitor.sv"
   `include "../uvc/component/pcs_agent.sv"
   `include "../uvc/component/pcs_env.sv"
-  
+ 
+ //top config 
+  `include "../config/global_config.sv"
  //register config
   `include "../register/PHY_PORT_TABLE.sv"
   `include "../register/register_config.sv"

@@ -55,7 +55,8 @@ event cfg_refresh;
     `uvm_sequencer_utils_end
      
      cpu_sequencer  rgm_sqr;
-     mac_rx_base_sequencer mac_sqr[];
+	 mac_rx_base_sequencer mac_sqr;
+     mac_rx_base_sequencer mac_sqr_array[];
      
     function new(string name = "pcs_virtual_sequencer", uvm_component parent);
         super.new(name,parent);        

@@ -68,7 +68,8 @@ reg    [7:0]     gmii_rd;
 reg              gmii_dv;
 reg              gmii_err;
 
-
+string index;
+int key;
 //-------------inner signal end------------------//
 
 //------------interface--------------------------//
@@ -80,7 +81,10 @@ pcs_xilinx_serdes_if       cgmii_tx_block_if();
 pcs_xilinx_serdes_vif      cgmii_tx_block_vif;
 
 gmii_rx_if gmii_rx_if0();
+gmii_rx_if gmii_rx_if_multi[2]();
+gmii_rx_if gmii_rx_if_tmp();
 gmii_tx_if gmii_tx_if0();
+gmii_tx_if gmii_tx_if_multi[2]();
 gmii_rx_vif gmii_rx_vif0;
 gmii_tx_vif gmii_tx_vif0;
 
@@ -120,21 +124,34 @@ xgmii64_tx_vif xgmii64_tx_vif0;
       
         
         gmii_rx_vif0 = new(gmii_rx_if0); 
-        //set_config_object("*mac_rx_agent0*","m_gmii_rx_vif",gmii_rx_vif0,0);
-        //set_config_object("*","vif",gmii_rx_vif0,0);
-        uvm_config_db#(virtual gmii_rx_if)::set(null,"*mac_rx_agent0*","m_gmii_rx_if",gmii_rx_if0);
+        uvm_config_db#(virtual gmii_rx_if)::set(null,"*mac_env_dbg*mac_rx_agent0*","m_gmii_rx_if",gmii_rx_if0);
         
         gmii_tx_vif0 = new(gmii_tx_if0); 
-        //set_config_object("*mac_tx_agent0*","m_gmii_tx_vif",gmii_tx_vif0,0);
-        uvm_config_db#(virtual gmii_tx_if)::set(null,"*mac_tx_agent0*","m_gmii_tx_if",gmii_tx_if0);
+        uvm_config_db#(virtual gmii_tx_if)::set(null,"*mac_env_dbg*mac_tx_agent0*","m_gmii_tx_if",gmii_tx_if0);
         
+		  
         xgmii64_rx_vif0 = new(xgmii64_rx_if); 
         set_config_object("*mac_rx_agent0*","m_xgmii64_rx_vif",xgmii64_rx_vif0,0);
         xgmii64_tx_vif0 = new(xgmii64_tx_if);                                     
         set_config_object("*mac_tx_agent0*","m_xgmii64_tx_vif",xgmii64_tx_vif0,0);
 
         //set_config_object("*","vif",cgmii_tx_block_vif,0);               
-    end  
+    end 
+	
+genvar i;
+generate
+  for(i=0;i<2;i++)
+ initial
+  begin
+  begin
+    		index = $sformatf("%0d",i);//string'(i);
+			//uvm_config_db#(virtual gmii_rx_if)::set(null,{"mac_env0[",index,"]*mac_rx_agent0*"},"m_gmii_rx_if",gmii_rx_if[0]);
+			uvm_config_db#(virtual gmii_rx_if)::set(null,{"*mac_env0[",index,"]*mac_rx_agent0*"},"m_gmii_rx_if",gmii_rx_if_multi[i]);
+			uvm_config_db#(virtual gmii_tx_if)::set(null,{"*mac_env0[",index,"]*mac_tx_agent0*"},"m_gmii_tx_if",gmii_tx_if_multi[i]);
+  end
+  end
+endgenerate
+	
 //------------ 
 //------------generate CLOCK_156M and reset begin-------//
 initial

@@ -1,6 +1,6 @@
 class topology_config extends uvm_object;
 
-int mac_number = 18;
+int mac_number = 2;
 
 `uvm_object_utils_begin( topology_config );
 `uvm_object_utils_end

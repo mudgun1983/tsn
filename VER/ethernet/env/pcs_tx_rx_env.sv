@@ -28,6 +28,7 @@ class pcs_tx_rx_env extends uvm_env;
     topology_config       topology_config0;
     cpu_agent             cpu_agent0;
     pcs_virtual_sequencer virt_seqr;
+	mac_env               mac_env_dbg;
     mac_env               mac_env0[];
     
     scoreboard            scb0 ;
@@ -48,7 +49,8 @@ class pcs_tx_rx_env extends uvm_env;
       super.build();
 	    if( !uvm_config_db #( topology_config )::get( this , "" , "topology_config" ,topology_config0 ) ) begin
            `uvm_fatal(get_type_name(),"=============topology_config==========");
-		   
+		end
+		
         expect_fifo_1         =  new("expect_fifo_1",this);
 		expect_fifo_0         =  new("expect_fifo_0",this);
         monitor_fifo_0         =  new("monitor_fifo_0",this);
@@ -57,9 +59,12 @@ class pcs_tx_rx_env extends uvm_env;
 		tsn_switch_model_monitor= new("tsn_switch_model_monitor",this);
        // pcs_rx_env0              =  pcs_env::type_id::create("pcs_rx_env0",this);
         cpu_agent0               =  cpu_agent::type_id::create("cpu_agent0",this);
+		mac_env_dbg                 =  mac_env::type_id::create("mac_env_dbg",this);
+		mac_env0=new[topology_config0.mac_number];
+		
 		for(int i=0;i<topology_config0.mac_number;i++)
           begin
-		    index = 'string(i);
+		    index = $sformatf("%0d",i);//string'(i);
 		    mac_env0[i]                 =  mac_env::type_id::create({"mac_env0[",index,"]"},this);
 		  end
         virt_seqr                =  pcs_virtual_sequencer::type_id::create("virt_seqr",this);
@@ -75,21 +80,22 @@ class pcs_tx_rx_env extends uvm_env;
                   
     //virtual sqr//
         virt_seqr.rgm_sqr         = cpu_agent0.sequencer;
+		virt_seqr.mac_sqr         = mac_env_dbg.mac_rx_agent0.sequencer;
 		for(int i=0;i<topology_config0.mac_number;i++)
-        virt_seqr.mac_sqr[i]         = mac_env0[i].mac_rx_agent0.sequencer;
+        virt_seqr.mac_sqr_array[i]         = mac_env0[i].mac_rx_agent0.sequencer;
         
         //mac_env0.mac_rx_agent0.monitor.item_collected_port.connect(expect_fifo_1.analysis_export);
         //scb0.expect_get_port.connect(expect_fifo_1.blocking_get_export);
 		
        //rx_monitor   ->  expect_fifo_0 -> tsn_switch_model0 -> expect_fifo_1 -> scb0 //
-		mac_env0.mac_rx_agent0.monitor.item_collected_port.connect(expect_fifo_0.analysis_export);
+		mac_env_dbg.mac_rx_agent0.monitor.item_collected_port.connect(expect_fifo_0.analysis_export);
 		tsn_switch_model0.get_port.connect(expect_fifo_0.blocking_get_export);
 		
 		tsn_switch_model0.item_collected_port.connect(expect_fifo_1.analysis_export);
 		scb0.expect_get_port.connect(expect_fifo_1.blocking_get_export);
 		
 		//tx_monitor   ->  monitor_fifo_0 -> tsn_switch_model_monitor -> monitor_fifo_1 -> scb0 //
-        mac_env0.mac_tx_agent0.monitor.item_collected_port.connect(monitor_fifo_0.analysis_export);
+        mac_env_dbg.mac_tx_agent0.monitor.item_collected_port.connect(monitor_fifo_0.analysis_export);
 		tsn_switch_model_monitor.get_port.connect(monitor_fifo_0.blocking_get_export);
 		
 		tsn_switch_model_monitor.item_collected_port.connect(monitor_fifo_1.analysis_export);
