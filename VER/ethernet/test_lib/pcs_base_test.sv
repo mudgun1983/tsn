@@ -27,7 +27,7 @@ class pcs_base_test extends uvm_test;
             
        pcs_tx_rx_env0 = pcs_tx_rx_env::type_id::create("pcs_tx_rx_env0", this); 
 //set config//
-       uvm_config_db #(register_config0)::set(this, "*", "register_config",
+       uvm_config_db #(register_config)::set(this, "*", "register_config",
        register_config0);
 
 //==================================scenario============================================       
@@ -37,9 +37,10 @@ class pcs_base_test extends uvm_test;
 //==================================scenario============================================         
 
 //==================================rgm=================================================
-       //set_config_string("aps_tb0.rgm_model_tb0.rgm_seqr","default_sequence","rgm_adapter_seq");
-       set_config_int("pcs_tx_rx_env.cpu_agent0.sequencer","count",0);
-       //set_config_int("aps_tb0.rgm_model_tb0.rgm_seqr","count",0);
+       //set_config_int("pcs_tx_rx_env.cpu_agent0.sequencer","count",0);
+	   uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.cpu_agent0.sequencer.run_phase", 
+			       "default_sequence",
+				phy_port_table_reg_seq::type_id::get());
 //====================================================================================== 
 
 //===========//

@@ -1,36 +1,4 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       poc_rgm_seq_lib.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:          Chen Chengman
-// AUTHOR'S EMAIL:  chen.chengman@zte.com.cn
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.1         2013-11-14    Chen Chengman   UVM
-// 1.2         2016-7-21     Son Gaoqian     UVM
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: poc_rgm_seq_lib
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
 
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------
 // CLASS: seq_reg_user_macro
@@ -65,9 +33,19 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
     super.new(name);
   endfunction : new
   
+   virtual task pre_body();/*{{{*/
+        uvm_test_done.raise_objection(this);
+        `uvm_info(get_type_name(),"[START_SEQUENCE]",UVM_LOW)
+   endtask : pre_body
+
+   virtual task post_body();
+       uvm_test_done.drop_objection(this);
+       `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
+   endtask : post_body
+  
   virtual task body();
      super.body();
-     `uvm_info(get_type_name(),$psprintf("\n-----------------RGM start---------------",),UVM_FULL);
+     `uvm_info(get_type_name(),$psprintf("\n-----------------RGM start---------------",),UVM_LOW);
   endtask: body
 endclass : seq_reg_user_macro
 

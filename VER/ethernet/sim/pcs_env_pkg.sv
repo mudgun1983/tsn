@@ -40,8 +40,9 @@ package pcs_env_pkg;
   `include "../uvc/component/pcs_env.sv"
   
  //register config
-  `include "../env/register_config.sv"
   `include "../env/PHY_PORT_TABLE.sv"
+  `include "../env/register_config.sv"
+  
   
   `include "../env/pcs_virtual_sequencer.sv" 
   `include "../env/dcn_scb.sv" 
