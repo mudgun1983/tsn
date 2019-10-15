@@ -1,4 +1,0 @@
--o test.txt -s /pcs_tb_top/dcn_top/dcn_tx_top/dcn_tx_shim0/block_data_o[65:2] -w 64 
--exp "/pcs_tb_top/dcn_top/dcn_tx_top/dcn_tx_shim0/block_valid_o==1" 
--w 1 -of h
-## comment
