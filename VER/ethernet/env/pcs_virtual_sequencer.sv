@@ -61,6 +61,7 @@ event cfg_refresh;
     function new(string name = "pcs_virtual_sequencer", uvm_component parent);
         super.new(name,parent);        
         `uvm_update_sequence_lib
+		mac_sqr_array = new[20];
 //        req_get_port = new[64];
 //        for(int i=0;i<req_get_port.size;i++)
 //        	     begin

@@ -36,7 +36,7 @@ parameter SELF_DEFINE_PACKET= 0;
 parameter OAM_PACKET        = 1;
 parameter PROTOCOL_PACKET   = 2;
 parameter DSP_PACKET        = 3;
-
+parameter GMII_PORT_NUM     = 20;
 //***************************************************************************
    // The following parameters refer to width of various ports
    //***************************************************************************
@@ -81,10 +81,10 @@ pcs_xilinx_serdes_if       cgmii_tx_block_if();
 pcs_xilinx_serdes_vif      cgmii_tx_block_vif;
 
 gmii_rx_if gmii_rx_if0();
-gmii_rx_if gmii_rx_if_multi[2]();
+gmii_rx_if gmii_rx_if_multi[GMII_PORT_NUM]();
 gmii_rx_if gmii_rx_if_tmp();
 gmii_tx_if gmii_tx_if0();
-gmii_tx_if gmii_tx_if_multi[2]();
+gmii_tx_if gmii_tx_if_multi[GMII_PORT_NUM]();
 gmii_rx_vif gmii_rx_vif0;
 gmii_tx_vif gmii_tx_vif0;
 
@@ -140,7 +140,7 @@ xgmii64_tx_vif xgmii64_tx_vif0;
 	
 genvar i;
 generate
-  for(i=0;i<2;i++)
+  for(i=0;i<GMII_PORT_NUM;i++)
  initial
   begin
   begin
@@ -243,47 +243,32 @@ always #(CLOCK_125M/2)
 always #(CLOCK_125M/2)                
   gmii_tx_if0.clk <= ~gmii_tx_if0.clk;
 
-
-logic    mana_sect_shim0_dat0_ien_i;
-logic    mana_sect_shim0_dat1_ien_i;
-
-logic    mana_sect_shim1_dat0_ien_i;
-logic    mana_sect_shim1_dat1_ien_i;  
-
-logic [65:0]mana_sect_shim0_dat_o    ;
-logic       mana_sect_shim0_dat_vld_o;
-
-logic [65:0]mana_sect_shim1_dat_o    ;
-logic       mana_sect_shim1_dat_vld_o;
-
-initial
-  begin
-  	mana_sect_shim0_dat0_ien_i=0;
-  	mana_sect_shim0_dat1_ien_i=0;
-  	mana_sect_shim1_dat0_ien_i=0;
-    mana_sect_shim1_dat1_ien_i=0;
-
-//  	#5us;
-//  	mana_sect_shim0_dat0_ien_i=1;
-//  	mana_sect_shim1_dat0_ien_i=1;
-//  	#10ns;
-//  	mana_sect_shim1_dat0_ien_i=1;
-//  	mana_sect_shim1_dat0_ien_i=0;
-  end   
-
-always #(CLOCK_1us/2)
+genvar j;
+generate
+ for(j=0;j<GMII_PORT_NUM;j++)
    begin
-   	mana_sect_shim0_dat0_ien_i<=1;
-    #10ns;
-    mana_sect_shim0_dat0_ien_i<=0;
+    initial
+      begin
+	    gmii_rx_if_multi[j].clk=1;
+      	gmii_rx_if_multi[j].reset=0;
+      	gmii_tx_if_multi[j].clk=1;
+      	gmii_tx_if_multi[j].reset=0;
+      	#10ns;
+		gmii_rx_if_multi[j].reset=1;
+      	gmii_tx_if_multi[j].reset=1;
+      	#50ns;
+		gmii_rx_if_multi[j].reset=0;
+      	gmii_tx_if_multi[j].reset=0;
+      end
+  
+    always #(CLOCK_125M/2)  
+      begin
+	   gmii_rx_if_multi[j].clk <= ~gmii_rx_if_multi[j].clk;
+	   gmii_tx_if_multi[j].clk <= ~gmii_tx_if_multi[j].clk;
+	  end
    end
-
-always #(CLOCK_1us/2)
-   begin
-   	mana_sect_shim1_dat0_ien_i<=1;
-    #10ns;
-    mana_sect_shim1_dat0_ien_i<=0;
-   end   	
+endgenerate
+ 	
 //--------- interface end  -----------//
 
 

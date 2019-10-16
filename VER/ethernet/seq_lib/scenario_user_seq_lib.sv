@@ -98,11 +98,13 @@ class scenario_simple_express_packet_test extends scenario_reg_test;
 			 begin
               `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
                              {mac_seq.c_da_cnt==local_da_cnt;
+							  mac_seq.c_sa_cnt==local_sa_cnt;
 							  mac_seq.c_packet_len == 'd46;
 							  mac_seq.c_tpid == 'd46;
 							  mac_seq.c_preemptable==0;
 							 })
-              local_da_cnt++; 		
+              local_da_cnt++; 	
+              local_sa_cnt++;			  
             end			  
         end
       endtask    
@@ -311,6 +313,63 @@ bit [7:0] frag[4]   = '{FRAG_CNT_0,FRAG_CNT_1,FRAG_CNT_2,FRAG_CNT_3};
 			 join
 			 
           end			 
+        end
+      endtask    
+endclass
+
+class scenario_full_throughput_test extends scenario_reg_test;
+int  data_len;
+    
+
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_full_throughput_test, pcs_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_full_throughput_test");               
+        super.new();             
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+
+   virtual task body();
+        begin
+		super.body();
+		  #500ns
+        
+        		
+		for(int i =0; i<topology_config0.mac_number;i++)
+		  begin
+		  automatic int index;
+          index = i; 
+		  fork
+          //EXPRESS PACKET
+		    begin
+		    //for(int j=0;j<3;j++)
+			forever
+			 begin
+			  data_len=$urandom_range(1518,46);
+              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr_array[index],
+                             {mac_seq.c_da_cnt==local_da_cnt;
+							  mac_seq.c_sa_cnt==local_sa_cnt;
+							  mac_seq.c_packet_len == data_len;
+							  mac_seq.c_tpid == data_len;
+							  mac_seq.c_preemptable==0;
+							 })
+              local_da_cnt++; 	
+              local_sa_cnt++;			  
+            end	
+			end
+          join_none			
+          end	
+          wait fork;
+          		  
         end
       endtask    
 endclass

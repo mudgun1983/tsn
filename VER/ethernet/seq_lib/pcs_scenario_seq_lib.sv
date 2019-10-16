@@ -13,10 +13,15 @@ class scenario_reg_test extends uvm_sequence;
 //==================== Attribute =================//
 seq_dcn_basic  seq_reg; 
 mac_user_sequence mac_seq;
+
 seq_dcn_statics_reg seq_dcn_statics_reg;
 seq_packet_gen seq_packet_gen_reg;
 
 bit [47:0] local_da_cnt;
+bit [47:0] local_sa_cnt;
+topology_config       topology_config0;
+string scope_name = "";
+
 //==================== Registration ==============//
 `uvm_sequence_utils(scenario_reg_test, pcs_virtual_sequencer)
 //==================== Registration ==============//
@@ -26,7 +31,7 @@ bit [47:0] local_da_cnt;
 //DESCRIPTION : construct
 //================================================//
     function new (string name = "scenario_reg_test");               
-        super.new();             
+        super.new();   
     endfunction:new
 
  virtual task pre_body();/*{{{*/
@@ -45,48 +50,21 @@ bit [47:0] local_da_cnt;
 //================================================//
    virtual task body();
         begin
-		    //`uvm_do_on(seq_reg,p_sequencer.rgm_sqr)
-          	//`uvm_do_on(mac_seq,p_sequencer.mac_sqr)
-        	//===========================aps reg config=============== 
-        	   #100ns
-        	  //`uvm_do_on(seq_reg,p_sequencer.rgm_sqr)
-//        	  `uvm_do_on(seq_reg_aps_config_seq,p_sequencer.rgm_sqr)
-//        	  `uvm_do_on(seq_reg_msp_config_seq,p_sequencer.rgm_sqr)
-/*        	  `uvm_do_on_with(seq_reg_lag_config_seq,p_sequencer.rgm_sqr,
-        	                  {foreach(seq_reg_lag_config_seq.index_to_dni_pw[key])
-        	                           {seq_reg_lag_config_seq.index_to_dni_pw[key].dni_pw_size==1;
-        	                            seq_reg_lag_config_seq.index_to_dni_pw[key].dni_pw[0]==key;}
-        	                  })*/
-//        	  ->p_sequencer.timing_trigger;
-        	  //===========================cpu cmd======================
-//        	  while(1)
-//        	    begin
-//        	    	#4000000
-//        	    	`uvm_do_on_with(seq_reg,p_sequencer.rgm_sqr,
-//        	    	                {seq_reg.pg_id==0;})
-//        	    end   
-            fork
-             
+  
+        if( scope_name == "" ) begin
+        scope_name = get_full_name(); // this is {       sequencer.get_full_name() , get_name() }
+        end
+
+        if( !uvm_config_db #( topology_config )::get( null , scope_name ,
+        "topology_config" , topology_config0 ) ) begin
+        `uvm_fatal(get_type_name(),"=============NO topology_config==========");
+        end
+		
+	
+		/*
+            fork            
              begin
-             //forever
-			 /*begin
-			  #500ns
-			  `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==local_da_cnt;
-							 mac_seq.c_preemptable==0;
-							})
-              local_da_cnt++; 
-			 end*/
-			 
-             begin
-             //#300ns
-			 // `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            // {mac_seq.c_da_cnt==0;//local_da_cnt;
-							 // mac_seq.c_packet_len == 'd138;
-							 // mac_seq.c_preemptable==0;
-							// })
-              // local_da_cnt++; 
-			  
+             begin		  
 			 //SMD_S0
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
                             {mac_seq.c_da_cnt==0;//local_da_cnt;
@@ -151,14 +129,9 @@ bit [47:0] local_da_cnt;
              	#500ns
               `uvm_do_on(seq_dcn_statics_reg,p_sequencer.rgm_sqr)
               end
-             end
-             
-//             begin
-//             	#10ns
-//             	`uvm_do_on(seq_packet_gen_reg,p_sequencer.rgm_sqr) 
-//             end
+             end            
             join
-            
+        */    
         end
       endtask    
 endclass

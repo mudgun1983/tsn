@@ -27,6 +27,7 @@ class mac_user_sequence extends mac_base_sequence;
   parameter [15:0]     VLAN_VALUE1 = 16'd501;
   
   rand bit [47:0] c_da_cnt;
+  rand bit [47:0] c_sa_cnt;
   `ifdef GMII_RX_PUSH_MODE
     `uvm_sequence_utils(mac_user_sequence,mac_rx_base_push_sequencer)
   `else
@@ -113,7 +114,7 @@ class mac_user_sequence extends mac_base_sequence;
 					req.preamble.frag_cnt            == c_frag_cnt;
                    	
                    	req.destination_address          == c_da_cnt;//48'h01_02_03_04_05_06;//p_sequencer.static_cfg.da;
-                   	req.source_address               == 48'h07_08_09_0a_0b_0c;//p_sequencer.static_cfg.sa;
+                   	req.source_address               == c_sa_cnt;//48'h07_08_09_0a_0b_0c;//p_sequencer.static_cfg.sa;
                     req.tagged_data_size             == 2    ;//p_sequencer.static_cfg.cfg_tagged_data_size;
                     //req.tagged_data[0].max_data_len  == 2    ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
                    // req.tagged_data[0].min_data_len  == 2    ;//p_sequencer.static_cfg.cfg_min_tagged_data_len;    
