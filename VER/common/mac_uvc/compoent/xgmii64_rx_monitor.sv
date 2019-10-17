@@ -1,35 +1,4 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       xgmii64_rx_monitor.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:          Li Xiangqiong
-// AUTHOR'S EMAIL:  li.xiangqiong@zte.com.cn
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.1         2011-11-22    Li Xiangqiong   UVM
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: xgmii64_rx_monitor
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
 
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
 
 `ifndef XGMII64_RX_MONITOR_SV
 `define XGMII64_RX_MONITOR_SV
@@ -75,22 +44,22 @@ class xgmii64_rx_monitor extends mac_rx_base_monitor;
   // build
   //--------------------------------------------------------------------
   function void build();
+    super.build();
+    // xgmii64_rx_vif vif;
+    // uvm_object dummy;
 
-    xgmii64_rx_vif vif;
-    uvm_object dummy;
-
-    vif = null;
-    if(!get_config_object("m_xgmii64_rx_vif", dummy, 0)) begin
-      uvm_report_error("build", "no virtual interface available");
-    end
-    else begin
-      if(!$cast(vif, dummy)) begin
-        uvm_report_error("build", "virtual interface is incorrect type");
-      end
-      else begin
-        m_xgmii64_rx_if = vif.m_xgmii64_rx_if;
-      end
-    end
+    // vif = null;
+    // if(!get_config_object("m_xgmii64_rx_vif", dummy, 0)) begin
+      // uvm_report_error("build", "no virtual interface available");
+    // end
+    // else begin
+      // if(!$cast(vif, dummy)) begin
+        // uvm_report_error("build", "virtual interface is incorrect type");
+      // end
+      // else begin
+        // m_xgmii64_rx_if = vif.m_xgmii64_rx_if;
+      // end
+    // end
     
     //if(!get_config_object("mac_env_static_config",dummy,0)) begin
     //	uvm_report_error("build","no value for mac_env_static_config");
@@ -98,7 +67,10 @@ class xgmii64_rx_monitor extends mac_rx_base_monitor;
     //else begin
     //	if(!$cast(static_cfg,dummy))
     //		uvm_report_error("build","static_cfg is incorrect type");
-    //	end  
+    //	end 
+    if(!uvm_config_db#(virtual xgmii64_rx_if)::get(this, "", "m_xgmii64_rx_if", m_xgmii64_rx_if)) begin
+         `uvm_fatal(get_type_name(),"=============No virtual interface specified for this driver instance==========");
+      end	
   endfunction : build
   
   function void start_of_simulation();

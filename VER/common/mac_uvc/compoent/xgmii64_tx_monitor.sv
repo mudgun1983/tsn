@@ -47,7 +47,7 @@ class xgmii64_tx_monitor extends mac_tx_base_monitor;
   } state_e;  
   local state_e     m_state;
   
-  protected virtual       xgmii64_tx_if         m_xgmii64_tx_if;
+  virtual       xgmii64_tx_if         m_xgmii64_tx_if;
   protected int unsigned  xgmii64_tx_monitor_id; 
   protected event         cov_transaction;
   
@@ -75,22 +75,22 @@ class xgmii64_tx_monitor extends mac_tx_base_monitor;
   // build
   //--------------------------------------------------------------------
   function void build();
+    super.build();
+    // xgmii64_tx_vif vif;
+    // uvm_object dummy;
 
-    xgmii64_tx_vif vif;
-    uvm_object dummy;
-
-    vif = null;
-    if(!get_config_object("m_xgmii64_tx_vif", dummy, 0)) begin
-      uvm_report_error("build", "no virtual interface available");
-    end
-    else begin
-      if(!$cast(vif, dummy)) begin
-        uvm_report_error("build", "virtual interface is incorrect type");
-      end
-      else begin
-        m_xgmii64_tx_if = vif.m_xgmii64_tx_if;
-      end
-    end
+    // vif = null;
+    // if(!get_config_object("m_xgmii64_tx_vif", dummy, 0)) begin
+      // uvm_report_error("build", "no virtual interface available");
+    // end
+    // else begin
+      // if(!$cast(vif, dummy)) begin
+        // uvm_report_error("build", "virtual interface is incorrect type");
+      // end
+      // else begin
+        // m_xgmii64_tx_if = vif.m_xgmii64_tx_if;
+      // end
+    // end
     
     //if(!get_config_object("mac_env_static_config",dummy,0)) begin
     //	uvm_report_error("build","no value for mac_env_static_config");
@@ -98,7 +98,10 @@ class xgmii64_tx_monitor extends mac_tx_base_monitor;
     //else begin
     //	if(!$cast(static_cfg,dummy))
     //		uvm_report_error("build","static_cfg is incorrect type");
-    //	end  
+    //	end 
+   if(!uvm_config_db#(virtual xgmii64_tx_if)::get(this, "", "m_xgmii64_tx_if", m_xgmii64_tx_if)) begin
+         `uvm_fatal(get_type_name(),"=============No virtual interface specified for this driver instance==========");
+      end	
   endfunction : build
   
   function void start_of_simulation();

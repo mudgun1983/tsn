@@ -1,35 +1,4 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       xgmii64_rx_driver.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:          Li Xiangqiong
-// AUTHOR'S EMAIL:  li.xiangqiong@zte.com.cn
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.1         2011-11-22    Li Xiangqiong   UVM
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: xgmii64_rx_driver
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
 
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
 
 `ifndef XGMII64_RX_DRIVER_SV
 `define XGMII64_RX_DRIVER_SV
@@ -46,7 +15,7 @@ class xgmii64_rx_driver extends mac_rx_base_driver;
     IPG_State,TX_PKT_State,TX_ER_State
   } state_e;
   
-  protected virtual       xgmii64_rx_if         m_xgmii64_rx_if;
+  virtual       xgmii64_rx_if         m_xgmii64_rx_if;
   protected int unsigned  xgmii64_rx_driver_id                 ;  
   local     state_e       m_state                              ;  
   bit [7:0]               frame_data[$]                        ;
@@ -68,7 +37,7 @@ class xgmii64_rx_driver extends mac_rx_base_driver;
   // build
   //--------------------------------------------------------------------
   function void build();
-
+      super.build();
 //    xgmii64_rx_vif vif;
 //    uvm_object dummy;
 //

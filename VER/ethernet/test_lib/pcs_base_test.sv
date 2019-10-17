@@ -78,6 +78,14 @@ class pcs_base_test extends uvm_test;
       set_type_override_by_type(mac_rx_base_driver::get_type(),gmii_rx_driver::get_type());   
       set_type_override_by_type(mac_rx_base_monitor::get_type(),gmii_rx_monitor::get_type());  
       set_type_override_by_type(mac_tx_base_monitor::get_type(),gmii_tx_monitor::get_type());  
+	  set_inst_override_by_type("*mac_env0[0]*mac_rx_agent0*", mac_rx_base_driver::get_type(), xgmii64_rx_driver::get_type() );
+	  set_inst_override_by_type("*mac_env0[0]*mac_rx_agent0*", mac_rx_base_monitor::get_type(), xgmii64_rx_monitor::get_type() );
+	  set_inst_override_by_type("*mac_env0[0]*mac_tx_agent0*", mac_tx_base_driver::get_type(), xgmii64_tx_driver::get_type() );
+	  set_inst_override_by_type("*mac_env0[0]*mac_tx_agent0*", mac_tx_base_monitor::get_type(), xgmii64_tx_monitor::get_type() );
+	  set_inst_override_by_type("*mac_env0[1]*mac_rx_agent0*", mac_rx_base_driver::get_type(), xgmii64_rx_driver::get_type() );
+	  set_inst_override_by_type("*mac_env0[1]*mac_rx_agent0*", mac_rx_base_monitor::get_type(), xgmii64_rx_monitor::get_type() );
+	  set_inst_override_by_type("*mac_env0[1]*mac_tx_agent0*", mac_tx_base_driver::get_type(), xgmii64_tx_driver::get_type() );
+	  set_inst_override_by_type("*mac_env0[1]*mac_tx_agent0*", mac_tx_base_monitor::get_type(), xgmii64_tx_monitor::get_type() );
 //================================ set_type_override =======================================
        
    endfunction : build_phase

@@ -1,35 +1,4 @@
-//FILE_HEADER------------------------------------------------------------------------------------------
-// ZTE  Copyright
-// ZTE Company Confidential
-//-----------------------------------------------------------------------------------------------------
-// FILE NAME:       xgmii64_tx_driver.sv
-// DEPARTMENT:      Multi-Service Bearer Product ShenZhen Design&Development Dept.
-// AUTHOR:          Li Xiangqiong
-// AUTHOR'S EMAIL:  li.xiangqiong@zte.com.cn
-//-----------------------------------------------------------------------------------------------------
-// RELEASE HISTORY: N/A
-// VERSION      DATE         AUTHOR       DESCRIPTION
-// 1.1         2011-11-22    Li Xiangqiong   UVM
-//-----------------------------------------------------------------------------------------------------
-// KEYWORDS: xgmii64_tx_driver
-//-----------------------------------------------------------------------------------------------------
-// PURPOSE: 
-//--------------------------------------------------------------------------------------------------
-// PARAMETERS
-//         PARAM  NAME    RANGE    : DESCRIPTION    :DEFAULT   :UNITS
 
-//-----------------------------------------------------------------------------------------------------
-//REUSE ISSUES
-// Reset Strategy:  N/A
-// Clock  Domains:  N/A
-// Critical Timing: N/A
-// Test   Features: N/A
-// Asynchronous I/F:N/A
-// Scan Methodology:N/A
-// Instaniations:   N/A
-// Synthesizable:   N/A
-// Other:   
-// END_HEADER---------------------------------------------------------------------------------------------
 
 `ifndef XGMII64_TX_DRIVER_SV
 `define XGMII64_TX_DRIVER_SV
@@ -46,7 +15,7 @@ class xgmii64_tx_driver extends mac_tx_base_driver;
     IPG_State,TX_PKT_State,TX_ER_State
   } state_e;
   
-  protected virtual       xgmii64_tx_if         m_xgmii64_tx_if;
+  virtual       xgmii64_tx_if         m_xgmii64_tx_if;
   protected int unsigned  xgmii64_tx_driver_id                 ;  
   local     state_e       m_state                              ;  
   bit [7:0]               frame_data[$]                        ;
@@ -68,22 +37,22 @@ class xgmii64_tx_driver extends mac_tx_base_driver;
   // build
   //--------------------------------------------------------------------
   function void build();
+    super.build();
+    // xgmii64_tx_vif vif;
+    // uvm_object dummy;
 
-    xgmii64_tx_vif vif;
-    uvm_object dummy;
-
-    vif = null;
-    if(!get_config_object("m_xgmii64_tx_vif", dummy, 0)) begin
-      uvm_report_error("build", "no virtual interface available");
-    end
-    else begin
-      if(!$cast(vif, dummy)) begin
-        uvm_report_error("build", "virtual interface is incorrect type");
-      end
-      else begin
-        m_xgmii64_tx_if = vif.m_xgmii64_tx_if;
-      end
-    end
+    // vif = null;
+    // if(!get_config_object("m_xgmii64_tx_vif", dummy, 0)) begin
+      // uvm_report_error("build", "no virtual interface available");
+    // end
+    // else begin
+      // if(!$cast(vif, dummy)) begin
+        // uvm_report_error("build", "virtual interface is incorrect type");
+      // end
+      // else begin
+        // m_xgmii64_tx_if = vif.m_xgmii64_tx_if;
+      // end
+    // end
     
     //if(!get_config_object("mac_env_static_config",dummy,0)) begin
     //	uvm_report_error("build","no value for mac_env_static_config");
@@ -92,6 +61,9 @@ class xgmii64_tx_driver extends mac_tx_base_driver;
     //	if(!$cast(static_cfg,dummy))
     //		uvm_report_error("build","static_cfg is incorrect type");
     //	end  
+	if(!uvm_config_db#(virtual xgmii64_tx_if)::get(this, "", "m_xgmii64_tx_if", m_xgmii64_tx_if)) begin
+         `uvm_fatal(get_type_name(),"=============No virtual interface specified for this driver instance==========");
+      end
   endfunction : build
   
   //--------------------------------------------------------------------

@@ -17,7 +17,6 @@ import mac_pkg::*;
 `include "xgmii64_tx_vif.sv" */
 
 
-`define shim_loop
 //`define serdes_looop
 //-------------parameter begin-------------------//
 parameter CLOCK_156M = 6.4;
@@ -37,6 +36,7 @@ parameter OAM_PACKET        = 1;
 parameter PROTOCOL_PACKET   = 2;
 parameter DSP_PACKET        = 3;
 parameter GMII_PORT_NUM     = 20;
+parameter XGMII_PORT_NUM     = 2;
 //***************************************************************************
    // The following parameters refer to width of various ports
    //***************************************************************************
@@ -68,7 +68,7 @@ reg    [7:0]     gmii_rd;
 reg              gmii_dv;
 reg              gmii_err;
 
-string index;
+string index,index1;
 int key;
 //-------------inner signal end------------------//
 
@@ -81,16 +81,15 @@ pcs_xilinx_serdes_if       cgmii_tx_block_if();
 pcs_xilinx_serdes_vif      cgmii_tx_block_vif;
 
 gmii_rx_if gmii_rx_if0();
-gmii_rx_if gmii_rx_if_multi[GMII_PORT_NUM]();
-gmii_rx_if gmii_rx_if_tmp();
+gmii_rx_if gmii_rx_if_array[GMII_PORT_NUM]();
 gmii_tx_if gmii_tx_if0();
-gmii_tx_if gmii_tx_if_multi[GMII_PORT_NUM]();
+gmii_tx_if gmii_tx_if_array[GMII_PORT_NUM]();
 gmii_rx_vif gmii_rx_vif0;
 gmii_tx_vif gmii_tx_vif0;
 
-xgmii64_rx_if xgmii64_rx_if();
+xgmii64_rx_if xgmii64_rx_if_array[XGMII_PORT_NUM]();
 xgmii64_rx_vif xgmii64_rx_vif0;
-xgmii64_tx_if xgmii64_tx_if();
+xgmii64_tx_if xgmii64_tx_if_array[XGMII_PORT_NUM]();
 xgmii64_tx_vif xgmii64_tx_vif0;
 //------------interface--------------------------//
 
@@ -130,24 +129,38 @@ xgmii64_tx_vif xgmii64_tx_vif0;
         uvm_config_db#(virtual gmii_tx_if)::set(null,"*mac_env_dbg*mac_tx_agent0*","m_gmii_tx_if",gmii_tx_if0);
         
 		  
-        xgmii64_rx_vif0 = new(xgmii64_rx_if); 
-        set_config_object("*mac_rx_agent0*","m_xgmii64_rx_vif",xgmii64_rx_vif0,0);
-        xgmii64_tx_vif0 = new(xgmii64_tx_if);                                     
-        set_config_object("*mac_tx_agent0*","m_xgmii64_tx_vif",xgmii64_tx_vif0,0);
+        // xgmii64_rx_vif0 = new(xgmii64_rx_if); 
+		// xgmii64_tx_vif0 = new(xgmii64_tx_if);   
+		
+        // set_config_object("*mac_env0[0]*mac_rx_agent0*","m_xgmii64_rx_vif",xgmii64_rx_vif0,0);                                 
+        // set_config_object("*mac_env0[0]*mac_tx_agent0*","m_xgmii64_tx_vif",xgmii64_tx_vif0,0);
 
         //set_config_object("*","vif",cgmii_tx_block_vif,0);               
     end 
 	
 genvar i;
 generate
-  for(i=0;i<GMII_PORT_NUM;i++)
+  for(i=2;i<GMII_PORT_NUM;i++)
  initial
   begin
   begin
     		index = $sformatf("%0d",i);//string'(i);
+			uvm_config_db#(virtual gmii_rx_if)::set(null,{"*mac_env0[",index,"]*mac_rx_agent0*"},"m_gmii_rx_if",gmii_rx_if_array[i]);
+			uvm_config_db#(virtual gmii_tx_if)::set(null,{"*mac_env0[",index,"]*mac_tx_agent0*"},"m_gmii_tx_if",gmii_tx_if_array[i]);
+  end
+  end
+endgenerate
+
+genvar k;
+generate
+  for(k=0;k<XGMII_PORT_NUM;k++)
+ initial
+  begin
+  begin
+    		index1 = $sformatf("%0d",k);//string'(i);
 			//uvm_config_db#(virtual gmii_rx_if)::set(null,{"mac_env0[",index,"]*mac_rx_agent0*"},"m_gmii_rx_if",gmii_rx_if[0]);
-			uvm_config_db#(virtual gmii_rx_if)::set(null,{"*mac_env0[",index,"]*mac_rx_agent0*"},"m_gmii_rx_if",gmii_rx_if_multi[i]);
-			uvm_config_db#(virtual gmii_tx_if)::set(null,{"*mac_env0[",index,"]*mac_tx_agent0*"},"m_gmii_tx_if",gmii_tx_if_multi[i]);
+			uvm_config_db#(virtual xgmii64_rx_if)::set(null,{"*mac_env0[",index1,"]*mac_rx_agent0*"},"m_xgmii64_rx_if",xgmii64_rx_if_array[k]);
+			uvm_config_db#(virtual xgmii64_tx_if)::set(null,{"*mac_env0[",index1,"]*mac_tx_agent0*"},"m_xgmii64_tx_if",xgmii64_tx_if_array[k]);
   end
   end
 endgenerate
@@ -249,26 +262,51 @@ generate
    begin
     initial
       begin
-	    gmii_rx_if_multi[j].clk=1;
-      	gmii_rx_if_multi[j].reset=0;
-      	gmii_tx_if_multi[j].clk=1;
-      	gmii_tx_if_multi[j].reset=0;
+	    gmii_rx_if_array[j].clk=1;
+      	gmii_rx_if_array[j].reset=0;
+      	gmii_tx_if_array[j].clk=1;
+      	gmii_tx_if_array[j].reset=0;
       	#10ns;
-		gmii_rx_if_multi[j].reset=1;
-      	gmii_tx_if_multi[j].reset=1;
+		gmii_rx_if_array[j].reset=1;
+      	gmii_tx_if_array[j].reset=1;
       	#50ns;
-		gmii_rx_if_multi[j].reset=0;
-      	gmii_tx_if_multi[j].reset=0;
+		gmii_rx_if_array[j].reset=0;
+      	gmii_tx_if_array[j].reset=0;
       end
   
     always #(CLOCK_125M/2)  
       begin
-	   gmii_rx_if_multi[j].clk <= ~gmii_rx_if_multi[j].clk;
-	   gmii_tx_if_multi[j].clk <= ~gmii_tx_if_multi[j].clk;
+	   gmii_rx_if_array[j].clk <= ~gmii_rx_if_array[j].clk;
+	   gmii_tx_if_array[j].clk <= ~gmii_tx_if_array[j].clk;
 	  end
    end
 endgenerate
- 	
+
+genvar j1;
+generate
+ for(j1=0;j1<XGMII_PORT_NUM;j1++)
+   begin
+    initial
+      begin
+	    xgmii64_rx_if_array[j1].clk=1;
+      	xgmii64_rx_if_array[j1].reset=0;
+      	xgmii64_tx_if_array[j1].clk=1;
+      	xgmii64_tx_if_array[j1].reset=0;
+      	#10ns;
+		xgmii64_rx_if_array[j1].reset=1;
+      	xgmii64_tx_if_array[j1].reset=1;
+      	#50ns;
+		xgmii64_rx_if_array[j1].reset=0;
+      	xgmii64_tx_if_array[j1].reset=0;
+      end
+  
+    always #(CLOCK_156M/2)  
+      begin
+	   xgmii64_rx_if_array[j1].clk <= ~xgmii64_rx_if_array[j1].clk;
+	   xgmii64_tx_if_array[j1].clk <= ~xgmii64_tx_if_array[j1].clk;
+	  end
+   end
+endgenerate  	
 //--------- interface end  -----------//
 
 
