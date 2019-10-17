@@ -145,8 +145,8 @@ generate
   begin
   begin
     		index = $sformatf("%0d",i);//string'(i);
-			uvm_config_db#(virtual gmii_rx_if)::set(null,{"*mac_env0[",index,"]*mac_rx_agent0*"},"m_gmii_rx_if",gmii_rx_if_array[i]);
-			uvm_config_db#(virtual gmii_tx_if)::set(null,{"*mac_env0[",index,"]*mac_tx_agent0*"},"m_gmii_tx_if",gmii_tx_if_array[i]);
+			uvm_config_db#(virtual gmii_rx_if)::set(null,{"*mac_env0[",index,"]*mac_rx_agent0*"},"m_gmii_rx_if",gmii_rx_if_array[i-2]);
+			uvm_config_db#(virtual gmii_tx_if)::set(null,{"*mac_env0[",index,"]*mac_tx_agent0*"},"m_gmii_tx_if",gmii_tx_if_array[i-2]);
   end
   end
 endgenerate
