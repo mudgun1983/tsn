@@ -51,7 +51,7 @@ class pcs_base_test extends uvm_test;
        //set_config_int("pcs_tx_rx_env.cpu_agent0.sequencer","count",0);
 	   uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.cpu_agent0.sequencer.run_phase", 
 			       "default_sequence",
-				phy_port_table_reg_seq::type_id::get());
+				ipp_epp_table_reg_seq::type_id::get());
 //====================================================================================== 
 
 //===========//

@@ -5,7 +5,8 @@
 //------------------------------------------------------------------
 class seq_reg_user_macro extends uvm_sequence #(cpu_item);
    bit [15:0]             rsp_data;
-  
+  register_config reg_config;
+  string scope_name = "";
    `define user_rgm_write_with(ADDR,DATA) \
     begin \
       `uvm_do_with(req,{req.addr == ADDR;req.data == DATA;req.kind == WRITE;}) \
@@ -46,6 +47,14 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
   virtual task body();
      super.body();
      `uvm_info(get_type_name(),$psprintf("\n-----------------RGM start---------------",),UVM_LOW);
+     if( scope_name == "" ) begin
+        scope_name = get_full_name(); // this is {       sequencer.get_full_name() , get_name() }
+        end
+
+      if( !uvm_config_db #( register_config )::get( null , scope_name ,
+      "register_config" , reg_config ) ) begin
+        `uvm_fatal(get_type_name(),"=============NO register_config==========");
+      end
   endtask: body
 endclass : seq_reg_user_macro
 
