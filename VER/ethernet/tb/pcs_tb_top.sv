@@ -19,17 +19,19 @@ import mac_pkg::*;
 
 //`define serdes_looop
 //-------------parameter begin-------------------//
-parameter CLOCK_156M = 6.4;
-parameter CLOCK_125M = 8;
-parameter CLOCK_322M = 3.104;
-parameter CLOCK_312M = 3.201;//CLOCK_322M*(66/64);
+parameter CLOCK_156M = 6.4ns;
+parameter CLOCK_125M = 8ns;
+parameter CLOCK_322M = 3.104ns;
+parameter CLOCK_312M = 3.201ns;//CLOCK_322M*(66/64);
 parameter CLOCK_161M = CLOCK_322M*2;  
-parameter CLOCK_200M = 5.0;
-parameter CLOCK_50M  = 20;
-parameter CLOCK_25M  = 40;
-parameter RESET_START_TIME = 100;
-parameter RESET_HOLD_TIEM = 500;
-parameter CLOCK_1us = 1000;
+parameter CLOCK_100M = 10ns;
+parameter CLOCK_200M = 5.0ns;
+parameter CLOCK_250M = 4.0ns;
+parameter CLOCK_50M  = 20ns;
+parameter CLOCK_25M  = 40ns;
+parameter RESET_START_TIME = 100ns;
+parameter RESET_HOLD_TIEM = 500ns;
+parameter CLOCK_1us = 1000ns;
 
 parameter SELF_DEFINE_PACKET= 0;
 parameter OAM_PACKET        = 1;
@@ -50,10 +52,12 @@ reg clk_322m;
 reg clk_312m;
 reg clk_161m;
 reg clk_200m;
+reg clk_250m;
 reg clk_100m;
 reg clk_50m;
 reg clk_25m;
 reg reset_b;
+reg rst;
 reg    [63:0]    xgmii_64_rd;
 reg    [7:0]     xgmii_64_rxc  ;
 
@@ -74,6 +78,7 @@ int key;
 
 //------------interface--------------------------//
 
+assign rst = ~reset_b;
 
 pcs_xilinx_serdes_if       cgmii_rx_block_if(); 
 pcs_xilinx_serdes_vif      cgmii_rx_block_vif;
@@ -111,7 +116,7 @@ xgmii64_tx_vif xgmii64_tx_vif0;
 
   always
        begin
-           #8ns cpu_clk = ~cpu_clk;//62.5M
+           #(CLOCK_100M/2) cpu_clk = ~cpu_clk;//62.5M
        end
 //------------cpu if-----------------------------//
 
@@ -173,6 +178,7 @@ initial
   	clk_125m    =1'b0;
   	clk_100m    =1'b0;
   	clk_200m    =1'b0;
+	clk_250m    =1'b0;
   	clk_322m    =1'b0;
   	clk_312m    =1'b0;
   	clk_161m    =1'b0;
@@ -195,6 +201,9 @@ always #(CLOCK_125M/2)
 
 always #(CLOCK_200M/2)
    clk_200m<=~clk_200m; 
+
+always #(CLOCK_250M/2)
+   clk_250m<=~clk_250m;   
    
 always #(CLOCK_50M/2)
    clk_50m<=~clk_50m; 
@@ -211,6 +220,8 @@ always #(CLOCK_312M/2)
 always #(CLOCK_161M/2)
    clk_161m<=~clk_161m;       
 
+always #(CLOCK_100M/2)
+   clk_100m<=~clk_100m;
 //------------generate CLOCK_156M and reset end --------//
 
 
@@ -331,12 +342,150 @@ endgenerate
 // end
 initial begin
 $vcdpluson;
-end   
-//------------DUT connect begin---------------------//
-tsn_sw_top tsn_sw_top();
+end  
 
+//ptp_time
+reg      [63:0]        timestamp_ptp;
+reg      [63:0]        timestamp_tc;
+wire                   mact_age_counter_pulse;
+wire                   policer_timer_pulse;
+wire                   frer_age_counter_pulse;
+
+always @(posedge clk_250m or posedge rst)
+  if(rst)
+    begin
+      timestamp_ptp[63:0]<= 64'd0;
+    end
+  else
+    begin
+      timestamp_ptp[31:0]<= timestamp_ptp[31:0] + 32'd4;
+      if(timestamp_ptp[31:0]==32'h3B9ACA00)
+        begin
+          timestamp_ptp[31:0] <= 32'd0;
+          timestamp_ptp[63:32] <= timestamp_ptp[63:32] + 32'd1;
+        end
+    end
+
+always @(posedge clk_250m or posedge rst)
+  if(rst)
+    begin
+      timestamp_tc[63:0]<= 64'd0;
+    end
+  else
+    begin
+      timestamp_tc[63:0]<= timestamp_tc[63:0] + 64'd4;
+    end 
+//------------DUT connect begin---------------------//
+`ifdef DUMMY_DUT
 assign    gmii_tx_if0.tx_en =gmii_rx_if0.rx_dv;
 assign    gmii_tx_if0.txd   =gmii_rx_if0.rxd  ; 
+`else
+tsn_sw_top UUT
+           (
+           .rst                   (rst           ), 	
+           .syc_clk_250m          (clk_250m      ),
+           .clk_cpu                    (clk_100m                     ),
+           .rx_clk_0                   (xgmii64_rx_if_array[0].clk),
+           .rx_mii_d_0                 (xgmii64_rx_if_array[0].rxd),
+           .rx_mii_c_0                 (xgmii64_rx_if_array[0].rxc),
+           .tx_clk_0                   (xgmii64_tx_if_array[0].clk),
+           .tx_mii_d_0                 (xgmii64_tx_if_array[0].txd),
+           .tx_mii_c_0                 (xgmii64_tx_if_array[0].txc),
+           .rx_clk_1                   (xgmii64_rx_if_array[1].clk),
+           .rx_mii_d_1                 (xgmii64_rx_if_array[1].rxd),
+           .rx_mii_c_1                 (xgmii64_rx_if_array[1].rxc),
+           .tx_clk_1                   (xgmii64_tx_if_array[1].clk),
+           .tx_mii_d_1                 (xgmii64_tx_if_array[1].txd),
+           .tx_mii_c_1                 (xgmii64_tx_if_array[1].txc),
+           .rx_clk_2                   (gmii_rx_if_array[0].clk  ),
+           .rx_er_2                    (gmii_rx_if_array[0].rx_er),
+           .rx_dv_2                    (gmii_rx_if_array[0].rx_dv),
+           .rxd_2                      (gmii_rx_if_array[0].rxd  ),
+           .gtx_clk_2                  (gmii_tx_if_array[0].clk  ),
+           .tx_er_2                    (gmii_tx_if_array[0].tx_er),
+           .tx_en_2                    (gmii_tx_if_array[0].tx_en),
+           .txd_2                      (gmii_tx_if_array[0].txd  ),
+           .rx_clk_3                   (gmii_rx_if_array[1].clk  ),
+           .rx_er_3                    (gmii_rx_if_array[1].rx_er),
+           .rx_dv_3                    (gmii_rx_if_array[1].rx_dv),
+           .rxd_3                      (gmii_rx_if_array[1].rxd  ),
+           .gtx_clk_3                  (gmii_tx_if_array[1].clk  ),
+           .tx_er_3                    (gmii_tx_if_array[1].tx_er),
+           .tx_en_3                    (gmii_tx_if_array[1].tx_en),
+           .txd_3                      (gmii_tx_if_array[1].txd  ),
+           .rx_clk_4                   (gmii_rx_if_array[2].clk  ),
+           .rx_er_4                    (gmii_rx_if_array[2].rx_er),
+           .rx_dv_4                    (gmii_rx_if_array[2].rx_dv),
+           .rxd_4                      (gmii_rx_if_array[2].rxd  ),
+           .gtx_clk_4                  (gmii_tx_if_array[2].clk  ),
+           .tx_er_4                    (gmii_tx_if_array[2].tx_er),
+           .tx_en_4                    (gmii_tx_if_array[2].tx_en),
+           .txd_4                      (gmii_tx_if_array[2].txd  ),
+           .rx_clk_5                   (gmii_rx_if_array[3].clk  ),
+           .rx_er_5                    (gmii_rx_if_array[3].rx_er),
+           .rx_dv_5                    (gmii_rx_if_array[3].rx_dv),
+           .rxd_5                      (gmii_rx_if_array[3].rxd  ),
+           .gtx_clk_5                  (gmii_tx_if_array[3].clk  ),
+           .tx_er_5                    (gmii_tx_if_array[3].tx_er),
+           .tx_en_5                    (gmii_tx_if_array[3].tx_en),
+           .txd_5                      (gmii_tx_if_array[3].txd  ),
+           .rx_clk_6                   (gmii_rx_if_array[4].clk  ),
+           .rx_er_6                    (gmii_rx_if_array[4].rx_er),
+           .rx_dv_6                    (gmii_rx_if_array[4].rx_dv),
+           .rxd_6                      (gmii_rx_if_array[4].rxd  ),
+           .gtx_clk_6                  (gmii_tx_if_array[4].clk  ),
+           .tx_er_6                    (gmii_tx_if_array[4].tx_er),
+           .tx_en_6                    (gmii_tx_if_array[4].tx_en),
+           .txd_6                      (gmii_tx_if_array[4].txd  ),
+           .rx_clk_7                   (gmii_rx_if_array[5].clk  ),
+           .rx_er_7                    (gmii_rx_if_array[5].rx_er),
+           .rx_dv_7                    (gmii_rx_if_array[5].rx_dv),
+           .rxd_7                      (gmii_rx_if_array[5].rxd  ),
+           .gtx_clk_7                  (gmii_tx_if_array[5].clk  ),
+           .tx_er_7                    (gmii_tx_if_array[5].tx_er),
+           .tx_en_7                    (gmii_tx_if_array[5].tx_en),
+           .txd_7                      (gmii_tx_if_array[5].txd  ),
+           .rx_clk_8                   (gmii_rx_if_array[6].clk  ),
+           .rx_er_8                    (gmii_rx_if_array[6].rx_er),
+           .rx_dv_8                    (gmii_rx_if_array[6].rx_dv),
+           .rxd_8                      (gmii_rx_if_array[6].rxd  ),
+           .gtx_clk_8                  (gmii_tx_if_array[6].clk  ),
+           .tx_er_8                    (gmii_tx_if_array[6].tx_er),
+           .tx_en_8                    (gmii_tx_if_array[6].tx_en),
+           .txd_8                      (gmii_tx_if_array[6].txd  ),
+           .rx_clk_9                   (gmii_rx_if_array[7].clk  ),
+           .rx_er_9                    (gmii_rx_if_array[7].rx_er),
+           .rx_dv_9                    (gmii_rx_if_array[7].rx_dv),
+           .rxd_9                      (gmii_rx_if_array[7].rxd  ),
+           .gtx_clk_9                  (gmii_tx_if_array[7].clk  ),
+           .tx_er_9                    (gmii_tx_if_array[7].tx_er),
+           .tx_en_9                    (gmii_tx_if_array[7].tx_en),
+           .txd_9                      (gmii_tx_if_array[7].txd  ),
+           .rx_clk_30                  (gmii_rx_if_array[8].clk  ),
+           .rx_er_30                   (gmii_rx_if_array[8].rx_er),
+           .rx_dv_30                   (gmii_rx_if_array[8].rx_dv),
+           .rxd_30                     (gmii_rx_if_array[8].rxd  ),
+           .gtx_clk_30                 (gmii_tx_if_array[8].clk  ),
+           .tx_er_30                   (gmii_tx_if_array[8].tx_er),
+           .tx_en_30                   (gmii_tx_if_array[8].tx_en),
+           .txd_30                     (gmii_tx_if_array[8].txd  ),
+           .cpu_cs_b                   (~m_cpu_if.cpu_cs                     ),
+           .cpu_rd_b                   (~m_cpu_if.cpu_rd                     ),
+           .cpu_wr_b                   (~m_cpu_if.cpu_wr                     ),
+           .cpu_addr                   (m_cpu_if.cpu_addr      [14:0]),
+           .cpu_data_in                (m_cpu_if.cpu_data_in            [15:0]),
+           .cpu_data_out               (m_cpu_if.cpu_data_out           [15:0]),
+           
+           .timestamp_ptp              (timestamp_ptp          [63:0]),
+           .timestamp_tc               (timestamp_tc           [63:0]),
+           .mact_age_counter_pulse     (mact_age_counter_pulse       ),
+           .policer_timer_pulse        (policer_timer_pulse          ),
+           .frer_age_counter_pulse     (frer_age_counter_pulse       )
+    );              
+`endif
+//------------DUT connect begin---------------------//
+
+
 
 ge_mac   ge_mac0
 (

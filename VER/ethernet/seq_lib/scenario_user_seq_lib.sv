@@ -344,7 +344,7 @@ int  data_len;
 		  #500ns
         
         		
-		for(int i =0; i<topology_config0.mac_number;i++)
+		for(int i =2; i<topology_config0.mac_number;i++)
 		  begin
 		  automatic int index;
           index = i; 
@@ -356,14 +356,14 @@ int  data_len;
 			 begin
 			  data_len=$urandom_range(1518,46);
               `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr_array[index],
-                             {mac_seq.c_da_cnt==local_da_cnt;
-							  mac_seq.c_sa_cnt==local_sa_cnt;
+                             {mac_seq.c_da_cnt==index;
+							  mac_seq.c_sa_cnt==index;
 							  mac_seq.c_packet_len == data_len;
 							  mac_seq.c_tpid == data_len;
 							  mac_seq.c_preemptable==0;
 							 })
-              local_da_cnt++; 	
-              local_sa_cnt++;			  
+              //local_da_cnt++; 	
+              //local_sa_cnt++;			  
             end	
 			end
           join_none			
