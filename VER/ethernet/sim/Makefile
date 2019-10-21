@@ -5,10 +5,19 @@ UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
 #TEST_NAME= simple_e_p_mix_random_test
 TEST_NAME= full_throughput_test
 
-all: comp run
+all: setup compile elaborate run
 
+setup:
+	./setup.sh
+	
+compile:
+	 ./compile.sh
+	
+elaborate:
+	./elaborate.sh
+	
 comp:
-	vcs -full64 -work work \
+	vcs -full64 -work xil_defaultlib \
 	-sverilog \
 	+define+SVT_UVM_TECHNOLOGY \
 	+define+SYNOPSYS_SV  \

@@ -1,5 +1,5 @@
 
-`timescale 1ns/1ps
+//`timescale 1ns/1ps
    
 
    
@@ -333,55 +333,7 @@ initial begin
 $vcdpluson;
 end   
 //------------DUT connect begin---------------------//
-/*
-dcn_top dcn_top (   
-    .reset         (gmii_rx_if0.reset), 
-    .sys_clk_125   (gmii_rx_if0.clk),
-    .shim_tx_clk   (clk_312m),
-    .shim0_rx_clk  (clk_322m),
-    .shim1_rx_clk  (clk_322m),
-    //from_to IP
-    .err_i   (1'b0),
-    .valid_i (gmii_rx_if0.rx_dv),
-    .data_i  (gmii_rx_if0.rxd),
-    .err_o    (),
-    .valid_o  (gmii_tx_if0.tx_en),
-    .data_o   (gmii_tx_if0.txd),
-    //from_to shim
-    .mana_sect_shim0_dat0_ien_i(mana_sect_shim0_dat0_ien_i),
-    .mana_sect_shim0_dat1_ien_i(mana_sect_shim0_dat0_ien_i),   
-    .mana_sect_shim0_dat_o     (mana_sect_shim0_dat_o    ),
-    .mana_sect_shim0_dat_vld_o (mana_sect_shim0_dat_vld_o),
-    
-    .mana_sect_shim1_dat0_ien_i(mana_sect_shim1_dat0_ien_i),
-    .mana_sect_shim1_dat1_ien_i(mana_sect_shim1_dat0_ien_i),   
-    .mana_sect_shim1_dat_o     (mana_sect_shim1_dat_o),
-    .mana_sect_shim1_dat_vld_o (mana_sect_shim1_dat_vld_o), 
-    
-    .mana_sect_shim0_dat0_i     (mana_sect_shim0_dat_o),
-    .mana_sect_shim0_dat1_i     (66'b0),
-    .mana_sect_shim0_dat0_vld_i (mana_sect_shim0_dat_vld_o),
-    .mana_sect_shim0_dat1_vld_i (1'b0),
-    .mana_sect_shim1_dat0_i     (66'b0),
-    .mana_sect_shim1_dat1_i     (mana_sect_shim1_dat_o),
-    .mana_sect_shim1_dat0_vld_i (1'b0),
-    .mana_sect_shim1_dat1_vld_i  (mana_sect_shim1_dat_vld_o), 
-    
-    //cpureset   
-    .cpu_clk (cpu_clk),
-    .cpu_rst (sys_rst),
-    .cpu_addr(m_cpu_if.cpu_addr[11:0]),    
-    .cpu_cs  (m_cpu_if.cpu_cs),
-    .cpu_rd  (m_cpu_if.cpu_rd),
-    .cpu_wr  (m_cpu_if.cpu_wr),
-    .cpu_din (m_cpu_if.cpu_data_in),
-    .cpu_dout(m_cpu_if.cpu_data_out)
-
-    );
-
-//------------DUT connect end  ---------------------//
-
-*/
+tsn_sw_top tsn_sw_top();
 
 assign    gmii_tx_if0.tx_en =gmii_rx_if0.rx_dv;
 assign    gmii_tx_if0.txd   =gmii_rx_if0.rxd  ; 
