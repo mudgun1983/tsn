@@ -11,7 +11,9 @@ class mac_user_sequence extends mac_base_sequence;
   rand bit [47:0] frame_cnt;
   rand bit [47:0] da_frame_cnt;
   rand bit [47:0] sa_frame_cnt;
-  rand bit  vlan_choose;
+  rand bit vlan_choose;
+  rand bit           c_data_control   ;
+  rand bit [7:0]     c_data_payload   ;
   rand int unsigned  c_packet_len     ;
   rand bit [15:0]    c_tpid     ;
   rand bit [7:0]     c_smd            ;
@@ -45,7 +47,10 @@ class mac_user_sequence extends mac_base_sequence;
     function new (string name = "mac_user_sequence");               
       super.new();
     endfunction:new
-
+	
+    // function void pre_randomize();
+	 // this.c_data_control.rand_mode(0);
+    // endfunction
 //================================================//
 //FUNCTION    : pre_do
 //DESCRIPTION : construct
@@ -136,9 +141,19 @@ class mac_user_sequence extends mac_base_sequence;
 					//req.tagged_data[1].data.size()   == c_packet_len;
                    	req.tagged_data[1].tpid   == c_tpid;
 					
+					if(~c_data_control)
+					{
 					foreach(req.tagged_data[1].data[key])   
                     {req.tagged_data[1].data[key]==key;
                     }
+					}
+					else
+					{
+					foreach(req.tagged_data[1].data[key])   
+                    {req.tagged_data[1].data[key]==c_data_payload;
+                    }
+					}
+					
                    	req.directed_protocol_error_size == 0;
                    	req.protocol_error_size          == 0;
                    	req.protocol_error_mode          == NO_PROT_ERROR;

@@ -320,7 +320,7 @@ endclass
 class scenario_full_throughput_test extends scenario_reg_test;
 int  data_len;
     
-
+int  data_sequence_id[20];
 //==================== Registration ==============//
 `uvm_sequence_utils(scenario_full_throughput_test, pcs_virtual_sequencer)
 //==================== Registration ==============//
@@ -358,12 +358,15 @@ int  data_len;
               `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr_array[index],
                              {mac_seq.c_da_cnt==index;
 							  mac_seq.c_sa_cnt==index;
+							  mac_seq.c_data_control == 1;
+							  mac_seq.c_data_payload ==data_sequence_id[index];
 							  mac_seq.c_packet_len == data_len;
 							  mac_seq.c_tpid == data_len;
 							  mac_seq.c_preemptable==0;
 							 })
               //local_da_cnt++; 	
-              //local_sa_cnt++;			  
+              //local_sa_cnt++;		
+              data_sequence_id[index]++;
             end	
 			end
           join_none			
