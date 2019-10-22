@@ -41,6 +41,7 @@ package pcs_env_pkg;
  
  //top config 
   `include "../config/global_config.sv"
+  `include "../config/global_define.sv"
  //register config
   `include "../register/register_para.sv"
   `include "../register/CONFIG_TABLE.sv"

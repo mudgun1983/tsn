@@ -1,11 +1,16 @@
 class tsn_switch_model #(string file_name = "expect") extends uvm_component;
-
-    uvm_blocking_get_port#(eth_frame)              get_port;
-    uvm_analysis_port #(eth_frame)                 item_collected_port;
+    uvm_blocking_get_port#(eth_frame)              get_port_dbg;
+    uvm_analysis_port #(eth_frame)                 item_collected_port_dbg;
 	
-`uvm_component_utils_begin(tsn_switch_model)
-    `uvm_component_utils_end
+    uvm_blocking_get_port#(eth_frame)              get_port[];
+    uvm_analysis_port #(eth_frame)                 item_collected_port[];
 
+typedef tsn_switch_model #(file_name) this_t;
+	
+`uvm_component_param_utils(this_t)
+
+//attribute    
+topology_config       topology_config0;
 
 typedef enum bit[7:0]{
     SMD_S0    = 8'hE6,
@@ -74,9 +79,27 @@ typedef enum bit[7:0]{
         string inst_name;
         super.build();
 		
-        get_port    =  new("get_port",this);
-        item_collected_port   =  new("item_collected_port",this);
-       
+		if( !uvm_config_db #( topology_config )::get( this , "" , "topology_config" ,topology_config0 ) ) begin
+           `uvm_fatal(get_type_name(),"=============topology_config==========");
+		end
+		
+		get_port_dbg            = new("get_port_dbg",this);
+		item_collected_port_dbg = new("item_collected_port",this);
+		
+		get_port    =  new[topology_config0.mac_number];
+		for(int i=0;i<topology_config0.mac_number;i++)
+		  begin
+		    inst_name = $sformatf("%0d",i);//string'(i);
+            get_port[i]    =  new({"get_port[",inst_name,"]"},this);
+	      end
+		  
+		item_collected_port = new[topology_config0.mac_number];
+		for(int i=0;i<topology_config0.mac_number;i++)
+		  begin
+		    inst_name = $sformatf("%0d",i);//string'(i);
+            item_collected_port[i]    =  new({"item_collected_port[",inst_name,"]"},this);
+	      end
+		  
     endfunction : build
 
 //================================================//
@@ -85,7 +108,8 @@ typedef enum bit[7:0]{
     virtual task run();
         super.run();
         fork
-            get_trans();
+            get_trans_dbg();
+			get_trans();
            // push_trans();
         join
     endtask: run
@@ -93,17 +117,38 @@ typedef enum bit[7:0]{
 ////================================================//
 ////TASK    : get_exp_trans
 ////================================================//
+    task get_trans_dbg();
+	         while(1) begin
+                 eth_frame eth_frame_exp_tr;
+                 eth_frame_exp_tr =new();
+                 get_port_dbg.get(eth_frame_exp_tr);
+		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
+		      	//classify and merge the packet
+		      	classify_merge(eth_frame_exp_tr);
+		      	if(merge_finish)
+		      	  item_collected_port_dbg.write(eth_frame_exp_tr);
+		      	end
+    endtask
+	
     task get_trans();
-	   while(1) begin
-            eth_frame eth_frame_exp_tr;
-            eth_frame_exp_tr =new();
-            get_port.get(eth_frame_exp_tr);
-			`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
-			//classify and merge the packet
-			classify_merge(eth_frame_exp_tr);
-			if(merge_finish)
-			  item_collected_port.write(eth_frame_exp_tr);
-			end
+	for(int i =0; i<topology_config0.mac_number;i++)
+		  begin
+		  automatic int index;
+          index = i; 
+		  fork
+	         while(1) begin
+                 eth_frame eth_frame_exp_tr;
+                 eth_frame_exp_tr =new();
+                 get_port[index].get(eth_frame_exp_tr);
+		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
+		      	//classify and merge the packet
+		      	//classify_merge(eth_frame_exp_tr);
+		      	//if(merge_finish)
+		      	  item_collected_port[index].write(eth_frame_exp_tr);
+		      	end
+		   join_none
+		   end
+		   wait fork;
     endtask	
 	
 	task classify_merge(ref eth_frame eth_frame_exp_tr );

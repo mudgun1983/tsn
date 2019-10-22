@@ -320,7 +320,7 @@ endclass
 class scenario_full_throughput_test extends scenario_reg_test;
 int  data_len;
     
-int  data_sequence_id[20];
+bit  [7:0] data_sequence_id[20];
 //==================== Registration ==============//
 `uvm_sequence_utils(scenario_full_throughput_test, pcs_virtual_sequencer)
 //==================== Registration ==============//
@@ -341,10 +341,11 @@ int  data_sequence_id[20];
    virtual task body();
         begin
 		super.body();
-		  #500ns
+		  //#500ns
         
         		
-		for(int i =2; i<topology_config0.mac_number;i++)
+		//for(int i =2; i<topology_config0.mac_number;i++)
+		for(int i =2; i<3;i++)
 		  begin
 		  automatic int index;
           index = i; 

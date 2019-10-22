@@ -160,7 +160,8 @@ class scoreboard extends uvm_scoreboard;
           	                else
           	                   begin      	                  
           	                   	eth_frame_exp_tr=eth_exp_que.pop_front();
-          	                   	
+          	                   	//---------------------------------------------//
+							    //---------------------------------------------//
           	     	            comp_state = COMPARE;
           	                   end        	     	            
           	              end

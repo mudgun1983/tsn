@@ -379,6 +379,20 @@ always @(posedge clk_250m or posedge rst)
 `ifdef DUMMY_DUT
 assign    gmii_tx_if0.tx_en =gmii_rx_if0.rx_dv;
 assign    gmii_tx_if0.txd   =gmii_rx_if0.rxd  ; 
+
+generate
+ for(i=0;i<GMII_PORT_NUM;i++)
+   begin
+    assign    gmii_tx_if_array[i].tx_en =gmii_rx_if_array[i].rx_dv;
+    assign    gmii_tx_if_array[i].txd   =gmii_rx_if_array[i].rxd  ; 
+   end
+
+ for(i=0;i<XGMII_PORT_NUM;i++)
+   begin
+    assign    xgmii64_tx_if_array[i].txc   =xgmii64_rx_if_array[i].rxc;
+    assign    xgmii64_tx_if_array[i].txd   =xgmii64_rx_if_array[i].rxd  ; 
+   end   
+endgenerate
 `else
 tsn_sw_top UUT
            (
