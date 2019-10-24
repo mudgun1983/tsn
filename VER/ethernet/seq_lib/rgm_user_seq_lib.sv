@@ -76,7 +76,16 @@ class reg_test_seq extends seq_reg_user_macro ;
         end
       
       `uvm_info(get_type_name(),$psprintf("\n-----------------reg_test_seq set end---------------",),UVM_LOW);
- 
+       
+	  `uvm_info(get_type_name(),$psprintf("\n-----------------gather ram init begin---------------",),UVM_LOW);
+	  for(int i=0;i<reg_config.gather_init_table.table_size;i++)
+	  begin
+	  `user_rgm_write_with(`PORT_POLLING_WEIGHT_TABLE_CFG_ADDR	 ,{16'b0,`GATHER_INIT_TABLE_CONTENT[i].table_key_t});         
+      `user_rgm_write_with(`PORT_POLLING_WEIGHT_TABLE_CFG_PORT_ID,{16'b0,`GATHER_INIT_TABLE_CONTENT[i].table_t});
+	  `user_rgm_write_with(`PORT_POLLING_WEIGHT_TABLE_CFG_TRIGGER,{16'b1});
+	  `user_rgm_write_with(`PORT_POLLING_WEIGHT_TABLE_CFG_TRIGGER,{16'b0});
+	  end
+	  `uvm_info(get_type_name(),$psprintf("\n-----------------gather ram init end---------------",),UVM_LOW);
 //      //*****************************************************************
 //      // 全局配置 
 //      //*****************************************************************

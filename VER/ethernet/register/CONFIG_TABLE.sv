@@ -1727,3 +1727,154 @@ endfunction
 
 endclass
 //----------------------------------- O_PHY_PORT_PRO_TABLE ---------------------------//
+
+
+//----------------------------------- GATHER_INIT_TABLE-------------------------------//
+class GATHER_INIT_TABLE_CONTENT extends uvm_object;
+
+typedef struct packed
+{
+  //key----
+  bit [5:0] port_polling_weight_table_cfg_addr;
+  //--------
+} table_key_s;
+typedef struct packed
+{  
+  //resaunlt---
+  bit [4:0] port_polling_weight_table_cfg_port_id;
+} table_s ;
+
+table_key_s table_key_t;
+table_s table_t;
+
+`uvm_object_utils_begin(GATHER_INIT_TABLE_CONTENT);
+`uvm_object_utils_end
+
+function new( string name = "" );
+super.new( name );
+endfunction
+
+endclass
+
+class GATHER_INIT_TABLE extends uvm_object;
+`uvm_object_utils( GATHER_INIT_TABLE );
+
+
+int unsigned table_size=50;
+
+GATHER_INIT_TABLE_CONTENT table_index[];
+
+function new( string name = "" );
+super.new( name );
+table_index = new[table_size];
+for(int i=0;i<table_size;i++)
+  table_index[i] = new();
+set_config();
+endfunction
+
+function void set_config();
+  table_index[ 0].table_key_t  = 'd0  ;
+  table_index[ 1].table_key_t  = 'd1  ;
+  table_index[ 2].table_key_t  = 'd2  ;
+  table_index[ 3].table_key_t  = 'd3  ;
+  table_index[ 4].table_key_t  = 'd4  ;
+  table_index[ 5].table_key_t  = 'd5  ;
+  table_index[ 6].table_key_t  = 'd6  ;
+  table_index[ 7].table_key_t  = 'd7  ;
+  table_index[ 8].table_key_t  = 'd8  ;
+  table_index[ 9].table_key_t  = 'd9  ;
+  table_index[10].table_key_t  = 'd10 ;
+  table_index[11].table_key_t  = 'd11 ;
+  table_index[12].table_key_t  = 'd12 ;
+  table_index[13].table_key_t  = 'd13 ;
+  table_index[14].table_key_t  = 'd14 ;
+  table_index[15].table_key_t  = 'd15 ;
+  table_index[16].table_key_t  = 'd16 ;
+  table_index[17].table_key_t  = 'd17 ;
+  table_index[18].table_key_t  = 'd18 ;
+  table_index[19].table_key_t  = 'd19 ;
+  table_index[20].table_key_t  = 'd20 ;
+  table_index[21].table_key_t  = 'd21 ;
+  table_index[22].table_key_t  = 'd22 ;
+  table_index[23].table_key_t  = 'd23 ;
+  table_index[24].table_key_t  = 'd24 ;
+  table_index[25].table_key_t  = 'd25 ;
+  table_index[26].table_key_t  = 'd26 ;
+  table_index[27].table_key_t  = 'd27 ;
+  table_index[28].table_key_t  = 'd28 ;
+  table_index[29].table_key_t  = 'd29 ;
+  table_index[30].table_key_t  = 'd30 ;
+  table_index[31].table_key_t  = 'd31 ;
+  table_index[32].table_key_t  = 'd32 ;
+  table_index[33].table_key_t  = 'd33 ;
+  table_index[34].table_key_t  = 'd34 ;
+  table_index[35].table_key_t  = 'd35 ;
+  table_index[36].table_key_t  = 'd36 ;
+  table_index[37].table_key_t  = 'd37 ;
+  table_index[38].table_key_t  = 'd38 ;
+  table_index[39].table_key_t  = 'd39 ;
+  table_index[40].table_key_t  = 'd40 ;
+  table_index[41].table_key_t  = 'd41 ;
+  table_index[42].table_key_t  = 'd42 ;
+  table_index[43].table_key_t  = 'd43 ;
+  table_index[44].table_key_t  = 'd44 ;
+  table_index[45].table_key_t  = 'd45 ;
+  table_index[46].table_key_t  = 'd46 ;
+  table_index[47].table_key_t  = 'd47 ;
+  table_index[48].table_key_t  = 'd48 ;
+  table_index[49].table_key_t  = 'd49 ;
+  
+  table_index[ 0].table_t  = 'd0 ;
+  table_index[ 1].table_t  = 'd1 ;
+  table_index[ 2].table_t  = 'd2 ;
+  table_index[ 3].table_t  = 'd3 ;
+  table_index[ 4].table_t  = 'd4 ;
+  table_index[ 5].table_t  = 'd0 ;
+  table_index[ 6].table_t  = 'd1 ;
+  table_index[ 7].table_t  = 'd5 ;
+  table_index[ 8].table_t  = 'd6 ;
+  table_index[ 9].table_t  = 'd7 ;
+  table_index[10].table_t  = 'd0 ;
+  table_index[11].table_t  = 'd1 ;
+  table_index[12].table_t  = 'd8 ;
+  table_index[13].table_t  = 'd9 ;
+  table_index[14].table_t  = 'd10 ;
+  table_index[15].table_t  = 'd0 ;
+  table_index[16].table_t  = 'd1 ;
+  table_index[17].table_t  = 'd11 ;
+  table_index[18].table_t  = 'd12 ;
+  table_index[19].table_t  = 'd13 ;
+  table_index[20].table_t  = 'd0 ;
+  table_index[21].table_t  = 'd1 ;
+  table_index[22].table_t  = 'd14 ;
+  table_index[23].table_t  = 'd15 ;
+  table_index[24].table_t  = 'd16 ;
+  table_index[25].table_t  = 'd0 ;
+  table_index[26].table_t  = 'd1 ;
+  table_index[27].table_t  = 'd17 ;
+  table_index[28].table_t  = 'd18 ;
+  table_index[29].table_t  = 'd19 ;
+  table_index[30].table_t  = 'd0 ;
+  table_index[31].table_t  = 'd1 ;
+  table_index[32].table_t  = 'd20 ;
+  table_index[33].table_t  = 'd21 ;
+  table_index[34].table_t  = 'd22 ;
+  table_index[35].table_t  = 'd0 ;
+  table_index[36].table_t  = 'd1 ;
+  table_index[37].table_t  = 'd23 ;
+  table_index[38].table_t  = 'd24 ;
+  table_index[39].table_t  = 'd25 ;
+  table_index[40].table_t  = 'd0 ;
+  table_index[41].table_t  = 'd1 ;
+  table_index[42].table_t  = 'd26 ;
+  table_index[43].table_t  = 'd27 ;
+  table_index[44].table_t  = 'd28 ;
+  table_index[45].table_t  = 'd0 ;
+  table_index[46].table_t  = 'd1 ;
+  table_index[47].table_t  = 'd29 ;
+  table_index[48].table_t  = 'd30 ;
+  table_index[49].table_t  = 'd31 ;
+endfunction
+
+endclass
+//----------------------------------- GATHER_INIT_TABLE-------------------------------//

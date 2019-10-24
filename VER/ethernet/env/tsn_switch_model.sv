@@ -61,6 +61,8 @@ typedef enum bit[7:0]{
   bit [7:0] frame_data_merge[$];
   
   int write_data_fd        ;
+  
+  eth_frame eth_frame_exp_tr_array[];
 		                        //            01: frag code error
 								//            02: not express nor preempt packet
 //================================================//
@@ -99,7 +101,8 @@ typedef enum bit[7:0]{
 		    inst_name = $sformatf("%0d",i);//string'(i);
             item_collected_port[i]    =  new({"item_collected_port[",inst_name,"]"},this);
 	      end
-		  
+		
+        eth_frame_exp_tr_array	= new[topology_config0.mac_number];	
     endfunction : build
 
 //================================================//
@@ -137,14 +140,14 @@ typedef enum bit[7:0]{
           index = i; 
 		  fork
 	         while(1) begin
-                 eth_frame eth_frame_exp_tr;
-                 eth_frame_exp_tr =new();
-                 get_port[index].get(eth_frame_exp_tr);
-		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
+                 //eth_frame eth_frame_exp_tr;
+                 eth_frame_exp_tr_array[index] =new();
+                 get_port[index].get(eth_frame_exp_tr_array[index]);
+		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr_array[index].sprint()},UVM_HIGH);
 		      	//classify and merge the packet
-		      	//classify_merge(eth_frame_exp_tr);
+		      	classify_merge(eth_frame_exp_tr_array[index]);
 		      	//if(merge_finish)
-		      	  item_collected_port[index].write(eth_frame_exp_tr);
+		      	item_collected_port[index].write(eth_frame_exp_tr_array[index]);
 		      	end
 		   join_none
 		   end
@@ -207,7 +210,7 @@ typedef enum bit[7:0]{
 		  end
 			 
 		if(express_packet ==1)
-		 return;
+		 ;//return;
 		else 
 		   begin
 		     merge_en = 1;

@@ -5,7 +5,7 @@ UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
 #TEST_NAME= simple_e_p_mix_random_test
 TEST_NAME= full_throughput_test
 
-all: setup compile elaborate run
+all:clean setup compile elaborate run
 
 setup:
 	./setup.sh
@@ -37,4 +37,5 @@ run:
 	./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=${TEST_NAME} 
 
 clean: 
-	\rm -rf csrc *.log simv* core ucli.key vcdplus.vpd DVEfiles vc_hdrs.h ucli.key
+	rm -rf *.log *.txt
+#	\rm -rf csrc *.log simv* core ucli.key vcdplus.vpd DVEfiles vc_hdrs.h ucli.key

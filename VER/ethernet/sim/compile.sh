@@ -33,7 +33,6 @@ $bin_path/vlogan $vlogan_opts +v2k -work xil_defaultlib "../../../../../RTL/netl
 
 $bin_path/vlogan $vlogan_opts  -sverilog -work xil_defaultlib +define+SVT_UVM_TECHNOLOGY \
 	+define+SYNOPSYS_SV  \
-	+vpi \
 	+define+UVM_PACKER_MAX_BYTES=1500000 \
 	+define+UVM_DISABLE_AUTO_ITEM_RECORDING \
 	+incdir+${UVM_HOME}/src \

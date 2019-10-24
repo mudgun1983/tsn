@@ -43,7 +43,7 @@ create_lib_mappings()
   fi
 
   touch $file
-  lib_map_path="/home/wangguobin/vivado_2017_vcs_lib"
+  lib_map_path="/home/wangguobin/vivado_2017_4_vcs_lib"
   incl_ref="OTHERS=$lib_map_path/synopsys_sim.setup"
   for (( i=0; i<${#libs[*]}; i++ )); do
     lib="${libs[i]}"

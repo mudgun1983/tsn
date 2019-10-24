@@ -26,8 +26,10 @@
 `define DOT1P_MAP_TABLE_CONTENT        reg_config.dot1p_map_table.table_index
 `define LAG_SEL_PORT_TABLE_CONTENT     reg_config.lag_sel_port_table.table_index
 `define O_PHY_PORT_PRO_TABLE_CONTENT   reg_config.o_phy_port_pro_table.table_index
+`define GATHER_INIT_TABLE_CONTENT      reg_config.gather_init_table.table_index
 
 `define BASE_OFFSET   15'b100_0000_0000_0000
+`define BASE_OFFSET_GATHER   16'b011_0000_0000_0000
 `define PP_VER_YEAR	        (`BASE_OFFSET+'h0000)
 `define PP_VER_MONTH_DAY	(`BASE_OFFSET+'h0002)
 `define PP_VER_HOUR_MIN	    (`BASE_OFFSET+'h0004)
@@ -410,3 +412,9 @@
 `define E_FILTER_DROP_R_TRIG	        (`BASE_OFFSET+'h02A0)	
 `define IP_BIND_DROP_ROUT_H	            (`BASE_OFFSET+'h02A2)	
 `define IP_BIND_DROP_ROUT_L	            (`BASE_OFFSET+'h02A4)
+
+`define PORT_POLLING_WEIGHT_TABLE_CFG_TRIGGER	(`BASE_OFFSET_GATHER+'h000)
+`define PORT_POLLING_WEIGHT_TABLE_CFG_ADDR	    (`BASE_OFFSET_GATHER+'h001)
+`define PORT_POLLING_WEIGHT_TABLE_CFG_PORT_ID	(`BASE_OFFSET_GATHER+'h002)
+`define PORT_POLLING_WEIGHT_TABLE_LOOKUP_DATA	(`BASE_OFFSET_GATHER+'h003)
+
