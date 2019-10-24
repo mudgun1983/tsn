@@ -28,7 +28,7 @@ class scoreboard extends uvm_scoreboard;
     local event                            comp_event_shim0;
     local event                            comp_event_shim1;
     local event                            pcs_comp_event;
-
+          event                            fatal_event;
     `uvm_component_utils_begin(scoreboard)
     `uvm_component_utils_end
      
@@ -165,7 +165,7 @@ class scoreboard extends uvm_scoreboard;
           	      	        if(exp_queue_size==0)          	      	        
           	                   begin
           	                    	write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
-                     		      	$fwrite(write_comp_data_fd,$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address));   
+                     		      	$fwrite(write_comp_data_fd,$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h time=%0t\n",eth_frame_col_tr.destination_address,$time));   
                      		      	$fclose(write_comp_data_fd);
                      		      	comp_state = COM_FINISH;
           	                   end
@@ -201,39 +201,46 @@ class scoreboard extends uvm_scoreboard;
           	      	        if(eth_frame_exp_tr.destination_address == eth_frame_col_tr.destination_address)
                      		      begin
                      		      	write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
-                     		      	$fwrite(write_comp_data_fd,$psprintf("COMP_START:comp_destination_address=%0h vlan=%0h\n",eth_frame_exp_tr.destination_address,{eth_frame_exp_tr.tagged_data[0].data[0],eth_frame_exp_tr.tagged_data[0].data[1]}));                         
+                     		      	$fwrite(write_comp_data_fd,$psprintf("COMP_START:comp_destination_address=%0h vlan=%0h time = %0t\n",eth_frame_exp_tr.destination_address,{eth_frame_exp_tr.tagged_data[0].data[0],eth_frame_exp_tr.tagged_data[0].data[1]},$time));                         
                      		      	
 									payload_compare(eth_frame_exp_tr,eth_frame_col_tr,match,payload_seq_id);
 									if(~match)
 									  begin
 									    begin
 								          write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
-                     		      	      $fwrite(write_comp_data_fd,$psprintf("WARNING, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id));   
+                     		      	      $fwrite(write_comp_data_fd,$psprintf("WARNING, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
                      		              $fclose(write_comp_data_fd);
 									      comp_state = EXP_QUEUE_CHECK;
-									      `uvm_info(get_type_name(),{$psprintf("WARNING, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id)},UVM_HIGH);
+									      `uvm_info(get_type_name(),{$psprintf("WARNING, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_HIGH);
 										  
 										  if(compare_start_flag)
 										    begin
 											write_comp_data_fd=$fopen(data_comp_result,"a+"); 
-										    $fwrite(write_comp_data_fd,$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id));   
+										    $fwrite(write_comp_data_fd,$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
                      		      	        $fclose(write_comp_data_fd);
-									       `uvm_fatal(get_type_name(),$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id));
+											->fatal_event;
+									       //`uvm_fatal(get_type_name(),$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id));
 										    end
 								       end
 									  end
 									else
 									  begin
 									    compare_start_flag = 1;
+										if(eth_frame_exp_tr.frame_data.size!=eth_frame_col_tr.frame_data.size)
+										  begin
+										    $fwrite(write_comp_data_fd,$psprintf("FATAL ERROR! packet length mismatch ,payload_seq_id =%0d time=%0t\n",payload_seq_id,$time)); 
+											->fatal_event;
+										  end
+										  
 									    foreach(eth_frame_exp_tr.frame_data[key])
                      		      	      begin
                      		      	      	if(eth_frame_exp_tr.frame_data[key]!=eth_frame_col_tr.frame_data[key])
-                     		      	      	    $fwrite(write_comp_data_fd,$psprintf("ERROR!eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h\n",
-                     		      	      	                                          key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key])); 
+                     		      	      	    $fwrite(write_comp_data_fd,$psprintf("ERROR!eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
+                     		      	      	                                          key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key],$time)); 
                      		      	      end
                      		      	    if(eth_frame_exp_tr.fcs!=eth_frame_col_tr.fcs)
-                     		      	             $fwrite(write_comp_data_fd,$psprintf("FCS_ERROR!,eth_frame_exp_tr.fcs=%0h != eth_frame_col_tr.fcs=%0h\n\n",
-                     		      	                                                   eth_frame_exp_tr.fcs,eth_frame_col_tr.fcs));                   		  	
+                     		      	             $fwrite(write_comp_data_fd,$psprintf("FCS_ERROR!,eth_frame_exp_tr.fcs=%0h != eth_frame_col_tr.fcs=%0h time=%0t\n",
+                     		      	                                                   eth_frame_exp_tr.fcs,eth_frame_col_tr.fcs,$time));                   		  	
                      		      	    $fclose(write_comp_data_fd);             		  	
                      		      	    comp_state = COM_FINISH;
                      		      	    `uvm_info(get_type_name(),{$psprintf("comp_state=COMPARE\n")},UVM_LOW);     
@@ -242,7 +249,7 @@ class scoreboard extends uvm_scoreboard;
                      		    else
                      		      begin
                      		      	write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
-                     		      	$fwrite(write_comp_data_fd,$psprintf("ERROR! PACKET LOSS, exp frame eth_frame_exp_tr.destination_address=%0h is MISSING\n",eth_frame_exp_tr.destination_address));   
+                     		      	$fwrite(write_comp_data_fd,$psprintf("ERROR! PACKET LOSS, exp frame eth_frame_exp_tr.destination_address=%0h is MISSING time=%0t\n",eth_frame_exp_tr.destination_address,$time));   
                      		      	$fclose(write_comp_data_fd);
                      		      	comp_state = EXP_QUEUE_CHECK;
                      		      end
@@ -252,9 +259,9 @@ class scoreboard extends uvm_scoreboard;
           	                 if(exp_queue_size==0)  
           	                   begin
           	                   	write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
-                     		      	$fwrite(write_comp_data_fd,$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address));   
+                     		      	$fwrite(write_comp_data_fd,$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h time=%0t\n",eth_frame_col_tr.destination_address,$time));   
                      		      	$fclose(write_comp_data_fd);
-									`uvm_fatal(get_type_name(),$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address));
+									//`uvm_fatal(get_type_name(),$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address));
                      		      	comp_state = COM_FINISH;
           	                   end
           	                else

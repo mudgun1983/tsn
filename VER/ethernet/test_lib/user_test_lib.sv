@@ -170,9 +170,33 @@ class full_throughput_test extends pcs_base_test;
      
     
    task run_phase(uvm_phase phase);
+    fork
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         //while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.scb0[index].fatal_event;
+		    	file_id=$fopen("global_test_log.txt","a+"); 
+		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
+		    	$fclose(file_id);
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+			   
+	
+	   begin
        phase.phase_done.set_drain_time(this, 50000);
        #20ms;
        $stop;      
+	   end
+	   
+	join
    endtask:run_phase
   
 endclass 

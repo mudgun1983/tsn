@@ -19,6 +19,10 @@ class pcs_base_test extends uvm_test;
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
 //       set_config_object("*","static_cfg",env_ec,0);     
          register_config0 = new();
+		 
+		 file_id=$fopen("global_test_log.txt","w+");                                               
+         $fclose(file_id);
+		
      endfunction : new
   
   function void set_topology_config();
