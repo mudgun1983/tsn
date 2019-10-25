@@ -28,16 +28,16 @@ package pcs_env_pkg;
   `include "uvm_macros.svh"
   import cpu_pkg::*;
   import mac_pkg::*;
-  `include "../uvc/interface/pcs_xilinx_serdes_vif.sv"
-  `include "../uvc/component/pcs_item.sv"
-  `include "../uvc/component/pcs_ref_model.sv"
-  `include "../uvc/component/pcs_base_sequencer.sv"
-  `include "../uvc/component/pcs_base_driver.sv"
-  `include "../uvc/component/pcs_base_monitor.sv"
-  `include "../uvc/component/pcs_driver.sv"
-  `include "../uvc/component/pcs_monitor.sv"
-  `include "../uvc/component/pcs_agent.sv"
-  `include "../uvc/component/pcs_env.sv"
+  // `include "../uvc/interface/pcs_xilinx_serdes_vif.sv"
+  // `include "../uvc/component/pcs_item.sv"
+  // `include "../uvc/component/pcs_ref_model.sv"
+  // `include "../uvc/component/pcs_base_sequencer.sv"
+  // `include "../uvc/component/pcs_base_driver.sv"
+  // `include "../uvc/component/pcs_base_monitor.sv"
+  // `include "../uvc/component/pcs_driver.sv"
+  // `include "../uvc/component/pcs_monitor.sv"
+  // `include "../uvc/component/pcs_agent.sv"
+  // `include "../uvc/component/pcs_env.sv"
  
  //top config 
   `include "../config/global_config.sv"
@@ -52,7 +52,7 @@ package pcs_env_pkg;
   `include "../env/dcn_scb.sv" 
   `include "../env/tsn_switch_model.sv"
   `include "../env/scoreboard.sv" 
-  `include "../uvc/sequence/pcs_base_seq.sv"    
+  //`include "../uvc/sequence/pcs_base_seq.sv"    
   `include "../env/pcs_tx_rx_env.sv" 
   //seq lib
   `include "../seq_lib/mac_user_seq_lib.sv"

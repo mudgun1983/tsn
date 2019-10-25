@@ -378,4 +378,84 @@ bit  [7:0] data_sequence_id[20];
       endtask    
 endclass
 
+class scenario_full_throughput_switch_test extends scenario_reg_test;
+int  data_len;
+    
+bit  [7:0] data_sequence_id[20];
+bit  [47:0] da_index;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_full_throughput_switch_test, pcs_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_full_throughput_switch_test");               
+        super.new();        
+        	
+    endfunction:new
+
+//================================================//
+//TASK        : body
+//DESCRIPTION : construct
+//================================================//
+
+   virtual task body();
+        begin
+		super.body();
+		  #100us
+        
+        		
+		for(int i =0; i<topology_config0.mac_number;i++)
+		//for(int i =2; i<4;i++)
+		  begin
+		  automatic int index;
+          index = i; 
+		  fork
+          //EXPRESS PACKET
+		   if(port_stimulus_s[index].port_en)
+		    begin
+			if(port_stimulus_s[index].packet_count==0)
+			  begin
+			    forever
+			      begin
+			       data_len=$urandom_range(1518,46);
+			       da_index = 3;//$urandom_range(2,19);
+                   seq_do(index);		
+                   data_sequence_id[index]++;
+                  end
+              end	
+            else
+              begin
+			    for(int j=0;j<port_stimulus_s[index].packet_count;j++)
+			      begin
+			       data_len=$urandom_range(1518,46);
+			       da_index = 3;//$urandom_range(2,19);
+                   seq_do(index);		
+                   data_sequence_id[index]++;
+                  end
+              end			  
+			end
+          join_none			
+          end	
+          wait fork;
+          		  
+        end
+      endtask  
+
+
+  task seq_do(input int index);
+                     `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr_array[index],
+                                  {mac_seq.c_da_cnt==da_index;
+			      				  mac_seq.c_sa_cnt==index;
+			      				  mac_seq.c_data_control == 1;
+			      				  mac_seq.c_data_payload ==data_sequence_id[index];
+			      				  mac_seq.c_packet_len == data_len;
+			      				  mac_seq.c_tpid == data_len;
+			      				  mac_seq.c_preemptable==0;
+			      				 })
+  endtask  
+endclass
+
 `endif // LABEL_FRAME_SV
