@@ -35,6 +35,7 @@ comp:
 
 run:
 	./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=${TEST_NAME} 
+	#./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=simple_express_packet_test 
 
 clean: 
 	rm -rf *.log *.txt

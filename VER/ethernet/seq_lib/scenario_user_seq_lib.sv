@@ -341,7 +341,7 @@ bit  [7:0] data_sequence_id[20];
    virtual task body();
         begin
 		super.body();
-		  #500ns
+		  #100us
         
         		
 		for(int i =2; i<topology_config0.mac_number;i++)

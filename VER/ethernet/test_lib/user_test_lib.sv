@@ -177,7 +177,7 @@ class full_throughput_test extends pcs_base_test;
 		   automatic int index;
            index = i;
 	       fork
-	         //while(1)
+	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.scb0[index].fatal_event;
 		    	file_id=$fopen("global_test_log.txt","a+"); 
