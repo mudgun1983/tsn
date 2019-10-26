@@ -3,7 +3,8 @@ UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
 #TEST_NAME= simple_express_packet_test
 #TEST_NAME= simple_e_p_mix_packet_test
 #TEST_NAME= simple_e_p_mix_random_test
-TEST_NAME= full_throughput_test
+#TEST_NAME= full_throughput_test
+TEST_NAME= full_throughput_switch_test 
 
 all:clean setup compile elaborate run
 
@@ -35,6 +36,7 @@ comp:
 
 run:
 	./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=${TEST_NAME} 
+	#./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=simple_express_packet_test 
 
 clean: 
 	rm -rf *.log *.txt

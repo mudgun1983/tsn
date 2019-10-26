@@ -177,7 +177,7 @@ class full_throughput_test extends pcs_base_test;
 		   automatic int index;
            index = i;
 	       fork
-	         //while(1)
+	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.scb0[index].fatal_event;
 		    	file_id=$fopen("global_test_log.txt","a+"); 
@@ -200,3 +200,23 @@ class full_throughput_test extends pcs_base_test;
    endtask:run_phase
   
 endclass 
+
+class full_throughput_switch_test extends pcs_base_test;
+ 
+   `uvm_component_utils(full_throughput_switch_test)
+ 
+
+    function new(string name="full_throughput_switch_test" ,  uvm_component parent=null);
+        super.new(name,parent);  
+     endfunction : new
+  
+   virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);       
+//==================================scenario============================================       
+       uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
+			            "default_sequence",
+	       		    	scenario_full_throughput_switch_test::type_id::get());
+//==================================scenario============================================               
+   endfunction : build_phase
+   
+endclass

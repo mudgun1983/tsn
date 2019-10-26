@@ -80,11 +80,6 @@ int key;
 
 assign rst = ~reset_b;
 
-pcs_xilinx_serdes_if       cgmii_rx_block_if(); 
-pcs_xilinx_serdes_vif      cgmii_rx_block_vif;
-pcs_xilinx_serdes_if       cgmii_tx_block_if(); 
-pcs_xilinx_serdes_vif      cgmii_tx_block_vif;
-
 gmii_rx_if gmii_rx_if0();
 gmii_rx_if gmii_rx_if_array[GMII_PORT_NUM]();
 gmii_tx_if gmii_tx_if0();
@@ -121,11 +116,7 @@ xgmii64_tx_vif xgmii64_tx_vif0;
 //------------cpu if-----------------------------//
 
 //------------ set interface class --------
-    initial begin 
-        cgmii_rx_block_vif = new(cgmii_rx_block_if);
-        cgmii_tx_block_vif = new(cgmii_tx_block_if);
-        set_config_object("*pcs_rx_env0*","vif",cgmii_rx_block_vif,0);
-      
+    initial begin  
         
         gmii_rx_vif0 = new(gmii_rx_if0); 
         uvm_config_db#(virtual gmii_rx_if)::set(null,"*mac_env_dbg*mac_rx_agent0*","m_gmii_rx_if",gmii_rx_if0);
@@ -226,20 +217,6 @@ always #(CLOCK_100M/2)
 
 
 //--------- interface begin-----------//
-initial
-  begin
-  	cgmii_rx_block_if.clk=1;
-  	cgmii_rx_block_if.reset=0;
-  	#10ns;
-  	cgmii_rx_block_if.reset=1;
-  	#50ns;
-  	cgmii_rx_block_if.reset=0;
-  	
-
-  end     
-
-always #(CLOCK_322M/2)  
-  cgmii_rx_block_if.clk <= ~cgmii_rx_block_if.clk;
   
 initial
   begin
