@@ -124,11 +124,7 @@ class mac_user_sequence extends mac_base_sequence;
                     //req.tagged_data[0].max_data_len  == 2    ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
                    // req.tagged_data[0].min_data_len  == 2    ;//p_sequencer.static_cfg.cfg_min_tagged_data_len;    
                    	req.tagged_data[0].vlan_tag_kind == eth_tagged_data::VLAN_TAG; 
-                   	if(vlan_choose)
-                   	{req.tagged_data[0].data[0] == VLAN_VALUE1[15:8] ;
-                     req.tagged_data[0].data[1] == VLAN_VALUE1[7:0] ;
-                   	}
-                   	else
+
                    	{
                    	 req.tagged_data[0].data[0] == VLAN_VALUE0[15:8] ;
                      req.tagged_data[0].data[1] == VLAN_VALUE0[7:0] ;

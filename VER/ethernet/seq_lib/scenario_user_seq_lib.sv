@@ -447,13 +447,13 @@ bit  [47:0] da_index;
 
   task seq_do(input int index);
                      `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr_array[index],
-                                  {mac_seq.c_da_cnt==da_index;
-			      				  mac_seq.c_sa_cnt==index;
-			      				  mac_seq.c_data_control == 1;
-			      				  mac_seq.c_data_payload ==data_sequence_id[index];
-			      				  mac_seq.c_packet_len == data_len;
-			      				  mac_seq.c_tpid == data_len;
-			      				  mac_seq.c_preemptable==0;
+                                  {mac_seq.c_da_cnt==port_stimulus_s[index].da_index;
+			      				   mac_seq.c_sa_cnt==port_stimulus_s[index].sa_index;
+			      				   mac_seq.c_data_control == 1;
+			      				   mac_seq.c_data_payload ==data_sequence_id[index];
+			      				   mac_seq.c_packet_len == data_len;
+			      				   mac_seq.c_tpid == data_len;
+			      				   mac_seq.c_preemptable==0;
 			      				 })
   endtask  
 endclass
