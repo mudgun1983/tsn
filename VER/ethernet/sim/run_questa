@@ -1,14 +1,15 @@
-set LIBDIR c:/questasim64_10.1d/uvm-1.1b/win64
+set LIBDIR ../../common/uvm-1.1b/win64
 
 
 #set TEST_NAME simple_preemptable_packet_test
 #set TEST_NAME simple_express_packet_test
 #set TEST_NAME simple_e_p_mix_packet_test
 #set TEST_NAME simple_e_p_mix_random_test
-set TEST_NAME full_throughput_test
+#set TEST_NAME full_throughput_test
+set TEST_NAME full_throughput_switch_test
 vlib work
 
 vlog +define+ALIGN_MARKER_FAST_SIMULATE+DUMMY_DUT -f pcs_env_filelist.f  -work work
 vlog  +define+ALIGN_MARKER_FAST_SIMULATE+SIM_USE -f dut_filelist.f  -work work
-vsim +acc=rmb -l vsim.log -sv_seed 0 -c -sv_lib $LIBDIR/uvm_dpi  -do vsim.do +UVM_TESTNAME=$TEST_NAME  pcs_tb_top glbl
+vsim +acc=rmb -l vsim.log -sv_seed 0 -c -sv_lib $LIBDIR/uvm_dpi  -do vsim.do +UVM_TESTNAME=$TEST_NAME -novopt pcs_tb_top glbl
 #-voptargs="+acc"
