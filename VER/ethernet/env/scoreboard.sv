@@ -168,6 +168,7 @@ class scoreboard extends uvm_scoreboard;
                      		      	$fwrite(write_comp_data_fd,$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h time=%0t\n",eth_frame_col_tr.destination_address,$time));   
                      		      	$fclose(write_comp_data_fd);
                      		      	comp_state = COM_FINISH;
+									->fatal_event;
           	                   end
           	                else
           	                   begin      	                  
@@ -263,6 +264,7 @@ class scoreboard extends uvm_scoreboard;
                      		      	$fclose(write_comp_data_fd);
 									//`uvm_fatal(get_type_name(),$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address));
                      		      	comp_state = COM_FINISH;
+									->fatal_event;
           	                   end
           	                else
           	                   begin          	                  

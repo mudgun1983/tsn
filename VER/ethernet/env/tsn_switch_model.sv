@@ -133,7 +133,7 @@ typedef enum bit[7:0]{
 		      	end
     endtask
 	
-    task get_trans();
+   virtual task get_trans();
 	for(int i =0; i<topology_config0.mac_number;i++)
 		  begin
 		  automatic int index;

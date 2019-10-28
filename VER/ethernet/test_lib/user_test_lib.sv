@@ -219,4 +219,9 @@ class full_throughput_switch_test extends pcs_base_test;
 //==================================scenario============================================               
    endfunction : build_phase
    
+   function void end_of_elaboration();
+    `uvm_info(get_type_name(),
+      $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
+  endfunction : end_of_elaboration 
+   
 endclass

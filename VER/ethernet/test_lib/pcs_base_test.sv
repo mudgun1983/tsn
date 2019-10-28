@@ -90,6 +90,7 @@ class pcs_base_test extends uvm_test;
 	  set_inst_override_by_type("*mac_env0[1]*mac_rx_agent0*", mac_rx_base_monitor::get_type(), xgmii64_rx_monitor::get_type() );
 	  set_inst_override_by_type("*mac_env0[1]*mac_tx_agent0*", mac_tx_base_driver::get_type(), xgmii64_tx_driver::get_type() );
 	  set_inst_override_by_type("*mac_env0[1]*mac_tx_agent0*", mac_tx_base_monitor::get_type(), xgmii64_tx_monitor::get_type() );
+	  set_inst_override_by_type("*tsn_switch_model0*",  tsn_switch_model  #("expect")::get_type(), tsn_switch_expect_model::get_type() );
 //================================ set_type_override =======================================
        
    endfunction : build_phase
