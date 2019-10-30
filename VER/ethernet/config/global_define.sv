@@ -1,5 +1,5 @@
 //PHY_PORT_TABLE
-//`define DUMMY_DUT
+`define DUMMY_DUT
 
 typedef struct packed
 {
@@ -80,26 +80,26 @@ port_stimulus_s[17].sa_index = 17;
 port_stimulus_s[18].sa_index = 18;
 port_stimulus_s[19].sa_index = 19;
 
-port_stimulus_s[0].da_index =  (19- 0);   
-port_stimulus_s[1].da_index =  (19- 1);
-port_stimulus_s[2].da_index =  (19- 2);  
-port_stimulus_s[3].da_index =  (19- 3);
-port_stimulus_s[4].da_index =  (19- 4);
-port_stimulus_s[5].da_index =  (19- 5);
-port_stimulus_s[6].da_index =  (19- 6);
-port_stimulus_s[7].da_index =  (19- 7);
-port_stimulus_s[8].da_index =  (19- 8);
-port_stimulus_s[9].da_index =  (19- 9);
-port_stimulus_s[10].da_index = (19-10);
-port_stimulus_s[11].da_index = (19-11);
-port_stimulus_s[12].da_index = (19-12);
-port_stimulus_s[13].da_index = (19-13);
-port_stimulus_s[14].da_index = (19-14);
-port_stimulus_s[15].da_index = (19-15);
-port_stimulus_s[16].da_index = (19-16);
-port_stimulus_s[17].da_index = (19-17);
-port_stimulus_s[18].da_index = (19-18);
-port_stimulus_s[19].da_index = (19-19);
+port_stimulus_s[0].da_index =   0;//(19- 0);   
+port_stimulus_s[1].da_index =   1;//(19- 1);
+port_stimulus_s[2].da_index =   2;//(19- 2);  
+port_stimulus_s[3].da_index =   3;//(19- 3);
+port_stimulus_s[4].da_index =   4;//(19- 4);
+port_stimulus_s[5].da_index =   5;//(19- 5);
+port_stimulus_s[6].da_index =   6;//(19- 6);
+port_stimulus_s[7].da_index =   7;//(19- 7);
+port_stimulus_s[8].da_index =   8;//(19- 8);
+port_stimulus_s[9].da_index =   9;//(19- 9);
+port_stimulus_s[10].da_index = 10;//(19-10);
+port_stimulus_s[11].da_index = 11;//(19-11);
+port_stimulus_s[12].da_index = 12;//(19-12);
+port_stimulus_s[13].da_index = 13;//(19-13);
+port_stimulus_s[14].da_index = 14;//(19-14);
+port_stimulus_s[15].da_index = 15;//(19-15);
+port_stimulus_s[16].da_index = 16;//(19-16);
+port_stimulus_s[17].da_index = 17;//(19-17);
+port_stimulus_s[18].da_index = 18;//(19-18);
+port_stimulus_s[19].da_index = 19;//(19-19);
 
 
 endfunction

@@ -4,7 +4,8 @@ UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
 #TEST_NAME= simple_e_p_mix_packet_test
 #TEST_NAME= simple_e_p_mix_random_test
 #TEST_NAME= full_throughput_test
-TEST_NAME= full_throughput_switch_test 
+#TEST_NAME= full_throughput_switch_test 
+TEST_NAME= ptp_smoke_test 
 
 all:clean setup compile elaborate run
 

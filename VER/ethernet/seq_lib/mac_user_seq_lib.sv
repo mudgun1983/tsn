@@ -134,7 +134,6 @@ class mac_user_sequence extends mac_base_sequence;
                     
                    	req.tagged_data[1].data_tag_kind == eth_tagged_data::DATA_TAG;  
 					req.tagged_data[1].data_length   == c_packet_len;
-					//req.tagged_data[1].data.size()   == c_packet_len;
                    	req.tagged_data[1].tpid   == c_tpid;
 					
 					if(~c_data_control)

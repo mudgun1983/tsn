@@ -28,17 +28,8 @@ package pcs_env_pkg;
   `include "uvm_macros.svh"
   import cpu_pkg::*;
   import mac_pkg::*;
-  // `include "../uvc/interface/pcs_xilinx_serdes_vif.sv"
-  // `include "../uvc/component/pcs_item.sv"
-  // `include "../uvc/component/pcs_ref_model.sv"
-  // `include "../uvc/component/pcs_base_sequencer.sv"
-  // `include "../uvc/component/pcs_base_driver.sv"
-  // `include "../uvc/component/pcs_base_monitor.sv"
-  // `include "../uvc/component/pcs_driver.sv"
-  // `include "../uvc/component/pcs_monitor.sv"
-  // `include "../uvc/component/pcs_agent.sv"
-  // `include "../uvc/component/pcs_env.sv"
- 
+
+  `include "../uvc/component/ptp_item.sv"
  //top config 
   `include "../config/global_config.sv"
   `include "../config/global_define.sv"
@@ -57,6 +48,7 @@ package pcs_env_pkg;
   `include "../env/pcs_tx_rx_env.sv" 
   //seq lib
   `include "../seq_lib/mac_user_seq_lib.sv"
+  `include "../seq_lib/mac_ptp_sequence.sv"
   `include "../seq_lib/rgm_seq_lib.sv"
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"

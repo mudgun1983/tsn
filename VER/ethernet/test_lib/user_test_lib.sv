@@ -225,3 +225,29 @@ class full_throughput_switch_test extends pcs_base_test;
   endfunction : end_of_elaboration 
    
 endclass
+
+
+class ptp_smoke_test extends pcs_base_test;
+ 
+   `uvm_component_utils(ptp_smoke_test)
+ 
+
+    function new(string name="ptp_smoke_test" ,  uvm_component parent=null);
+        super.new(name,parent);  
+     endfunction : new
+  
+   virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);       
+//==================================scenario============================================       
+       uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
+			            "default_sequence",
+	       		    	scenario_ptp_smoke_test_test::type_id::get());
+//==================================scenario============================================               
+   endfunction : build_phase
+   
+   function void end_of_elaboration();
+    `uvm_info(get_type_name(),
+      $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
+  endfunction : end_of_elaboration 
+   
+endclass
