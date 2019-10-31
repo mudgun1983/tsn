@@ -30,6 +30,7 @@ DOT1P_MAP_TABLE          dot1p_map_table       ;
 LAG_SEL_PORT_TABLE       lag_sel_port_table    ;
 O_PHY_PORT_PRO_TABLE     o_phy_port_pro_table  ;
 GATHER_INIT_TABLE        gather_init_table     ;
+PTP_CONFIG               ptp_config;
   function new (string name = "register_config");
     super.new(name);
 	phy_port_table        = new();
@@ -62,6 +63,7 @@ GATHER_INIT_TABLE        gather_init_table     ;
 	lag_sel_port_table    = new();
 	o_phy_port_pro_table  = new();	
 	gather_init_table     = new();
+	ptp_config            = new();
   endfunction : new
   
 endclass

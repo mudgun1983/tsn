@@ -371,9 +371,9 @@ generate
    end   
 endgenerate
 `else
-tsn_sw_top UUT
+tsn_sw_chip_top UUT
            (
-           .rst                   (rst           ), 	
+           .sys_reset             (rst           ), 	
            .syc_clk_250m          (clk_250m      ),
            .clk_cpu                    (clk_100m                     ),
            .rx_clk_0                   (xgmii64_rx_if_array[0].clk),
@@ -527,15 +527,15 @@ tsn_sw_top UUT
            .cpu_cs_b                   (~m_cpu_if.cpu_cs                     ),
            .cpu_rd_b                   (~m_cpu_if.cpu_rd                     ),
            .cpu_wr_b                   (~m_cpu_if.cpu_wr                     ),
-           .cpu_addr                   (m_cpu_if.cpu_addr      [14:0]),
+           .cpu_addr                   ({m_cpu_if.cpu_addr      [14:0],1'b0}),
            .cpu_data_in                (m_cpu_if.cpu_data_in            [15:0]),
-           .cpu_data_out               (m_cpu_if.cpu_data_out           [15:0]),
+           .cpu_data_out               (m_cpu_if.cpu_data_out           [15:0])
            
-           .timestamp_ptp              (timestamp_ptp          [63:0]),
-           .timestamp_tc               (timestamp_tc           [63:0]),
-           .mact_age_counter_pulse     (mact_age_counter_pulse       ),
-           .policer_timer_pulse        (policer_timer_pulse          ),
-           .frer_age_counter_pulse     (frer_age_counter_pulse       )
+           //.timestamp_ptp              (timestamp_ptp          [63:0]),
+           //.timestamp_tc               (timestamp_tc           [63:0]),
+           //.mact_age_counter_pulse     (mact_age_counter_pulse       ),
+           //.policer_timer_pulse        (policer_timer_pulse          ),
+           //.frer_age_counter_pulse     (frer_age_counter_pulse       )
     );              
 `endif
 //------------DUT connect begin---------------------//

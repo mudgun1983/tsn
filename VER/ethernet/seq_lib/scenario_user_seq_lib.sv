@@ -8,6 +8,32 @@
 // CLASS: XXXX
 //
 //------------------------------------------------------------------------------
+
+//add a base register access scenario//
+class scenario_basic_reg_test extends scenario_reg_test;
+
+reg_test_seq reg_test_seq0;
+//==================== Registration ==============//
+`uvm_sequence_utils(scenario_basic_reg_test, pcs_virtual_sequencer)
+//==================== Registration ==============//
+
+//================================================//
+//FUNCTION    : new
+//DESCRIPTION : construct
+//================================================//
+    function new (string name = "scenario_basic_reg_test");               
+        super.new();             
+    endfunction:new
+	
+	 virtual task body();
+        begin
+		#500ns
+		 `uvm_do_on(reg_test_seq0,p_sequencer.rgm_sqr)
+		end
+	 endtask
+	 
+endclass
+
 class scenario_simple_preemptable_packet_test extends scenario_reg_test;
 
 //==================== Registration ==============//
@@ -458,21 +484,22 @@ bit  [47:0] da_index;
   endtask  
 endclass
 
-class scenario_ptp_smoke_test_test extends scenario_reg_test;
+class scenario_ptp_smoke_test extends scenario_reg_test;
 int  data_len;
 
-mac_ptp_sequence  mac_seq;   
+mac_ptp_sequence  mac_seq;  
+ptp_reg_seq       ptp_reg_seq0;
 bit  [7:0] data_sequence_id[20];
 bit  [47:0] da_index;
 //==================== Registration ==============//
-`uvm_sequence_utils(scenario_ptp_smoke_test_test, pcs_virtual_sequencer)
+`uvm_sequence_utils(scenario_ptp_smoke_test, pcs_virtual_sequencer)
 //==================== Registration ==============//
 
 //================================================//
 //FUNCTION    : new
 //DESCRIPTION : construct
 //================================================//
-    function new (string name = "scenario_ptp_smoke_test_test");               
+    function new (string name = "scenario_ptp_smoke_test");               
         super.new();        
         	
     endfunction:new
@@ -487,7 +514,8 @@ bit  [47:0] da_index;
 		super.body();
 		  #10us
         
-        		
+         `uvm_do_on(ptp_reg_seq0,p_sequencer.rgm_sqr)
+		 
 		for(int i =0; i<topology_config0.mac_number;i++)
 		//for(int i =2; i<4;i++)
 		  begin

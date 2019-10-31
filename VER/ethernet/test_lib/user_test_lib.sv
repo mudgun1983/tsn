@@ -1,5 +1,25 @@
 // AUTHOR: wanggb@pcl.ac.cn
 ///////////////////////////////////////////////////////////////////////////////////////////////
+//add a base register access test//
+class basic_reg_test extends pcs_base_test;
+ 
+   `uvm_component_utils(basic_reg_test)
+    
+	function new(string name="basic_reg_test" ,  uvm_component parent=null);
+        super.new(name,parent);  
+    endfunction : new
+	
+    virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);       
+//==================================scenario============================================       
+       uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
+			            "default_sequence",
+	       		    	scenario_basic_reg_test::type_id::get());
+//==================================scenario============================================               
+   endfunction : build_phase
+   
+endclass
+  
 class simple_preemptable_packet_test extends pcs_base_test;
  
    `uvm_component_utils(simple_preemptable_packet_test)
@@ -183,6 +203,7 @@ class full_throughput_test extends pcs_base_test;
 		    	file_id=$fopen("global_test_log.txt","a+"); 
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
+				`uvm_fatal(get_type_name(),$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));
 		       end
 		   join_none
 		 end
@@ -241,7 +262,7 @@ class ptp_smoke_test extends pcs_base_test;
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",
-	       		    	scenario_ptp_smoke_test_test::type_id::get());
+	       		    	scenario_ptp_smoke_test::type_id::get());
 //==================================scenario============================================               
    endfunction : build_phase
    

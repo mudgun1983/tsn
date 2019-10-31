@@ -29,7 +29,7 @@ vlogan_opts="-full64"
 
 
 # compile glbl module
-$bin_path/vlogan $vlogan_opts +v2k -work xil_defaultlib "../../../../../RTL/netlist_v/tsn_sw_top_net.v" "glbl.v" 2>&1 | tee -a vlogan.log
+$bin_path/vlogan $vlogan_opts +v2k -sverilog -work xil_defaultlib -f dut_filelist.f -f filelist_hw_engine.f 2>&1 | tee -a vlogan.log
 
 $bin_path/vlogan $vlogan_opts  -sverilog -work xil_defaultlib +define+SVT_UVM_TECHNOLOGY \
 	+define+SYNOPSYS_SV  \
@@ -39,4 +39,4 @@ $bin_path/vlogan $vlogan_opts  -sverilog -work xil_defaultlib +define+SVT_UVM_TE
 	${UVM_HOME}/src/dpi/uvm_dpi.cc \
     ${UVM_HOME}/src/uvm_pkg.sv \
 	-timescale=1ns/1ps \
-    -f pcs_env_filelist.f -f dut_filelist.f 2>&1 | tee -a vlogan.log
+    -f env_filelist.f  2>&1 | tee -a vlogan.log

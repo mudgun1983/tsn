@@ -146,26 +146,3 @@ class pcs_base_test extends uvm_test;
                  
 endclass : pcs_base_test
 
-class eth_base_test extends pcs_base_test;
- 
-   `uvm_component_utils(eth_base_test)
-
-    function new(string name="eth_base_test" ,  uvm_component parent=null);
-        super.new(name,parent);
-//       env_ec         = env_static_config::type_id::create("env_ec", this); 
-//       set_config_object("*","static_cfg",env_ec,0);     
-     endfunction : new
-
-   virtual function void build_phase(uvm_phase phase);
-    super.build_phase(phase);  
-    
-    //==================================scenario============================================       
-       uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
-			            "default_sequence",
-	       		    	scenario_eth_test::type_id::get());
-    //==================================scenario============================================ 
-
-    set_type_override_by_type(mac_rx_base_driver::get_type(),xgmii64_rx_driver::get_type()); 
-   endfunction
-          
-endclass

@@ -1,5 +1,5 @@
 //PHY_PORT_TABLE
-`define DUMMY_DUT
+//`define DUMMY_DUT
 
 typedef struct packed
 {
