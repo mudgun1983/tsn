@@ -30,6 +30,10 @@ class cpu_driver extends uvm_driver#(cpu_item);
 //================================================//
   virtual function void build();
     super.build();
+	if( !uvm_config_db #( cpu_config )::get( this , "" , "cpu_config" ,cfg ) ) begin
+           `uvm_fatal(get_type_name(),"=============cpu_config==========");
+		end
+		
     //if (!uvm_config_db#(virtual cpu_if)::get(this, "", "vif", vif)) begin
     //   `uvm_fatal(get_type_name(),"No virtual interface specified for this driver instance");
     //end
@@ -95,26 +99,19 @@ class cpu_driver extends uvm_driver#(cpu_item);
       this.vif.mck.cpu_wr   <= '0;
       @ (this.vif.mck);
       @ (this.vif.mck);
-      this.vif.mck.cpu_cs   <= '1;
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);     
+      this.vif.mck.cpu_cs   <= '1;  
       this.vif.mck.cpu_rd   <= '1;
-      @ (this.vif.mck);
-      this.vif.mck.cpu_rd   <= '0;
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);
+
+      repeat(cfg.hold_cycles)
+	  @ (this.vif.mck);
+      
       data = this.vif.mck.cpu_data_out;
       this.vif.mck.cpu_rd   <= '0;
       this.vif.mck.cpu_cs   <= '0;
       //this.vif.mck.cpu_addr <= $random();
       this.vif.mck.cpu_addr <= 'hzzzz_zzzz;
+	  repeat(cfg.idle_cycles)
+	  @ (this.vif.mck);
    endtask: read
 
    virtual protected task write(input bit [31:0] addr,
@@ -125,24 +122,18 @@ class cpu_driver extends uvm_driver#(cpu_item);
       @ (this.vif.mck);
       @ (this.vif.mck);
       this.vif.mck.cpu_cs   <= '1;
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      @ (this.vif.mck);
-      this.vif.mck.cpu_wr   <= '1;      
-      @ (this.vif.mck);
-      this.vif.mck.cpu_wr   <= '0;
-      @ (this.vif.mck);   
-      @ (this.vif.mck);      
-      @ (this.vif.mck);
-      @ (this.vif.mck);  
-      @ (this.vif.mck);  
-      @ (this.vif.mck);  
-      @ (this.vif.mck);  
-      @ (this.vif.mck);  
+	  this.vif.mck.cpu_wr   <= '1;
+      
+     repeat(cfg.hold_cycles)
+	  @ (this.vif.mck); 
+	  
       this.vif.mck.cpu_cs   <= '0;
+	  this.vif.mck.cpu_wr   <= '0;
       //this.vif.mck.cpu_addr <= $random();
       this.vif.mck.cpu_addr <= 'hzzzz_zzzz;
       this.vif.mck.cpu_data_in <= 'hzzzz_zzzz;
+	  repeat(cfg.idle_cycles)
+	  @ (this.vif.mck);
    endtask: write
 
    virtual protected task trans_received(cpu_item tr);

@@ -7,7 +7,7 @@ class eth_frame_simplify extends eth_frame;
 //DESCRIPTION : pack the pdu units to frame_data
 //================================================//
   function void do_pack(uvm_packer packer);
-    super.do_pack(packer);
+    //super.do_pack(packer);
     
       
     packer.pack_field_int (destination_address,48);

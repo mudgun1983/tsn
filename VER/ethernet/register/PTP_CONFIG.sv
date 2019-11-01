@@ -3,8 +3,10 @@ parameter [15:0]     VLAN_VALUE0 = 16'd500;
 sys_item sys_trans;
 ptp_item ptp_trans;
 eth_frame_simplify eth_trans;
-bit [15:0] packed_data[$];
+descriptor_item descriptor_trans;
 
+bit [15:0] packed_data[$];
+bit [15:0] packed_desc[$];
 `uvm_object_utils_begin( PTP_CONFIG_CONTENT );
 `uvm_object_utils_end
 
@@ -14,17 +16,26 @@ super.new( name );
 sys_trans = new();
 ptp_trans = new();
 eth_trans = new();
-predefine_sys_trans();
 predefine_ptp_trans();
+predefine_sys_trans();
 predefine_eth_trans();
+// sys_trans.print();
+// ptp_trans.print();
+// eth_trans.print();
 pack();
+
+descriptor_trans=new();
+predefine_descriptor_trans();
+desc_pack();
 endfunction
 
 function predefine_sys_trans();
-   if ( !(sys_trans.randomize() with {sys_trans.pckt_type == 4'b1001;} )) 
-        begin
-		 `uvm_error(get_type_name, "Randomize Failed!") 
-		end
+  // if ( !(sys_trans.randomize() with {sys_trans.pckt_type == 4'b1001;} )) 
+       // begin
+		 //`uvm_error(get_type_name, "Randomize Failed!") 
+		//end
+	sys_trans.pckt_type = 4'b1001;
+    sys_trans.sub_type	= ptp_trans.messageType;
     sys_trans.pack_bytes(sys_trans.frame_data);
 endfunction
 
@@ -63,21 +74,59 @@ function predefine_eth_trans();
 	eth_trans.pack_bytes(eth_trans.frame_data);	
 endfunction
 
+function predefine_descriptor_trans();
+   //if ( !(descriptor_trans.randomize() with {descriptor_trans.pckt_type == 4'b1001;} )) 
+   //     begin
+  //		 `uvm_error(get_type_name, "Randomize Failed!") 
+	//end
+	
+	descriptor_trans.inst_valid = 1;
+	descriptor_trans.pckt_type  = 4'b1001; //4’b1001-ptp
+	descriptor_trans.inst_type = 0; //1’b0-master
+                                    //1’b1-slave
+	descriptor_trans.two_step = 1;
+	descriptor_trans.follow_up_tlv = 1;	
+	descriptor_trans.send_period = 1;
+	descriptor_trans.pckt_len=126;
+	descriptor_trans.vlan_num=1;
+	
+	
+
+    descriptor_trans.pack_bytes(descriptor_trans.frame_data);
+endfunction
+
 function pack();
   int tmp_size;
   bit [7:0] packed_data_tmp[];
-  packed_data_tmp = {sys_trans.frame_data,
-                     eth_trans.frame_data};
+  packed_data_tmp = {sys_trans.frame_data,eth_trans.frame_data};
   
   tmp_size = packed_data_tmp.size();  
-  for(int i=0;i<(tmp_size)/2;i++)
+  for(int i=0;i<((tmp_size)/2+tmp_size%2);i++)
     begin
-	  if((i+1)>tmp_size)
-	    packed_data[i/2]={8'h0,packed_data_tmp[i]};  
+	  if((i*2+1)>tmp_size)
+	    packed_data[i]={8'h0,packed_data_tmp[i*2]};  
 	  else
-	    packed_data[i/2]={packed_data_tmp[i+1],packed_data_tmp[i]};  // packed_data[7:0] = packed_data_tmp[0]; packed_data[15:8] = packed_data_tmp[1];
+	    packed_data[i]={packed_data_tmp[i*2],packed_data_tmp[i*2+1]};  // packed_data[7:0] = packed_data_tmp[0]; packed_data[15:8] = packed_data_tmp[1];
 	end
 	
+endfunction
+
+
+function desc_pack();
+  int tmp_size;
+  bit [7:0] packed_data_tmp[];
+  packed_data_tmp = descriptor_trans.frame_data;
+  
+  tmp_size = packed_data_tmp.size();  
+  for(int i=0;i<((tmp_size)/2+tmp_size%2);i++)
+    begin
+	  if((i*2+1)>tmp_size)
+	    packed_desc[i]={8'h0,packed_data_tmp[i*2]};  
+	  else
+	    packed_desc[i]={packed_data_tmp[i*2],packed_data_tmp[i*2+1]};  // packed_data[7:0] = packed_data_tmp[0]; packed_data[15:8] = packed_data_tmp[1];
+	end
+	
+	packed_desc.reverse();
 endfunction
 endclass
 

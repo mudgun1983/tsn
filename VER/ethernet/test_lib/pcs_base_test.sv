@@ -9,6 +9,7 @@ class pcs_base_test extends uvm_test;
     pcs_tx_rx_env pcs_tx_rx_env0;
     register_config register_config0;
 	topology_config topology_config0;
+	cpu_config      cpu_config0;
     integer file_id;
     event tc_finish;
     event tc_fail;
@@ -25,14 +26,25 @@ class pcs_base_test extends uvm_test;
 		
      endfunction : new
   
-  function void set_topology_config();
+  virtual function void set_topology_config();
     topology_config0 =new();
+  endfunction
+  
+  virtual function void set_cpu_config();
+    cpu_config0 =new();
+	cpu_config0.hold_cycles=15;
+	cpu_config0.idle_cycles=10;
   endfunction
   
    virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);       
        printer = new();
        printer.knobs.depth = 6;
+//=================================set cpu agent config==========================================	
+	   set_cpu_config();
+       uvm_config_db #(cpu_config)::set(this, "*", "cpu_config",
+       cpu_config0);   
+	   
 //=================================set top config==========================================
        set_topology_config();
        uvm_config_db #(topology_config)::set(this, "*", "topology_config",

@@ -38,10 +38,10 @@ randc packet_kind packet_type;
 //==================== Attribute =================// 
     //Common message header
     
-	rand bit[(4*1-1):0] messageType                   ;//1 0
 	rand bit[(4*1-1):0] transportSpecific             ;
-	rand bit[(4*1-1):0] versionPTP                    ;//1 1
-    rand bit[(4*1-1):0] reserved0                     ;
+	rand bit[(4*1-1):0] messageType                   ;//1 0
+	rand bit[(4*1-1):0] reserved0                     ;
+	rand bit[(4*1-1):0] versionPTP                    ;//1 1  
     rand bit[(8*2-1):0] messageLength                 ;//2 2
     rand bit[(8*1-1):0] domainNumber                  ;//1 4
     rand bit[(8*1-1):0] reserved1                     ;//1 5
