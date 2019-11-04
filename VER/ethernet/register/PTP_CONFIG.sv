@@ -7,6 +7,8 @@ descriptor_item descriptor_trans;
 
 bit [15:0] packed_data[$];
 bit [15:0] packed_desc[$];
+bit [15:0] packed_data_pad[];
+bit [15:0] packed_desc_pad[];
 `uvm_object_utils_begin( PTP_CONFIG_CONTENT );
 `uvm_object_utils_end
 
@@ -27,6 +29,10 @@ pack();
 descriptor_trans=new();
 predefine_descriptor_trans();
 desc_pack();
+
+//packed_data_pad = new[64];
+//packed_desc_pad = new[8];
+packed_padding();
 endfunction
 
 function predefine_sys_trans();
@@ -36,14 +42,18 @@ function predefine_sys_trans();
 		//end
 	sys_trans.pckt_type = 4'b1001;
     sys_trans.sub_type	= ptp_trans.messageType;
+	sys_trans.timestamp_tc = 'hffff_ffff;
     sys_trans.pack_bytes(sys_trans.frame_data);
 endfunction
 
 function predefine_ptp_trans();
-   if ( !(ptp_trans.randomize() with {ptp_trans.packet_type == ptp_item::Sync;} )) 
-        begin
-		 `uvm_error(get_type_name, "Randomize Failed!") 
-		end
+   // if ( !(ptp_trans.randomize() with {ptp_trans.packet_type == ptp_item::Sync;} )) 
+        // begin
+		 // `uvm_error(get_type_name, "Randomize Failed!") 
+		// end
+	ptp_trans.packet_type     =    ptp_item::Sync;
+	ptp_trans.originTimestamp =    'hffff_ffff;
+		
     ptp_trans.pack_bytes(ptp_trans.frame_data);
 	
 endfunction
@@ -90,7 +100,7 @@ function predefine_descriptor_trans();
 	descriptor_trans.pckt_len=126;
 	descriptor_trans.vlan_num=1;
 	
-	
+	descriptor_trans.rsv6 = 'hffff_ffff;
 
     descriptor_trans.pack_bytes(descriptor_trans.frame_data);
 endfunction
@@ -128,6 +138,15 @@ function desc_pack();
 	
 	packed_desc.reverse();
 endfunction
+
+function packed_padding();
+  foreach(packed_data[key])
+    packed_data_pad[key] = packed_data[key];
+  
+  foreach(packed_desc[key])
+    packed_desc_pad[key] = packed_desc[key];
+endfunction
+
 endclass
 
 class PTP_CONFIG extends uvm_object;

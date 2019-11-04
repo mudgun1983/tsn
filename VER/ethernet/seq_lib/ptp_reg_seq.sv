@@ -23,14 +23,16 @@ class ptp_reg_seq extends seq_reg_user_macro ;
 	  
 	//file IO
 	write_exp_data_fd=$fopen(tran_exp,"a+");   
-    $fwrite(write_exp_data_fd,$psprintf("ID0 packed_desc size=%0d\n",`PTP_CONFIG_CONTENT[0].packed_desc.size));	
-	foreach(`PTP_CONFIG_CONTENT[0].packed_desc[key])
-              $fwrite(write_exp_data_fd,$psprintf("ID0 packed_desc[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].packed_desc[key]));
+    $fwrite(write_exp_data_fd,$psprintf("ID0 packed_desc_pad size=%0d\n",`PTP_CONFIG_CONTENT[0].packed_desc_pad.size));	
+	foreach(`PTP_CONFIG_CONTENT[0].packed_desc_pad[key])
+              $fwrite(write_exp_data_fd,$psprintf("ID0 packed_desc_pad[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].packed_desc_pad[key]));
 	$fclose(write_exp_data_fd);
 	
 	write_exp_data_fd=$fopen(tran_exp,"a+");                                               
-	foreach(`PTP_CONFIG_CONTENT[0].packed_data[key])
-              $fwrite(write_exp_data_fd,$psprintf("ID0 packet[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].packed_data[key]));
+	//foreach(`PTP_CONFIG_CONTENT[0].packed_data_pad[key])
+              //$fwrite(write_exp_data_fd,$psprintf("ID0 packet[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].packed_data_pad[key]));
+	foreach(`PTP_CONFIG_CONTENT[0].packed_data_pad[key])
+              $fwrite(write_exp_data_fd,$psprintf("ID0 packet[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].packed_data_pad[key]));
 	$fclose(write_exp_data_fd);		
 
     write_exp_data_fd=$fopen(tran_exp,"a+");                                               
@@ -51,18 +53,18 @@ class ptp_reg_seq extends seq_reg_user_macro ;
 	 // for(int i=0;i<reg_config.ptp_config.table_size;i++)
 	 for(int i=0;i<1;i++)
 	   begin    
-        for(bit[15:0] j=0;j<`PTP_CONFIG_CONTENT[i].packed_data.size;j++)	  
+        for(bit[15:0] j=0;j<`PTP_CONFIG_CONTENT[i].packed_data_pad.size;j++)	  
           begin		
            `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h800+j+(i*96)) });   //every step means 2Bytes, 96steps means 128bytes for each packet      
-           `user_rgm_write_with(`PKT_RAM_WR_DATA_REG ,{`PTP_CONFIG_CONTENT[i].packed_data[j]}) ;
+           `user_rgm_write_with(`PKT_RAM_WR_DATA_REG ,{`PTP_CONFIG_CONTENT[i].packed_data_pad[j]}) ;
 	       `user_rgm_write_with(`PKT_RAM_WR_REG      ,{1'b1});
 		   
 		   `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h800+j+(i*96)) });   //every step means 2Bytes, 96steps means 128bytes for each packet      
            `user_rgm_write_with(`PKT_RAM_RD_REG      ,{1'b1});
 		   `user_rgm_read_with(`PKT_RAM_RD_DATA_REG ) ;
 	       
-		   if(`PTP_CONFIG_CONTENT[i].packed_data[j]!= `user_read_data)
-             `uvm_fatal(get_type_name(),$psprintf("\nEXPCT_DATA=%0h,READ_DATA=%0h",`PTP_CONFIG_CONTENT[i].packed_data[j],`user_read_data));	
+		   if(`PTP_CONFIG_CONTENT[i].packed_data_pad[j]!= `user_read_data)
+             `uvm_fatal(get_type_name(),$psprintf("\nEXPCT_DATA=%0h,READ_DATA=%0h",`PTP_CONFIG_CONTENT[i].packed_data_pad[j],`user_read_data));	
 		  end
         end
 	
@@ -70,18 +72,18 @@ class ptp_reg_seq extends seq_reg_user_macro ;
 	// for(int i=0;i<reg_config.ptp_config.table_size;i++)
     for(int i=0;i<1;i++)
 	   begin    
-        for(bit[15:0] j=0;j<`PTP_CONFIG_CONTENT[i].packed_desc.size;j++)	  
+        for(bit[15:0] j=0;j<`PTP_CONFIG_CONTENT[i].packed_desc_pad.size;j++)	  
           begin		
            `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h000+j+(i*8)) });   //every step means 2Bytes, 8steps means 16bytes for each packet      
-           `user_rgm_write_with(`PKT_RAM_WR_DATA_REG ,{`PTP_CONFIG_CONTENT[i].packed_desc[j]}) ;
+           `user_rgm_write_with(`PKT_RAM_WR_DATA_REG ,{`PTP_CONFIG_CONTENT[i].packed_desc_pad[j]}) ;
 	       `user_rgm_write_with(`PKT_RAM_WR_REG      ,{1'b1});
 		   
 		   `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h000+j+(i*8)) });   //every step means 2Bytes, 8steps means 16bytes for each packet      
            `user_rgm_write_with(`PKT_RAM_RD_REG      ,{1'b1});
 		   `user_rgm_read_with(`PKT_RAM_RD_DATA_REG ) ;
 	       
-		   if(`PTP_CONFIG_CONTENT[i].packed_desc[j]!= `user_read_data)
-             `uvm_fatal(get_type_name(),$psprintf("\nEXPCT_DATA=%0h,READ_DATA=%0h",`PTP_CONFIG_CONTENT[i].packed_desc[j],`user_read_data));	
+		   if(`PTP_CONFIG_CONTENT[i].packed_desc_pad[j]!= `user_read_data)
+             `uvm_fatal(get_type_name(),$psprintf("\nEXPCT_DATA=%0h,READ_DATA=%0h",`PTP_CONFIG_CONTENT[i].packed_desc_pad[j],`user_read_data));	
 		  end
         end   	
 	`uvm_info(get_type_name(),$psprintf("\n-----------------ptp_reg_seq set end---------------",),UVM_LOW);	
