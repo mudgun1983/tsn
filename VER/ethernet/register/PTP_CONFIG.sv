@@ -30,8 +30,10 @@ descriptor_trans=new();
 predefine_descriptor_trans();
 desc_pack();
 
-//packed_data_pad = new[64];
-//packed_desc_pad = new[8];
+packed_data_pad = new[64];
+//packed_data_pad = packed_data;
+packed_desc_pad = new[8];
+//  packed_desc_pad  = packed_desc ;
 packed_padding();
 endfunction
 
@@ -145,6 +147,7 @@ function packed_padding();
   
   foreach(packed_desc[key])
     packed_desc_pad[key] = packed_desc[key];
+	
 endfunction
 
 endclass
