@@ -489,6 +489,7 @@ int  data_len;
 
 mac_ptp_sequence  mac_seq;  
 ptp_reg_seq       ptp_reg_seq0;
+ipp_epp_table_reg_seq ipp_epp_table_reg_seq0;
 bit  [7:0] data_sequence_id[20];
 bit  [47:0] da_index;
 //==================== Registration ==============//
@@ -504,6 +505,11 @@ bit  [47:0] da_index;
         	
     endfunction:new
 
+virtual task post_body();
+      //uvm_test_done.drop_objection(this);
+      `uvm_info(get_type_name(),"[STOP_SEQUENCE] without drop_objection",UVM_LOW)
+  endtask : post_body
+  
 //================================================//
 //TASK        : body
 //DESCRIPTION : construct
@@ -515,7 +521,8 @@ bit  [47:0] da_index;
 		  #10us
         
          `uvm_do_on(ptp_reg_seq0,p_sequencer.rgm_sqr)
-		 
+		 `uvm_do_on(ipp_epp_table_reg_seq0,p_sequencer.rgm_sqr)
+		 /*
 		for(int i =0; i<topology_config0.mac_number;i++)
 		//for(int i =2; i<4;i++)
 		  begin
@@ -549,7 +556,7 @@ bit  [47:0] da_index;
           join_none			
           end	
           wait fork;
-          		  
+          	*/
         end
       endtask  
 

@@ -28,8 +28,10 @@ vhdlan_opts="-full64"
 vlogan_opts="-full64"
 
 vlogan_define="SIM"
+
+attri="+memcbk"
 # compile glbl module
-$bin_path/vlogan $vlogan_opts +define+$vlogan_define +v2k -sverilog -work xil_defaultlib -f dut_filelist.f -f filelist_hw_engine.f 2>&1 | tee -a vlogan.log
+$bin_path/vlogan $vlogan_opts $attri  +define+$vlogan_define +v2k -sverilog -work xil_defaultlib -f dut_filelist.f -f filelist_hw_engine.f 2>&1 | tee -a vlogan.log
 
 $bin_path/vlogan $vlogan_opts  -sverilog -work xil_defaultlib +define+SVT_UVM_TECHNOLOGY \
 	+define+SYNOPSYS_SV  \

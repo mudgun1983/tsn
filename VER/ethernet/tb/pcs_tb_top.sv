@@ -319,6 +319,7 @@ endgenerate
 // end
 initial begin
 $vcdpluson;
+//$vcdplusmemon;
 end  
 
 //ptp_time

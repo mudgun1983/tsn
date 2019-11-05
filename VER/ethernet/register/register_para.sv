@@ -32,6 +32,7 @@
 `define BASE_OFFSET   15'b100_0000_0000_0000
 `define BASE_OFFSET_GATHER   15'b011_0000_0000_0000
 `define BASE_OFFSET_PTP      15'b000_1110_1000_0000
+`define BASE_OFFSET_GE_29    15'b010_1101_0000_0000
 `define PP_VER_YEAR	        (`BASE_OFFSET+'h0000)
 `define PP_VER_MONTH_DAY	(`BASE_OFFSET+'h0002)
 `define PP_VER_HOUR_MIN	    (`BASE_OFFSET+'h0004)
@@ -446,10 +447,13 @@
 `define FIFO_STAT_REG                (`BASE_OFFSET_PTP+'h22)
 `define SEQ_ERR_REG                  (`BASE_OFFSET_PTP+'h23)
 `define FCS_ERR_REG                  (`BASE_OFFSET_PTP+'h24)
-										   
+`define RAM_INIT_DONE                (`BASE_OFFSET_PTP+'h25)										   
 `define DBG_1_REG                    (`BASE_OFFSET_PTP+'h30)
 `define DBG_2_REG                    (`BASE_OFFSET_PTP+'h31)
 `define DBG_3_REG                    (`BASE_OFFSET_PTP+'h32)
 `define DBG_4_REG                    (`BASE_OFFSET_PTP+'h33)
 `define DBG_5_REG                    (`BASE_OFFSET_PTP+'h34)
 
+
+//GE
+`define SYS_HEADER                    'h006
