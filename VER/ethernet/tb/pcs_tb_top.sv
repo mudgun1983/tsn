@@ -528,7 +528,7 @@ tsn_sw_chip_top UUT
            .cpu_cs_b                   (~m_cpu_if.cpu_cs                     ),
            .cpu_rd_b                   (~m_cpu_if.cpu_rd                     ),
            .cpu_wr_b                   (~m_cpu_if.cpu_wr                     ),
-           .cpu_addr                   ({m_cpu_if.cpu_addr      [14:0],1'b0}),
+           .cpu_addr                   (m_cpu_if.cpu_addr               [15:0]),
            .cpu_data_in                (m_cpu_if.cpu_data_in            [15:0]),
            .cpu_data_out               (m_cpu_if.cpu_data_out           [15:0])
            

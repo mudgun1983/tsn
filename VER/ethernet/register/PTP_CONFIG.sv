@@ -44,6 +44,7 @@ function predefine_sys_trans();
 		//end
 	sys_trans.pckt_type = 4'b1001;
     sys_trans.sub_type	= ptp_trans.messageType;
+	sys_trans.destination = 2;//port 1
 	sys_trans.timestamp_tc = 'hffff_ffff;
     sys_trans.pack_bytes(sys_trans.frame_data);
 endfunction
