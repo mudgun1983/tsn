@@ -311,16 +311,18 @@ endgenerate
 	$display("test start");
         run_test();
     end
-
-// initial
-// begin
-  // $fsdbDumpfile("filename_you_want.fsdb");
-  // $fsdbDumpvars;
-// end
+`ifdef VERDI
+ initial
+ begin
+   $fsdbDumpfile("tb_top.fsdb");
+   $fsdbDumpvars(0,pcs_tb_top);
+ end
+ `else
 initial begin
 $vcdpluson;
 //$vcdplusmemon;
-end  
+end 
+`endif 
 
 //ptp_time
 reg      [63:0]        timestamp_ptp;

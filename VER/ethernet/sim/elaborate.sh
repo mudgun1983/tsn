@@ -15,6 +15,7 @@
 #
 # ****************************************************************************
 UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
+VERDI_PATH=/usr/synopsys/Verdi3_L-2016.06-1/share/PLI/VCS/LINUX64
 # installation path setting
 bin_path="/usr/synopsys/L-2016.06/bin"
 
@@ -32,4 +33,6 @@ vcs -full64  \
 	-debug_access+all \
 	${UVM_HOME}/src/dpi/uvm_dpi.cc \
 	+error+10 \
+	-P ${VERDI_PATH}/novas.tab \
+        ${VERDI_PATH}/pli.a \
 	-l comp.log -CFLAGS -DVCS 

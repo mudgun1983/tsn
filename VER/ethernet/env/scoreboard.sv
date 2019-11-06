@@ -127,7 +127,7 @@ class scoreboard extends uvm_scoreboard;
 			$fwrite(write_exp_data_fd,$psprintf(" S \n"));
             foreach(eth_frame_col_tr.frame_data[key])
               //$fwrite(write_col_data_fd,$psprintf("eth_frame_col_trans.data[%0d]=%0h\n",key,eth_frame_col_tr.frame_data[key]));     
-                $fwrite(write_col_data_fd,$psprintf("%2h\n",eth_frame_col_tr.frame_data[key]));   			  
+                $fwrite(write_col_data_fd,$psprintf("[%0d]%2h\n",key,eth_frame_col_tr.frame_data[key]));   			  
             $fclose(write_col_data_fd);
             ->comp_event;
         end

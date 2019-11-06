@@ -41,5 +41,5 @@ run:
 	#./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=simple_express_packet_test 
 
 clean: 
-	rm -rf *.log *.txt
+	rm -rf *.log *.txt *.bak *.fsdb  
 #	\rm -rf csrc *.log simv* core ucli.key vcdplus.vpd DVEfiles vc_hdrs.h ucli.key
