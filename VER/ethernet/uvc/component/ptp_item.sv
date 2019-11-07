@@ -48,7 +48,7 @@ randc packet_kind packet_type;
     rand bit[(8*2-1):0] flagField                     ;//2 6
     rand bit[(8*8-1):0] correctionField               ;//8 8
     rand bit[(8*4-1):0] reserved2                     ;//4 16
-    rand bit[(8*1-1):0] sourcePortIdentity            ;//10 20
+    rand bit[(8*10-1):0] sourcePortIdentity            ;//10 20
     rand bit[(8*2-1):0] sequenceId                    ;//2 30
     rand bit[(8*1-1):0] controlField                  ;//1 32
     rand bit[(8*1-1):0] logMessageInterval            ;//1
@@ -157,28 +157,28 @@ randc packet_kind packet_type;
 		 packer.pack_field_int (flagField          ,8*2);
 		 packer.pack_field_int (correctionField    ,8*8);
 		 packer.pack_field_int (reserved2          ,8*4);
-		 packer.pack_field_int (sourcePortIdentity ,8*1);
+		 packer.pack_field     (sourcePortIdentity ,8*10);
 		 packer.pack_field_int (sequenceId         ,8*2);
 		 packer.pack_field_int (controlField       ,8*1);
 		 packer.pack_field_int (logMessageInterval ,8*1);
 		 
 		case(packet_type)
-		     Sync       :packer.pack_field(originTimestamp,80);  
-			 Delay_Req  :packer.pack_field(originTimestamp,80);  
+		     Sync       :packer.pack_field (originTimestamp,80);  
+			 Delay_Req  :packer.pack_field (originTimestamp,80);  
 			 Delay_Resp :begin
-			               packer.pack_field(receiveTimestamp,80);
-						   packer.pack_field(requestingPortIdentity,80);
+			               packer.pack_field (receiveTimestamp,80);
+						   packer.pack_field (requestingPortIdentity,80);
 			             end
 			 Pdelay_Req :begin
-			               packer.pack_field(originTimestamp,80);
-						   packer.pack_field(reserved,80);
+			               packer.pack_field (originTimestamp,80);
+						   packer.pack_field (reserved,80);
 						 end
 			 Pdelay_Resp:begin
-			               packer.pack_field(requestReceiptTimestamp,80);
-						   packer.pack_field(requestingPortIdentity,80);
+			               packer.pack_field (requestReceiptTimestamp,80);
+						   packer.pack_field (requestingPortIdentity,80);
 			             end
 			 Follow_Up  :begin
-			               packer.pack_field(preciseOriginTimestamp,80);		               
+			               packer.pack_field (preciseOriginTimestamp,80);		               
 			             end         
 		endcase
     endfunction

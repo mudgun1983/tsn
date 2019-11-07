@@ -55,7 +55,7 @@ function predefine_ptp_trans();
 		 // `uvm_error(get_type_name, "Randomize Failed!") 
 		// end
 	ptp_trans.packet_type     =    ptp_item::Sync;
-	ptp_trans.originTimestamp =    'hffff_ffff;
+	ptp_trans.originTimestamp =    {80{1'b1}};//'hffff_ffff;
 		
     ptp_trans.pack_bytes(ptp_trans.frame_data);
 	

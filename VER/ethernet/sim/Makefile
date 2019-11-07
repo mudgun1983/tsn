@@ -43,3 +43,5 @@ run:
 clean: 
 	rm -rf *.log *.txt *.bak *.fsdb  
 #	\rm -rf csrc *.log simv* core ucli.key vcdplus.vpd DVEfiles vc_hdrs.h ucli.key
+verdi:
+	 verdi +v2k -sverilog -f dut_filelist.f -f filelist_hw_engine.f  -ssf tb_top.fsdb
