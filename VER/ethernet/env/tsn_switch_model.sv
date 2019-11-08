@@ -1,13 +1,14 @@
-class tsn_switch_model #(string file_name = "expect") extends uvm_component;
+class tsn_switch_model  extends uvm_component;
     uvm_blocking_get_port#(eth_frame)              get_port_dbg;
     uvm_analysis_port #(eth_frame)                 item_collected_port_dbg;
 	
     uvm_blocking_get_port#(eth_frame)              get_port[];
     uvm_analysis_port #(eth_frame)                 item_collected_port[];
+    uvm_analysis_port #(eth_frame)                 ptp_item_collected_port[];
 
-typedef tsn_switch_model #(file_name) this_t;
+string file_name;
 	
-`uvm_component_param_utils(this_t)
+`uvm_component_utils(tsn_switch_model)
 
 //attribute    
 topology_config       topology_config0;
@@ -61,7 +62,7 @@ typedef enum bit[7:0]{
   bit [7:0] frame_data_merge[$];
   
   int write_data_fd        ;
-  
+  string inst_name;
   eth_frame eth_frame_exp_tr_array[];
 		                        //            01: frag code error
 								//            02: not express nor preempt packet
@@ -70,6 +71,7 @@ typedef enum bit[7:0]{
 //================================================//
     function new (string name ="tsn_switch_model",uvm_component parent);
         super.new(name,parent);
+		file_name = get_name();
 		write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"w+");                                               
         $fclose(write_data_fd);
     endfunction
@@ -78,7 +80,6 @@ typedef enum bit[7:0]{
 //FUNCTION    : build
 //================================================//
     virtual function void build ();
-        string inst_name;
         super.build();
 		
 		if( !uvm_config_db #( topology_config )::get( this , "" , "topology_config" ,topology_config0 ) ) begin
@@ -102,6 +103,13 @@ typedef enum bit[7:0]{
             item_collected_port[i]    =  new({"item_collected_port[",inst_name,"]"},this);
 	      end
 		
+		ptp_item_collected_port = new[topology_config0.mac_number];
+		for(int i=0;i<topology_config0.mac_number;i++)
+		  begin
+		    inst_name = $sformatf("%0d",i);//string'(i);
+            ptp_item_collected_port[i]    =  new({"ptp_item_collected_port[",inst_name,"]"},this);
+	      end
+		  
         eth_frame_exp_tr_array	= new[topology_config0.mac_number];	
     endfunction : build
 

@@ -258,7 +258,8 @@ class ptp_smoke_test extends pcs_base_test;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
-    super.build_phase(phase);       
+    super.build_phase(phase);      
+    auto_stop_en = 1;	
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",
@@ -271,4 +272,35 @@ class ptp_smoke_test extends pcs_base_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration 
    
+  task run_phase(uvm_phase phase);
+    fork
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.ptp_scb0[index].fatal_event;
+		    	file_id=$fopen("global_test_log.txt","a+"); 
+		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
+		    	$fclose(file_id);
+				if(auto_stop_en)
+				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR ptp_scb0[%0d]",index));
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+			   
+	
+	   begin
+       phase.phase_done.set_drain_time(this, 50000);
+       #20ms;
+       $stop;      
+	   end
+	   
+	join
+   endtask:run_phase
 endclass

@@ -13,7 +13,7 @@ class pcs_base_test extends uvm_test;
     integer file_id;
     event tc_finish;
     event tc_fail;
-
+    bit   auto_stop_en;
     
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
@@ -102,7 +102,8 @@ class pcs_base_test extends uvm_test;
 	  set_inst_override_by_type("*mac_env0[1]*mac_rx_agent0*", mac_rx_base_monitor::get_type(), xgmii64_rx_monitor::get_type() );
 	  set_inst_override_by_type("*mac_env0[1]*mac_tx_agent0*", mac_tx_base_driver::get_type(), xgmii64_tx_driver::get_type() );
 	  set_inst_override_by_type("*mac_env0[1]*mac_tx_agent0*", mac_tx_base_monitor::get_type(), xgmii64_tx_monitor::get_type() );
-	  set_inst_override_by_type("*tsn_switch_model0*",  tsn_switch_model  #("expect")::get_type(), tsn_switch_expect_model::get_type() );
+	  set_inst_override_by_type("*tsn_switch_model0*",  tsn_switch_model::get_type(), tsn_switch_expect_model::get_type() );
+	  set_inst_override_by_type("*tsn_switch_model_monitor*",  tsn_switch_model::get_type(), tsn_switch_monitor_model::get_type() );
 //================================ set_type_override =======================================
        
    endfunction : build_phase
@@ -130,6 +131,8 @@ class pcs_base_test extends uvm_test;
 		    	file_id=$fopen("global_test_log.txt","a+"); 
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
+				if(auto_stop_en)
+				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scb0[%0d]",index));
 		       end
 		   join_none
 		 end

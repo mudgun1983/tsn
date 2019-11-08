@@ -100,7 +100,24 @@ rand bit[7:0]    frame_data[];
 
     endfunction
 
-
+//================================================//
+//FUNCTION    : do_unpack
+//DESCRIPTION : unpack the frame_data to pdu units
+//================================================//
+  function void do_unpack(uvm_packer packer);
+    pckt_type	    =  packer.unpack_field_int(3 +1 );  
+    sub_type        =  packer.unpack_field_int(3 +1 );
+    d_typ           =  packer.unpack_field_int(1 +1 );
+    destination     =  packer.unpack_field_int(9 +1 );
+    rsv0	        =  packer.unpack_field_int(3 +1 );
+    pckt_len        =  packer.unpack_field_int(15+1 );
+    rsv1			=  packer.unpack_field_int(23+1 );
+    rsv2			=  packer.unpack_field_int(31+1 );
+    rsv3			=  packer.unpack_field_int(31+1 );
+    timestamp_ptp   =  packer.unpack_field_int(63+1 );
+    timestamp_tc	=  packer.unpack_field_int(63+1 );
+  endfunction
+  
 endclass : sys_item
 
 `endif // pcs_item_SV

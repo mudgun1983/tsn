@@ -9,8 +9,6 @@ class scoreboard extends uvm_scoreboard;
     
 
     uvm_comparer                           comparer;
-	parameter    SHIM_0_VLAN = 16'd500;
-    parameter    SHIM_1_VLAN = 16'd501;
     
     typedef enum {EXP_POP,COMPARE,EXP_QUEUE_CHECK,COM_FINISH}    comp_state_enum           ;
     
@@ -24,11 +22,8 @@ class scoreboard extends uvm_scoreboard;
     eth_frame                              eth_col_que_shim0[$];
     eth_frame                              eth_col_que_shim1[$];
     
-    local event                            comp_event;
-    local event                            comp_event_shim0;
-    local event                            comp_event_shim1;
-    local event                            pcs_comp_event;
-          event                            fatal_event;
+     event                            comp_event;
+     event                            fatal_event;
     `uvm_component_utils_begin(scoreboard)
     `uvm_component_utils_end
      
@@ -136,7 +131,7 @@ class scoreboard extends uvm_scoreboard;
 //================================================//
 //TASK    : eth_frame_compare
 //================================================//
-    task eth_frame_compare();
+    virtual task eth_frame_compare();
         int exp_queue_size;
 		bit match;
         while(1)

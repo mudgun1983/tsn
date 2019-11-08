@@ -8,7 +8,7 @@ UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
 #TEST_NAME= full_throughput_switch_test 
 TEST_NAME= ptp_smoke_test 
 
-all:clean setup compile elaborate run
+all:clean touch setup compile elaborate run
 
 setup:
 	./setup.sh
@@ -45,3 +45,6 @@ clean:
 #	\rm -rf csrc *.log simv* core ucli.key vcdplus.vpd DVEfiles vc_hdrs.h ucli.key
 verdi:
 	 verdi +v2k -sverilog -f dut_filelist.f -f filelist_hw_engine.f  -ssf tb_top.fsdb
+
+create:
+	touch test_result.txt

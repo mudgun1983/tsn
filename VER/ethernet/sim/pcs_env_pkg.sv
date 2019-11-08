@@ -47,7 +47,9 @@ package pcs_env_pkg;
   `include "../env/dcn_scb.sv" 
   `include "../env/tsn_switch_model.sv"
   `include "../env/tsn_switch_expect_model.sv"
+  `include "../env/tsn_switch_monitor_model.sv"
   `include "../env/scoreboard.sv" 
+  `include "../env/ptp_scoreboard.sv"
   //`include "../uvc/sequence/pcs_base_seq.sv"    
   `include "../env/pcs_tx_rx_env.sv" 
 

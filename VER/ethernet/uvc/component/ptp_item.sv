@@ -146,21 +146,21 @@ randc packet_kind packet_type;
 //================================================//
     function void do_pack(uvm_packer packer);
         super.do_pack(packer);  
-		
-		 packer.pack_field_int (messageType        ,4*1);
-		 packer.pack_field_int (transportSpecific  ,4*1);
-		 packer.pack_field_int (versionPTP         ,4*1);
-		 packer.pack_field_int (reserved0          ,4*1);
-		 packer.pack_field_int (messageLength      ,8*2);
-		 packer.pack_field_int (domainNumber       ,8*1);
-		 packer.pack_field_int (reserved1          ,8*1);
-		 packer.pack_field_int (flagField          ,8*2);
-		 packer.pack_field_int (correctionField    ,8*8);
-		 packer.pack_field_int (reserved2          ,8*4);
+		 packer.pack_field_int (transportSpecific  ,4*1 );
+		 packer.pack_field_int (messageType        ,4*1 );
+		 packer.pack_field_int (reserved0          ,4*1 );
+		 packer.pack_field_int (versionPTP         ,4*1 );
+		 
+		 packer.pack_field_int (messageLength      ,8*2 );
+		 packer.pack_field_int (domainNumber       ,8*1 );
+		 packer.pack_field_int (reserved1          ,8*1 );
+		 packer.pack_field_int (flagField          ,8*2 );
+		 packer.pack_field_int (correctionField    ,8*8 );
+		 packer.pack_field_int (reserved2          ,8*4 );
 		 packer.pack_field     (sourcePortIdentity ,8*10);
-		 packer.pack_field_int (sequenceId         ,8*2);
-		 packer.pack_field_int (controlField       ,8*1);
-		 packer.pack_field_int (logMessageInterval ,8*1);
+		 packer.pack_field_int (sequenceId         ,8*2 );
+		 packer.pack_field_int (controlField       ,8*1 );
+		 packer.pack_field_int (logMessageInterval ,8*1 );
 		 
 		case(packet_type)
 		     Sync       :packer.pack_field (originTimestamp,80);  
@@ -183,7 +183,61 @@ randc packet_kind packet_type;
 		endcase
     endfunction
 
-
+//================================================//
+//FUNCTION    : do_unpack
+//DESCRIPTION : unpack the frame_data to pdu units
+//================================================//
+  function void do_unpack(uvm_packer packer);
+    transportSpecific =  packer.unpack_field_int(4*1 );
+	messageType       =  packer.unpack_field_int(4*1 );  
+    reserved0         =  packer.unpack_field_int(4*1 );
+    versionPTP        =  packer.unpack_field_int(4*1 );
+    
+    messageLength     =  packer.unpack_field_int(8*2 );
+    domainNumber      =  packer.unpack_field_int(8*1 );
+    reserved1         =  packer.unpack_field_int(8*1 );
+    flagField         =  packer.unpack_field_int(8*2 );
+    correctionField   =  packer.unpack_field_int(8*8 );
+    reserved2         =  packer.unpack_field_int(8*4 );
+    sourcePortIdentity=  packer.unpack_field(8*10);
+    sequenceId        =  packer.unpack_field_int(8*2 );
+    controlField      =  packer.unpack_field_int(8*1 );
+    logMessageInterval=  packer.unpack_field_int(8*1 );
+	
+	case(messageType)
+	'h0:packet_type=Sync                   ;
+	'h1:packet_type=Delay_Req              ;
+	'h2:packet_type=Pdelay_Req             ;
+	'h3:packet_type=Pdelay_Resp            ;
+	'h8:packet_type=Follow_Up              ;
+	'h9:packet_type=Delay_Resp             ;
+	'hA:packet_type=Pdelay_Resp_Follow_Up  ;
+	'hB:packet_type=Announce               ;
+	'hC:packet_type=Signaling              ;
+	'hD:packet_type=Management             ;
+	endcase
+	
+	case(packet_type)
+		     Sync       :originTimestamp= packer.unpack_field(80);// packer.pack_field (originTimestamp,80);  
+			 Delay_Req  :originTimestamp= packer.unpack_field(80);//packer.pack_field (originTimestamp,80);  
+			 Delay_Resp :begin
+			               receiveTimestamp      = packer.unpack_field(80);////packer.pack_field (receiveTimestamp,80);
+						   requestingPortIdentity= packer.unpack_field(80);////packer.pack_field (requestingPortIdentity,80);
+			             end
+			 Pdelay_Req :begin
+			               originTimestamp= packer.unpack_field(80);//packer.pack_field (originTimestamp,80);
+						   reserved       = packer.unpack_field(80);//packer.pack_field (reserved,80);
+						 end
+			 Pdelay_Resp:begin
+			               requestReceiptTimestamp= packer.unpack_field(80);// packer.pack_field (requestReceiptTimestamp,80);
+						   requestingPortIdentity = packer.unpack_field(80);// packer.pack_field (requestingPortIdentity,80);
+			             end
+			 Follow_Up  :begin
+			               preciseOriginTimestamp = packer.unpack_field(80);//packer.pack_field (preciseOriginTimestamp,80);		               
+			             end         
+		endcase
+  endfunction
+  
 endclass 
 
 `endif // 

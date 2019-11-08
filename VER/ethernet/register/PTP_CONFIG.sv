@@ -75,7 +75,7 @@ function predefine_eth_trans();
                                      
                    	                 eth_trans.tagged_data[1].data_tag_kind == eth_tagged_data::DATA_TAG;  
 					                 eth_trans.tagged_data[1].data_length   == ptp_trans.frame_data.size();
-                   	                 eth_trans.tagged_data[1].tpid   == 16'h88F7;
+                   	                 eth_trans.tagged_data[1].tpid   == `PTP_ETYPE;//16'h88F7;
 									 foreach(eth_trans.tagged_data[1].data[key])   
                                       {eth_trans.tagged_data[1].data[key]==ptp_trans.frame_data[key];
                                       }

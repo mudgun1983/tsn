@@ -1,6 +1,9 @@
 //PHY_PORT_TABLE
 //`define DUMMY_DUT
 
+//global define
+`define PTP_ETYPE 16'h88F7
+
 typedef struct packed
 {
 bit        port_en;
