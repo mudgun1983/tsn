@@ -63,7 +63,7 @@ endfunction
 
 function predefine_eth_trans();
   eth_trans.tagged_data[1].c_data_length.constraint_mode(0);
-  if ( !(eth_trans.randomize() with {eth_trans.destination_address    == 48'h01_1b_19_00_00_00;
+  if ( !(eth_trans.randomize() with {eth_trans.destination_address    == `PTP_NON_PEER_MULTI_DA;//48'h01_1b_19_00_00_00;
                                      eth_trans.tagged_data_size             == 2    ;//  
                    	                 eth_trans.tagged_data[0].vlan_tag_kind == eth_tagged_data::VLAN_TAG; 					                 
                    	                 {

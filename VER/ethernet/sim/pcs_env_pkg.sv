@@ -64,11 +64,14 @@ package pcs_env_pkg;
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
- 
+  
 //test
   `include "../test_lib/pcs_base_test.sv"
   `include "../test_lib/user_test_lib.sv"
-   
+
+//append test case here  
+  `include "../test_lib/ptp/scenario_ptp_rcv_smoke_test.sv"
+  `include "../test_lib/ptp/ptp_rcv_smoke_test.sv"
 endpackage
 `endif
 
