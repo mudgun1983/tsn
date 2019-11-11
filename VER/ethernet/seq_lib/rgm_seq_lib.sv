@@ -7,6 +7,8 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
    bit [15:0]             rsp_data;
   register_config reg_config;
   string scope_name = "";
+  int file_id;
+  string script_generated;
    `define user_rgm_write_with(ADDR,DATA) \
     begin \
       `uvm_do_with(req,{req.addr == ADDR;req.data == DATA;req.kind == WRITE;}) \
@@ -32,6 +34,9 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
   
   function new(string name="seq_reg_user_macro");
     super.new(name);
+	script_generated = "../data/script_generated.txt";
+    file_id=$fopen(script_generated,"w+");                                               
+    $fclose(file_id);
   endfunction : new
   
    virtual task pre_body();/*{{{*/
@@ -42,6 +47,7 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
    virtual task post_body();
        uvm_test_done.drop_objection(this);
        `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
+	   generate_script();
    endtask : post_body
   
   virtual task body();
@@ -56,6 +62,19 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
         `uvm_fatal(get_type_name(),"=============NO register_config==========");
       end
   endtask: body
+  
+  virtual task generate_script();
+    file_id=$fopen(script_generated,"a+");   
+	$fwrite(file_id,$psprintf("crt.Screen.Send "));
+	
+	if(req.kind == WRITE)
+    $fwrite(file_id,$psprintf("\"reg wr 0x%0h 0x%0h\" ",req.addr,req.data));
+	else
+	$fwrite(file_id,$psprintf("\"reg rd 0x%0h\" ",req.addr));
+	
+	$fwrite(file_id,$psprintf("& chr(13)\n"));
+	$fclose(file_id);				 
+  endtask
 endclass : seq_reg_user_macro
 
 

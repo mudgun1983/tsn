@@ -10,6 +10,11 @@ bit [15:0] packed_desc[$];
 bit [15:0] packed_data_pad[];
 bit [15:0] packed_desc_pad[];
 `uvm_object_utils_begin( PTP_CONFIG_CONTENT );
+`uvm_field_object        (sys_trans               , UVM_ALL_ON|UVM_NOPACK)
+`uvm_field_object        (ptp_trans               , UVM_ALL_ON|UVM_NOPACK)
+`uvm_field_object        (descriptor_trans        , UVM_ALL_ON|UVM_NOPACK)
+`uvm_field_sarray_int    (packed_data            , UVM_ALL_ON|UVM_NOPACK)	
+`uvm_field_sarray_int    (packed_desc            , UVM_ALL_ON|UVM_NOPACK)	
 `uvm_object_utils_end
 
 
@@ -46,7 +51,7 @@ function predefine_sys_trans();
     sys_trans.sub_type	= ptp_trans.messageType;
 	sys_trans.destination = 2;//port 1
 	sys_trans.timestamp_tc = 'hffff_ffff;
-    sys_trans.pack_bytes(sys_trans.frame_data);
+    //sys_trans.pack_bytes(sys_trans.frame_data);
 endfunction
 
 function predefine_ptp_trans();
@@ -57,11 +62,12 @@ function predefine_ptp_trans();
 	ptp_trans.packet_type     =    ptp_item::Sync;
 	ptp_trans.originTimestamp =    {80{1'b1}};//'hffff_ffff;
 		
-    ptp_trans.pack_bytes(ptp_trans.frame_data);
+    //ptp_trans.pack_bytes(ptp_trans.frame_data);
 	
 endfunction
 
 function predefine_eth_trans();
+  ptp_trans.pack_bytes(ptp_trans.frame_data);
   eth_trans.tagged_data[1].c_data_length.constraint_mode(0);
   if ( !(eth_trans.randomize() with {eth_trans.destination_address    == `PTP_NON_PEER_MULTI_DA;//48'h01_1b_19_00_00_00;
                                      eth_trans.tagged_data_size             == 2    ;//  
@@ -84,7 +90,7 @@ function predefine_eth_trans();
 		 `uvm_error(get_type_name, "Randomize Failed!") 
 		end
 		
-	eth_trans.pack_bytes(eth_trans.frame_data);	
+	//eth_trans.pack_bytes(eth_trans.frame_data);	
 endfunction
 
 function predefine_descriptor_trans();
@@ -105,12 +111,15 @@ function predefine_descriptor_trans();
 	
 	descriptor_trans.rsv6 = 'hffff_ffff;
 
-    descriptor_trans.pack_bytes(descriptor_trans.frame_data);
+    //descriptor_trans.pack_bytes(descriptor_trans.frame_data);
 endfunction
 
 function pack();
   int tmp_size;
   bit [7:0] packed_data_tmp[];
+  
+  sys_trans.pack_bytes(sys_trans.frame_data);
+  eth_trans.pack_bytes(eth_trans.frame_data);	
   packed_data_tmp = {sys_trans.frame_data,eth_trans.frame_data};
   
   tmp_size = packed_data_tmp.size();  
@@ -128,6 +137,8 @@ endfunction
 function desc_pack();
   int tmp_size;
   bit [7:0] packed_data_tmp[];
+  
+  descriptor_trans.pack_bytes(descriptor_trans.frame_data);
   packed_data_tmp = descriptor_trans.frame_data;
   
   tmp_size = packed_data_tmp.size();  

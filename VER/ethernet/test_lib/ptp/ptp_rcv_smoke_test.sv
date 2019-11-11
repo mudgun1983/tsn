@@ -9,7 +9,7 @@ class ptp_rcv_smoke_test extends pcs_base_test;
   
    virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);      
-    auto_stop_en = 1;	
+    auto_stop_en = 0;	
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",
@@ -64,11 +64,11 @@ virtual function set_port_stimulus_value();
   
 // port_stimulus_s[0].port_en = 1;
 // port_stimulus_s[1].port_en = 1;
-port_stimulus_s[2].port_en = 1;
+// port_stimulus_s[2].port_en = 1;
 // port_stimulus_s[3].port_en = 1;
 // port_stimulus_s[4].port_en = 1;
 // port_stimulus_s[5].port_en = 1;
-// port_stimulus_s[6].port_en = 1;
+ port_stimulus_s[6].port_en = 1;
 // port_stimulus_s[7].port_en = 1;
 // port_stimulus_s[8].port_en = 1;
 // port_stimulus_s[9].port_en = 1;
@@ -108,11 +108,11 @@ port_stimulus_s[2].port_en = 1;
 
 // port_stimulus_s[0].da_index =   0;//(19- 0);   
 // port_stimulus_s[1].da_index =   1;//(19- 1);
-port_stimulus_s[2].da_index =   `PTP_PEER_MULTI_DA;//(19- 2);  
+// port_stimulus_s[2].da_index =   `PTP_PEER_MULTI_DA;//(19- 2);  
 // port_stimulus_s[3].da_index =   3;//(19- 3);
 // port_stimulus_s[4].da_index =   4;//(19- 4);
 // port_stimulus_s[5].da_index =   5;//(19- 5);
-// port_stimulus_s[6].da_index =   6;//(19- 6);
+ port_stimulus_s[6].da_index =   `PTP_PEER_MULTI_DA;//6;//(19- 6);
 // port_stimulus_s[7].da_index =   7;//(19- 7);
 // port_stimulus_s[8].da_index =   8;//(19- 8);
 // port_stimulus_s[9].da_index =   9;//(19- 9);
@@ -129,17 +129,32 @@ port_stimulus_s[2].da_index =   `PTP_PEER_MULTI_DA;//(19- 2);
 endfunction         
 
 virtual function set_ptp_predefine_value();
+
+  `PTP_CONFIG.table_size =1;
+  //disable all the instance
   foreach(`PTP_CONFIG_CONTENT[key])
     `PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 0;
+  
+  //modify the config	
+  `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_valid = 1;
+  `PTP_CONFIG_CONTENT[0].sys_trans.destination =  6;
+  //re-pack to update the value
+  foreach(`PTP_CONFIG_CONTENT[key])  
+	   begin
+	     `PTP_CONFIG_CONTENT[key].pack();
+		 `PTP_CONFIG_CONTENT[key].desc_pack();
+		 `PTP_CONFIG_CONTENT[key].packed_padding();
+	   end
 endfunction 
 
 virtual function set_i_epp_predefine_value();
-  `PHY_PORT_TABLE_CONTENT[2].table_key_t = 2;
-  `PHY_PORT_TABLE_CONTENT[2].table_t = {2'd0,48'd0,48'd1,5'd2,1'b1,1'b0,5'd0};
+  `PHY_PORT_TABLE.table_size =1;
+  `PHY_PORT_TABLE_CONTENT[0].table_key_t = 6;
+  `PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,5'd2,1'b1,1'b0,5'd0};
   
   `RX_PTP_FORWARD_TABLE.table_size =1;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.message_type = `Pdelay_Req;
-  `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.phy_port = 2;
+  `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.phy_port = 6;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_t.fw_destination = 2'b10;
   
   

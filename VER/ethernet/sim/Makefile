@@ -42,10 +42,11 @@ run:
 	#./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=simple_express_packet_test 
 
 clean: 
-	rm -rf *.log *.txt *.bak *.fsdb  
+	rm -rf *.log *.txt *.bak *.fsdb data 
 #	\rm -rf csrc *.log simv* core ucli.key vcdplus.vpd DVEfiles vc_hdrs.h ucli.key
 verdi:
 	 verdi +v2k -sverilog -f dut_filelist.f -f filelist_hw_engine.f  -ssf tb_top.fsdb
 
 create:
-	touch test_result.txt
+	mkdir data	
+	touch data/test_result.txt

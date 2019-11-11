@@ -21,13 +21,12 @@ class ptp_reg_seq extends seq_reg_user_macro ;
       super.body();
 	  
       `uvm_info(get_type_name(),$psprintf("\n-----------------ptp_reg_seq set begin---------------",),UVM_LOW);
-	foreach(`PTP_CONFIG_CONTENT[key])  
-	   begin
-	     `PTP_CONFIG_CONTENT[key].pack();
-		 `PTP_CONFIG_CONTENT[key].desc_pack();
-		 `PTP_CONFIG_CONTENT[key].packed_padding();
-	   end
+	
 	//file IO
+	write_exp_data_fd=$fopen(tran_exp,"a+");   
+    $fwrite(write_exp_data_fd,$psprintf("ID0 ptp config class:\n%0s\n",`PTP_CONFIG_CONTENT[0].sprint()));	
+	$fclose(write_exp_data_fd);
+	
 	write_exp_data_fd=$fopen(tran_exp,"a+");   
     $fwrite(write_exp_data_fd,$psprintf("ID0 packed_desc_pad size=%0d\n",`PTP_CONFIG_CONTENT[0].packed_desc_pad.size));	
 	foreach(`PTP_CONFIG_CONTENT[0].packed_desc_pad[key])
@@ -40,7 +39,12 @@ class ptp_reg_seq extends seq_reg_user_macro ;
 	foreach(`PTP_CONFIG_CONTENT[0].packed_data_pad[key])
               $fwrite(write_exp_data_fd,$psprintf("ID0 packet[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].packed_data_pad[key]));
 	$fclose(write_exp_data_fd);		
-
+    
+	write_exp_data_fd=$fopen(tran_exp,"a+");                                               
+	foreach(`PTP_CONFIG_CONTENT[0].descriptor_trans.frame_data[key])
+              $fwrite(write_exp_data_fd,$psprintf("ID0 descriptor_trans[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].descriptor_trans.frame_data[key]));
+	$fclose(write_exp_data_fd);	
+	
     write_exp_data_fd=$fopen(tran_exp,"a+");                                               
 	foreach(`PTP_CONFIG_CONTENT[0].sys_trans.frame_data[key])
               $fwrite(write_exp_data_fd,$psprintf("ID0 sys_packet[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].sys_trans.frame_data[key]));
@@ -70,8 +74,8 @@ class ptp_reg_seq extends seq_reg_user_macro ;
 	  end
 	
 	//packet ram  
-	 // for(int i=0;i<reg_config.ptp_config.table_size;i++)
-	 for(int i=0;i<1;i++)
+     for(int i=0;i<reg_config.ptp_config.table_size;i++)
+	 //for(int i=0;i<1;i++)
 	   begin    
         for(bit[15:0] j=0;j<`PTP_CONFIG_CONTENT[i].packed_data_pad.size;j++)	  
           begin		
@@ -89,8 +93,8 @@ class ptp_reg_seq extends seq_reg_user_macro ;
         end
 	
     //descriptor
-	// for(int i=0;i<reg_config.ptp_config.table_size;i++)
-    for(int i=0;i<1;i++)
+	 for(int i=0;i<reg_config.ptp_config.table_size;i++)
+    //for(int i=0;i<1;i++)
 	   begin    
         for(bit[15:0] j=1;j<`PTP_CONFIG_CONTENT[i].packed_desc_pad.size;j++)	  
           begin		

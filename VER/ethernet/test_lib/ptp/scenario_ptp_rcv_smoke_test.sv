@@ -2,8 +2,11 @@ class scenario_ptp_rcv_smoke_test extends scenario_reg_test;
 int  data_len;
 parameter INTERVAL=10us;
 mac_ptp_sequence  mac_seq;  
+reg_test_seq      reg_test_seq0;
 ptp_reg_seq       ptp_reg_seq0;
 ipp_epp_table_reg_seq ipp_epp_table_reg_seq0;
+phy_port_table_reg_seq phy_port_table_reg_seq0;
+rx_ptp_forward_table_reg_seq rx_ptp_forward_table_reg_seq0;
 bit  [7:0] data_sequence_id[20];
 bit  [47:0] da_index;
 //==================== Registration ==============//
@@ -32,10 +35,12 @@ virtual task post_body();
    virtual task body();
         begin
 		super.body();
-		  #10us
-        
+		  #10us       
+		 `uvm_do_on(reg_test_seq0,p_sequencer.rgm_sqr)
          `uvm_do_on(ptp_reg_seq0,p_sequencer.rgm_sqr)
-		 `uvm_do_on(ipp_epp_table_reg_seq0,p_sequencer.rgm_sqr)
+		 //`uvm_do_on(ipp_epp_table_reg_seq0,p_sequencer.rgm_sqr)
+		 `uvm_do_on(phy_port_table_reg_seq0,p_sequencer.rgm_sqr)
+		 `uvm_do_on(rx_ptp_forward_table_reg_seq0,p_sequencer.rgm_sqr)
 		 
 		for(int i =0; i<topology_config0.mac_number;i++)
 		//for(int i =2; i<4;i++)
