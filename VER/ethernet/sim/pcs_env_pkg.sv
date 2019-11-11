@@ -72,6 +72,7 @@ package pcs_env_pkg;
 //append test case here  
   `include "../test_lib/ptp/scenario_ptp_rcv_smoke_test.sv"
   `include "../test_lib/ptp/ptp_rcv_smoke_test.sv"
+  `include "../test_lib/ptp/ptp_slave_smoke_test.sv"
 endpackage
 `endif
 

@@ -34,9 +34,9 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
   
   function new(string name="seq_reg_user_macro");
     super.new(name);
-	script_generated = "../data/script_generated.txt";
-    file_id=$fopen(script_generated,"w+");                                               
-    $fclose(file_id);
+	script_generated = "./data/script_generated.txt";
+    //file_id=$fopen(script_generated,"w+");                                               
+    //$fclose(file_id);
   endfunction : new
   
    virtual task pre_body();/*{{{*/
@@ -46,9 +46,12 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
 
    virtual task post_body();
        uvm_test_done.drop_objection(this);
-       `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
-	   generate_script();
+       `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)	   
    endtask : post_body
+  
+  virtual function void post_do(uvm_sequence_item this_item);
+  generate_script();
+  endfunction
   
   virtual task body();
      super.body();
@@ -63,7 +66,7 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
       end
   endtask: body
   
-  virtual task generate_script();
+  virtual function generate_script();
     file_id=$fopen(script_generated,"a+");   
 	$fwrite(file_id,$psprintf("crt.Screen.Send "));
 	
@@ -74,7 +77,7 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
 	
 	$fwrite(file_id,$psprintf("& chr(13)\n"));
 	$fclose(file_id);				 
-  endtask
+  endfunction
 endclass : seq_reg_user_macro
 
 

@@ -77,6 +77,48 @@ class rx_ptp_forward_table_reg_seq extends seq_reg_user_macro ;
   endtask
 endclass
 
+class o_phy_port_pro_table_reg_seq extends seq_reg_user_macro ;
+	  
+  `uvm_sequence_utils(o_phy_port_pro_table_reg_seq, cpu_sequencer)
+  
+  function new(string name="o_phy_port_pro_table_reg_seq");
+    super.new(name);
+  endfunction : new
+  
+   // virtual task pre_body();/*{{{*/
+       // uvm_test_done.raise_objection(this);
+       // `uvm_info(get_type_name(),"[START_SEQUENCE]",UVM_LOW)
+  // endtask : pre_body
+
+  // virtual task post_body();
+      // uvm_test_done.drop_objection(this);
+      // `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
+  // endtask : post_body
+  
+  virtual task body();
+      super.body();
+     `uvm_info(get_type_name(),$psprintf("\n-----------------o_phy_port_pro_table set begin---------------",),UVM_LOW);
+      
+     for(int i=0;i<reg_config.o_phy_port_pro_table.table_size;i++)
+	   begin     
+      `user_rgm_write_with(`O_PHY_PORT_PRO_TABLE_CONTROL,{{16{1'b1}} , `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_key_t[4:0]});         
+      `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_0	,{16'b0 , `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[117:112]}); 
+	  `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_1	,{        `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[96+:16] });
+	  `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_2	,{        `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[80+:16] }); 
+	  `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_3	,{        `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[64+:16] });
+	  `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_4	,{        `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[48+:16] }); 
+	  `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_5	,{        `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[32+:16] });
+	  `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_6	,{        `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[16+:16] }); 
+	  `user_rgm_write_with(`O_PHY_PORT_PRO_T_CONF_DIN_7	,{        `O_PHY_PORT_PRO_TABLE_CONTENT[i].table_t[0+:16]  });
+	   end
+      
+      `uvm_info(get_type_name(),$psprintf("\n-----------------o_phy_port_pro_table set end---------------",),UVM_LOW);
+ 
+  endtask
+endclass
+
+
+	   
 class reg_test_seq extends seq_reg_user_macro ;
 	  
   `uvm_sequence_utils(reg_test_seq, cpu_sequencer)
