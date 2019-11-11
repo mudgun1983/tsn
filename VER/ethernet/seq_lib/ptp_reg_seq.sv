@@ -21,7 +21,12 @@ class ptp_reg_seq extends seq_reg_user_macro ;
       super.body();
 	  
       `uvm_info(get_type_name(),$psprintf("\n-----------------ptp_reg_seq set begin---------------",),UVM_LOW);
-	  
+	foreach(`PTP_CONFIG_CONTENT[key])  
+	   begin
+	     `PTP_CONFIG_CONTENT[key].pack();
+		 `PTP_CONFIG_CONTENT[key].desc_pack();
+		 `PTP_CONFIG_CONTENT[key].packed_padding();
+	   end
 	//file IO
 	write_exp_data_fd=$fopen(tran_exp,"a+");   
     $fwrite(write_exp_data_fd,$psprintf("ID0 packed_desc_pad size=%0d\n",`PTP_CONFIG_CONTENT[0].packed_desc_pad.size));	
