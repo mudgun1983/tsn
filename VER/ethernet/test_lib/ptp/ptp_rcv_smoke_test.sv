@@ -134,9 +134,10 @@ virtual function set_ptp_predefine_value();
 endfunction 
 
 virtual function set_i_epp_predefine_value();
-  `PHY_PORT_TABLE_CONTENT[0].table_key_t = 2;
-  `PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,5'd2,1'b1,1'b0,5'd0};
+  `PHY_PORT_TABLE_CONTENT[2].table_key_t = 2;
+  `PHY_PORT_TABLE_CONTENT[2].table_t = {2'd0,48'd0,48'd1,5'd2,1'b1,1'b0,5'd0};
   
+  `RX_PTP_FORWARD_TABLE.table_size =1;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.message_type = `Pdelay_Req;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.phy_port = 2;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_t.fw_destination = 2'b10;

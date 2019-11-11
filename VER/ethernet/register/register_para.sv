@@ -29,6 +29,37 @@
 `define GATHER_INIT_TABLE_CONTENT      reg_config.gather_init_table.table_index
 `define PTP_CONFIG_CONTENT             reg_config.ptp_config.table_index
 
+`define PHY_PORT_TABLE          reg_config.phy_port_table 
+`define LOGIC_PORT_TABLE        reg_config.logic_port_table 
+`define L2_PROTOCOL_TABLE       reg_config.l2_protocol_table 
+`define IPHB_TABLE              reg_config.iphb_table 
+`define IVLAN_XLATE_TABLE       reg_config.ivlan_xlate_table 
+`define IVLAN_PROPERTY_TABLE    reg_config.ivlan_property_table 
+`define IVLAN_ACTION_TABLE      reg_config.ivlan_action_table 
+`define IVLAN_STG_TABLE         reg_config.ivlan_stg_table 
+`define L2_MAC_TABLE            reg_config.l2_mac_table 
+`define STORM_POLICER_ID_TABLE  reg_config.storm_policer_id_table 
+`define ING_FLOW_TABLE          reg_config.ing_flow_table 
+`define ING_FLOW_PRO_TABLE      reg_config.ing_flow_pro_table 
+`define ING_GATE_TABLE          reg_config.ing_gate_table 
+`define POLICER_CONF_TABLE      reg_config.policer_conf_table 
+`define POLICER_TOKEN_TABLE     reg_config.policer_token_table 
+`define FRER_REC_TABLE          reg_config.frer_rec_table 
+`define RX_PTP_FORWARD_TABLE    reg_config.rx_ptp_forward_table 
+`define OUT_FP_TABLE            reg_config.out_fp_table 
+`define L2_MC_TABLE             reg_config.l2_mc_table 
+`define TIME_SLOT_TABLE         reg_config.time_slot_table 
+`define EVLAN_XLATE_TABLE       reg_config.evlan_xlate_table 
+`define EVLAN_ACTION_TABLE      reg_config.evlan_action_table 
+`define EVLAN_PROPERTY_TABLE    reg_config.evlan_property_table 
+`define EVLAN_STG_TABLE         reg_config.evlan_stg_table 
+`define OPORT_PRO_TABLE         reg_config.oport_pro_table 
+`define DOT1P_MAP_TABLE         reg_config.dot1p_map_table 
+`define LAG_SEL_PORT_TABLE      reg_config.lag_sel_port_table 
+`define O_PHY_PORT_PRO_TABLE    reg_config.o_phy_port_pro_table 
+`define GATHER_INIT_TABLE       reg_config.gather_init_table 
+`define PTP_CONFIG              reg_config.ptp_config 
+
 `define BASE_OFFSET          16'b0000_0000_0000_0000
 `define BASE_OFFSET_GATHER   16'b0011_0000_0000_0000
 `define BASE_OFFSET_PTP      16'b0001_1101_0000_0000  //1d00
