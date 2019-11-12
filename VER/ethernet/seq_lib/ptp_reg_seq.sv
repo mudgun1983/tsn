@@ -60,12 +60,17 @@ class ptp_reg_seq extends seq_reg_user_macro ;
               $fwrite(write_exp_data_fd,$psprintf("ID0 eth_trans[%0d]=%2h\n",key,`PTP_CONFIG_CONTENT[0].eth_trans.frame_data[key]));
 	$fclose(write_exp_data_fd);	
     
-	//static configure
+	//global static configure
 	// `user_rgm_write_with(`EN_REG,{'h7});
 	// `user_rgm_read_with(`EN_REG);
 	`user_rgm_write_with((`BASE_OFFSET_GE_29+`SYS_HEADER),('h0)); 
     `user_rgm_read_with((`BASE_OFFSET_GE_29+`SYS_HEADER));	
-	
+	//ptp static config
+	`user_rgm_write_with(`PDLY_REQ_PRO_CONFIG1_REG,{`PTP_CONFIG.two_step});
+	`user_rgm_write_with(`PDLY_REQ_PRO_CONFIG2_REG,{`PTP_CONFIG.src_mac[15:0]});
+	`user_rgm_write_with(`PDLY_REQ_PRO_CONFIG3_REG,{`PTP_CONFIG.src_mac[31:16]});
+	`user_rgm_write_with(`PDLY_REQ_PRO_CONFIG4_REG,{`PTP_CONFIG.src_mac[47:32]});
+	`user_rgm_write_with(`PDLY_REQ_PRO_CONFIG_UPDT_REG,{'h0});
 	read_data_tmp = 0;
 	while(!read_data_tmp)
 	  begin

@@ -169,15 +169,16 @@ class pcs_tx_rx_env extends uvm_env;
 		       scb0[i].monitor_get_port.connect(monitor_fifo_post[i].blocking_get_export);
 			 end
 		
-		//N/A   ->  N/A -> N/A -> ptp_expect_fifo_post[*] -> ptp_scb0[*] //
+		//rx_monitor[*]   ->  expect_fifo_pre[*] -> tsn_switch_model0 -> ptp_expect_fifo_post[*] -> ptp_scb0[*] //
 		   for(int i=0;i<topology_config0.mac_number;i++)
 		     begin
+			   tsn_switch_model0.ptp_item_collected_port[i].connect(ptp_expect_fifo_post[i].analysis_export);
 			   ptp_scb0[i].expect_get_port.connect(ptp_expect_fifo_post[i].blocking_get_export);
 			 end
         //tx_monitor[*]   ->  monitor_fifo_pre[*] -> tsn_switch_monitor_model0 -> ptp_monitor_fifo_post[*] -> ptp_scb0[*] //
            for(int i=0;i<topology_config0.mac_number;i++)
 		     begin	
-			   ptp_scb0[i].monitor_get_port.connect(ptp_monitor_fifo_post[i].blocking_get_export);
+			   //ptp_scb0[i].monitor_get_port.connect(ptp_monitor_fifo_post[i].blocking_get_export);
 			   
 		       tsn_switch_model_monitor.ptp_item_collected_port[i].connect(ptp_monitor_fifo_post[i].analysis_export);
 		       ptp_scb0[i].monitor_get_port.connect(ptp_monitor_fifo_post[i].blocking_get_export);

@@ -11,7 +11,7 @@ class tsn_switch_expect_model extends tsn_switch_model ;
   int l2_table[];
   semaphore sem;
   int hash_key[];
-  
+  bit  is_ptp[];
   
     function new (string name ="tsn_switch_expect_model",uvm_component parent);
         super.new(name,parent);
@@ -26,6 +26,7 @@ class tsn_switch_expect_model extends tsn_switch_model ;
 		
 		hash_key = new[topology_config0.mac_number];
 		l2_table = new[HASH_SIZE];
+		is_ptp	= 	new[topology_config0.mac_number];
     endfunction 	
 
 
@@ -46,8 +47,19 @@ class tsn_switch_expect_model extends tsn_switch_model ;
 		      	classify_merge(eth_frame_exp_tr_array[index]);
 		      	//if(merge_finish)
 				hash_cal_read_l2_table(eth_frame_exp_tr_array[index],index,index_o);
-				`uvm_info(get_type_name(),{$psprintf("input port=%0d,output port=%0d\n",index,index_o)},UVM_LOW);
-		      	item_collected_port[index_o].write(eth_frame_exp_tr_array[index]);
+				
+				if(eth_frame_exp_tr_array[index].tagged_data[1].tpid==`PTP_ETYPE)
+				  is_ptp[index] =1;
+				else
+				  is_ptp[index] =0;
+				
+                if(is_ptp[index])
+				    ptp_item_collected_port[index].write(eth_frame_exp_tr_array[index]);
+				else
+                 begin				
+			    	`uvm_info(get_type_name(),{$psprintf("input port=%0d,output port=%0d\n",index,index_o)},UVM_LOW);
+		      	     item_collected_port[index_o].write(eth_frame_exp_tr_array[index]);
+				 end
 		      	end
 		   join_none
 		   end

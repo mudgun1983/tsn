@@ -303,4 +303,10 @@ class ptp_smoke_test extends pcs_base_test;
 	   
 	join
    endtask:run_phase
+   
+   virtual function set_ptp_predefine_value();
+
+  `PTP_CONFIG.table_size =1;
+  endfunction
+  
 endclass

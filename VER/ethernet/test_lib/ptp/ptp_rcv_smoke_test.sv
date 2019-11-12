@@ -9,7 +9,7 @@ class ptp_rcv_smoke_test extends pcs_base_test;
   
    virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);      
-    auto_stop_en = 0;	
+    auto_stop_en = 1;	
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",

@@ -17,8 +17,11 @@ class eth_frame_simplify extends eth_frame;
     	foreach(tagged_data[i]) begin
     		if(tagged_data[i].data.size() > 0) begin
     		  packer.pack_field_int (tagged_data[i].tpid,16);
-    		  foreach(tagged_data[i].data[j])
+    		  if(i==0)
+    		   begin
+			    foreach(tagged_data[i].data[j])
     		    packer.pack_field_int (tagged_data[i].data[j],8);
+			   end
     	  end
     	end
     end

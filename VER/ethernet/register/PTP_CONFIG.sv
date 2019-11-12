@@ -120,7 +120,8 @@ function pack();
   
   sys_trans.pack_bytes(sys_trans.frame_data);
   eth_trans.pack_bytes(eth_trans.frame_data);	
-  packed_data_tmp = {sys_trans.frame_data,eth_trans.frame_data};
+  ptp_trans.pack_bytes(ptp_trans.frame_data);
+  packed_data_tmp = {sys_trans.frame_data,eth_trans.frame_data,ptp_trans.frame_data};
   
   tmp_size = packed_data_tmp.size();  
   for(int i=0;i<((tmp_size)/2+tmp_size%2);i++)
@@ -166,7 +167,18 @@ endclass
 
 class PTP_CONFIG extends uvm_object;
 
+bit [5:0]	uncal_pid ;
+bit [5:0]	slave_pid ;
+bit [7:0]	domain    ;
+bit 	    two_step  ;
+bit [47:0]  src_mac   ;	
+
 `uvm_object_utils_begin( PTP_CONFIG );
+`uvm_field_int        (uncal_pid               , UVM_ALL_ON|UVM_NOPACK)
+`uvm_field_int        (slave_pid               , UVM_ALL_ON|UVM_NOPACK)
+`uvm_field_int        (domain                  , UVM_ALL_ON|UVM_NOPACK)
+`uvm_field_int        (two_step                , UVM_ALL_ON|UVM_NOPACK)
+`uvm_field_int        (src_mac                 , UVM_ALL_ON|UVM_NOPACK)
 `uvm_object_utils_end
 
 int unsigned table_size=32;
