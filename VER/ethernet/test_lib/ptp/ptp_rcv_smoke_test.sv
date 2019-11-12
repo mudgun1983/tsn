@@ -150,7 +150,7 @@ endfunction
 virtual function set_i_epp_predefine_value();
   `PHY_PORT_TABLE.table_size =1;
   `PHY_PORT_TABLE_CONTENT[0].table_key_t = 6;
-  `PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,5'd2,1'b1,1'b0,5'd0};
+  `PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,5'd6,1'b1,1'b0,5'd0};
   
   `RX_PTP_FORWARD_TABLE.table_size =1;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.message_type = `Pdelay_Req;

@@ -71,7 +71,7 @@ class seq_reg_user_macro extends uvm_sequence #(cpu_item);
 	$fwrite(file_id,$psprintf("crt.Screen.Send "));
 	
 	if(req.kind == WRITE)
-    $fwrite(file_id,$psprintf("\"reg wr 0x%0h 0x%0h\" ",req.addr,req.data));
+    $fwrite(file_id,$psprintf("\"reg wr 0x%0h 0x%0h\" ",req.addr,req.data[15:0]));
 	else
 	$fwrite(file_id,$psprintf("\"reg rd 0x%0h\" ",req.addr));
 	

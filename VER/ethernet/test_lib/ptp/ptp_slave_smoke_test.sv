@@ -160,6 +160,10 @@ virtual function set_i_epp_predefine_value();
   `PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,5'd2,1'b1,1'b0,5'd0};
   
   `RX_PTP_FORWARD_TABLE.table_size =4;
+  `RX_PTP_FORWARD_TABLE.table_index = new[`RX_PTP_FORWARD_TABLE.table_size];
+   for(int i=0;i<`RX_PTP_FORWARD_TABLE.table_size;i++)
+    `RX_PTP_FORWARD_TABLE.table_index[i] = new(); 
+	
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.message_type = `Pdelay_Req;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.phy_port = 7;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_t.fw_destination = 2'b10;
