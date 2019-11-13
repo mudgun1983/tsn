@@ -2,7 +2,7 @@ class ptp_scoreboard  extends scoreboard;
 
 register_config reg_config;
 ptp_item        ptp_trans;
-int port_id ;
+bit[31:0] port_id ;
 bit [7:0] data_tmp[];
 int sequence_id = 0;
 int last_message_type = 0;
@@ -85,7 +85,10 @@ string timestamp_file;
 			endcase
 
 			if(~match)
+			 begin
+			 `uvm_info(get_type_name(),{$psprintf("COMPARE MISMATCH")},UVM_LOW);
 			 -> fatal_event;
+			 end
 		  end
 	endtask
 
@@ -340,7 +343,7 @@ string timestamp_file;
 		   end
 	endfunction 
 	
-	virtual function pop_exp(eth_frame eth_frame_exp_tr);
+	virtual function pop_exp(ref eth_frame eth_frame_exp_tr);
 	        int exp_queue_size;			 
 	        eth_frame eth_frame_exp_tr;
             eth_frame_exp_tr =new();
@@ -367,7 +370,7 @@ string timestamp_file;
 	   ptp_trans.packet_type = ptp_item::Pdelay_Resp;
 	   ptp_trans.messageType = `Pdelay_Resp;
 	   ptp_trans.requestingPortIdentity = ptp_trans.sourcePortIdentity;
-	   ptp_trans.sourcePortIdentity = `PTP_CONFIG.src_mac+ptp_trans.sourcePortIdentity;
+	   ptp_trans.sourcePortIdentity = {`PTP_CONFIG.src_mac,port_id};
 	   
 	endfunction 
 	
@@ -379,6 +382,7 @@ string timestamp_file;
 	  
 	  mismatch = 0;
 	  match = 0;	
+	  one_two_step = `PTP_CONFIG.two_step;
 		//transform the pdelay req to pdelay_resp
 		   transform_pdelay_req(ptp_exp_trans);		
         //compare ethernet
@@ -427,8 +431,14 @@ string timestamp_file;
 			//requestReceiptTimestamp
 			  begin
 			    $fwrite(write_exp_data_fd,$psprintf("T=%0t,sequenceId=%0d,RCV requestReceiptTimestamp =%0h\n",$time,ptp_col_trans.sequenceId,ptp_col_trans.requestReceiptTimestamp));	
+				if(~one_two_step) begin// one step
+				  if(ptp_col_trans.requestReceiptTimestamp!=0)
+				   mismatch[9] = 1;
+				   end
+				else begin
 				if(ptp_col_trans.requestReceiptTimestamp == last_OriginTimestamp)			   
-			      mismatch[9] = 1; 
+			       mismatch[10] = 1; 
+				end
 			    last_OriginTimestamp = ptp_col_trans.requestReceiptTimestamp;
 		      end		
             $fclose(write_exp_data_fd);

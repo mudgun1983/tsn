@@ -377,7 +377,7 @@ endgenerate
 tsn_sw_chip_top UUT
            (
            .sys_reset             (rst           ), 	
-           .syc_clk_250m          (clk_250m      ),
+           .syc_clk_250m          (clk_125m      ),//(clk_250m      ),
            .clk_cpu                    (clk_100m                     ),
            .rx_clk_0                   (xgmii64_rx_if_array[0].clk),
            .rx_mii_d_0                 (xgmii64_rx_if_array[0].rxd),

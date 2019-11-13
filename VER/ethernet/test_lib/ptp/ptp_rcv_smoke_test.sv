@@ -131,6 +131,7 @@ endfunction
 virtual function set_ptp_predefine_value();
 
   `PTP_CONFIG.table_size =1;
+  `PTP_CONFIG.src_mac = 48'h8000_0000_0000;
   //disable all the instance
   foreach(`PTP_CONFIG_CONTENT[key])
     `PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 0;
