@@ -2,7 +2,7 @@ class ptp_slave_smoke_test extends pcs_base_test;
  
    `uvm_component_utils(ptp_slave_smoke_test)
  
-
+    parameter test_port_index= 5'd7;
     function new(string name="ptp_slave_smoke_test" ,  uvm_component parent=null);
         super.new(name,parent);  
      endfunction : new
@@ -39,7 +39,12 @@ class ptp_slave_smoke_test extends pcs_base_test;
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
 				if(auto_stop_en)
+				  begin
+				   file_id=$fopen(test_result_file,"a+"); 
+		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"},));	
+		    	   $fclose(file_id);
 				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR ptp_scb0[%0d]",index));
+				  end
 		       end
 		   join_none
 		 end
@@ -67,7 +72,19 @@ class ptp_slave_smoke_test extends pcs_base_test;
 	
 	   begin
        phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
+       #5ms;
+	   if(comp_success_count[test_port_index]!=0)
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"},));	
+		   $fclose(file_id);
+		 end
+	   else
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"},));	
+		   $fclose(file_id);
+		 end
        $stop;      
 	   end
 	   
@@ -162,7 +179,7 @@ virtual function set_ptp_predefine_value();
   `PTP_CONFIG_CONTENT[0].ptp_trans.messageType     =    `Pdelay_Req;
   
   `PTP_CONFIG_CONTENT[0].eth_trans.destination_address = `PTP_PEER_MULTI_DA;
-  `PTP_CONFIG_CONTENT[0].sys_trans.destination =  7;
+  `PTP_CONFIG_CONTENT[0].sys_trans.destination =  test_port_index;
   `PTP_CONFIG_CONTENT[0].sys_trans.sub_type	= `Pdelay_Req;
   //re-pack to update the value
   foreach(`PTP_CONFIG_CONTENT[key])  
@@ -175,7 +192,7 @@ endfunction
 
 virtual function set_i_epp_predefine_value();
   `PHY_PORT_TABLE.table_size =1;
-  `PHY_PORT_TABLE_CONTENT[0].table_key_t = 7;
+  `PHY_PORT_TABLE_CONTENT[0].table_key_t = test_port_index;
   `PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,5'd2,1'b1,1'b0,5'd0};
   
   `RX_PTP_FORWARD_TABLE.table_size =4;
@@ -184,23 +201,23 @@ virtual function set_i_epp_predefine_value();
     `RX_PTP_FORWARD_TABLE.table_index[i] = new(); 
 	
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.message_type = `Pdelay_Req;
-  `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.phy_port = 7;
+  `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.phy_port = test_port_index;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_t.fw_destination = 2'b10;
 
   `RX_PTP_FORWARD_TABLE_CONTENT[1].table_key_t.message_type = `Sync;
-  `RX_PTP_FORWARD_TABLE_CONTENT[1].table_key_t.phy_port = 7;
+  `RX_PTP_FORWARD_TABLE_CONTENT[1].table_key_t.phy_port = test_port_index;
   `RX_PTP_FORWARD_TABLE_CONTENT[1].table_t.fw_destination = 2'b10;
   
   `RX_PTP_FORWARD_TABLE_CONTENT[2].table_key_t.message_type = `Follow_Up;
-  `RX_PTP_FORWARD_TABLE_CONTENT[2].table_key_t.phy_port = 7;
+  `RX_PTP_FORWARD_TABLE_CONTENT[2].table_key_t.phy_port = test_port_index;
   `RX_PTP_FORWARD_TABLE_CONTENT[2].table_t.fw_destination = 2'b10;
   
   `RX_PTP_FORWARD_TABLE_CONTENT[3].table_key_t.message_type = `Pdelay_Resp;
-  `RX_PTP_FORWARD_TABLE_CONTENT[3].table_key_t.phy_port = 7;
+  `RX_PTP_FORWARD_TABLE_CONTENT[3].table_key_t.phy_port = test_port_index;
   `RX_PTP_FORWARD_TABLE_CONTENT[3].table_t.fw_destination = 2'b10;
   
   `O_PHY_PORT_PRO_TABLE.table_size=1;
-  `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_key_t = 7;
+  `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_key_t = test_port_index;
   `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_t = {111'd0,1'b1,1'b0,5'd0};
 endfunction  
    

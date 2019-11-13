@@ -16,6 +16,7 @@ class pcs_base_test extends uvm_test;
     bit   auto_stop_en;
     int comp_success_count[];
 	string global_test_log;
+	string test_result_file;
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
@@ -24,6 +25,7 @@ class pcs_base_test extends uvm_test;
 		 set_i_epp_predefine_value();
 		 set_ptp_predefine_value();
 		 set_port_stimulus_value();	// define in the global_define.sv
+		 test_result_file = `test_result_file;
 		 global_test_log = {get_type_name(),"_log.txt"};
 		 file_id=$fopen(global_test_log,"w+");                                               
          $fclose(file_id);
