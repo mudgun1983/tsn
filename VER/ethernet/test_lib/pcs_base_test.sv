@@ -14,7 +14,8 @@ class pcs_base_test extends uvm_test;
     event tc_finish;
     event tc_fail;
     bit   auto_stop_en;
-    
+    int comp_success_count[];
+	string global_test_log;
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
@@ -23,9 +24,10 @@ class pcs_base_test extends uvm_test;
 		 set_i_epp_predefine_value();
 		 set_ptp_predefine_value();
 		 set_port_stimulus_value();	// define in the global_define.sv
-		 file_id=$fopen("global_test_log.txt","w+");                                               
+		 global_test_log = {get_type_name(),"_log.txt"};
+		 file_id=$fopen(global_test_log,"w+");                                               
          $fclose(file_id);
-		
+		 auto_stop_en = 1; //default to enable auto stop when encounter fatal error
      endfunction : new
   
   virtual function void set_topology_config();
@@ -107,7 +109,7 @@ class pcs_base_test extends uvm_test;
 	  set_inst_override_by_type("*tsn_switch_model0*",  tsn_switch_model::get_type(), tsn_switch_expect_model::get_type() );
 	  set_inst_override_by_type("*tsn_switch_model_monitor*",  tsn_switch_model::get_type(), tsn_switch_monitor_model::get_type() );
 //================================ set_type_override =======================================
-       
+      comp_success_count =new[topology_config0.mac_number]; 
    endfunction : build_phase
   
   function void connect();
@@ -130,7 +132,7 @@ class pcs_base_test extends uvm_test;
 	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.scb0[index].fatal_event;
-		    	file_id=$fopen("global_test_log.txt","a+"); 
+		    	file_id=$fopen(global_test_log,"a+"); 
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
 				if(auto_stop_en)
@@ -140,7 +142,25 @@ class pcs_base_test extends uvm_test;
 		 end
 		  wait fork ;
 	   end
-			   
+	   
+       begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.ptp_scb0[index].comp_success;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" SUCCESS in scoreboard[%0d] \n",index));	
+		    	$fclose(file_id);
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+	   
 	
 	   begin
        phase.phase_done.set_drain_time(this, 50000);

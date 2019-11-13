@@ -25,6 +25,7 @@ class scoreboard extends uvm_scoreboard;
      event                            comp_event;
      event                            fatal_event;
 	 event                            comp_start;
+	 event                            comp_success;
     `uvm_component_utils_begin(scoreboard)
     `uvm_component_utils_end
      

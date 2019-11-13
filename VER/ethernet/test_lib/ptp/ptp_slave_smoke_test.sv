@@ -9,7 +9,7 @@ class ptp_slave_smoke_test extends pcs_base_test;
   
    virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);      
-    auto_stop_en = 0;	
+    auto_stop_en = 1;	
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",
@@ -35,7 +35,7 @@ class ptp_slave_smoke_test extends pcs_base_test;
 	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.ptp_scb0[index].fatal_event;
-		    	file_id=$fopen("global_test_log.txt","a+"); 
+		    	file_id=$fopen(global_test_log,"a+"); 
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
 				if(auto_stop_en)
@@ -45,7 +45,25 @@ class ptp_slave_smoke_test extends pcs_base_test;
 		 end
 		  wait fork ;
 	   end
-			   
+	   
+       begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.ptp_scb0[index].comp_success;
+				comp_success_count[index]++;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard[%0d] \n",comp_success_count[index],index));	
+		    	$fclose(file_id);
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end	   
 	
 	   begin
        phase.phase_done.set_drain_time(this, 50000);
@@ -138,6 +156,7 @@ virtual function set_ptp_predefine_value();
   //modify the config	
   `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_valid = 1;
   `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_type = 1; //slave
+  `PTP_CONFIG_CONTENT[0].descriptor_trans.two_step = 0; //only one step 
   
   `PTP_CONFIG_CONTENT[0].ptp_trans.packet_type     =    ptp_item::Pdelay_Req;
   `PTP_CONFIG_CONTENT[0].ptp_trans.messageType     =    `Pdelay_Req;
@@ -182,7 +201,7 @@ virtual function set_i_epp_predefine_value();
   
   `O_PHY_PORT_PRO_TABLE.table_size=1;
   `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_key_t = 7;
-  `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_t = {112'd0,1'b1,5'd0};
+  `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_t = {111'd0,1'b1,1'b0,5'd0};
 endfunction  
    
 endclass

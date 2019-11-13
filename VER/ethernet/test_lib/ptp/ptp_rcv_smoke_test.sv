@@ -1,10 +1,11 @@
 class ptp_rcv_smoke_test extends pcs_base_test;
  
    `uvm_component_utils(ptp_rcv_smoke_test)
- 
+    
 
     function new(string name="ptp_rcv_smoke_test" ,  uvm_component parent=null);
         super.new(name,parent);  
+		
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -35,7 +36,7 @@ class ptp_rcv_smoke_test extends pcs_base_test;
 	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.ptp_scb0[index].fatal_event;
-		    	file_id=$fopen("global_test_log.txt","a+"); 
+		    	file_id=$fopen(global_test_log,"a+"); 
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
 				if(auto_stop_en)
@@ -46,10 +47,28 @@ class ptp_rcv_smoke_test extends pcs_base_test;
 		  wait fork ;
 	   end
 			   
-	
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.ptp_scb0[index].comp_success;
+				comp_success_count[index]++;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard[%0d] \n",comp_success_count[index],index));	
+		    	$fclose(file_id);
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+	   
 	   begin
        phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
+       #10ms;
        $stop;      
 	   end
 	   
@@ -137,7 +156,7 @@ virtual function set_ptp_predefine_value();
     `PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 0;
   
   //modify the config	
-  `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_valid = 1;
+  `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_valid = 0;
   `PTP_CONFIG_CONTENT[0].sys_trans.destination =  6;
   //re-pack to update the value
   foreach(`PTP_CONFIG_CONTENT[key])  

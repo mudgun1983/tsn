@@ -200,7 +200,7 @@ class full_throughput_test extends pcs_base_test;
 	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.scb0[index].fatal_event;
-		    	file_id=$fopen("global_test_log.txt","a+"); 
+		    	file_id=$fopen(global_test_log,"a+"); 
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
 				`uvm_fatal(get_type_name(),$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));
@@ -283,7 +283,7 @@ class ptp_smoke_test extends pcs_base_test;
 	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.ptp_scb0[index].fatal_event;
-		    	file_id=$fopen("global_test_log.txt","a+"); 
+		    	file_id=$fopen(global_test_log,"a+"); 
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
 				if(auto_stop_en)

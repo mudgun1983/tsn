@@ -243,8 +243,9 @@ string timestamp_file;
 			        `PTP_CONFIG_CONTENT[compare_index].ptp_trans.sourcePortIdentity,ptp_trans.sourcePortIdentity));
 					end
 		   
-		 if( (ptp_trans.sequenceId!=0) && (  ((ptp_trans.packet_type == ptp_item::Follow_Up)&&(ptp_trans.sequenceId  !=sequence_id  ))
-		                                   ||((ptp_trans.packet_type == ptp_item::Sync)     &&(ptp_trans.sequenceId  !=sequence_id+1)))
+		 if( (ptp_trans.sequenceId!=0) && (  ((ptp_trans.packet_type == ptp_item::Follow_Up)  &&(ptp_trans.sequenceId  !=sequence_id  ))
+		                                   ||((ptp_trans.packet_type == ptp_item::Sync)       &&(ptp_trans.sequenceId  !=sequence_id+1))
+										   ||((ptp_trans.packet_type == ptp_item::Pdelay_Req) &&(ptp_trans.sequenceId  !=sequence_id+1)))
 		   )
 		 begin
 		    mismatch = 1;
@@ -320,6 +321,8 @@ string timestamp_file;
 			$fclose(write_exp_data_fd);		
 			
 			match = ~mismatch;
+			if(match)
+			-> comp_success;
     endfunction	
 	
 	virtual function field_compare_2(eth_frame eth_frame_trans,ptp_item ptp_trans, output bit match);
@@ -453,5 +456,7 @@ string timestamp_file;
 			
 			match = ~(|mismatch);
 			
+			if(match)
+			-> comp_success;
 	endfunction
 endclass
