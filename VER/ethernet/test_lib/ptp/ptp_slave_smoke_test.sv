@@ -86,7 +86,7 @@ class ptp_slave_smoke_test extends pcs_base_test;
 		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
 		   $fclose(file_id);
 		 end
-       $stop;      
+       $finish;      
 	   end
 	   
 	join

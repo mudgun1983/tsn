@@ -8,4 +8,4 @@
 #ptp_smoke_test 
 ptp_rcv_smoke_test
 ptp_slave_smoke_test
-ptp_slave_smoke_test
+#ptp_slave_smoke_test
