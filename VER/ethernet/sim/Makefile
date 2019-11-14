@@ -10,7 +10,7 @@ UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
 #TEST_NAME=ptp_rcv_smoke_test
 TEST_NAME=ptp_slave_smoke_test
 
-all:clean create setup compile elaborate run
+all:clean create setup compile elaborate auto_run
 
 setup:
 	./setup.sh
@@ -51,3 +51,5 @@ verdi:
 create:
 	mkdir data	
 	touch data/test_result.txt
+auto_run:
+	./auto_run.sh

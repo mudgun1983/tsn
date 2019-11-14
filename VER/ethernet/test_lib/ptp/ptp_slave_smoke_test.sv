@@ -41,7 +41,7 @@ class ptp_slave_smoke_test extends pcs_base_test;
 				if(auto_stop_en)
 				  begin
 				   file_id=$fopen(test_result_file,"a+"); 
-		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"},));	
+		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
 		    	   $fclose(file_id);
 				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR ptp_scb0[%0d]",index));
 				  end
@@ -73,16 +73,17 @@ class ptp_slave_smoke_test extends pcs_base_test;
 	   begin
        phase.phase_done.set_drain_time(this, 50000);
        #5ms;
+	   //#100us;
 	   if(comp_success_count[test_port_index]!=0)
 	     begin
 		   file_id=$fopen(test_result_file,"a+"); 
-		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"},));	
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
 		   $fclose(file_id);
 		 end
 	   else
 	     begin
 		   file_id=$fopen(test_result_file,"a+"); 
-		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"},));	
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
 		   $fclose(file_id);
 		 end
        $stop;      
