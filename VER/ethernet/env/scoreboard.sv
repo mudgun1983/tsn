@@ -288,6 +288,7 @@ if(eth_frame_exp_tr.tagged_data[1].data[0] != eth_frame_col_tr.tagged_data[1].da
 else
    begin
      match = 1;		
+	 ->comp_success;
    end
 
 payload_seq_id	 = eth_frame_exp_tr.tagged_data[1].data[0];

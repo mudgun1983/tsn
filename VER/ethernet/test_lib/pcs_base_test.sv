@@ -17,6 +17,8 @@ class pcs_base_test extends uvm_test;
     int comp_success_count[];
 	string global_test_log;
 	string test_result_file;
+	parameter test_port_index= 5'd2;
+	parameter TIME_OUT_INTERVAL=500us; 
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
@@ -138,7 +140,31 @@ class pcs_base_test extends uvm_test;
 		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
 		    	$fclose(file_id);
 				if(auto_stop_en)
-				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scb0[%0d]",index));
+				  begin
+				   file_id=$fopen(test_result_file,"a+"); 
+		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
+		    	   $fclose(file_id);
+				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR ptp_scb0[%0d]",index));
+				  end
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+	   
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.scb0[index].comp_success;
+				comp_success_count[index]++;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard[%0d] \n",comp_success_count[index],index));	
+		    	$fclose(file_id);
 		       end
 		   join_none
 		 end
@@ -154,8 +180,9 @@ class pcs_base_test extends uvm_test;
 	         while(1)
 		       begin
 		        @this.pcs_tx_rx_env0.ptp_scb0[index].comp_success;
+				comp_success_count[index]++;
 		    	file_id=$fopen(global_test_log,"a+"); 
-		    	$fwrite(file_id,$psprintf(" SUCCESS in scoreboard[%0d] \n",index));	
+		    	$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard[%0d] \n",comp_success_count[index],index));	
 		    	$fclose(file_id);
 		       end
 		   join_none
@@ -166,8 +193,21 @@ class pcs_base_test extends uvm_test;
 	
 	   begin
        phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
-       $stop;      
+       #TIME_OUT_INTERVAL;
+	   //#100us;
+	   if(comp_success_count[test_port_index]!=0)
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
+		   $fclose(file_id);
+		 end
+	   else
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
+		   $fclose(file_id);
+		 end
+       $finish;      
 	   end
 	   
 	join
