@@ -145,7 +145,10 @@ class mac_user_sequence extends mac_base_sequence;
 					else
 					{
 					foreach(req.tagged_data[1].data[key])   
-                    {req.tagged_data[1].data[key]==c_data_payload;
+                    { if(key ==0)
+					   {req.tagged_data[1].data[key]==c_data_payload;}
+					  else
+					   {req.tagged_data[1].data[key]==key;}
                     }
 					}
 					
