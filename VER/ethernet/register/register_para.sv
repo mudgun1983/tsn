@@ -60,6 +60,17 @@
 `define GATHER_INIT_TABLE       reg_config.gather_init_table 
 `define PTP_CONFIG              reg_config.ptp_config 
 
+`define   SUB sub_
+`define   SUB_PTP_CONFIG_CONTENT             `SUB```PTP_CONFIG_CONTENT
+`define   SUB_PTP_CONFIG                     `SUB```PTP_CONFIG 
+`define   SUB_PHY_PORT_TABLE                 `SUB```PHY_PORT_TABLE
+`define   SUB_PHY_PORT_TABLE_CONTENT         `SUB```PHY_PORT_TABLE_CONTENT
+`define   SUB_RX_PTP_FORWARD_TABLE           `SUB```RX_PTP_FORWARD_TABLE
+`define   SUB_RX_PTP_FORWARD_TABLE_CONTENT   `SUB```RX_PTP_FORWARD_TABLE_CONTENT
+`define   SUB_O_PHY_PORT_PRO_TABLE           `SUB```O_PHY_PORT_PRO_TABLE
+`define   SUB_O_PHY_PORT_PRO_TABLE_CONTENT   `SUB```O_PHY_PORT_PRO_TABLE_CONTENT
+`define   SUB_CPU_ADDR                       32'h8000_0000
+  
 `define BASE_OFFSET          16'b0000_0000_0000_0000
 `define BASE_OFFSET_GATHER   16'b0011_0000_0000_0000
 `define BASE_OFFSET_PTP      16'b0001_1101_0000_0000  //1d00

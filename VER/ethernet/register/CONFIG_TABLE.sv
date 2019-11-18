@@ -1722,7 +1722,7 @@ endfunction
 
 function void set_config();
   table_index[0].table_key_t[4:0] = 4'd5;
-  table_index[0].table_t    [117:0] = {112'd0,1'b1,5'd0};
+  table_index[0].table_t    [117:0] = {111'd0,1'b1,1'b0,5'd0};
 endfunction
 
 endclass

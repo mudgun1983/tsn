@@ -267,8 +267,8 @@ Orientation = Landscape
 [FileBrowser]
 LoadSimulationResults = /home/xuruofan/designs/test/counter16/sim/modelsim/routed,
 ImportDesign = /home/xuruofan/designs/test/counter16/sim/modelsim/routed/logic.v,/home/xuruofan/bin,/home/xuruofan/designs/test/counter16/alta/routed.v,/home/xuruofan/designs/test/counter16/tb.v,/home/xuruofan/cvs/alta/src/doc/,
-nWaveOpenFsdbDirHistory = "\"/home/wgb/project/609/VER/pcs/sim/sim_000.fsdb\"" "\"/home/wgb/project/609/VER/pcs/sim\"" "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\"" "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/\
-sim\""
+nWaveOpenFsdbDirHistory = "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim\"" "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\"" "\"/home/wgb/project/609/VER/pcs/sim\"" "\"/home/wgb/project/609/VER/pcs/sim/sim_000.f\
+sdb\"" "\"/home/wangguobin/project/TSN/verification_git_debug_2/tsn/VER/ethernet/sim\""
 [Form]
 version = Verdi3_L-2016.06-1
 wave/openWFile.fm = 100,100,823,688
@@ -280,9 +280,9 @@ ViewMouse13Swap = FALSE
 cmd_enter_form = FALSE
 SyncBrowserDir = TRUE
 bDisplayWelcome = FALSE
-version = Verdi3_L-2016.06-1
 SignalCaseInSensitive = FALSE
 ShowWndCtntDuringResizing = FALSE
+version = Verdi3_L-2016.06-1
 [GlobalProp]
 ErrWindow_Font = Helvetica_M_R_12
 [HB]
@@ -376,17 +376,18 @@ savePropDtl = TRUE
 [QtDialog]
 QwWarnMsgDlg = 650,446,600,250
 importDesignForm = 633,242,634,611
-qWaveSignalDialog = 652,299,800,479
 AMS_MAIN = 633,209,652,690
-QwUserAskDlg = 798,489,324,134
+QwUserAskDlg = 798,445,324,134
+QwInfoMsgDlg = 575,446,750,250
+qWaveSignalDialog = 520,166,927,591
 [Relationship]
 hideRecursiceNode = FALSE
 [Session Cache]
-2 = string (session file name)
 3 = string (session file name)
 4 = string (session file name)
 5 = string (session file name)
-1 = /home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/verdiLog/novas_autosave.ses
+1 = /home/wangguobin/project/TSN/verification_git_debug_2/tsn/VER/ethernet/sim/verdiLog/novas_autosave.ses
+2 = /home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/verdiLog/novas_autosave.ses
 [Signal List]
 backgroundColor = ID_WHITE
 foregroundColor = ID_BLACK
@@ -465,7 +466,7 @@ KeepBreakPoints = FALSE
 eventDumpUnfinish = FALSE
 [SourceVHDL]
 vhSimType = ModelSim
-ohSimType = VerilogXL
+ohSimType = VCS
 [TclShell]
 nLineSize = 1024
 [Text]
@@ -550,7 +551,7 @@ pdmlCommand = ID_BLACK
 pdmlMacro = ID_BLACK
 font = FIXED20
 [Text.1]
-viewport = -1 27 1920 981 45
+viewport = 230 104 1440 726 45
 [TextPrinter]
 Orientation = Landscape
 Indicator = FALSE
@@ -652,8 +653,7 @@ open_rc_file_dir
 getSignalSignalListBackgroundColor = -c ID_GRAY5
 filter_out_synthesized_net = off n
 filter_out_synthesized_instance = off
-getSignalForm = 550 271 800 479 277 381 273 89
-viewPort = 0 28 1920 396 526 65
+viewPort = 0 28 1440 86 214 65
 signalSpacing = 3
 digitalSignalHeight = 15
 analogSignalHeight = 98
@@ -901,8 +901,9 @@ curveWindow_Drag&Drop_Mode = TRUE
 hspiceIncOpenMode = TRUE
 pcSelectMode = TRUE
 hierarchyDelimiter = /
-RecentFile1 = "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\""
-RecentFile2 = "\"/home/wgb/project/609/VER/pcs/sim/sim_000.fsdb\""
+RecentFile1 = "\"/home/wangguobin/project/TSN/verification_git_debug_2/tsn/VER/ethernet/sim/tb_top.fsdb\""
+RecentFile2 = "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\""
+RecentFile3 = "\"/home/wgb/project/609/VER/pcs/sim/sim_000.fsdb\""
 open_file_time_range = FALSE
 value_window_aligment = Right
 signal_window_alignment = Auto
@@ -914,16 +915,16 @@ group_name_font = -f COURIER12 -c ID_GREEN5
 ruler_value_font = -f COURIER12 -c ID_CYAN5
 analog_ruler_value_font = -f COURIER12 -c ID_CYAN5
 comment_string_font = -f COURIER12 -c ID_RED5
-getsignal_form_font = -f COURIER12 
+getsignal_form_font = -f COURIER12
 SigsCheckNum = on 1000
 filter_synthesized_net = off n
 filterOutNet = on
-filter_synthesized_instance = off 
+filter_synthesized_instance = off
 filterOutInstance = on
 showGroupTree = TRUE
 hierGroupDelim = /
 MsgSeverityColor = {y \"Severity\"==\"1\" ID_RED5} {y \"Severity\"==\"2\" ID_RED6} {y \"Severity\"==\"3\" ID_RED7} {y \"Severity\"==\"4\" ID_RED8} {y \"Severity\"==\"5\" ID_ORANGE5} {y \"Severity\"==\"6\" ID_ORANGE6} {y \"Severity\"==\"7\" ID_ORANGE7} {y \"Severity\"==\"8\" \
-ID_GREEN7} {y \"Severity\"==\"9\" ID_GREEN6} {y \"Severity\"==\"10\" ID_GREEN5} 
+ID_GREEN7} {y \"Severity\"==\"9\" ID_GREEN6} {y \"Severity\"==\"10\" ID_GREEN5}
 AutoApplySeverityColor = FALSE
 AutoAdjustMsgWidthByLabel = off
 verilogStrengthDispType = type1
@@ -932,6 +933,7 @@ autoConnectTBrowser = FALSE
 connectTBrowserInContainer = TRUE
 SEQShowComparisonIcon = TRUE
 SEQAddDriverLoadInSameGroup = TRUE
+getSignalForm = 370 -546 927 591 326 493 547 239
 [compile_design]
 DefaultLang = Verilog
 [eco]
@@ -946,7 +948,7 @@ OutputPinStatus = 2
 RevisedComponentColor = ID_BLUE5
 SpareCellColor = ID_RED5
 UserName = wangguobin
-CommentFormat = Novas ECO updated by ${UserName} ${Date} ${Time} 
+CommentFormat = Novas ECO updated by ${UserName} ${Date} ${Time}
 PrefixN = eco_n
 PrefixP = eco_p
 PrefixI = eco_i
@@ -1256,7 +1258,7 @@ AddImportArgument = FALSE
 LineBreakWithScope = TRUE
 StopAfterCompileOption = -s
 [wave.0]
-viewPort = 0 28 1920 396 526 65
+viewPort = 0 28 1440 86 214 65
 [wave.1]
 viewPort = 0 28 1920 852 526 65
 [wave.2]

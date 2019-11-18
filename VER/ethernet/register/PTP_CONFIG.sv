@@ -55,10 +55,10 @@ function predefine_sys_trans();
 endfunction
 
 function predefine_ptp_trans();
-   // if ( !(ptp_trans.randomize() with {ptp_trans.packet_type == ptp_item::Sync;} )) 
-        // begin
-		 // `uvm_error(get_type_name, "Randomize Failed!") 
-		// end
+    if ( !(ptp_trans.randomize() )) 
+         begin
+		  `uvm_error(get_type_name, "Randomize Failed!") 
+		 end
 	ptp_trans.packet_type     =    ptp_item::Sync;
 	ptp_trans.originTimestamp =    {80{1'b1}};//'hffff_ffff;
 		

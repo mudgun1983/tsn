@@ -24,9 +24,7 @@ class pcs_base_test extends uvm_test;
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
 //       set_config_object("*","static_cfg",env_ec,0);     
          reg_config = new();
-		 set_i_epp_predefine_value();
-		 set_ptp_predefine_value();
-		 set_port_stimulus_value();	// define in the global_define.sv
+		 
 		 test_result_file = `test_result_file;
 		 global_test_log = {get_type_name(),"_log.txt"};
 		 file_id=$fopen(global_test_log,"w+");                                               
@@ -48,6 +46,11 @@ class pcs_base_test extends uvm_test;
     super.build_phase(phase);       
        printer = new();
        printer.knobs.depth = 6;
+
+//  invoke config file
+       set_i_epp_predefine_value();
+	   set_ptp_predefine_value();
+	   set_port_stimulus_value();	// define in the global_define.sv
 //=================================set cpu agent config==========================================	
 	   set_cpu_config();
        uvm_config_db #(cpu_config)::set(this, "*", "cpu_config",

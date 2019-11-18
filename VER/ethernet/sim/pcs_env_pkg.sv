@@ -61,6 +61,8 @@ package pcs_env_pkg;
   `include "../seq_lib/rgm_seq_lib.sv"
   `include "../seq_lib/rgm_user_seq_lib.sv"
   `include "../seq_lib/ptp_reg_seq.sv"
+  `include "../seq_lib/sub_ptp_reg_seq.sv"
+  `include "../seq_lib/sub_switch_reg_seq.sv"
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
@@ -73,6 +75,9 @@ package pcs_env_pkg;
   `include "../test_lib/ptp/scenario_ptp_rcv_smoke_test.sv"
   `include "../test_lib/ptp/ptp_rcv_smoke_test.sv"
   `include "../test_lib/ptp/ptp_slave_smoke_test.sv"
+  `include "../test_lib/ptp/full_instance_one_step_master.sv"
+  `include "../test_lib/ptp/full_instance_two_step_master.sv"
+  `include "../test_lib/ptp/ptp_master_slave_base_test.sv"
 endpackage
 `endif
 
