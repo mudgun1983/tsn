@@ -14,9 +14,11 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
     sub_o_phy_port_pro_table_reg_seq sub_o_phy_port_pro_table_reg_seq0;
 	
     bit [15:0] comp_fail_flag;
+	bit        one_two_step;
     function new(string name="ptp_master_slave_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
         test_port_index= 5'd6;	
+		one_two_step = 1;
         sub_reg_config = new();
 		
      endfunction : new
@@ -55,6 +57,8 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
    task configure_phase( uvm_phase phase);
      phase.raise_objection( this );
      //program_control_registers_seq.start( m_sequencer );
+	 fork 
+	 begin
 	 #10us;
 	 ptp_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
 	 phy_port_table_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
@@ -65,7 +69,17 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 	 sub_phy_port_table_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
 	 sub_rx_ptp_forward_table_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
 	 sub_o_phy_port_pro_table_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
+	 end
 	 
+	 // begin
+	 // #1us;
+	 // `ifdef DUAL_DUT
+	   // force pcs_tb_top.SUB_UUT.sys_reset = 1;
+	 // #100us;
+	   // release pcs_tb_top.SUB_UUT.sys_reset;
+	 // `endif
+	 // end
+	 join
      phase.drop_objection( this );
   endtask
 
@@ -149,6 +163,7 @@ virtual function set_ptp_predefine_value();
 //master_node
   `PTP_CONFIG.table_size =1;
   `PTP_CONFIG.src_mac = 48'h8000_0000_0000;
+  `PTP_CONFIG.two_step = one_two_step;//1： two step  0: one step
   //enable all the instance
   foreach(`PTP_CONFIG_CONTENT[key])
     `PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 1;
@@ -157,10 +172,11 @@ virtual function set_ptp_predefine_value();
   foreach(`PTP_CONFIG_CONTENT[key]) begin
   `PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 1;
   `PTP_CONFIG_CONTENT[key].descriptor_trans.inst_type = 0; //0:master
-  `PTP_CONFIG_CONTENT[key].descriptor_trans.two_step = 0; //1： two step  0: one step
+  `PTP_CONFIG_CONTENT[key].descriptor_trans.two_step = one_two_step; //1： two step  0: one step
   
   `PTP_CONFIG_CONTENT[key].ptp_trans.packet_type     =    ptp_item::Sync;
   `PTP_CONFIG_CONTENT[key].ptp_trans.messageType     =    `Sync;
+  `PTP_CONFIG_CONTENT[key].ptp_trans.flagField[1]     =    one_two_step;
   
   `PTP_CONFIG_CONTENT[key].eth_trans.destination_address = `PTP_NON_PEER_MULTI_DA;
   `PTP_CONFIG_CONTENT[key].sys_trans.destination =  test_port_index;
@@ -179,7 +195,8 @@ endfunction
 virtual function set_sub_ptp_predefine_value();
 //slave_node
   `SUB_PTP_CONFIG.table_size =1;
-  `PTP_CONFIG.slave_pid = test_port_index;
+  `SUB_PTP_CONFIG.slave_pid = test_port_index;
+  `SUB_PTP_CONFIG.two_step = one_two_step;//1： two step  0: one step
   //enable all the instance
   foreach(`SUB_PTP_CONFIG_CONTENT[key])
     `SUB_PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 1;
@@ -188,11 +205,12 @@ virtual function set_sub_ptp_predefine_value();
   foreach(`SUB_PTP_CONFIG_CONTENT[key]) begin
   `SUB_PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 1;
   `SUB_PTP_CONFIG_CONTENT[key].descriptor_trans.inst_type = 1; //1:slave
-  `SUB_PTP_CONFIG_CONTENT[key].descriptor_trans.two_step = 0; //1： two step  0: one step
+  `SUB_PTP_CONFIG_CONTENT[key].descriptor_trans.two_step = one_two_step; //1： two step  0: one step
   
   `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.packet_type     =    ptp_item::Pdelay_Req;
   `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.messageType     =    `Pdelay_Req;
-  
+  `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.flagField[1]       =    one_two_step;
+   
   `SUB_PTP_CONFIG_CONTENT[key].eth_trans.destination_address = `PTP_PEER_MULTI_DA;
   `SUB_PTP_CONFIG_CONTENT[key].sys_trans.destination =  test_port_index;
   `SUB_PTP_CONFIG_CONTENT[key].sys_trans.sub_type	= `Pdelay_Req;
@@ -230,7 +248,7 @@ virtual function set_sub_i_epp_predefine_value();
   `SUB_PHY_PORT_TABLE_CONTENT[0].table_key_t = test_port_index;
   `SUB_PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,test_port_index[4:0],1'b1,1'b0,5'd0};
   
-  `SUB_RX_PTP_FORWARD_TABLE.table_size =4;
+  `SUB_RX_PTP_FORWARD_TABLE.table_size =5;
   `SUB_RX_PTP_FORWARD_TABLE.table_index = new[`SUB_RX_PTP_FORWARD_TABLE.table_size];
    for(int i=0;i<`SUB_RX_PTP_FORWARD_TABLE.table_size;i++)
     `SUB_RX_PTP_FORWARD_TABLE.table_index[i] = new(); 
@@ -250,6 +268,10 @@ virtual function set_sub_i_epp_predefine_value();
   `SUB_RX_PTP_FORWARD_TABLE_CONTENT[3].table_key_t.message_type = `Pdelay_Resp;
   `SUB_RX_PTP_FORWARD_TABLE_CONTENT[3].table_key_t.phy_port = test_port_index;
   `SUB_RX_PTP_FORWARD_TABLE_CONTENT[3].table_t.fw_destination = 2'b10;
+  
+  `SUB_RX_PTP_FORWARD_TABLE_CONTENT[4].table_key_t.message_type = `Pdelay_Resp_Follow_Up;
+  `SUB_RX_PTP_FORWARD_TABLE_CONTENT[4].table_key_t.phy_port = test_port_index;
+  `SUB_RX_PTP_FORWARD_TABLE_CONTENT[4].table_t.fw_destination = 2'b10;
   
   `SUB_O_PHY_PORT_PRO_TABLE.table_size=1;
   `SUB_O_PHY_PORT_PRO_TABLE_CONTENT[0].table_key_t = test_port_index;

@@ -88,6 +88,9 @@ class sub_ptp_reg_seq extends seq_reg_user_macro ;
 	`user_rgm_write_with((SUB_CPU_ADDR+`PDLY_REQ_PRO_CONFIG3_REG),{`SUB_PTP_CONFIG.src_mac[31:16]});
 	`user_rgm_write_with((SUB_CPU_ADDR+`PDLY_REQ_PRO_CONFIG4_REG),{`SUB_PTP_CONFIG.src_mac[47:32]});
 	`user_rgm_write_with((SUB_CPU_ADDR+`PDLY_REQ_PRO_CONFIG_UPDT_REG),{'h1});
+	
+	`user_rgm_write_with((SUB_CPU_ADDR+`SYNC_PRO_CONFIG1_REG),{`SUB_PTP_CONFIG.slave_pid});
+	`user_rgm_write_with((SUB_CPU_ADDR+`SYNC_PRO_CONFIG_UPDT_REG),{'h1});
 	read_data_tmp = 0;
 	while(!read_data_tmp)
 	  begin

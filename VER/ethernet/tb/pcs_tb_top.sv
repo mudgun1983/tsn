@@ -31,6 +31,8 @@ parameter CLOCK_50M  = 20ns;
 parameter CLOCK_25M  = 40ns;
 parameter RESET_START_TIME = 100ns;
 parameter RESET_HOLD_TIEM = 500ns;
+parameter SUB_RESET_START_TIME = 100ns;
+parameter SUB_RESET_HOLD_TIEM = 50us;
 parameter CLOCK_1us = 1000ns;
 
 parameter SELF_DEFINE_PACKET= 0;
@@ -57,7 +59,7 @@ reg clk_100m;
 reg clk_50m;
 reg clk_25m;
 reg reset_b;
-reg rst;
+reg rst,sub_rst;
 reg    [63:0]    xgmii_64_rd;
 reg    [7:0]     xgmii_64_rxc  ;
 
@@ -87,6 +89,7 @@ gmii_tx_if gmii_tx_if_array[GMII_PORT_NUM]();
 gmii_rx_vif gmii_rx_vif0;
 gmii_tx_vif gmii_tx_vif0;
 
+gmii_rx_if gmii_ptp_rx_if();
 gmii_tx_if gmii_ptp_tx_if();
 
 xgmii64_rx_if xgmii64_rx_if_array[XGMII_PORT_NUM]();
@@ -176,6 +179,7 @@ initial
   	clk_312m    =1'b0;
   	clk_161m    =1'b0;
   	reset_b     =1'b1;
+	sub_rst     =1'b0;
   end
 
 initial
@@ -186,6 +190,14 @@ initial
    	  reset_b=1'b1;
    end  
 
+initial
+   begin
+   	#SUB_RESET_START_TIME;
+	  sub_rst=1'b1;
+   	#SUB_RESET_HOLD_TIEM;
+	  sub_rst=1'b0;
+   end
+   
 always #(CLOCK_156M/2)
    clk_156m<=~clk_156m; 
    
@@ -234,15 +246,19 @@ initial
   begin
   	gmii_tx_if0.clk=1;
   	gmii_tx_if0.reset=0;
+	gmii_ptp_rx_if.clk=1;
+  	gmii_ptp_rx_if.reset=0;
 	gmii_ptp_tx_if.clk=1;
   	gmii_ptp_tx_if.reset=0;
 	
   	#10ns;
   	gmii_tx_if0.reset=1;
+	gmii_ptp_rx_if.reset=1;
 	gmii_ptp_tx_if.reset=1;
   	#50ns;
   	gmii_tx_if0.reset=0;
-	gmii_ptp_tx_if.reset=0;
+	gmii_ptp_rx_if.reset=0;
+	gmii_ptp_tx_if.reset=1;
   end
   
 always #(CLOCK_125M/2)  
@@ -250,6 +266,9 @@ always #(CLOCK_125M/2)
 
 always #(CLOCK_125M/2)                
   gmii_tx_if0.clk <= ~gmii_tx_if0.clk;
+
+always #(CLOCK_125M/2)                
+  gmii_ptp_rx_if.clk <= ~gmii_ptp_rx_if.clk;
 
 always #(CLOCK_125M/2)                
   gmii_ptp_tx_if.clk <= ~gmii_ptp_tx_if.clk;
@@ -457,16 +476,20 @@ tsn_sw_chip_top UUT
            .rx_er_6                    (gmii_ptp_tx_if.tx_er),
            .rx_dv_6                    (gmii_ptp_tx_if.tx_en),
            .rxd_6                      (gmii_ptp_tx_if.txd  ),
+		   .gtx_clk_6                  (gmii_ptp_rx_if.clk  ),
+           .tx_er_6                    (gmii_ptp_rx_if.rx_er),
+           .tx_en_6                    (gmii_ptp_rx_if.rx_dv),
+           .txd_6                      (gmii_ptp_rx_if.rxd  ),
 		  `else
 		   .rx_clk_6                   (gmii_rx_if_array[4].clk  ),
            .rx_er_6                    (gmii_rx_if_array[4].rx_er),
            .rx_dv_6                    (gmii_rx_if_array[4].rx_dv),
            .rxd_6                      (gmii_rx_if_array[4].rxd  ),
-		  `endif
            .gtx_clk_6                  (gmii_tx_if_array[4].clk  ),
            .tx_er_6                    (gmii_tx_if_array[4].tx_er),
            .tx_en_6                    (gmii_tx_if_array[4].tx_en),
            .txd_6                      (gmii_tx_if_array[4].txd  ),
+		   `endif
            .rx_clk_7                   (gmii_rx_if_array[5].clk  ),
            .rx_er_7                    (gmii_rx_if_array[5].rx_er),
            .rx_dv_7                    (gmii_rx_if_array[5].rx_dv),
@@ -579,153 +602,153 @@ tsn_sw_chip_top UUT
   `ifdef DUAL_DUT	
   tsn_sw_chip_top SUB_UUT
            (
-           .sys_reset             (rst           ), 	
+           .sys_reset             (sub_rst           ), 	
            .syc_clk_250m          (clk_125m      ),//(clk_250m      ),
            .clk_cpu                    (clk_100m                     ),
            .rx_clk_0                   (xgmii64_rx_if_array[0].clk),
-           .rx_mii_d_0                 (),
-           .rx_mii_c_0                 (),
+           .rx_mii_d_0                 (0),
+           .rx_mii_c_0                 (0),
            .tx_clk_0                   (xgmii64_tx_if_array[0].clk),
-           .tx_mii_d_0                 (),
-           .tx_mii_c_0                 (),
+           .tx_mii_d_0                 ( ),
+           .tx_mii_c_0                 ( ),
            .rx_clk_1                   (xgmii64_rx_if_array[1].clk),
-           .rx_mii_d_1                 (),
-           .rx_mii_c_1                 (),
+           .rx_mii_d_1                 (0),
+           .rx_mii_c_1                 (0),
            .tx_clk_1                   (xgmii64_tx_if_array[1].clk),
-           .tx_mii_d_1                 (),
-           .tx_mii_c_1                 (),
+           .tx_mii_d_1                 ( ),
+           .tx_mii_c_1                 ( ),
            .rx_clk_2                   (gmii_rx_if_array[0].clk  ),
-           .rx_er_2                    (),
-           .rx_dv_2                    (),
-           .rxd_2                      (),
+           .rx_er_2                    (0),
+           .rx_dv_2                    (0),
+           .rxd_2                      (0),
            .gtx_clk_2                  (gmii_tx_if_array[0].clk  ),
-           .tx_er_2                    (),
-           .tx_en_2                    (),
-           .txd_2                      (),
+           .tx_er_2                    ( ),
+           .tx_en_2                    ( ),
+           .txd_2                      ( ),
            .rx_clk_3                   (gmii_rx_if_array[1].clk  ),
-           .rx_er_3                    (),
-           .rx_dv_3                    (),
-           .rxd_3                      (),
+           .rx_er_3                    (0),
+           .rx_dv_3                    (0),
+           .rxd_3                      (0),
            .gtx_clk_3                  (gmii_tx_if_array[1].clk  ),
            .tx_er_3                    (),
            .tx_en_3                    (),
            .txd_3                      (),
            .rx_clk_4                   (gmii_rx_if_array[2].clk  ),
-           .rx_er_4                    (),
-           .rx_dv_4                    (),
-           .rxd_4                      (),
+           .rx_er_4                    (0),
+           .rx_dv_4                    (0),
+           .rxd_4                      (0),
            .gtx_clk_4                  (gmii_tx_if_array[2].clk  ),
            .tx_er_4                    (),
            .tx_en_4                    (),
            .txd_4                      (),
            .rx_clk_5                   (gmii_rx_if_array[3].clk  ),
-           .rx_er_5                    (),
-           .rx_dv_5                    (),
-           .rxd_5                      (),
+           .rx_er_5                    (0),
+           .rx_dv_5                    (0),
+           .rxd_5                      (0),
            .gtx_clk_5                  (gmii_tx_if_array[3].clk  ),
            .tx_er_5                    (),
            .tx_en_5                    (),
            .txd_5                      (),
-           .rx_clk_6                   (gmii_tx_if_array[4].clk  ),   //receive ptp packet from master node
-           .rx_er_6                    (gmii_tx_if_array[4].tx_er),
-           .rx_dv_6                    (gmii_tx_if_array[4].tx_en),
-           .rxd_6                      (gmii_tx_if_array[4].txd  ),
+           .rx_clk_6                   (gmii_ptp_rx_if.clk       ),   //receive ptp packet from master node
+           .rx_er_6                    (gmii_ptp_rx_if.rx_er     ),
+           .rx_dv_6                    (gmii_ptp_rx_if.rx_dv     ),
+           .rxd_6                      (gmii_ptp_rx_if.rxd       ),
            .gtx_clk_6                  (gmii_ptp_tx_if.clk       ),
            .tx_er_6                    (gmii_ptp_tx_if.tx_er     ),
            .tx_en_6                    (gmii_ptp_tx_if.tx_en     ),
            .txd_6                      (gmii_ptp_tx_if.txd       ),
            .rx_clk_7                   (gmii_rx_if_array[5].clk  ),
-           .rx_er_7                    (),
-           .rx_dv_7                    (),
-           .rxd_7                      (),
+           .rx_er_7                    (0),
+           .rx_dv_7                    (0),
+           .rxd_7                      (0),
            .gtx_clk_7                  (gmii_tx_if_array[5].clk  ),
            .tx_er_7                    (),
            .tx_en_7                    (),
            .txd_7                      (),
            .rx_clk_8                   (gmii_rx_if_array[6].clk  ),
-           .rx_er_8                    (),
-           .rx_dv_8                    (),
-           .rxd_8                      (),
+           .rx_er_8                    (0),
+           .rx_dv_8                    (0),
+           .rxd_8                      (0),
            .gtx_clk_8                  (gmii_tx_if_array[6].clk  ),
            .tx_er_8                    (),
            .tx_en_8                    (),
            .txd_8                      (),
            .rx_clk_9                   (gmii_rx_if_array[7].clk  ),
-           .rx_er_9                    (),
-           .rx_dv_9                    (),
-           .rxd_9                      (),
+           .rx_er_9                    (0),
+           .rx_dv_9                    (0),
+           .rxd_9                      (0),
            .gtx_clk_9                  (gmii_tx_if_array[7].clk  ),
            .tx_er_9                    (),
            .tx_en_9                    (),
            .txd_9                      (),
 		   .rx_clk_10                  (gmii_rx_if_array[8].clk  ),
-           .rx_er_10                   (),
-           .rx_dv_10                   (),
-           .rxd_10                     (),
+           .rx_er_10                   (0),
+           .rx_dv_10                   (0),
+           .rxd_10                     (0),
            .gtx_clk_10                 (gmii_tx_if_array[8].clk  ),
            .tx_er_10                   (),
            .tx_en_10                   (),
            .txd_10                     (),
            .rx_clk_11                  (gmii_rx_if_array[9].clk   ),
-           .rx_er_11                   (),
-           .rx_dv_11                   (),
-           .rxd_11                     (),
+           .rx_er_11                   (0),
+           .rx_dv_11                   (0),
+           .rxd_11                     (0),
            .gtx_clk_11                 (gmii_tx_if_array[9].clk   ),
            .tx_er_11                   (),
            .tx_en_11                   (),
            .txd_11                     (),
            .rx_clk_12                  (gmii_rx_if_array[10].clk  ),
-           .rx_er_12                   (),
-           .rx_dv_12                   (),
-           .rxd_12                     (),
+           .rx_er_12                   (0),
+           .rx_dv_12                   (0),
+           .rxd_12                     (0),
            .gtx_clk_12                 (gmii_tx_if_array[10].clk  ),
            .tx_er_12                   (),
            .tx_en_12                   (),
            .txd_12                     (),
            .rx_clk_13                  (gmii_rx_if_array[11].clk   ),
-           .rx_er_13                   (),
-           .rx_dv_13                   (),
-           .rxd_13                     (),
+           .rx_er_13                   (0),
+           .rx_dv_13                   (0),
+           .rxd_13                     (0),
            .gtx_clk_13                 (gmii_tx_if_array[11].clk   ),
            .tx_er_13                   (),
            .tx_en_13                   (),
            .txd_13                     (),
            .rx_clk_14                  (gmii_rx_if_array[12].clk   ),
-           .rx_er_14                   (),
-           .rx_dv_14                   (),
-           .rxd_14                     (),
+           .rx_er_14                   (0),
+           .rx_dv_14                   (0),
+           .rxd_14                     (0),
            .gtx_clk_14                 (gmii_tx_if_array[12].clk   ),
            .tx_er_14                   (),
            .tx_en_14                   (),
            .txd_14                     (),
            .rx_clk_15                  (gmii_rx_if_array[13].clk   ),
-           .rx_er_15                   (),
-           .rx_dv_15                   (),
-           .rxd_15                     (),
+           .rx_er_15                   (0),
+           .rx_dv_15                   (0),
+           .rxd_15                     (0),
            .gtx_clk_15                 (gmii_tx_if_array[13].clk   ),
            .tx_er_15                   (),
            .tx_en_15                   (),
            .txd_15                     (),
            .rx_clk_16                  (gmii_rx_if_array[14].clk   ),
-           .rx_er_16                   (),
-           .rx_dv_16                   (),
-           .rxd_16                     (),
+           .rx_er_16                   (0),
+           .rx_dv_16                   (0),
+           .rxd_16                     (0),
            .gtx_clk_16                 (gmii_tx_if_array[14].clk   ),
            .tx_er_16                   (),
            .tx_en_16                   (),
            .txd_16                     (),
            .rx_clk_17                  (gmii_rx_if_array[15].clk   ),
-           .rx_er_17                   (),
-           .rx_dv_17                   (),
-           .rxd_17                     (),
+           .rx_er_17                   (0),
+           .rx_dv_17                   (0),
+           .rxd_17                     (0),
            .gtx_clk_17                 (gmii_tx_if_array[15].clk   ),
            .tx_er_17                   (),
            .tx_en_17                   (),
            .txd_17                     (),
            .rx_clk_30                  (gmii_rx_if_array[16].clk  ),
-           .rx_er_30                   (),
-           .rx_dv_30                   (),
-           .rxd_30                     (),
+           .rx_er_30                   (0),
+           .rx_dv_30                   (0),
+           .rxd_30                     (0),
            .gtx_clk_30                 (gmii_tx_if_array[16].clk  ),
            .tx_er_30                   (),
            .tx_en_30                   (),
