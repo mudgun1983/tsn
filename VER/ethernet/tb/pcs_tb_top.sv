@@ -32,7 +32,7 @@ parameter CLOCK_25M  = 40ns;
 parameter RESET_START_TIME = 100ns;
 parameter RESET_HOLD_TIEM = 500ns;
 parameter SUB_RESET_START_TIME = 100ns;
-parameter SUB_RESET_HOLD_TIEM = 50us;
+parameter SUB_RESET_HOLD_TIEM = 500ns;
 parameter CLOCK_1us = 1000ns;
 
 parameter SELF_DEFINE_PACKET= 0;
@@ -96,6 +96,9 @@ xgmii64_rx_if xgmii64_rx_if_array[XGMII_PORT_NUM]();
 xgmii64_rx_vif xgmii64_rx_vif0;
 xgmii64_tx_if xgmii64_tx_if_array[XGMII_PORT_NUM]();
 xgmii64_tx_vif xgmii64_tx_vif0;
+
+//connect the dut signal to uvm
+dut_if dut_if0();
 //------------interface--------------------------//
 
 //------------cpu if-----------------------------//
@@ -104,6 +107,7 @@ xgmii64_tx_vif xgmii64_tx_vif0;
   cpu_if                      m_cpu_if(cpu_clk,~sys_rst); 
   initial begin
       uvm_config_db#(virtual cpu_if)::set(null,"*rx_env0.cpu_agent0*","vif",m_cpu_if);
+	  uvm_config_db#(virtual dut_if)::set(null,"*","dut_vif",dut_if0);
   end  
 
   initial begin   	
@@ -602,7 +606,7 @@ tsn_sw_chip_top UUT
   `ifdef DUAL_DUT	
   tsn_sw_chip_top SUB_UUT
            (
-           .sys_reset             (sub_rst           ), 	
+           .sys_reset             (sub_rst       ), 	
            .syc_clk_250m          (clk_125m      ),//(clk_250m      ),
            .clk_cpu                    (clk_100m                     ),
            .rx_clk_0                   (xgmii64_rx_if_array[0].clk),

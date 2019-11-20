@@ -23,11 +23,15 @@
 `ifndef PCS_ENV_PKG_SV
 `define PCS_ENV_PKG_SV
 
+//dut if
+  `include "../tb/dut_if.sv"
+  
 package pcs_env_pkg;
   import uvm_pkg::*;
   `include "uvm_macros.svh"
   import cpu_pkg::*;
   import mac_pkg::*;
+
 //item
   `include "../uvc/component/ptp_item.sv"
   `include "../uvc/component/sys_item.sv"

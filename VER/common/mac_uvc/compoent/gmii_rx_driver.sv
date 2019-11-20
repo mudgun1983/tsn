@@ -206,8 +206,11 @@ class gmii_rx_driver extends mac_rx_base_driver;
       	    m_gmii_rx_if.rx_er <= 1'b0;
       	    break;
       		end
-      		m_gmii_rx_if.rx_dv <= 1'b1;
-      	  m_gmii_rx_if.rx_er <= 1'b0;
+			if(i<7-trans.preamble.preamble_length)
+			 m_gmii_rx_if.rx_dv <= 1'b0;
+      		else
+			 m_gmii_rx_if.rx_dv <= 1'b1;
+      	    m_gmii_rx_if.rx_er <= 1'b0;
       		m_gmii_rx_if.rxd   <= trans.frame_data[i];  		
       	end
       	m_state          = IPG_State;

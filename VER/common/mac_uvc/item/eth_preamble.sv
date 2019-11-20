@@ -66,7 +66,7 @@ class eth_preamble extends uvm_sequence_item;
   }
   	                   
   constraint c_data_preamble_size{
-      data_preamble.size() == preamble_length;
+      data_preamble.size() == 7;//preamble_length;
   }   
   
   constraint c_data_preamble{

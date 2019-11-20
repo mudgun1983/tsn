@@ -280,19 +280,32 @@ class eth_frame extends uvm_sequence_item;
   function void do_pack(uvm_packer packer);
     super.do_pack(packer);
     
-    if(preamble.data_preamble.size() > 0) begin
-      foreach(preamble.data_preamble[key])
-        packer.pack_field_int (preamble.data_preamble[key],8);
-    end
+    // if(preamble.data_preamble.size() > 0) begin
+      // foreach(preamble.data_preamble[key])
+        // packer.pack_field_int (preamble.data_preamble[key],8);
+    // end
 	if(preemptable && (~start_or_frag))
 	  begin
+	   for(int i=0;i<6;i++)begin
+	   packer.pack_field_int (preamble.data_preamble[i],8);
+	   end
 	   packer.pack_field_int (preamble.smd,8);
 	   packer.pack_field_int (preamble.frag_cnt,8);
 	  end
 	else if(preemptable)
-	       packer.pack_field_int (preamble.smd,8);
+	       begin
+		    for(int i=0;i<7;i++)begin
+	         packer.pack_field_int (preamble.data_preamble[i],8);
+	         end
+		     packer.pack_field_int (preamble.smd,8);
+		   end
 	     else
+		   begin
+		    for(int i=0;i<7;i++)begin
+	         packer.pack_field_int (preamble.data_preamble[i],8);
+	         end
            packer.pack_field_int (preamble.sfd,8);
+		   end
     
     packer.pack_field_int (destination_address,48);
     packer.pack_field_int (source_address     ,48);

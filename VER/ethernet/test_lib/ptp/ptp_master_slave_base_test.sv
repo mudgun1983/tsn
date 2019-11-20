@@ -1,7 +1,7 @@
 class  ptp_master_slave_base_test extends ptp_smoke_test;
   
    `uvm_component_utils(ptp_master_slave_base_test)
-    
+    virtual dut_if dut_if0;
 	register_config sub_reg_config;
 	ptp_reg_seq                  ptp_reg_seq0;
     phy_port_table_reg_seq       phy_port_table_reg_seq0;
@@ -29,8 +29,13 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 	//invoke static config
 	    set_sub_i_epp_predefine_value();
 		set_sub_ptp_predefine_value();
-//=================================set register config==========================================
 
+//=================================get dut if connected with DUT================================
+        if( !uvm_config_db #(virtual dut_if )::get( this , "" , "dut_vif" ,dut_if0 ) ) begin
+           `uvm_fatal(get_type_name(),"=============dut_if==========");
+		end
+		
+//=================================set register config==========================================
        uvm_config_db #(register_config)::set(this, "*", "sub_register_config",
        sub_reg_config);
 	   
@@ -71,14 +76,16 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 	 sub_o_phy_port_pro_table_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
 	 end
 	 
-	 // begin
-	 // #1us;
-	 // `ifdef DUAL_DUT
-	   // force pcs_tb_top.SUB_UUT.sys_reset = 1;
-	 // #100us;
-	   // release pcs_tb_top.SUB_UUT.sys_reset;
-	 // `endif
-	 // end
+	  begin
+	  #1us;
+	  `ifdef DUAL_DUT
+	    //force pcs_tb_top.SUB_UUT.sys_reset = 1;
+		dut_if0.assert_sys_reset();
+	  #50us;
+	    //release pcs_tb_top.SUB_UUT.sys_reset;
+		dut_if0.de_assert_sys_reset();
+	  `endif
+	  end
 	 join
      phase.drop_objection( this );
   endtask
