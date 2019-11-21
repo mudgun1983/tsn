@@ -18,7 +18,7 @@
 +incdir+../../common/mac_uvc/item
 +incdir+../../common/mac_uvc/seq_lib
 ../../common/mac_uvc/mac_pkg.svh
-
++incdir+../config
 pcs_env_pkg.sv
 
 ../uvc/interface/pcs_xilinx_serdes_if.sv

@@ -2,6 +2,12 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
   
    `uvm_component_utils(ptp_master_slave_base_test)
     virtual dut_if dut_if0;
+	int     peek_value;
+	int     peek_value_1;
+	event   monitor_event0;
+	int     monitor_event0_cnt;
+	event   monitor_event1;
+	int     monitor_event1_cnt;
 	register_config sub_reg_config;
 	ptp_reg_seq                  ptp_reg_seq0;
     phy_port_table_reg_seq       phy_port_table_reg_seq0;
@@ -20,7 +26,7 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
         test_port_index= 5'd6;	
 		one_two_step = 1;
         sub_reg_config = new();
-		
+		TIME_OUT_INTERVAL = 1ms;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -79,10 +85,10 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 	  begin
 	  #1us;
 	  `ifdef DUAL_DUT
-	    //force pcs_tb_top.SUB_UUT.sys_reset = 1;
+	    //force dut_if0.sys_reset = 1;
 		dut_if0.assert_sys_reset();
 	  #50us;
-	    //release pcs_tb_top.SUB_UUT.sys_reset;
+	    //release dut_if0.sys_reset;
 		dut_if0.de_assert_sys_reset();
 	  `endif
 	  end
@@ -138,14 +144,55 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 	   end
 	   
 	   begin
+	     while(1)begin
+		 if(monitor_event0_cnt!=0)
+		   begin
+		     //$display("test00");
+		     @monitor_event1;
+		   end
+		 //$display("test01");  
+	     dut_if0.peek_ptp_slave_offset(peek_value);
+		 if(peek_value!=0)
+		  begin
+		    -> monitor_event0;
+			monitor_event0_cnt++;
+		    file_id=$fopen(global_test_log,"a+"); 
+		    $fwrite(file_id,$psprintf("T=%0t,PRE peek_ptp_slave_offset=%0h monitor_cnt=%0d\n",$time,peek_value,monitor_event0_cnt));	
+		    $fclose(file_id);
+		  end
+         end		  
+	   end
+	   
+	   begin
+	    while(1)begin
+	    @monitor_event0;
+	    while(1)begin
+		 //$display("test10");
+		
+		 // $display("test11");  
+		 dut_if0.peek_ptp_slave_offset(peek_value_1);
+		 if(peek_value_1==0)
+		  begin
+		    -> monitor_event1;
+			monitor_event1_cnt++;
+		    file_id=$fopen(global_test_log,"a+"); 
+		    $fwrite(file_id,$psprintf("T=%0t,POST peek_ptp_slave_offset=%0h monitor_cnt=%0d\n",$time,peek_value_1,monitor_event1_cnt));	
+		    $fclose(file_id);
+			break;
+		  end
+	    end
+		end
+	   end
+	   
+	   begin
        phase.phase_done.set_drain_time(this, 50000);
-       #5ms;
+       #TIME_OUT_INTERVAL;
 	   //#100us;
-	   for(int i=0;i<9;i++)
+	   for(int i=0;i<1;i++)
 		 begin
 		   automatic int index;
            index = i;
-		    if(comp_success_count[index]==0)
+		    if(~(monitor_event1_cnt==1 && monitor_event0_cnt==1))
 			  comp_fail_flag[index] = 1;
 		 end
 	   if(comp_fail_flag==0)

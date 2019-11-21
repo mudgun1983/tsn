@@ -604,6 +604,11 @@ tsn_sw_chip_top UUT
            //.frer_age_counter_pulse     (frer_age_counter_pulse       )
     );      
   `ifdef DUAL_DUT	
+  initial
+    begin
+	    //pcs_tb_top.SUB_UUT.sys_reset = dut_if0.sys_reset ;
+	end
+	
   tsn_sw_chip_top SUB_UUT
            (
            .sys_reset             (sub_rst       ), 	

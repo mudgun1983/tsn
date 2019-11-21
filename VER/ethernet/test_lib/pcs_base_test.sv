@@ -18,7 +18,7 @@ class pcs_base_test extends uvm_test;
 	string global_test_log;
 	string test_result_file;
 	parameter test_port_index= 5'd2;
-	parameter TIME_OUT_INTERVAL=50ms; 
+	int    TIME_OUT_INTERVAL=50ms; 
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
