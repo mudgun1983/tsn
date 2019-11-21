@@ -10,5 +10,6 @@
 #ptp_slave_smoke_test
 #full_instance_one_step_master
 #full_instance_two_step_master
+<<<<<<< HEAD
 #ptp_master_slave_base_test
 ptp_master_slave_two_step_test

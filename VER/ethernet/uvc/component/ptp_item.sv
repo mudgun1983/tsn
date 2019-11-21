@@ -146,6 +146,14 @@ randc packet_kind packet_type;
 //================================================//
     function void do_pack(uvm_packer packer);
         super.do_pack(packer);  
+		case(packet_type)
+		     Sync       :this.messageLength = 34+10;
+			 Delay_Req  :this.messageLength = 34+10;
+			 Delay_Resp :this.messageLength = 34+20;
+			 Pdelay_Req :this.messageLength = 34+20;
+			 Pdelay_Resp:this.messageLength = 34+20;
+			 Follow_Up  :this.messageLength = 34+10;         
+		endcase
 		 packer.pack_field_int (transportSpecific  ,4*1 );
 		 packer.pack_field_int (messageType        ,4*1 );
 		 packer.pack_field_int (reserved0          ,4*1 );

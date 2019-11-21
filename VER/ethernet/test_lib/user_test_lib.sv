@@ -447,6 +447,7 @@ class ptp_smoke_test extends pcs_base_test;
   
   `PTP_CONFIG_CONTENT[0].ptp_trans.packet_type     =    ptp_item::Sync;
   `PTP_CONFIG_CONTENT[0].ptp_trans.messageType     =    `Sync;
+  `PTP_CONFIG_CONTENT[0].ptp_trans.flagField[1]     =    1; //1： two step  0: one step
   
   `PTP_CONFIG_CONTENT[0].eth_trans.destination_address = `PTP_NON_PEER_MULTI_DA;
   `PTP_CONFIG_CONTENT[0].sys_trans.destination =  test_port_index;

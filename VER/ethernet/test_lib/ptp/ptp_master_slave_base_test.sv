@@ -21,9 +21,11 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 	
     bit [15:0] comp_fail_flag;
 	bit        one_two_step;
+	bit [4:0]  test_port_index_1;
     function new(string name="ptp_master_slave_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
-        test_port_index= 5'd6;	
+        test_port_index= 5'd6;
+        test_port_index_1 =5'd7;		
 		one_two_step = 1;
         sub_reg_config = new();
 		TIME_OUT_INTERVAL = 1ms;
@@ -215,7 +217,7 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
    
 virtual function set_ptp_predefine_value();
 //master_node
-  `PTP_CONFIG.table_size =1;
+  `PTP_CONFIG.table_size =2;
   `PTP_CONFIG.src_mac = 48'h8000_0000_0000;
   `PTP_CONFIG.two_step = one_two_step;//1： two step  0: one step
   //enable all the instance
@@ -230,13 +232,16 @@ virtual function set_ptp_predefine_value();
   
   `PTP_CONFIG_CONTENT[key].ptp_trans.packet_type     =    ptp_item::Sync;
   `PTP_CONFIG_CONTENT[key].ptp_trans.messageType     =    `Sync;
-  `PTP_CONFIG_CONTENT[key].ptp_trans.flagField[1]     =    one_two_step;
+  `PTP_CONFIG_CONTENT[key].ptp_trans.flagField[9]     =    one_two_step;
   
   `PTP_CONFIG_CONTENT[key].eth_trans.destination_address = `PTP_NON_PEER_MULTI_DA;
   `PTP_CONFIG_CONTENT[key].sys_trans.destination =  test_port_index;
   `PTP_CONFIG_CONTENT[key].sys_trans.sub_type	= `Sync;
   end
   
+  //for generate script
+  `PTP_CONFIG_CONTENT[0].sys_trans.destination =  test_port_index;
+  `PTP_CONFIG_CONTENT[1].sys_trans.destination =  test_port_index_1;
   //re-pack to update the value
   foreach(`PTP_CONFIG_CONTENT[key])  
 	   begin
@@ -263,8 +268,8 @@ virtual function set_sub_ptp_predefine_value();
   
   `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.packet_type     =    ptp_item::Pdelay_Req;
   `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.messageType     =    `Pdelay_Req;
-  `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.flagField[1]       =    one_two_step;
-   
+  `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.flagField[9]       =    one_two_step;
+  `SUB_PTP_CONFIG_CONTENT[key].ptp_trans.flagField[8]       =    1;//1:slave,0:master
   `SUB_PTP_CONFIG_CONTENT[key].eth_trans.destination_address = `PTP_PEER_MULTI_DA;
   `SUB_PTP_CONFIG_CONTENT[key].sys_trans.destination =  test_port_index;
   `SUB_PTP_CONFIG_CONTENT[key].sys_trans.sub_type	= `Pdelay_Req;
@@ -281,19 +286,29 @@ endfunction
 
 virtual function set_i_epp_predefine_value();
 //master_node
-  `PHY_PORT_TABLE.table_size =1;
+  `PHY_PORT_TABLE.table_size =2;
   `PHY_PORT_TABLE_CONTENT[0].table_key_t = test_port_index;
   `PHY_PORT_TABLE_CONTENT[0].table_t = {2'd0,48'd0,48'd1,test_port_index[4:0],1'b1,1'b0,5'd0};
+  `PHY_PORT_TABLE_CONTENT[1].table_key_t = test_port_index_1;
+  `PHY_PORT_TABLE_CONTENT[1].table_t = {2'd0,48'd0,48'd1,test_port_index_1[4:0],1'b1,1'b0,5'd0};
   
-  `RX_PTP_FORWARD_TABLE.table_size =1;
+  `RX_PTP_FORWARD_TABLE.table_size =2;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.message_type = `Pdelay_Req;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_key_t.phy_port = test_port_index;
   `RX_PTP_FORWARD_TABLE_CONTENT[0].table_t.fw_destination = 2'b10;
+  `RX_PTP_FORWARD_TABLE_CONTENT[1].table_key_t.message_type = `Pdelay_Req;
+  `RX_PTP_FORWARD_TABLE_CONTENT[1].table_key_t.phy_port = test_port_index_1;
+  `RX_PTP_FORWARD_TABLE_CONTENT[1].table_t.fw_destination = 2'b10;
+  
 
-
-  `O_PHY_PORT_PRO_TABLE.table_size=1;
+  `O_PHY_PORT_PRO_TABLE.table_size=2;
+  `O_PHY_PORT_PRO_TABLE.table_index = new[`O_PHY_PORT_PRO_TABLE.table_size];
+  for(int i=0;i<`O_PHY_PORT_PRO_TABLE.table_size;i++)
+    `O_PHY_PORT_PRO_TABLE.table_index[i] = new(); 
   `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_key_t = test_port_index;
   `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_t = {111'd0,1'b1,1'b0,5'd0};
+  `O_PHY_PORT_PRO_TABLE_CONTENT[1].table_key_t = test_port_index_1;
+  `O_PHY_PORT_PRO_TABLE_CONTENT[1].table_t = {111'd0,1'b1,1'b0,5'd0};
 endfunction     
 
 virtual function set_sub_i_epp_predefine_value();

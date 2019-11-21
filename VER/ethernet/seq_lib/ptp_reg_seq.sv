@@ -87,11 +87,11 @@ class ptp_reg_seq extends seq_reg_user_macro ;
 	   begin    
         for(bit[15:0] j=0;j<`PTP_CONFIG_CONTENT[i].packed_data_pad.size;j++)	  
           begin		
-           `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h800+j+(i*96)) });   //every step means 2Bytes, 96steps means 128bytes for each packet      
+           `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h800+j+(i*64)) });   //every step means 2Bytes, 64steps means 128bytes for each packet      
            `user_rgm_write_with(`PKT_RAM_WR_DATA_REG ,{`PTP_CONFIG_CONTENT[i].packed_data_pad[j]}) ;
 	       `user_rgm_write_with(`PKT_RAM_WR_REG      ,{1'b1});
 		   
-		   `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h800+j+(i*96)) });   //every step means 2Bytes, 96steps means 128bytes for each packet      
+		   `user_rgm_write_with(`PKT_RAM_ADDR_REG    ,{('h800+j+(i*64)) });   //every step means 2Bytes, 64steps means 128bytes for each packet      
            `user_rgm_write_with(`PKT_RAM_RD_REG      ,{1'b1});
 		   `user_rgm_read_with(`PKT_RAM_RD_DATA_REG ) ;
 	       

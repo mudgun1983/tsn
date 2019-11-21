@@ -2,6 +2,7 @@
 interface dut_if();
 //logic sys_reset;
 
+
  `ifdef DUAL_DUT
  task assert_sys_reset();
    force pcs_tb_top.SUB_UUT.sys_reset = 1;
@@ -16,4 +17,5 @@ interface dut_if();
     peek_value = pcs_tb_top.SUB_UUT.hw_engine_1588_top.u_OFFSET_CAL.o_deltaT[79:0];
  endtask
  `endif
+
 endinterface 
