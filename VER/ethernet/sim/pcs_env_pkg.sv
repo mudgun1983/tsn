@@ -32,14 +32,18 @@ package pcs_env_pkg;
   import cpu_pkg::*;
   import mac_pkg::*;
 
+//global define
+  `include "../config/global_define.sv"
+
+//top config 
+  `include "../config/global_config.sv"
+  
 //item
   `include "../uvc/component/ptp_item.sv"
   `include "../uvc/component/sys_item.sv"
   `include "../uvc/component/eth_frame_simplify.sv"
   `include "../uvc/component/descriptor_item.sv"
-//top config 
-  `include "../config/global_config.sv"
-  `include "../config/global_define.sv"
+
 //register config
   `include "../register/register_para.sv"
   `include "../register/CONFIG_TABLE.sv"

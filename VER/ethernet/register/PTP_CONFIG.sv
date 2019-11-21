@@ -59,8 +59,10 @@ function predefine_ptp_trans();
          //begin
 		  //`uvm_error(get_type_name, "Randomize Failed!") 
 		 //end
-	ptp_trans.packet_type     =    ptp_item::Sync;
-	ptp_trans.originTimestamp =    {80{1'b1}};//'hffff_ffff;
+	ptp_trans.packet_type       =    ptp_item::Sync;
+	ptp_trans.transportSpecific =    4'b0001;
+	ptp_trans.versionPTP        =    4'b0010;
+	ptp_trans.originTimestamp   =    {80{1'b1}};//'hffff_ffff;
 		
     //ptp_trans.pack_bytes(ptp_trans.frame_data);
 	
@@ -104,7 +106,7 @@ function predefine_descriptor_trans();
 	descriptor_trans.inst_type = 0; //1’b0-master
                                     //1’b1-slave
 	descriptor_trans.two_step = 1;
-	descriptor_trans.follow_up_tlv = 1;	
+	descriptor_trans.follow_up_tlv = 0;	
 	descriptor_trans.send_period = 1;
 	descriptor_trans.pckt_len=126;
 	descriptor_trans.vlan_num=1;

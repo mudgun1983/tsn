@@ -1,6 +1,6 @@
 //PHY_PORT_TABLE
 //`define DUMMY_DUT
-//`define DUAL_DUT
+`define DUAL_DUT
 `define test_result_file "./data/test_result.txt"
 //global define
 `define PTP_ETYPE 16'h88F7

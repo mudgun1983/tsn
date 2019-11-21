@@ -3,11 +3,11 @@
 #simple_express_packet_test
 #simple_e_p_mix_packet_test
 #simple_e_p_mix_random_test
-full_throughput_test
+#full_throughput_test
 #full_throughput_switch_test 
 #ptp_smoke_test 
 #ptp_rcv_smoke_test
 #ptp_slave_smoke_test
 #full_instance_one_step_master
 #full_instance_two_step_master
-#ptp_master_slave_base_test
+ptp_master_slave_base_test
