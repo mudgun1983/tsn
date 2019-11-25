@@ -1,7 +1,9 @@
 //PHY_PORT_TABLE
 //`define DUMMY_DUT
-`define DUAL_DUT
+//`define DUAL_DUT
 `define test_result_file "./data/test_result.txt"
+`define MAX_PORT_NUM 10
+`define MAX_ENV_MAC_NUM 20
 //global define
 `define PTP_ETYPE 16'h88F7
 `define PTP_NON_PEER_MULTI_DA 48'h01_1b_19_00_00_00
@@ -25,6 +27,7 @@ bit [47:0] da_index;
 bit [47:0] sa_index;
 } port_stimulus_t;
 
-port_stimulus_t port_stimulus_s[20];
+port_stimulus_t port_stimulus_s[`MAX_ENV_MAC_NUM];
 
+int port_ptp_instance_mapping_table[`MAX_ENV_MAC_NUM];
 

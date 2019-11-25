@@ -345,6 +345,7 @@ class ptp_smoke_test extends pcs_base_test;
    `uvm_component_utils(ptp_smoke_test)
  
     bit[4:0] test_port_index;//
+	bit        one_two_step;
     function new(string name="ptp_smoke_test" ,  uvm_component parent=null);
         super.new(name,parent);  
 		test_port_index = 5'd6;

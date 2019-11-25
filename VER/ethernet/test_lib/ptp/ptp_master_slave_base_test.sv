@@ -20,13 +20,13 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
     sub_o_phy_port_pro_table_reg_seq sub_o_phy_port_pro_table_reg_seq0;
 	
     bit [15:0] comp_fail_flag;
-	bit        one_two_step;
+
 	bit [4:0]  test_port_index_1;
     function new(string name="ptp_master_slave_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
         test_port_index= 5'd6;
         test_port_index_1 =5'd7;		
-		one_two_step = 1;
+		one_two_step = 0;
         sub_reg_config = new();
 		TIME_OUT_INTERVAL = 1ms;
      endfunction : new
@@ -125,7 +125,7 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 		 end
 		  wait fork ;
 	   end
-			   
+   
 	   begin
 	    for(int i=0;i<topology_config0.mac_number;i++)
 		 begin
@@ -144,7 +144,7 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 		 end
 		  wait fork ;
 	   end
-	   
+	`ifdef DUAL_DUT	
 	   begin
 	     while(1)begin
 		 if(monitor_event0_cnt!=0)
@@ -185,7 +185,7 @@ class  ptp_master_slave_base_test extends ptp_smoke_test;
 	    end
 		end
 	   end
-	   
+	`endif   
 	   begin
        phase.phase_done.set_drain_time(this, 50000);
        #TIME_OUT_INTERVAL;

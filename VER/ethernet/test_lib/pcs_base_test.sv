@@ -51,6 +51,7 @@ class pcs_base_test extends uvm_test;
        set_i_epp_predefine_value();
 	   set_ptp_predefine_value();
 	   set_port_stimulus_value();	// define in the global_define.sv
+	   set_port_ptp_instance_mapping();
 //=================================set cpu agent config==========================================	
 	   set_cpu_config();
        uvm_config_db #(cpu_config)::set(this, "*", "cpu_config",
@@ -320,6 +321,11 @@ virtual function set_ptp_predefine_value();
 endfunction     
 
 virtual function set_i_epp_predefine_value();
-endfunction     
+endfunction    
+
+virtual function set_port_ptp_instance_mapping();
+  foreach(port_ptp_instance_mapping_table[key])
+     port_ptp_instance_mapping_table[key] = key;
+endfunction 
 endclass : pcs_base_test
 

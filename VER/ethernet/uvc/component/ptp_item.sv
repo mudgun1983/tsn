@@ -127,7 +127,16 @@ randc packet_kind packet_type;
 						(packet_type==Signaling             )->  messageType == 'hC ;
 						(packet_type==Management            )->  messageType == 'hD ;								                    
                            }
-                                      
+
+constraint c_controlField {
+					    (packet_type==Sync                  )->  controlField == 'h0 ;
+						(packet_type==Delay_Req             )->  controlField == 'h1 ;
+						(packet_type==Follow_Up             )->  controlField == 'h2 ;
+						(packet_type==Delay_Resp            )->  controlField == 'h3 ;
+						(packet_type==Management            )->  controlField == 'h4 ;								                    
+                           }
+
+  
 //==================== Constraint ================//
 
 

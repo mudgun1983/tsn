@@ -2,9 +2,10 @@ class ptp_slave_smoke_test extends pcs_base_test;
  
    `uvm_component_utils(ptp_slave_smoke_test)
  
-    parameter test_port_index= 5'd7;
+    int test_port_index= 5'd7;
     function new(string name="ptp_slave_smoke_test" ,  uvm_component parent=null);
-        super.new(name,parent);  
+        super.new(name,parent); 
+        TIME_OUT_INTERVAL = 5ms;		
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -72,7 +73,7 @@ class ptp_slave_smoke_test extends pcs_base_test;
 	
 	   begin
        phase.phase_done.set_drain_time(this, 50000);
-       #5ms;
+       #TIME_OUT_INTERVAL;
 	   //#100us;
 	   if(comp_success_count[test_port_index]!=0)
 	     begin
@@ -167,6 +168,7 @@ endfunction
 virtual function set_ptp_predefine_value();
 
   `PTP_CONFIG.table_size =1;
+  `PTP_CONFIG.slave_pid = test_port_index;
   //disable all the instance
   foreach(`PTP_CONFIG_CONTENT[key])
     `PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid = 0;
@@ -221,5 +223,12 @@ virtual function set_i_epp_predefine_value();
   `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_key_t = test_port_index;
   `O_PHY_PORT_PRO_TABLE_CONTENT[0].table_t = {111'd0,1'b1,1'b0,5'd0};
 endfunction  
+
+virtual function set_port_ptp_instance_mapping();
+  foreach(port_ptp_instance_mapping_table[key])
+     port_ptp_instance_mapping_table[key] = key;
+	 
+   port_ptp_instance_mapping_table[test_port_index] = 0;	 
+endfunction 
    
 endclass

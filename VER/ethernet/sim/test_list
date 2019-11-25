@@ -7,9 +7,13 @@
 #full_throughput_switch_test 
 #ptp_smoke_test 
 #ptp_rcv_smoke_test
-#ptp_slave_smoke_test
+ptp_slave_smoke_test
 #full_instance_one_step_master
 #full_instance_two_step_master
-<<<<<<< HEAD
 #ptp_master_slave_base_test
-ptp_master_slave_two_step_test
+#ptp_master_slave_two_step_test
+#full_instance_one_step_master
+#full_instance_two_step_master
+#full_instance_rcv_one_step_master
+#full_instance_rcv_two_step_master
+#full_instance_slave

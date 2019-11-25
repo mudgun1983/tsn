@@ -87,6 +87,9 @@ package pcs_env_pkg;
   `include "../test_lib/ptp/full_instance_two_step_master.sv"
   `include "../test_lib/ptp/ptp_master_slave_base_test.sv"
   `include "../test_lib/ptp/ptp_master_slave_two_step_test.sv"
+  `include "../test_lib/ptp/full_instance_rcv_one_step_master.sv"
+  `include "../test_lib/ptp/full_instance_rcv_two_step_master.sv"
+  `include "../test_lib/ptp/full_instance_slave.sv"
 endpackage
 `endif
 

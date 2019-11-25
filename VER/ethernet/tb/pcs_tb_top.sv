@@ -39,7 +39,7 @@ parameter SELF_DEFINE_PACKET= 0;
 parameter OAM_PACKET        = 1;
 parameter PROTOCOL_PACKET   = 2;
 parameter DSP_PACKET        = 3;
-parameter GMII_PORT_NUM     = 20;
+parameter GMII_PORT_NUM     = `MAX_ENV_MAC_NUM;//20;
 parameter XGMII_PORT_NUM     = 2;
 //***************************************************************************
    // The following parameters refer to width of various ports

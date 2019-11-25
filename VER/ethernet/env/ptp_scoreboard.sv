@@ -100,16 +100,17 @@ string timestamp_file;
 	  mismatch = 0;
 	  match = 0;	  
 	  
-	  
-	    foreach(`PTP_CONFIG_CONTENT[key])
-		   begin
-		     if (`PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid)
-			   if(`PTP_CONFIG_CONTENT[key].sys_trans.destination == port_id)
-			      begin
-				   compare_index = key;
-				   break;
-				  end
-		   end
+	  compare_index = port_ptp_instance_mapping_table[port_id];
+	  `uvm_info(get_type_name(),{$psprintf("COMPARE_INSTANCE_INDEX=%0d PORT_ID=%0d \n",compare_index,port_id)},UVM_LOW);
+	    // foreach(`PTP_CONFIG_CONTENT[key])
+		   // begin
+		     // if (`PTP_CONFIG_CONTENT[key].descriptor_trans.inst_valid)
+			   // if(`PTP_CONFIG_CONTENT[key].sys_trans.destination == port_id)
+			      // begin
+				   // compare_index = key;
+				   // break;
+				  // end
+		   // end
 	 
         one_two_step= `PTP_CONFIG_CONTENT[compare_index].descriptor_trans.two_step ;//0: one step; 1: two step
 		
@@ -243,7 +244,7 @@ string timestamp_file;
 			        `PTP_CONFIG_CONTENT[compare_index].ptp_trans.sourcePortIdentity,ptp_trans.sourcePortIdentity));
 					end
 		   
-		 if( (ptp_trans.sequenceId!=0) && (  ((ptp_trans.packet_type == ptp_item::Follow_Up)  &&(ptp_trans.sequenceId  !=sequence_id  ))
+		 if( (ptp_trans.sequenceId!=0 && sequence_id!=0) && (  ((ptp_trans.packet_type == ptp_item::Follow_Up)  &&(ptp_trans.sequenceId  !=sequence_id  ))
 		                                   ||((ptp_trans.packet_type == ptp_item::Sync)       &&(ptp_trans.sequenceId  !=sequence_id+1))
 										   ||((ptp_trans.packet_type == ptp_item::Pdelay_Req) &&(ptp_trans.sequenceId  !=sequence_id+1)))
 		   )
@@ -312,7 +313,7 @@ string timestamp_file;
 					end			
             $fclose(write_exp_data_fd);
 			
-			write_comp_data_fd=$fopen(timestamp_file,"a+"); 
+			write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 			if(mismatch)  
 		     begin		                                                   
              $fwrite(write_comp_data_fd,$psprintf("T=%0t\n exp:\n%s\n  col:\n%s\n",$time,
@@ -333,6 +334,7 @@ string timestamp_file;
 	    pop_exp(eth_frame_exp_tr);
 		//unpack eth_frame_exp;
 		unpack_ptp(eth_frame_exp_tr,ptp_exp_trans);
+		`uvm_info(get_type_name(),{$psprintf("field_compare_2 start\n",$time)},UVM_LOW);
 		if(ptp_trans.sequenceId == ptp_exp_trans.sequenceId)
 		   begin
 		   ->comp_start;	   
@@ -370,10 +372,13 @@ string timestamp_file;
 	endfunction 
 	
     virtual function transform_pdelay_req(ref ptp_item ptp_trans);
+	   int real_port_id;
+	   real_port_id = port_ptp_instance_mapping_table[port_id];
+	   `uvm_info(get_type_name(),{$psprintf("REAL_PORT_ID=%0d PORT_ID=%0d \n",real_port_id,port_id)},UVM_LOW);
 	   ptp_trans.packet_type = ptp_item::Pdelay_Resp;
 	   ptp_trans.messageType = `Pdelay_Resp;
 	   ptp_trans.requestingPortIdentity = ptp_trans.sourcePortIdentity;
-	   ptp_trans.sourcePortIdentity = {`PTP_CONFIG.src_mac,port_id};
+	   ptp_trans.sourcePortIdentity = {`PTP_CONFIG.src_mac,real_port_id[31:0]};
 	   
 	endfunction 
 	
@@ -383,6 +388,7 @@ string timestamp_file;
 	  bit [255:0]mismatch;
 	  bit one_two_step;
 	  
+	  `uvm_info(get_type_name(),{$psprintf("field_compare_2_imp start",$time)},UVM_LOW);
 	  mismatch = 0;
 	  match = 0;	
 	  one_two_step = `PTP_CONFIG.two_step;
@@ -446,7 +452,7 @@ string timestamp_file;
 		      end		
             $fclose(write_exp_data_fd);
 			
-			write_comp_data_fd=$fopen(timestamp_file,"a+"); 
+			write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 			if(|mismatch)  
 		     begin		                                                   
              $fwrite(write_comp_data_fd,$psprintf("T=%0t\n mismatch=%0b exp:\n%s\n  col:\n%s\n",$time,mismatch,
