@@ -461,5 +461,11 @@ class ptp_smoke_test extends pcs_base_test;
 		 `PTP_CONFIG_CONTENT[key].packed_padding();
 	   end
 endfunction 
+
+virtual function set_port_ptp_instance_mapping();
+  foreach(port_ptp_instance_mapping_table[key])
+     port_ptp_instance_mapping_table[key] = key;
   
+  port_ptp_instance_mapping_table[test_port_index] = 0; 
+endfunction  
 endclass
