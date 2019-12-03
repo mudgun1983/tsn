@@ -70,6 +70,7 @@ class simple_express_packet_test extends pcs_base_test;
 
     function new(string name="simple_express_packet_test" ,  uvm_component parent=null);
         super.new(name,parent);  
+		//TIME_OUT_INTERVAL = 10us;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -86,21 +87,13 @@ class simple_express_packet_test extends pcs_base_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration    
     
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
-       $stop;      
-   endtask:run_phase
+  // task run_phase(uvm_phase phase);
+  //     phase.phase_done.set_drain_time(this, 50000);
+  //     #20ms;
+  //     $stop;      
+  // endtask:run_phase
 
-  function void report_phase(uvm_phase phase);
-    if(1) begin
-      `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
-    end
-    else begin
-      `uvm_error(get_type_name(), "** UVM TEST FAIL **")
-    end
-  endfunction
-  
+ 
 endclass : simple_express_packet_test
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,6 +104,7 @@ class simple_e_p_mix_packet_test extends pcs_base_test;
 
     function new(string name="simple_e_p_mix_packet_test" ,  uvm_component parent=null);
         super.new(name,parent);  
+		TIME_OUT_INTERVAL = 10us;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -127,20 +121,6 @@ class simple_e_p_mix_packet_test extends pcs_base_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration    
     
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
-       $stop;      
-   endtask:run_phase
-
-  function void report_phase(uvm_phase phase);
-    if(1) begin
-      `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
-    end
-    else begin
-      `uvm_error(get_type_name(), "** UVM TEST FAIL **")
-    end
-  endfunction
   
 endclass : simple_e_p_mix_packet_test
 
@@ -162,13 +142,6 @@ class simple_e_p_mix_random_test extends pcs_base_test;
 //==================================scenario============================================               
    endfunction : build_phase
      
-    
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
-       $stop;      
-   endtask:run_phase
-  
 endclass 
 
 class full_throughput_test extends pcs_base_test;

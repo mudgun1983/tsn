@@ -218,7 +218,7 @@ typedef enum bit[7:0]{
 		  end
 			 
 		if(express_packet ==1)
-		 ;//return;
+		 return;
 		else 
 		   begin
 		     merge_en = 1;

@@ -1,5 +1,5 @@
 //PHY_PORT_TABLE
-`define DUMMY_DUT
+//`define DUMMY_DUT
 //`define DUAL_DUT
 `define test_result_file "./data/test_result.txt"
 `define MAX_PORT_NUM 10
@@ -18,7 +18,12 @@
 `define Announce               4'hB //ptp_item::Announce             //General B
 `define Signaling              4'hC //ptp_item::Signaling            //General C
 `define Management             4'hD //ptp_item::Management           //General D
-`define DUT_MAX_PORT 'd10			  
+`define DUT_MAX_PORT 'd10	
+
+//ITEM_CONFIG
+`define INCREASE_PAYLOAD  2'b00
+`define RANDOM_PAYLOAD    2'b01
+`define ASSIGN_FIRST_BYTE 2'b10		  
 typedef struct packed
 {
 bit        port_en;

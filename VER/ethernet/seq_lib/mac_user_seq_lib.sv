@@ -30,6 +30,10 @@ class mac_user_sequence extends mac_base_sequence;
   
   rand bit [47:0] c_da_cnt;
   rand bit [47:0] c_sa_cnt;
+  
+  item_config item_config0;
+  string scope_name = "";
+  bit [1:0] eth_item_payload;
   `ifdef GMII_RX_PUSH_MODE
     `uvm_sequence_utils(mac_user_sequence,mac_rx_base_push_sequencer)
   `else
@@ -46,6 +50,7 @@ class mac_user_sequence extends mac_base_sequence;
   //================================================//
     function new (string name = "mac_user_sequence");               
       super.new();
+
     endfunction:new
 	
     // function void pre_randomize();
@@ -59,6 +64,7 @@ class mac_user_sequence extends mac_base_sequence;
      bit [63:0] block_data;
      bit [7:0] random_data;
      int  data_len;
+//	 get_config();
  /*    
      data_len=46;//$urandom_range(1518,46);
 //     req.tagged_data[1].data_length=data_len;
@@ -85,7 +91,9 @@ class mac_user_sequence extends mac_base_sequence;
 
   virtual task body();
      //forever 
-     begin
+     begin	  
+	 get_config();
+	 eth_item_payload = item_config0.eth_item_payload;
      	vlan_choose = $random;
      	//$display("T=%0t,test in mac seq",$time);
      `uvm_do_with(req,
@@ -136,13 +144,13 @@ class mac_user_sequence extends mac_base_sequence;
 					req.tagged_data[1].data_length   == c_packet_len;
                    	req.tagged_data[1].tpid   == c_tpid;
 					
-					if(~c_data_control)
+					if(eth_item_payload == `INCREASE_PAYLOAD)
 					{
 					foreach(req.tagged_data[1].data[key])   
                     {req.tagged_data[1].data[key]==key;
                     }
 					}
-					else
+					else if(eth_item_payload == `ASSIGN_FIRST_BYTE)
 					{
 					foreach(req.tagged_data[1].data[key])   
                     { if(key ==0)
@@ -151,6 +159,7 @@ class mac_user_sequence extends mac_base_sequence;
 					   {req.tagged_data[1].data[key]==key;}
                     }
 					}
+					
 					
                    	req.directed_protocol_error_size == 0;
                    	req.protocol_error_size          == 0;
@@ -211,7 +220,16 @@ class mac_user_sequence extends mac_base_sequence;
 	  `uvm_info(get_type_name(),{$psprintf("c_preemptable =%0b,c_last_frag=%0b,req.fcs=%h,p_sequencer.init_crc=%h\n",c_preemptable,c_last_frag,req.fcs,p_sequencer.init_crc)},UVM_LOW);
   endfunction
   
+virtual function get_config();
+	  if( scope_name == "" ) begin
+          scope_name = get_full_name(); // this is {       sequencer.get_full_name() , get_name() }
+        end
 
+      if( !uvm_config_db #( item_config )::get( null , scope_name ,
+      "item_config" , item_config0 ) ) begin
+        `uvm_fatal(get_type_name(),"=============NO item_config==========");
+      end
+endfunction
 endclass : mac_user_sequence
 /*}}}*/
 

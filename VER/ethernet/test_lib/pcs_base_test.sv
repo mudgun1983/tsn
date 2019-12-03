@@ -10,6 +10,7 @@ class pcs_base_test extends uvm_test;
     register_config reg_config;
 	topology_config topology_config0;
 	cpu_config      cpu_config0;
+	item_config     item_config0;
     integer file_id;
     event tc_finish;
     event tc_fail;
@@ -19,12 +20,13 @@ class pcs_base_test extends uvm_test;
 	string test_result_file;
 	parameter test_port_index= 5'd2;
 	int    TIME_OUT_INTERVAL=50ms; 
+	bit    test_pass;
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
 //       set_config_object("*","static_cfg",env_ec,0);     
          reg_config = new();
-		 
+		 item_config0 = new();
 		 test_result_file = `test_result_file;
 		 global_test_log = {get_type_name(),"_log.txt"};
 		 file_id=$fopen(global_test_log,"w+");                                               
@@ -52,6 +54,7 @@ class pcs_base_test extends uvm_test;
 	   set_ptp_predefine_value();
 	   set_port_stimulus_value();	// define in the global_define.sv
 	   set_port_ptp_instance_mapping();
+	   set_item_config_value();
 //=================================set cpu agent config==========================================	
 	   set_cpu_config();
        uvm_config_db #(cpu_config)::set(this, "*", "cpu_config",
@@ -61,13 +64,17 @@ class pcs_base_test extends uvm_test;
        set_topology_config();
        uvm_config_db #(topology_config)::set(this, "*", "topology_config",
        topology_config0);
-	   
+
+//=================================set register config==========================================
+       uvm_config_db #(item_config)::set(this, "*", "item_config",
+       item_config0);
+	   	   
        pcs_tx_rx_env0 = pcs_tx_rx_env::type_id::create("pcs_tx_rx_env0", this); 
 
 //=================================set register config==========================================
-
        uvm_config_db #(register_config)::set(this, "*", "register_config",
        reg_config);
+
 
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
@@ -131,6 +138,30 @@ class pcs_base_test extends uvm_test;
     
    task run_phase(uvm_phase phase);
     fork
+	   while(1)
+	   begin
+	    @this.pcs_tx_rx_env0.scb0_dbg.fatal_event;
+		file_id=$fopen(global_test_log,"a+"); 
+		$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard_dbg\n"));	
+		$fclose(file_id);
+		if(auto_stop_en)
+		  begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		      $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
+		      $fclose(file_id);
+		  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scoreboard_dbg"));
+		  end
+	   end
+	   
+	   while(1)
+	   begin
+		@this.pcs_tx_rx_env0.scb0_dbg.comp_success;
+		comp_success_count[test_port_index]++;
+		file_id=$fopen(global_test_log,"a+"); 
+		$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard_dbg \n",comp_success_count[test_port_index]));	
+		$fclose(file_id);
+	   end
+	   
 	   begin
 	    for(int i=0;i<topology_config0.mac_number;i++)
 		 begin
@@ -148,7 +179,7 @@ class pcs_base_test extends uvm_test;
 				   file_id=$fopen(test_result_file,"a+"); 
 		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
 		    	   $fclose(file_id);
-				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR ptp_scb0[%0d]",index));
+				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scoreboard[%0d]",index));
 				  end
 		       end
 		   join_none
@@ -204,12 +235,16 @@ class pcs_base_test extends uvm_test;
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
 		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		   test_pass=1;
 		 end
 	   else
 	     begin
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
 		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		   test_pass=0;
 		 end
        $finish;      
 	   end
@@ -218,12 +253,22 @@ class pcs_base_test extends uvm_test;
    endtask:run_phase
 
   function void report_phase(uvm_phase phase);
-    if(1) begin
-      `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
-    end
-    else begin
-      `uvm_error(get_type_name(), "** UVM TEST FAIL **")
-    end
+	   if(comp_success_count[test_port_index]!=0)
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
+		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		   test_pass=1;
+		 end
+	   else
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
+		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		   test_pass=0;
+		 end
   endfunction
 
  virtual function set_port_stimulus_value();
@@ -327,5 +372,9 @@ virtual function set_port_ptp_instance_mapping();
   foreach(port_ptp_instance_mapping_table[key])
      port_ptp_instance_mapping_table[key] = key;
 endfunction 
+
+virtual function set_item_config_value();
+endfunction
+
 endclass : pcs_base_test
 

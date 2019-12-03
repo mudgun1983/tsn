@@ -71,6 +71,7 @@ class scenario_simple_preemptable_packet_test extends scenario_reg_test;
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
                             {mac_seq.c_da_cnt==local_da_cnt;
 							 mac_seq.c_packet_len == 'd46;
+							 mac_seq.c_tpid == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
 							 mac_seq.c_last_frag == 0;   //not last frag
@@ -85,6 +86,7 @@ class scenario_simple_preemptable_packet_test extends scenario_reg_test;
              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
                             {mac_seq.c_da_cnt==local_da_cnt;
 							 mac_seq.c_packet_len == 'd46;
+							 mac_seq.c_tpid == 'd46;
 							 mac_seq.c_preemptable==1;
 							 mac_seq.c_start_or_frag==0;
 							 mac_seq.c_last_frag == 1;   //is last frag
@@ -286,7 +288,7 @@ bit [7:0] frag[4]   = '{FRAG_CNT_0,FRAG_CNT_1,FRAG_CNT_2,FRAG_CNT_3};
 							  mac_seq.c_preemptable==0;
 							 })
               express_da_cnt++; 		
-              end	   
+              end	  
             //PREEMPTABLE PACKET
               begin	
              for(int i=0;i<4;i++)

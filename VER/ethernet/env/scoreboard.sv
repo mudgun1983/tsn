@@ -136,6 +136,7 @@ class scoreboard extends uvm_scoreboard;
     virtual task eth_frame_compare();
         int exp_queue_size;
 		bit match;
+		bit mismatch;
         while(1)
           begin
           	eth_frame eth_frame_exp_tr;         
@@ -200,7 +201,7 @@ class scoreboard extends uvm_scoreboard;
                      		      begin
                      		      	write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
                      		      	$fwrite(write_comp_data_fd,$psprintf("COMP_START:comp_destination_address=%0h vlan=%0h time = %0t\n",eth_frame_exp_tr.destination_address,{eth_frame_exp_tr.tagged_data[0].data[0],eth_frame_exp_tr.tagged_data[0].data[1]},$time));                         
-                     		      	
+                     		      	$fclose(write_comp_data_fd);
 									payload_compare(eth_frame_exp_tr,eth_frame_col_tr,match,payload_seq_id);
 									if(~match)
 									  begin
@@ -216,6 +217,7 @@ class scoreboard extends uvm_scoreboard;
 											write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 										    $fwrite(write_comp_data_fd,$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
                      		      	        $fclose(write_comp_data_fd);
+											`uvm_info(get_type_name(),{$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_LOW);
 											->fatal_event;
 									       //`uvm_fatal(get_type_name(),$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id));
 										    end
@@ -224,24 +226,37 @@ class scoreboard extends uvm_scoreboard;
 									else
 									  begin
 									    compare_start_flag = 1;
+										write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 										if(eth_frame_exp_tr.frame_data.size!=eth_frame_col_tr.frame_data.size)
 										  begin
-										    $fwrite(write_comp_data_fd,$psprintf("FATAL ERROR! packet length mismatch ,payload_seq_id =%0d time=%0t\n",payload_seq_id,$time)); 
+										    $fwrite(write_comp_data_fd,$psprintf("FATAL ERROR! packet length mismatch ,payload_seq_id =%0d time=%0t\n",payload_seq_id,$time));
+                                            `uvm_info(get_type_name(),$psprintf("FATAL ERROR! packet length mismatch ,payload_seq_id =%0d time=%0t\n",payload_seq_id,$time),UVM_LOW);											
 											->fatal_event;
 										  end
 										  
 									    foreach(eth_frame_exp_tr.frame_data[key])
                      		      	      begin
                      		      	      	if(eth_frame_exp_tr.frame_data[key]!=eth_frame_col_tr.frame_data[key])
-                     		      	      	    $fwrite(write_comp_data_fd,$psprintf("ERROR!eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
+                     		      	      	   begin $fwrite(write_comp_data_fd,$psprintf("FATAL ERROR!eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
                      		      	      	                                          key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key],$time)); 
+											mismatch = 1;
+											`uvm_info(get_type_name(),$psprintf("FATAL ERROR!eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
+                     		      	      	                                          key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key],$time),UVM_LOW);
+											->fatal_event;			
+                                              end											
                      		      	      end
                      		      	    if(eth_frame_exp_tr.fcs!=eth_frame_col_tr.fcs)
-                     		      	             $fwrite(write_comp_data_fd,$psprintf("FCS_ERROR!,eth_frame_exp_tr.fcs=%0h != eth_frame_col_tr.fcs=%0h time=%0t\n",
-                     		      	                                                   eth_frame_exp_tr.fcs,eth_frame_col_tr.fcs,$time));                   		  	
+                     		      	        begin
+ 											 $fwrite(write_comp_data_fd,$psprintf("FCS_ERROR!,eth_frame_exp_tr.fcs=%0h != eth_frame_col_tr.fcs=%0h time=%0t\n",
+                     		      	                                                   eth_frame_exp_tr.fcs,eth_frame_col_tr.fcs,$time));  
+                                            //->fatal_event;	 																					   
+                                            end																					   
                      		      	    $fclose(write_comp_data_fd);             		  	
                      		      	    comp_state = COM_FINISH;
-                     		      	    `uvm_info(get_type_name(),{$psprintf("comp_state=COMPARE\n")},UVM_LOW);     
+                     		      	    `uvm_info(get_type_name(),{$psprintf("mismatch=%0d,comp_state=COMPARE\n",mismatch)},UVM_LOW);  
+                                         if(~mismatch)										
+										   -> comp_success;
+										mismatch=0;
 									  end
                      		      end
                      		    else
@@ -261,6 +276,7 @@ class scoreboard extends uvm_scoreboard;
                      		      	$fclose(write_comp_data_fd);
 									//`uvm_fatal(get_type_name(),$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address));
                      		      	comp_state = COM_FINISH;
+									`uvm_info(get_type_name(),$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h time=%0t\n",eth_frame_col_tr.destination_address,$time),UVM_LOW); 
 									->fatal_event;
           	                   end
           	                else
