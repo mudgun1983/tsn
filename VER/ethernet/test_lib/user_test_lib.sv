@@ -26,7 +26,8 @@ class simple_preemptable_packet_test extends pcs_base_test;
  
 
     function new(string name="simple_preemptable_packet_test" ,  uvm_component parent=null);
-        super.new(name,parent);  
+        super.new(name,parent); 
+        TIME_OUT_INTERVAL = 10us;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -43,12 +44,12 @@ class simple_preemptable_packet_test extends pcs_base_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration    
     
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #10us;
-       $stop;
+  // task run_phase(uvm_phase phase);
+  //     phase.phase_done.set_drain_time(this, 50000);
+  //     #10us;
+  //     $stop;
        
-   endtask:run_phase
+  // endtask:run_phase
 
   function void report_phase(uvm_phase phase);
     if(1) begin
@@ -444,11 +445,11 @@ class ptp_smoke_test extends pcs_base_test;
   //modify the config	
   `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_valid = 1;
   `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_type = 0; //master
-  `PTP_CONFIG_CONTENT[0].descriptor_trans.two_step = 1; //1： two step  0: one step
+  `PTP_CONFIG_CONTENT[0].descriptor_trans.two_step = 1; //1锛� two step  0: one step
   
   `PTP_CONFIG_CONTENT[0].ptp_trans.packet_type     =    ptp_item::Sync;
   `PTP_CONFIG_CONTENT[0].ptp_trans.messageType     =    `Sync;
-  `PTP_CONFIG_CONTENT[0].ptp_trans.flagField[1]     =    1; //1： two step  0: one step
+  `PTP_CONFIG_CONTENT[0].ptp_trans.flagField[1]     =    1; //1锛� two step  0: one step
   
   `PTP_CONFIG_CONTENT[0].eth_trans.destination_address = `PTP_NON_PEER_MULTI_DA;
   `PTP_CONFIG_CONTENT[0].sys_trans.destination =  test_port_index;

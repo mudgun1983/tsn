@@ -240,7 +240,7 @@ typedef enum bit[7:0]{
 	//debug
 	  foreach(data_payload[i])
 	    begin
-		  `uvm_info(get_type_name(),{$psprintf("origin data_payload[%0d]=%0h\n",i,data_payload[i])},UVM_HIGH);
+		  `uvm_info(get_type_name(),{$psprintf("origin data_payload[%0d]=%0h",i,data_payload[i])},UVM_HIGH);
 		end
 	
 	if((~express_packet) && (frag_packet))
@@ -262,7 +262,7 @@ typedef enum bit[7:0]{
 	//debug
 	  foreach(data_payload[i])
 	    begin
-		  `uvm_info(get_type_name(),{$psprintf("origin data_payload[%0d]=%0h\n",i,data_payload[i])},UVM_HIGH);
+		  `uvm_info(get_type_name(),{$psprintf("origin data_payload[%0d]=%2h",i,data_payload[i])},UVM_HIGH);
 		end
 		
     // start merge the payload	
@@ -276,6 +276,10 @@ typedef enum bit[7:0]{
 	
 			//cal the crc
 			data_payload = frame_data_merge;
+			foreach(data_payload[i])
+			begin
+				`uvm_info(get_type_name(),{$psprintf("merge data_payload[%0d]=%2h",i,data_payload[i])},UVM_HIGH);		     
+			end
 			temp_crc32 = crc_cal.do_crc32_se(data_payload,32'hffff_ffff)^ (32'hffff_ffff);
 			
 			 `uvm_info(get_type_name(),{$psprintf("temp_crc32=%0h  eth_frame_exp_tr.fcs=%0h",temp_crc32,eth_frame_exp_tr.fcs)},UVM_HIGH);
@@ -284,7 +288,7 @@ typedef enum bit[7:0]{
             local_crc32[23:16] = temp_crc32[15:8] ;
             local_crc32[15:8]  = temp_crc32[23:16];
             local_crc32[7:0]   = temp_crc32[31:24];
-	         `uvm_info(get_type_name(),{$psprintf("local_crc32=%0h  eth_frame_exp_tr.fcs=%0h",local_crc32,eth_frame_exp_tr.fcs)},UVM_HIGH);
+	         `uvm_info(get_type_name(),{$psprintf("local_crc32=%0h  eth_frame_exp_tr.fcs=%0h",local_crc32,eth_frame_exp_tr.fcs)},UVM_LOW);
 			if(local_crc32 == eth_frame_exp_tr.fcs)
 			  merge_finish = 1;
 			else

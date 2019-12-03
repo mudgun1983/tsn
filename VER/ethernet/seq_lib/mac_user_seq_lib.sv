@@ -125,10 +125,10 @@ class mac_user_sequence extends mac_base_sequence;
                    // req.tagged_data[0].min_data_len  == 2    ;//p_sequencer.static_cfg.cfg_min_tagged_data_len;    
                    	req.tagged_data[0].vlan_tag_kind == eth_tagged_data::VLAN_TAG; 
 
-                   	{
+                   	//{
                    	 req.tagged_data[0].data[0] == VLAN_VALUE0[15:8] ;
                      req.tagged_data[0].data[1] == VLAN_VALUE0[7:0] ;
-                   	}
+                   	//}
                    	req.tagged_data[1].max_data_len  == 1518   ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
                     req.tagged_data[1].min_data_len  == 46 ;//p_sequencer.static_cfg.cfg_min_tagged_data_len; 
                     
@@ -208,7 +208,7 @@ class mac_user_sequence extends mac_base_sequence;
 	    //begin
 		  //p_sequencer.init_crc[i] = tmp_crc[31-i] ;
 		//end
-	  `uvm_info(get_type_name(),{$psprintf("p_sequencer.init_crc=%h\n",p_sequencer.init_crc)},UVM_HIGH);
+	  `uvm_info(get_type_name(),{$psprintf("c_preemptable =%0b,c_last_frag=%0b,req.fcs=%h,p_sequencer.init_crc=%h\n",c_preemptable,c_last_frag,req.fcs,p_sequencer.init_crc)},UVM_LOW);
   endfunction
   
 

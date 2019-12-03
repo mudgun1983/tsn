@@ -461,22 +461,26 @@ class eth_frame extends uvm_sequence_item;
 	if(preemptable && (~start_or_frag))
 	  begin
        foreach(data_crc[i])
-        data_crc[i] = data_crc[i+preamble.data_preamble.size()+1+1];  //SMD and FRAG CNT
+        //data_crc[i] = data_crc[i+preamble.data_preamble.size()+1+1];  //SMD and FRAG CNT
+       	data_crc[i] = data_crc[i+6+1+1];  //SMD and FRAG CNT,the size of preamble data is tied to 6
 	  end
 	else
 	  begin
 	   foreach(data_crc[i])
-        data_crc[i] = data_crc[i+preamble.data_preamble.size()+1];
+        //data_crc[i] = data_crc[i+preamble.data_preamble.size()+1];
+	   	data_crc[i] = data_crc[i+7+1];//SMD ,the size of preamble data is tied to 7
 	  end
 	  
 //      data_crc[i] = data_crc[i+8];
 //    data_crc = new[data_crc.size()-12](data_crc);//delete preamble,sfd and fcs
     if(preemptable && (~start_or_frag))
-	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-1-4](data_crc);//delete preamble,smd,frag_cnt and fcs
+	 //data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-1-4](data_crc);//delete preamble,smd,frag_cnt and fcs
+    	data_crc = new[data_crc.size()-6-1-1-4](data_crc);//delete preamble,smd,frag_cnt and fcs
     else
-	 data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-4](data_crc);//delete preamble,sfd and fcs
+	 //data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-4](data_crc);//delete preamble,sfd and fcs
+    	data_crc = new[data_crc.size()-7-1-4](data_crc);//delete preamble,sfd and fcs
    
-   `uvm_info(get_type_name(),{$psprintf("init_crc=%h\n",init_crc)},UVM_HIGH);
+   `uvm_info(get_type_name(),{$psprintf("init_crc=%h\n",init_crc)},UVM_LOW);
 	foreach(data_crc[key])
 	  `uvm_info(get_type_name(),{$psprintf("data_crc[%0d]=%h\n",key,data_crc[key])},UVM_HIGH);
 	if(preemptable)
