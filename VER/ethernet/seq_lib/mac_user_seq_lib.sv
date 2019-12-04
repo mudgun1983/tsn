@@ -217,7 +217,7 @@ class mac_user_sequence extends mac_base_sequence;
 	    //begin
 		  //p_sequencer.init_crc[i] = tmp_crc[31-i] ;
 		//end
-	  `uvm_info(get_type_name(),{$psprintf("c_preemptable =%0b,c_last_frag=%0b,req.fcs=%h,p_sequencer.init_crc=%h\n",c_preemptable,c_last_frag,req.fcs,p_sequencer.init_crc)},UVM_LOW);
+	  `uvm_info(get_type_name(),{$psprintf("c_preemptable =%0b,c_last_frag=%0b,req.fcs=%h,p_sequencer.init_crc=%h\n",c_preemptable,c_last_frag,req.fcs,p_sequencer.init_crc)},UVM_HIGH);
   endfunction
   
 virtual function get_config();

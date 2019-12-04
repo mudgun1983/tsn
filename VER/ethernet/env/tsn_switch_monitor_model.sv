@@ -38,7 +38,7 @@ bit  is_ptp[];
                  get_port[index].get(eth_frame_exp_tr_array[index]);
 		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr_array[index].sprint()},UVM_HIGH);
 		      	//classify and merge the packet
-		      	classify_merge(eth_frame_exp_tr_array[index]);
+		      	classify_merge(eth_frame_exp_tr_array[index],merge_finish);
 				
 				if(eth_frame_exp_tr_array[index].tagged_data[1].tpid==`PTP_ETYPE)
 				  is_ptp[index] =1;

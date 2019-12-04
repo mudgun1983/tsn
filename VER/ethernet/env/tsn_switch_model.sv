@@ -35,15 +35,9 @@ typedef enum bit[7:0]{
 
 typedef enum bit[7:0]{
     IDLE = 8'h0,
-	SMD_S0_STATE,
-	SMD_S1_STATE,
-	SMD_S2_STATE,
-	SMD_S3_STATE,
-	SMD_C0_STATE,
-	SMD_C1_STATE,
-	SMD_C2_STATE,
-	SMD_C3_STATE,
-	MERGE,
+	SMD_S_STATE,
+	SMD_C_STATE,
+	ASSEMBLE,
 	ERROR
   } state_e;
   
@@ -64,6 +58,18 @@ typedef enum bit[7:0]{
   int write_data_fd        ;
   string inst_name;
   eth_frame eth_frame_exp_tr_array[];
+  
+  //check for preemptable packet//
+  int rxFrameCnt;
+  int cFrameCnt;
+  int rxFragCnt;
+  int nxFragCnt;
+  bit smd_flag=0;
+  smd_e     smd_t;
+  frag_e    frag_t;
+  bit [7:0] sfd;
+  bit [7:0] smd;
+  bit [7:0] frag;
 		                        //            01: frag code error
 								//            02: not express nor preempt packet
 //================================================//
@@ -135,9 +141,12 @@ typedef enum bit[7:0]{
                  get_port_dbg.get(eth_frame_exp_tr);
 		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
 		      	//classify and merge the packet
-		      	classify_merge(eth_frame_exp_tr);
+		      	classify_merge(eth_frame_exp_tr,merge_finish);
 		      	if(merge_finish)
-		      	  item_collected_port_dbg.write(eth_frame_exp_tr);
+		      	  begin
+				  `uvm_info(get_type_name(),{$psprintf("merge_finish=%0d T=%0t",merge_finish,$time)},UVM_HIGH);
+				  item_collected_port_dbg.write(eth_frame_exp_tr);
+				  end
 		      	end
     endtask
 	
@@ -153,7 +162,7 @@ typedef enum bit[7:0]{
                  get_port[index].get(eth_frame_exp_tr_array[index]);
 		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr_array[index].sprint()},UVM_HIGH);
 		      	//classify and merge the packet
-		      	classify_merge(eth_frame_exp_tr_array[index]);
+		      	classify_merge(eth_frame_exp_tr_array[index],merge_finish);
 		      	//if(merge_finish)
 		      	item_collected_port[index].write(eth_frame_exp_tr_array[index]);
 		      	end
@@ -162,18 +171,15 @@ typedef enum bit[7:0]{
 		   wait fork;
     endtask	
 	
-	task classify_merge(ref eth_frame eth_frame_exp_tr );
+	task classify_merge(ref eth_frame eth_frame_exp_tr,output bit merge_finish_o );
 
-		bit [7:0] sfd;
-		bit [7:0] smd;
-		bit [7:0] frag;
+
 		bit       preempt_start;
 		bit       merge_en = 0;
 		bit [7:0] data_payload[];
 		bit [31:0] temp_crc32;
 		bit [31:0] local_crc32;
-		smd_e     smd_t;
-		frag_e    frag_t;
+
 		
 		
 		sfd = eth_frame_exp_tr.preamble.sfd;
@@ -204,13 +210,13 @@ typedef enum bit[7:0]{
 		  begin
 		    express_packet = 1;
 			frag_packet = 0;
-			merge_finish = 1;
+			merge_finish_o = 1;
 		  end
 		else
 		  //if(smd_t == SMD_S0 || smd_t == SMD_S1 || smd_t == SMD_S2 || smd_t == SMD_S3)
 		  begin
 		    express_packet = 0;
-			merge_finish = 0;
+			merge_finish_o = 0;
 			if(smd_t == SMD_C0 || smd_t == SMD_C1 ||smd_t == SMD_C2 ||smd_t == SMD_C3)
 			frag_packet = 1;
 			else
@@ -221,18 +227,8 @@ typedef enum bit[7:0]{
 		 return;
 		else 
 		   begin
-		     merge_en = 1;
-			 // case(state_t)
-			       // IDLE: if(smd_t==SMD_S0)
-				             // begin
-							   // state_t = SMD_S0_STATE;
-							   // merge_en =1;
-							 // end
-						 // else
-						     // state_t = IDLE;
-			// SMD_S0_STATE:if(smd_t)
-			     // default:state= IDLE;
-			 // endcase
+		     check_preemtable_packet_valid();
+		     merge_en = 1;           
 		   end
 		
     // extract the payload in frame_data 
@@ -290,12 +286,12 @@ typedef enum bit[7:0]{
             local_crc32[7:0]   = temp_crc32[31:24];
 	         `uvm_info(get_type_name(),{$psprintf("local_crc32=%0h  eth_frame_exp_tr.fcs=%0h",local_crc32,eth_frame_exp_tr.fcs)},UVM_LOW);
 			if(local_crc32 == eth_frame_exp_tr.fcs)
-			  merge_finish = 1;
+			  merge_finish_o = 1;
 			else
-			  merge_finish = 0;
+			  merge_finish_o = 0;
 		   end
 		
-		if(merge_finish)
+		if(merge_finish_o)
 		   begin
 		     eth_frame_exp_tr.frame_data  = new[data_payload.size()](eth_frame_exp_tr.frame_data);
 			 eth_frame_exp_tr.frame_data  = data_payload;
@@ -313,9 +309,93 @@ typedef enum bit[7:0]{
 			 data_payload.delete();	
              frame_data_merge.delete();			 
 		   end
+		`uvm_info(get_type_name(),{$psprintf("merge_finish_o=%0d T=%0t",merge_finish_o,$time)},UVM_HIGH);
 	endtask
 	
 	
- 
-  
+virtual function bit [1:0] SMDS_ENCODE(input [7:0]smd);
+    case(smd)
+	     8'hE6:SMDS_ENCODE=0;
+		 8'h4C:SMDS_ENCODE=1;
+		 8'h7F:SMDS_ENCODE=2;
+		 8'hB3:SMDS_ENCODE=3;		 
+	endcase
+endfunction
+
+virtual function bit [1:0] SMDC_ENCODE(input [7:0]smd);
+    case(smd)
+	     8'h61:SMDC_ENCODE=0;
+		 8'h52:SMDC_ENCODE=1;
+		 8'h9E:SMDC_ENCODE=2;
+		 8'h2A:SMDC_ENCODE=3;		 
+	endcase
+endfunction
+
+virtual function bit [1:0] FRAG_ENCODE(input [7:0]smd);
+    case(smd)
+	     8'hE6:FRAG_ENCODE=0;
+		 8'h4C:FRAG_ENCODE=1;
+		 8'h7F:FRAG_ENCODE=2;
+		 8'hB3:FRAG_ENCODE=3;		 
+	endcase
+endfunction  
+
+virtual function check_preemtable_packet_valid();
+			  case(state_t)
+			        IDLE:begin
+                          if(smd_t == SMD_S0 || smd_t == SMD_S1 || smd_t == SMD_S2 || smd_t == SMD_S3)
+				              begin
+							    state_t = SMD_S_STATE;
+							    //merge_en =1;
+								rxFrameCnt=SMDS_ENCODE(smd);
+							  end
+						  else 
+                              state_t = IDLE;
+					     end
+			 SMD_S_STATE:begin
+			              smd_flag=1;
+			              if(smd_t == SMD_S0 || smd_t == SMD_S1 || smd_t == SMD_S2 || smd_t == SMD_S3)
+						    begin
+							  state_t = SMD_S_STATE;
+							  rxFrameCnt=SMDS_ENCODE(smd);
+							  nxFragCnt =0;
+							end
+					      else if(smd_t == SMD_C0 || smd_t == SMD_C1 ||smd_t == SMD_C2 ||smd_t == SMD_C3)
+						           begin
+								    state_t = SMD_S_STATE;
+									cFrameCnt = SMDC_ENCODE(smd);
+									  
+									 if(cFrameCnt!=rxFrameCnt)
+						               begin
+							            `uvm_fatal(get_type_name(),$psprintf("FATAL,cFrameCnt!=rxFrameCnt ,cFrameCnt=%0d ,rxFrameCnt=%0d time=%0t\n",cFrameCnt,rxFrameCnt,$time));
+							             state_t = ERROR;
+							           end
+						             else if(frag_t==FRAG_CNT_0 || frag_t==FRAG_CNT_1 || frag_t==FRAG_CNT_2 || frag_t==FRAG_CNT_3)
+						                    begin
+											 rxFragCnt = FRAG_ENCODE(frag);
+											 if(rxFragCnt != nxFragCnt)
+							                  begin
+							                   `uvm_fatal(get_type_name(),$psprintf("FATAL,rxFragCnt!=nxFragCnt ,rxFragCnt=%0d ,nxFragCnt=%0d time=%0t\n",rxFragCnt,nxFragCnt,$time));
+							                    state_t = ERROR;
+							                  end
+											 else 
+											  begin
+							                   nxFragCnt++;								       
+								               state_t= SMD_S_STATE;
+											  end
+							                end									      										    
+								   end
+							   else
+							       state_t = ERROR;
+						 end
+			 ERROR:begin
+                     `uvm_fatal(get_type_name(),$psprintf("FATAL,SMD DECODE ERROR SMD=%0h time=%0t\n",smd,$time));
+					  state_t= IDLE;
+					  smd_flag=0;
+			       end			 
+			      default:state_t= IDLE;
+			  endcase			
+            `uvm_info(get_type_name(),{$psprintf("SMD=%0h %s,FRAG=%0h %s, STATE=%0s time=%0t",smd,smd_t,frag,frag_t,state_t,$time)},UVM_LOW);			
+endfunction
+
 endclass

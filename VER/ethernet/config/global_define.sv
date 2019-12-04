@@ -1,5 +1,5 @@
 //PHY_PORT_TABLE
-//`define DUMMY_DUT
+`define DUMMY_DUT
 //`define DUAL_DUT
 `define test_result_file "./data/test_result.txt"
 `define MAX_PORT_NUM 10

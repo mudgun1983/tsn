@@ -480,7 +480,7 @@ class eth_frame extends uvm_sequence_item;
 	 //data_crc = new[data_crc.size()-preamble.data_preamble.size()-1-4](data_crc);//delete preamble,sfd and fcs
     	data_crc = new[data_crc.size()-7-1-4](data_crc);//delete preamble,sfd and fcs
    
-   `uvm_info(get_type_name(),{$psprintf("init_crc=%h\n",init_crc)},UVM_LOW);
+   `uvm_info(get_type_name(),{$psprintf("init_crc=%h\n",init_crc)},UVM_HIGH);
 	foreach(data_crc[key])
 	  `uvm_info(get_type_name(),{$psprintf("data_crc[%0d]=%h\n",key,data_crc[key])},UVM_HIGH);
 	if(preemptable)

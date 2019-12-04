@@ -44,7 +44,7 @@ class tsn_switch_expect_model extends tsn_switch_model ;
 				 hash_cal_store_l2_table(eth_frame_exp_tr_array[index],index);
 		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr_array[index].sprint()},UVM_HIGH);
 		      	//classify and merge the packet
-		      	classify_merge(eth_frame_exp_tr_array[index]);
+		      	classify_merge(eth_frame_exp_tr_array[index],merge_finish);
 		      	//if(merge_finish)
 				hash_cal_read_l2_table(eth_frame_exp_tr_array[index],index,index_o);
 				
