@@ -52,6 +52,7 @@ typedef enum bit[7:0]{
   bit express_packet; //1:express 0:preemt
   bit frag_packet;    //1:start of preempt 0:frag of preempt
   bit merge_finish;
+  bit merge_finish_array[];
   bit [1:0] error_packet; //error-code: 00: no error
   bit [7:0] frame_data_merge[$];
   
@@ -117,6 +118,7 @@ typedef enum bit[7:0]{
 	      end
 		  
         eth_frame_exp_tr_array	= new[topology_config0.mac_number];	
+		merge_finish_array = new[topology_config0.mac_number];
     endfunction : build
 
 //================================================//

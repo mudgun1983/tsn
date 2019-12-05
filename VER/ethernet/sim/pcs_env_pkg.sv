@@ -90,6 +90,8 @@ package pcs_env_pkg;
   `include "../test_lib/ptp/full_instance_rcv_one_step_master.sv"
   `include "../test_lib/ptp/full_instance_rcv_two_step_master.sv"
   `include "../test_lib/ptp/full_instance_slave.sv"
+  `include "../test_lib/br/scenario_simple_preemptable_packet_port_test.sv"
+  `include "../test_lib/br/simple_preemptable_packet_port_test.sv"
 endpackage
 `endif
 

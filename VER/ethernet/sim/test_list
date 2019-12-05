@@ -2,7 +2,7 @@
 #simple_preemptable_packet_test
 #simple_express_packet_test
 #simple_e_p_mix_packet_test
-simple_e_p_mix_random_test
+#simple_e_p_mix_random_test
 #full_throughput_test
 #full_throughput_switch_test 
 #ptp_smoke_test 
@@ -17,3 +17,4 @@ simple_e_p_mix_random_test
 #full_instance_rcv_one_step_master
 #full_instance_rcv_two_step_master
 #full_instance_slave
+simple_preemptable_packet_port_test
