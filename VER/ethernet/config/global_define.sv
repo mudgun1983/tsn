@@ -23,7 +23,8 @@
 //ITEM_CONFIG
 `define INCREASE_PAYLOAD  2'b00
 `define RANDOM_PAYLOAD    2'b01
-`define ASSIGN_FIRST_BYTE 2'b10		  
+`define ASSIGN_FIRST_BYTE 2'b10		
+`define ASSIGN_ALL_BYTE   2'b11
 typedef struct packed
 {
 bit        port_en;

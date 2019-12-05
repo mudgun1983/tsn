@@ -252,7 +252,7 @@ class pcs_base_test extends uvm_test;
 	join
    endtask:run_phase
 
-  function void report_phase(uvm_phase phase);
+  virtual function void report_phase(uvm_phase phase);
 	   if(comp_success_count[test_port_index]!=0)
 	     begin
 		   file_id=$fopen(test_result_file,"a+"); 

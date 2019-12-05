@@ -38,7 +38,11 @@ bit  is_ptp[];
                  get_port[index].get(eth_frame_exp_tr_array[index]);
 		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr_array[index].sprint()},UVM_HIGH);
 		      	//classify and merge the packet
-		      	classify_merge(eth_frame_exp_tr_array[index],merge_finish_array[index]);
+		      	//classify_merge(eth_frame_exp_tr_array[index],merge_finish_array[index]);
+				classify_merge(.eth_frame_exp_tr(eth_frame_exp_tr_array[index]),
+							   .classify_pack_s (classify_pack_s[index]),
+							   .index           (index),
+							   .merge_finish_o  (merge_finish_array[index]) );
 				
 				if(eth_frame_exp_tr_array[index].tagged_data[1].tpid==`PTP_ETYPE)
 				  is_ptp[index] =1;
@@ -47,8 +51,8 @@ bit  is_ptp[];
 		      	if(merge_finish_array[index])
 				if(is_ptp[index])
 				ptp_item_collected_port[index].write(eth_frame_exp_tr_array[index]);
-				else
-		      	item_collected_port[index].write(eth_frame_exp_tr_array[index]);
+				else if(merge_finish_array[index])	
+		      	       item_collected_port[index].write(eth_frame_exp_tr_array[index]);
 		      	end
 		   join_none
 		   end

@@ -101,7 +101,7 @@ class scoreboard extends uvm_scoreboard;
             `uvm_info(get_type_name(),{$psprintf("get eth_frame_exp_trans:\n"),eth_frame_exp_tr.sprint()},UVM_HIGH);
             
             write_exp_data_fd=$fopen(tran_exp,"a+"); 
-			$fwrite(write_exp_data_fd,$psprintf(" S \n"));	
+			$fwrite(write_exp_data_fd,$psprintf(" S preemptable=%0d\n",eth_frame_exp_tr.preemptable));	
             foreach(eth_frame_exp_tr.frame_data[key])
               //$fwrite(write_exp_data_fd,$psprintf("eth_frame_exp_trans.data[%0d]=%0h\n",key,eth_frame_exp_tr.frame_data[key])); 
               $fwrite(write_exp_data_fd,$psprintf("%2h\n",eth_frame_exp_tr.frame_data[key]));			  
@@ -121,7 +121,7 @@ class scoreboard extends uvm_scoreboard;
             `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_HIGH);
             
             write_col_data_fd=$fopen(tran_col,"a+"); 
-			$fwrite(write_exp_data_fd,$psprintf(" S \n"));
+			$fwrite(write_exp_data_fd,$psprintf(" S preemptable=%0d\n",eth_frame_col_tr.preemptable));	
             foreach(eth_frame_col_tr.frame_data[key])
               //$fwrite(write_col_data_fd,$psprintf("eth_frame_col_trans.data[%0d]=%0h\n",key,eth_frame_col_tr.frame_data[key]));     
                 $fwrite(write_col_data_fd,$psprintf("[%0d]%2h\n",key,eth_frame_col_tr.frame_data[key]));   			  
@@ -207,17 +207,17 @@ class scoreboard extends uvm_scoreboard;
 									  begin
 									    begin
 								          write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
-                     		      	      $fwrite(write_comp_data_fd,$psprintf("WARNING, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
+                     		      	      $fwrite(write_comp_data_fd,$psprintf("WARNING, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
                      		              $fclose(write_comp_data_fd);
 									      comp_state = EXP_QUEUE_CHECK;
-									      `uvm_info(get_type_name(),{$psprintf("WARNING, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_HIGH);
+									      `uvm_info(get_type_name(),{$psprintf("WARNING, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_HIGH);
 										  
 										  if(compare_start_flag)
 										    begin
 											write_comp_data_fd=$fopen(data_comp_result,"a+"); 
-										    $fwrite(write_comp_data_fd,$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
+										    $fwrite(write_comp_data_fd,$psprintf("FATAL, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
                      		      	        $fclose(write_comp_data_fd);
-											`uvm_info(get_type_name(),{$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_LOW);
+											`uvm_info(get_type_name(),{$psprintf("FATAL, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_LOW);
 											->fatal_event;
 									       //`uvm_fatal(get_type_name(),$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id));
 										    end

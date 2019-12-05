@@ -90,9 +90,9 @@ class mac_user_sequence extends mac_base_sequence;
   endtask : pre_body
 
   virtual task body();
-     //forever 
-     begin	  
-	 get_config();
+     get_config();
+	 //forever 
+     begin	  	 
 	 eth_item_payload = item_config0.eth_item_payload;
      	vlan_choose = $random;
      	//$display("T=%0t,test in mac seq",$time);
@@ -159,7 +159,12 @@ class mac_user_sequence extends mac_base_sequence;
 					   {req.tagged_data[1].data[key]==key;}
                     }
 					}
-					
+					else if(eth_item_payload == `ASSIGN_ALL_BYTE)
+					{
+					foreach(req.tagged_data[1].data[key])   
+                    {req.tagged_data[1].data[key]==c_data_payload;
+                    }
+					}
 					
                    	req.directed_protocol_error_size == 0;
                    	req.protocol_error_size          == 0;
