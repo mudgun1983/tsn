@@ -360,6 +360,9 @@ port_stimulus_s[16].da_index = 16;//(19-16);
 port_stimulus_s[17].da_index = 17;//(19-17);
 port_stimulus_s[18].da_index = 18;//(19-18);
 port_stimulus_s[19].da_index = 19;//(19-19);
+
+foreach(port_stimulus_s[key])
+ port_stimulus_s[key].e_p_packet_en  = 2'b11;
 endfunction     
 
 virtual function set_ptp_predefine_value();

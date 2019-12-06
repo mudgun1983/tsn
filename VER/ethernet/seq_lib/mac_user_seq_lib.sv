@@ -30,7 +30,7 @@ class mac_user_sequence extends mac_base_sequence;
   
   rand bit [47:0] c_da_cnt;
   rand bit [47:0] c_sa_cnt;
-  
+  rand bit [15:0] c_vlan;
   item_config item_config0;
   string scope_name = "";
   bit [1:0] eth_item_payload;
@@ -134,8 +134,8 @@ class mac_user_sequence extends mac_base_sequence;
                    	req.tagged_data[0].vlan_tag_kind == eth_tagged_data::VLAN_TAG; 
 
                    	//{
-                   	 req.tagged_data[0].data[0] == VLAN_VALUE0[15:8] ;
-                     req.tagged_data[0].data[1] == VLAN_VALUE0[7:0] ;
+                   	 req.tagged_data[0].data[0] == c_vlan[15:8] ;
+                     req.tagged_data[0].data[1] == c_vlan[7:0] ;
                    	//}
                    	req.tagged_data[1].max_data_len  == 1518   ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
                     req.tagged_data[1].min_data_len  == 46 ;//p_sequencer.static_cfg.cfg_min_tagged_data_len; 

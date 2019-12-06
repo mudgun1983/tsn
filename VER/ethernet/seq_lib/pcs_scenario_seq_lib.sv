@@ -16,6 +16,7 @@ mac_user_sequence mac_seq;
 bit [47:0] local_da_cnt;
 bit [47:0] local_sa_cnt;
 topology_config       topology_config0;
+item_config           item_config0;
 string scope_name = "";
 
 //==================== Registration ==============//
@@ -56,7 +57,10 @@ string scope_name = "";
         `uvm_fatal(get_type_name(),"=============NO topology_config==========");
         end
 		
-	
+	    if( !uvm_config_db #( item_config )::get( null , scope_name ,
+        "item_config" , item_config0 ) ) begin
+        `uvm_fatal(get_type_name(),"=============NO item_config==========");
+        end
 		/*
             fork            
              begin

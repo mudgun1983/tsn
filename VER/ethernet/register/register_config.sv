@@ -31,6 +31,8 @@ LAG_SEL_PORT_TABLE       lag_sel_port_table    ;
 O_PHY_PORT_PRO_TABLE     o_phy_port_pro_table  ;
 GATHER_INIT_TABLE        gather_init_table     ;
 PTP_CONFIG               ptp_config;
+OBM_CONTENT_TABLE        obm_content_table;
+MAC_CONFIG_TABLE         mac_config_table ;
   function new (string name = "register_config");
     super.new(name);
 	phy_port_table        = new();
@@ -64,6 +66,8 @@ PTP_CONFIG               ptp_config;
 	o_phy_port_pro_table  = new();	
 	gather_init_table     = new();
 	ptp_config            = new();
+	obm_content_table     = new();
+	mac_config_table      = new();
   endfunction : new
   
 endclass

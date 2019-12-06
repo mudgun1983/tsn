@@ -1,5 +1,5 @@
 //PHY_PORT_TABLE
-`define DUMMY_DUT
+//`define DUMMY_DUT
 //`define DUAL_DUT
 `define test_result_file "./data/test_result.txt"
 `define MAX_PORT_NUM 10
@@ -28,6 +28,7 @@
 typedef struct packed
 {
 bit        port_en;
+bit [1:0]  e_p_packet_en; //bit0: 1 issue e packet //bit1: 1 issue p packet
 int        packet_count;
 bit [47:0] da_index;
 bit [47:0] sa_index;

@@ -71,6 +71,7 @@ package pcs_env_pkg;
   `include "../seq_lib/ptp_reg_seq.sv"
   `include "../seq_lib/sub_ptp_reg_seq.sv"
   `include "../seq_lib/sub_switch_reg_seq.sv"
+  `include "../seq_lib/br_reg_seq.sv"
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
@@ -96,6 +97,7 @@ package pcs_env_pkg;
   `include "../test_lib/br/simple_e_p_mix_packet_port_test.sv"
   `include "../test_lib/br/scenario_simple_e_p_random_packet_port_test.sv"
   `include "../test_lib/br/simple_e_p_random_packet_port_test.sv"
+  `include "../test_lib/br/simple_n_packet_port_test.sv"
 endpackage
 `endif
 
