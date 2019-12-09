@@ -7,6 +7,7 @@ class simple_n_packet_port_test extends pcs_base_test;
     function new(string name="simple_n_packet_port_test" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
+		auto_stop_en = 0;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -22,7 +23,7 @@ class simple_n_packet_port_test extends pcs_base_test;
   
 task configure_phase( uvm_phase phase);
      phase.raise_objection( this );
-	 #10us;
+	 #150us;
      //scenario_simple_e_p_random_packet_port_test0.start(pcs_tx_rx_env0.virt_seqr);  //use to self learn the input port and output port
 	 br_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
 	 phase.drop_objection( this );
@@ -39,6 +40,11 @@ endtask
 	 super.run_phase(phase);
 	 
 	 begin
+	 #140us;
+	 port_stimulus_s[2].port_en = 0;
+	 scenario_simple_e_p_random_packet_port_test0.start(pcs_tx_rx_env0.virt_seqr);
+	 port_stimulus_s[2].port_en = 1;
+	 #60us;
 	 scenario_simple_e_p_random_packet_port_test0.start(pcs_tx_rx_env0.virt_seqr);
 	 //port_stimulus_s[2].e_p_packet_en  = 2'b10;
 	 //scenario_simple_e_p_random_packet_port_test0.start(pcs_tx_rx_env0.virt_seqr);

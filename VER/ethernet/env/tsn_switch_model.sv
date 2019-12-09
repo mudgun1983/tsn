@@ -257,7 +257,7 @@ typedef enum bit[7:0]{
 		if(express_packet ==1)
 		 begin
 		   eth_frame_exp_tr.preemptable=0;
-		   return;
+		   //return;
 		 end
 		else 
 		   begin
@@ -272,7 +272,8 @@ typedef enum bit[7:0]{
 			 .state_t   (classify_pack_s.state_t   ),
 			 .smd_flag  (classify_pack_s.smd_flag  )
 			 );
-		     merge_en = 1;           
+		     merge_en = 1;    
+             eth_frame_exp_tr.preemptable =1;			 
 		   end
 		
     // extract the payload in frame_data 
@@ -339,7 +340,7 @@ typedef enum bit[7:0]{
 		   begin
 		     eth_frame_exp_tr.frame_data  = new[data_payload.size()](eth_frame_exp_tr.frame_data);
 			 eth_frame_exp_tr.frame_data  = data_payload;
-			 eth_frame_exp_tr.preemptable =1;
+			 //eth_frame_exp_tr.preemptable =1;
 			 //file IO
                 // write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
                 // foreach(frame_data_merge[key])
@@ -351,6 +352,7 @@ typedef enum bit[7:0]{
                 // $fclose(write_data_fd);
 					
 			 data_payload.delete();	
+			 if(eth_frame_exp_tr.preemptable==1)
              classify_pack_s.frame_data_merge.delete();			 
 		   end
 		`uvm_info(get_type_name(),{$psprintf("merge_finish_o=%0d T=%0t",merge_finish_o,$time)},UVM_HIGH);
