@@ -14,7 +14,7 @@
 # usage: compile.sh
 #
 # ****************************************************************************
-UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
+UVM_HOME=../../common/uvm-1.1b
 # installation path setting
 bin_path="/usr/synopsys/L-2016.06/bin"
 

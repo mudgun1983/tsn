@@ -98,6 +98,7 @@ class eth_frame extends uvm_sequence_item;
   
   rand bit [31:0] init_crc;
   rand bit [31:0] xor_value;
+  bit no_preamble;
 //==================== Attribute =================//
 
 
@@ -336,6 +337,7 @@ class eth_frame extends uvm_sequence_item;
     super.do_unpack(packer);
     
     preamble.preamble_length = 0;
+	if(~no_preamble)begin
     for(int i=0; i<frame_data.size(); i++) begin
     	//if(frame_data[i]!=8'hd5)
 		if(frame_data[i]==8'h55)
@@ -364,14 +366,20 @@ class eth_frame extends uvm_sequence_item;
 	
 	if(frag_ind)
 	  preamble.frag_cnt = packer.unpack_field_int(8);
-	  
+	
+	end
+	
     destination_address = packer.unpack_field_int(48);
     source_address      = packer.unpack_field_int(48);
     
+	if(~no_preamble)begin
 	if(~frag_ind)
       data_cnt = preamble.preamble_length+13;//sfd(1)+da(6)+sa(6)
 	else
 	  data_cnt = preamble.preamble_length+14;//sfd(1)+frag_cnt(1)+da(6)+sa(6) 
+	end
+    else	
+	  data_cnt = 12;//da(6)+sa(6)
 	  
     tag_cnt  = 0;
     while(data_cnt < frame_data.size()) begin

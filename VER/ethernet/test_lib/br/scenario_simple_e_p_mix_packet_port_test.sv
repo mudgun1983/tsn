@@ -45,7 +45,7 @@ bit  [7:0] data_sequence_id[20];
 							 mac_seq.c_start_or_frag==1; //1:start
 							 mac_seq.c_last_frag == 0;   //not last frag
 							 mac_seq.c_smd==8'hE6;
-							 mac_seq.c_xor_value == 32'h0000ffff;
+							 mac_seq.c_xor_value == 32'hffff0000;//32'h0000ffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
 							}) 	
               data_sequence_id[index]++;	
@@ -73,7 +73,7 @@ bit  [7:0] data_sequence_id[20];
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'hE6;
-							 mac_seq.c_xor_value == 32'h0000ffff;
+							 mac_seq.c_xor_value == 32'hffff0000;//32'h0000ffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
 							 })	 
 	          data_sequence_id[index]++;

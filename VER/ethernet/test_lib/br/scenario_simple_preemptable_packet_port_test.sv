@@ -1,5 +1,7 @@
 class scenario_simple_preemptable_packet_port_test extends scenario_reg_test;
 bit  [7:0] data_sequence_id[20];
+bit  [15:0] e_mac_vlan;
+bit  [15:0] p_mac_vlan;
 //==================== Registration ==============//
 `uvm_sequence_utils(scenario_simple_preemptable_packet_port_test, pcs_virtual_sequencer)
 //==================== Registration ==============//
@@ -19,9 +21,10 @@ bit  [7:0] data_sequence_id[20];
    virtual task body();
         begin
 		super.body();
-		  #100us
-        
-        		
+		  //#100us
+        `uvm_info(get_type_name(),{$psprintf("item_config0.e_mac_vlan=%0h ,p_mac_vlan=%0h \n",item_config0.e_mac_vlan,item_config0.p_mac_vlan)},UVM_LOW);
+        e_mac_vlan = item_config0.e_mac_vlan;
+       	p_mac_vlan = item_config0.p_mac_vlan;	
 		for(int i =0; i<topology_config0.mac_number;i++)
 		//for(int i =2; i<3;i++)
 		  begin
@@ -55,8 +58,9 @@ bit  [7:0] data_sequence_id[20];
 							 mac_seq.c_start_or_frag==1; //1:start
 							 mac_seq.c_last_frag == 0;   //not last frag
 							 mac_seq.c_smd==8'hE6;
-							 mac_seq.c_xor_value == 32'h0000ffff;
+							 mac_seq.c_xor_value == 32'hffff0000;//32'h0000ffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
+							 mac_seq.c_vlan == p_mac_vlan;
 							}) 	
               data_sequence_id[index]++;							
 			 //SMD_C0_FRAG0
@@ -71,8 +75,9 @@ bit  [7:0] data_sequence_id[20];
 							 mac_seq.c_preamble_length == 6;
 							 mac_seq.c_smd==8'h61;
 							 mac_seq.c_frag_cnt==8'hE6;
-							 mac_seq.c_xor_value == 32'h0000ffff;
+							 mac_seq.c_xor_value == 32'hffff0000;//32'h0000ffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
+							 mac_seq.c_vlan == p_mac_vlan;
 							 })	 
 	          data_sequence_id[index]++;
 			 //SMD_C0_FRAG1
@@ -89,6 +94,7 @@ bit  [7:0] data_sequence_id[20];
 							 mac_seq.c_frag_cnt==8'h4C;
 							 mac_seq.c_xor_value == 32'hffffffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
+							 mac_seq.c_vlan == p_mac_vlan;
 							 })
 							 
               data_sequence_id[index]++;

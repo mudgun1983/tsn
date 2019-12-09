@@ -42,8 +42,8 @@ semaphore sem;
         begin
 		super.body();
 		  //#100us
-        foreach(port_stimulus_s[key])
-		  $display("port_stimulus_s[%0d]=%0d",key,port_stimulus_s[key].port_en);
+        //foreach(port_stimulus_s[key])
+		  //$display("port_stimulus_s[%0d]=%0d",key,port_stimulus_s[key].port_en);
         		
 		for(int i =0; i<topology_config0.mac_number;i++)
 		//for(int i =2; i<3;i++)
@@ -154,7 +154,7 @@ semaphore sem;
 							 if(j==(preempt_cnt-1))
 							  {mac_seq.c_xor_value == 32'hffffffff;}
 							 else
-							  {mac_seq.c_xor_value == 32'h0000ffff;}
+							  {mac_seq.c_xor_value == 32'hffff0000;}//32'h0000ffff;}
 							
 							mac_seq.c_data_payload ==data_sequence_id[index];
 							mac_seq.c_vlan == vlan;

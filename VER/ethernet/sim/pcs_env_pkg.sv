@@ -76,11 +76,15 @@ package pcs_env_pkg;
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
   
+  `include "../test_lib/br/scenario_simple_preemptable_packet_port_test.sv"
+  `include "../test_lib/br/scenario_simple_e_p_mix_packet_port_test.sv"
+  `include "../test_lib/br/scenario_simple_e_p_random_packet_port_test.sv"
 //test
   `include "../test_lib/pcs_base_test.sv"
   `include "../test_lib/user_test_lib.sv"
 
 //append test case here  
+  //PTP
   `include "../test_lib/ptp/scenario_ptp_rcv_smoke_test.sv"
   `include "../test_lib/ptp/ptp_rcv_smoke_test.sv"
   `include "../test_lib/ptp/ptp_slave_smoke_test.sv"
@@ -91,13 +95,12 @@ package pcs_env_pkg;
   `include "../test_lib/ptp/full_instance_rcv_one_step_master.sv"
   `include "../test_lib/ptp/full_instance_rcv_two_step_master.sv"
   `include "../test_lib/ptp/full_instance_slave.sv"
-  `include "../test_lib/br/scenario_simple_preemptable_packet_port_test.sv"
-  `include "../test_lib/br/simple_preemptable_packet_port_test.sv"
-  `include "../test_lib/br/scenario_simple_e_p_mix_packet_port_test.sv"
-  `include "../test_lib/br/simple_e_p_mix_packet_port_test.sv"
-  `include "../test_lib/br/scenario_simple_e_p_random_packet_port_test.sv"
+  //BR
+  `include "../test_lib/br/simple_n_packet_port_test.sv"  
+  `include "../test_lib/br/simple_preemptable_packet_port_test.sv"  
+  `include "../test_lib/br/simple_e_p_mix_packet_port_test.sv" 
   `include "../test_lib/br/simple_e_p_random_packet_port_test.sv"
-  `include "../test_lib/br/simple_n_packet_port_test.sv"
+  
 endpackage
 `endif
 

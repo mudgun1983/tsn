@@ -60,79 +60,10 @@ string scope_name = "";
 	    if( !uvm_config_db #( item_config )::get( null , scope_name ,
         "item_config" , item_config0 ) ) begin
         `uvm_fatal(get_type_name(),"=============NO item_config==========");
+        end   
         end
-		/*
-            fork            
-             begin
-             begin		  
-			 //SMD_S0
-             `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==0;//local_da_cnt;
-							 mac_seq.c_packet_len == 'd46;
-							 mac_seq.c_tpid == 'd138;
-							 mac_seq.c_preemptable==1;
-							 mac_seq.c_start_or_frag==1; //1:start
-							 mac_seq.c_smd==8'hE6;
-							 mac_seq.c_xor_value == 32'h0000ffff;
-							})
-             local_da_cnt++;  
-			 
-			 //EXPRESS PACKET
-              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                             {mac_seq.c_da_cnt==local_da_cnt;
-							  mac_seq.c_packet_len == 'd46;
-							  mac_seq.c_tpid == 'd46;
-							  mac_seq.c_preemptable==0;
-							 })
-              local_da_cnt++; 
-			 
-			 //SMD_C0_FRAG0
-             `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==0;//local_da_cnt;
-							 mac_seq.c_packet_len == 'd46;
-							 mac_seq.c_preemptable==1;
-							 mac_seq.c_start_or_frag==0;
-							 mac_seq.c_preamble_length == 6;
-							 mac_seq.c_smd==8'h61;
-							 mac_seq.c_frag_cnt==8'hE6;
-							 mac_seq.c_xor_value == 32'h0000ffff;
-							 })
-             local_da_cnt++; 
-			 
-			 //EXPRESS PACKET
-              `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                             {mac_seq.c_da_cnt==local_da_cnt;
-							  mac_seq.c_packet_len == 'd46;
-							  mac_seq.c_tpid == 'd46;
-							  mac_seq.c_preemptable==0;
-							 })
-              local_da_cnt++; 
-			 
-			 //SMD_C0_FRAG1
-             `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr,
-                            {mac_seq.c_da_cnt==0;//local_da_cnt;
-							 mac_seq.c_packet_len == 'd46;
-							 mac_seq.c_preemptable==1;
-							 mac_seq.c_start_or_frag==0;
-							 mac_seq.c_preamble_length == 6;
-							 mac_seq.c_smd==8'h61;
-							 mac_seq.c_frag_cnt==8'h4C;
-							 mac_seq.c_xor_value == 32'hffffffff;
-							 })
-             local_da_cnt++; 			 
-             end
-             end
-             
-             begin
-             	forever
-             	begin
-             	#500ns
-              `uvm_do_on(seq_dcn_statics_reg,p_sequencer.rgm_sqr)
-              end
-             end            
-            join
-        */    
-        end
+		
+		`uvm_info(get_type_name(),{$psprintf("item_config0.e_mac_vlan=%0h ,p_mac_vlan=%0h \n",item_config0.e_mac_vlan,item_config0.p_mac_vlan)},UVM_HIGH);
       endtask    
 endclass
 

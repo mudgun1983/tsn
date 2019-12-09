@@ -118,7 +118,7 @@ class scoreboard extends uvm_scoreboard;
             eth_frame_col_tr =new();
             monitor_get_port.get(eth_frame_col_tr);
             eth_col_que.push_back(eth_frame_col_tr);
-            `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_HIGH);
+            `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_LOW);
             
             write_col_data_fd=$fopen(tran_col,"a+"); 
 			$fwrite(write_exp_data_fd,$psprintf(" S preemptable=%0d\n",eth_frame_col_tr.preemptable));	
@@ -289,7 +289,7 @@ class scoreboard extends uvm_scoreboard;
                           end
                      endcase   
                 end
-          `uvm_info(get_type_name(),{$psprintf("comp_state=%0s\n",comp_state)},UVM_HIGH);                         	
+          `uvm_info(get_type_name(),{$psprintf("comp_state=%0s\n",comp_state)},UVM_LOW);                         	
           end
     endtask: eth_frame_compare
 

@@ -340,6 +340,11 @@ typedef enum bit[7:0]{
 		   begin
 		     eth_frame_exp_tr.frame_data  = new[data_payload.size()](eth_frame_exp_tr.frame_data);
 			 eth_frame_exp_tr.frame_data  = data_payload;
+			 eth_frame_exp_tr.no_preamble = 1;
+			 if(eth_frame_exp_tr.preemptable==1)begin
+			 eth_frame_exp_tr.unpack_bytes(eth_frame_exp_tr.frame_data);
+			 eth_frame_exp_tr.fcs=local_crc32;
+			 end
 			 //eth_frame_exp_tr.preemptable =1;
 			 //file IO
                 // write_data_fd=$fopen({"merge_frame_",file_name,".txt"},"a+"); 	
