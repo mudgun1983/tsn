@@ -100,6 +100,7 @@ package pcs_env_pkg;
   `include "../test_lib/br/simple_preemptable_packet_port_test.sv"  
   `include "../test_lib/br/simple_e_p_mix_packet_port_test.sv" 
   `include "../test_lib/br/simple_e_p_random_packet_port_test.sv"
+  `include "../test_lib/br/simple_p_packet_port_test.sv"
   
 endpackage
 `endif

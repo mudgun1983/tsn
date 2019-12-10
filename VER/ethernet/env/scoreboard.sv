@@ -9,7 +9,7 @@ class scoreboard extends uvm_scoreboard;
     
 
     uvm_comparer                           comparer;
-    
+    topology_config       topology_config0;
     typedef enum {EXP_POP,COMPARE,EXP_QUEUE_CHECK,COM_FINISH}    comp_state_enum           ;
     
     comp_state_enum                        comp_state;
@@ -40,6 +40,7 @@ class scoreboard extends uvm_scoreboard;
 	
 	int compare_start_flag = 0;
 	int payload_seq_id;
+	int scoreboard_id;
 //================================================//
 //FUNCTION    : new
 //================================================//
@@ -73,7 +74,9 @@ class scoreboard extends uvm_scoreboard;
         // port 
         expect_get_port = new("expect_get_port",this);
         monitor_get_port = new("monitor_get_port",this);
-       
+        if( !uvm_config_db #( topology_config )::get( this , "" , "topology_config" ,topology_config0 ) ) begin
+           `uvm_fatal(get_type_name(),"=============topology_config==========");
+		end
     endfunction : build
 //================================================//
 //TASK    : run
@@ -83,7 +86,8 @@ class scoreboard extends uvm_scoreboard;
         fork
             get_exp_trans();
             get_col_trans();
-            eth_frame_compare();
+			if(topology_config0.compare_enable[scoreboard_id]) begin
+            eth_frame_compare();end
         join
     endtask: run
 
@@ -118,7 +122,7 @@ class scoreboard extends uvm_scoreboard;
             eth_frame_col_tr =new();
             monitor_get_port.get(eth_frame_col_tr);
             eth_col_que.push_back(eth_frame_col_tr);
-            `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_LOW);
+            `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_HIGH);
             
             write_col_data_fd=$fopen(tran_col,"a+"); 
 			$fwrite(write_exp_data_fd,$psprintf(" S preemptable=%0d\n",eth_frame_col_tr.preemptable));	

@@ -191,6 +191,13 @@ virtual function set_i_epp_predefine_value();
 		`IPHB_TABLE_CONTENT[key].table_t=key[2:0]%4;              //vlan_port_bitmap[31:0]
 	  end
     end
+	
+	`MAC_CONFIG.table_size=1;
+	foreach(`MAC_CONFIG_CONTENT[key]) begin
+      begin
+	    `MAC_CONFIG_CONTENT[key].mpkt_size='d128;     // iphb_ptr[3:0] ,ovlan_pri[2:0]
+	  end
+    end
 endfunction  
 
 

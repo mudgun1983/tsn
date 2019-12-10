@@ -1934,7 +1934,7 @@ endclass
 class MAC_CONFIG_TABLE extends uvm_object;
 `uvm_object_utils( MAC_CONFIG_TABLE );
 
-int unsigned table_size=10;
+int unsigned table_size=1;
 
 MAC_CONTENT table_index[];
 

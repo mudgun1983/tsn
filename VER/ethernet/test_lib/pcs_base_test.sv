@@ -24,7 +24,8 @@ class pcs_base_test extends uvm_test;
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
-//       set_config_object("*","static_cfg",env_ec,0);     
+//       set_config_object("*","static_cfg",env_ec,0);   
+         topology_config0 =new();  
          reg_config = new();
 		 item_config0 = new();
 		 test_result_file = `test_result_file;
@@ -35,7 +36,7 @@ class pcs_base_test extends uvm_test;
      endfunction : new
   
   virtual function void set_topology_config();
-    topology_config0 =new();
+    //topology_config0.compare_enable = 0;
   endfunction
   
   virtual function void set_cpu_config();
