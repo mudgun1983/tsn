@@ -7,7 +7,8 @@ class simple_n_packet_port_test extends pcs_base_test;
     function new(string name="simple_n_packet_port_test" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
-		auto_stop_en = 0;
+		//auto_stop_en = 0;
+		test_port_index = 4;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -44,6 +45,7 @@ endtask
 	 port_stimulus_s[2].port_en = 0;
 	 scenario_simple_e_p_random_packet_port_test0.start(pcs_tx_rx_env0.virt_seqr);
 	 port_stimulus_s[2].port_en = 1;
+	 port_stimulus_s[4].port_en = 0;
 	 #60us;
 	 scenario_simple_e_p_random_packet_port_test0.start(pcs_tx_rx_env0.virt_seqr);
 	 //port_stimulus_s[2].e_p_packet_en  = 2'b10;
@@ -59,16 +61,21 @@ endtask
 
  virtual function void report_phase(uvm_phase phase);
     bit test_fail;
-     foreach(port_stimulus_s[key])
-	   begin
-	     if(port_stimulus_s[key].port_en)
-		   begin
-		    if(comp_success_count[key]==0)
-		     test_fail=1;
-			else
-			 $display("comp_success_count[%0d]=%0d",key,comp_success_count[key]);
-		   end
-	   end
+     // foreach(port_stimulus_s[key])
+	   // begin
+	     // if(port_stimulus_s[key].port_en)
+		   // begin
+		    // if(comp_success_count[key]==0)
+		     // test_fail=1;
+			// else
+			 // $display("comp_success_count[%0d]=%0d",key,comp_success_count[key]);
+		   // end
+	   // end
+	   
+	   if(comp_success_count[test_port_index]==0)
+		  test_fail=1;
+	   else
+	      $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 	   
 	   if(~test_fail)
 	     begin
