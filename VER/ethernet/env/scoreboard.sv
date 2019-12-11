@@ -75,7 +75,7 @@ class scoreboard extends uvm_scoreboard;
         expect_get_port = new("expect_get_port",this);
         monitor_get_port = new("monitor_get_port",this);
         if( !uvm_config_db #( topology_config )::get( this , "" , "topology_config" ,topology_config0 ) ) begin
-           `uvm_fatal(get_type_name(),"=============topology_config==========");
+           `uvm_fatal(get_type_name(),"============= NO topology_config==========");
 		end
     endfunction : build
 //================================================//
@@ -94,7 +94,7 @@ class scoreboard extends uvm_scoreboard;
 ////================================================//
 ////TASK    : get_exp_trans
 ////================================================//
-    task get_exp_trans();
+  virtual  task get_exp_trans();
         while(1) begin
             eth_frame eth_frame_exp_tr;
             eth_frame_exp_tr =new();
@@ -116,7 +116,7 @@ class scoreboard extends uvm_scoreboard;
 //================================================//
 //TASK    : get_col_trans
 //================================================//
-    task get_col_trans();
+  virtual  task get_col_trans();
         while(1) begin
             eth_frame eth_frame_col_tr;
             eth_frame_col_tr =new();

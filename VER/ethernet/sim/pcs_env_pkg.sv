@@ -58,6 +58,7 @@ package pcs_env_pkg;
   `include "../env/tsn_switch_monitor_model.sv"
   `include "../env/scoreboard.sv" 
   `include "../env/ptp_scoreboard.sv"
+  `include "../env/scoreboard_p_e_out_of_order.sv"
   //`include "../uvc/sequence/pcs_base_seq.sv"    
   `include "../env/pcs_tx_rx_env.sv" 
 
@@ -101,6 +102,8 @@ package pcs_env_pkg;
   `include "../test_lib/br/simple_e_p_mix_packet_port_test.sv" 
   `include "../test_lib/br/simple_e_p_random_packet_port_test.sv"
   `include "../test_lib/br/simple_p_packet_port_test.sv"
+  `include "../test_lib/br/e_n_packet_multi_port_to_e_p_mac_test.sv"
+  `include "../test_lib/br/e_p_packet_multi_port_to_e_mac_test.sv"
   
 endpackage
 `endif

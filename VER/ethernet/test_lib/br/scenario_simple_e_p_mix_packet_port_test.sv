@@ -1,7 +1,7 @@
 class scenario_simple_e_p_mix_packet_port_test extends scenario_reg_test;
 bit  [7:0] data_sequence_id[20];
-bit  [15:0] e_mac_vlan;
-bit  [15:0] p_mac_vlan;
+bit  [15:0] e_mac_vlan[`MAX_ENV_MAC_NUM];
+bit  [15:0] p_mac_vlan[`MAX_ENV_MAC_NUM];
 //==================== Registration ==============//
 `uvm_sequence_utils(scenario_simple_e_p_mix_packet_port_test, pcs_virtual_sequencer)
 //==================== Registration ==============//
@@ -22,9 +22,11 @@ bit  [15:0] p_mac_vlan;
         begin
 		super.body();
 		  //#100us
-        e_mac_vlan = item_config0.e_mac_vlan;
-       	p_mac_vlan = item_config0.p_mac_vlan;
-        		
+		foreach(e_mac_vlan[key])begin
+          e_mac_vlan[key] = item_config0.e_mac_vlan[key] ;
+       	  p_mac_vlan[key] = item_config0.p_mac_vlan[key] ;
+        end
+		
 		for(int i =0; i<topology_config0.mac_number;i++)
 		//for(int i =2; i<3;i++)
 		  begin
@@ -50,7 +52,7 @@ bit  [15:0] p_mac_vlan;
 							 mac_seq.c_smd==8'hE6;
 							 mac_seq.c_xor_value == 32'hffff0000;//32'h0000ffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
-							 mac_seq.c_vlan == p_mac_vlan;
+							 mac_seq.c_vlan == p_mac_vlan[index];
 							}) 	
               data_sequence_id[index]++;	
 
@@ -62,7 +64,7 @@ bit  [15:0] p_mac_vlan;
 							  mac_seq.c_tpid == 'd46;
 							  mac_seq.c_preemptable==0;
 							  mac_seq.c_data_payload ==data_sequence_id[index];
-							  mac_seq.c_vlan == e_mac_vlan;
+							  mac_seq.c_vlan == e_mac_vlan[index];
 							 })
               data_sequence_id[index]++;
 			  
@@ -80,7 +82,7 @@ bit  [15:0] p_mac_vlan;
 							 mac_seq.c_frag_cnt==8'hE6;
 							 mac_seq.c_xor_value == 32'hffff0000;//32'h0000ffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
-							 mac_seq.c_vlan == p_mac_vlan;
+							 mac_seq.c_vlan == p_mac_vlan[index];
 							 })	 
 	          data_sequence_id[index]++;
 			  
@@ -92,7 +94,7 @@ bit  [15:0] p_mac_vlan;
 							  mac_seq.c_tpid == 'd46;
 							  mac_seq.c_preemptable==0;
 							  mac_seq.c_data_payload ==data_sequence_id[index];
-							  mac_seq.c_vlan == e_mac_vlan;
+							  mac_seq.c_vlan == e_mac_vlan[index];
 							 })
               data_sequence_id[index]++;
 			 //SMD_C0_FRAG1
@@ -109,7 +111,7 @@ bit  [15:0] p_mac_vlan;
 							 mac_seq.c_frag_cnt==8'h4C;
 							 mac_seq.c_xor_value == 32'hffffffff;
 							 mac_seq.c_data_payload ==data_sequence_id[index];
-							 mac_seq.c_vlan == p_mac_vlan;
+							 mac_seq.c_vlan == p_mac_vlan[index];
 							 })
 							 
               data_sequence_id[index]++;

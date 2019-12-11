@@ -63,7 +63,7 @@ string scope_name = "";
         end   
         end
 		
-		`uvm_info(get_type_name(),{$psprintf("item_config0.e_mac_vlan=%0h ,p_mac_vlan=%0h \n",item_config0.e_mac_vlan,item_config0.p_mac_vlan)},UVM_HIGH);
+		//`uvm_info(get_type_name(),{$psprintf("item_config0.e_mac_vlan=%0h ,p_mac_vlan=%0h \n",item_config0.e_mac_vlan,item_config0.p_mac_vlan)},UVM_HIGH);
       endtask    
 endclass
 
