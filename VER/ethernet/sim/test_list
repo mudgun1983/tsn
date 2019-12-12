@@ -22,5 +22,7 @@
 #simple_e_p_random_packet_port_test
 #simple_n_packet_port_test
 #simple_p_packet_port_test
-e_n_packet_multi_port_to_e_p_mac_test
+#e_n_packet_multi_port_to_e_p_mac_test
 #e_p_packet_multi_port_to_e_mac_test
+#smd_r_response_port_test
+smd_v_trigger_port_test
