@@ -171,7 +171,7 @@ virtual function set_i_epp_predefine_value();
    foreach(`IVLAN_PROPERTY_TABLE_CONTENT[key]) begin
       begin
 	    `IVLAN_PROPERTY_TABLE_CONTENT[key].table_key_t='h500;     //ivlan
-		`IVLAN_PROPERTY_TABLE_CONTENT[key].table_t={1'b1,9'b0,1'b0,1'b0,1'b0,8'b0,32'h0000_001C};     //vlan_port_bitmap[31:0] ,port4,3,2
+		`IVLAN_PROPERTY_TABLE_CONTENT[key].table_t={1'b1,9'b0,1'b0,1'b0,1'b0,8'b0,32'h0000_001F};     //vlan_port_bitmap[31:0] ,port4,3,2,1,0
 	  end
     end
 	

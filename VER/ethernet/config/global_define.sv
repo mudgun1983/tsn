@@ -32,6 +32,7 @@ bit [1:0]  e_p_packet_en; //bit0: 1 issue e packet //bit1: 1 issue p packet
 int        packet_count;
 bit [47:0] da_index;
 bit [47:0] sa_index;
+int        fatal_error_bypass_port;
 } port_stimulus_t;
 
 port_stimulus_t port_stimulus_s[`MAX_ENV_MAC_NUM];

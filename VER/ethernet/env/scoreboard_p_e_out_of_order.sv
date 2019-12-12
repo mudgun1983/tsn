@@ -207,7 +207,7 @@ eth_col_port_que_t;
 										    $fwrite(write_comp_data_fd,$psprintf("FATAL, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
                      		      	        $fclose(write_comp_data_fd);
 											`uvm_info(get_type_name(),{$psprintf("FATAL, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_LOW);
-											if(eth_frame_col_tr.source_address==2)// for debug
+											if(eth_frame_col_tr.source_address==port_stimulus_s[scoreboard_id].fatal_error_bypass_port)// for debug
 											->fatal_event;
 									       //`uvm_fatal(get_type_name(),$psprintf("FATAL, PACKET LOSS, Sequence ID=%0h\n",payload_seq_id));
 										    end

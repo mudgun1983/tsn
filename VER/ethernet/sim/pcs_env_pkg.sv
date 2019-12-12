@@ -106,7 +106,8 @@ package pcs_env_pkg;
   `include "../test_lib/br/e_p_packet_multi_port_to_e_mac_test.sv"
   `include "../test_lib/br/smd_r_response_port_test.sv"
   `include "../test_lib/br/smd_v_trigger_port_test.sv"
-  
+  `include "../test_lib/br/e_n_packet_set_port_to_e_p_mac_test.sv"
+  `include "../test_lib/br/e_n_packet_set_port_to_e_mac_test.sv"
 endpackage
 `endif
 
