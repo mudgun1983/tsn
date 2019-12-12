@@ -24,7 +24,7 @@ class mac_user_sequence extends mac_base_sequence;
   rand int unsigned  c_preamble_length;
   rand bit [31:0]    c_init_crc;
   rand bit [31:0]    c_xor_value;
-  
+  int unsigned  c_packet_ipg=12;
   parameter [15:0]     VLAN_VALUE0 = 16'd500;
   parameter [15:0]     VLAN_VALUE1 = 16'd501;
   
@@ -114,7 +114,7 @@ class mac_user_sequence extends mac_base_sequence;
 					req.xor_value   == c_xor_value ;
 					req.preemptable    == c_preemptable   ;            
 					req.start_or_frag  == c_start_or_frag ;
-                   	req.inter_frame_gap              == 12;//p_sequencer.static_cfg.cfg_MinIPG;
+                   	req.inter_frame_gap              == c_packet_ipg;//12;//p_sequencer.static_cfg.cfg_MinIPG;
 //                   	req.preamble.data_preamble[0]    == 8'h55;
 //                   	req.preamble.data_preamble[1]    == 8'h55;
 //                   	req.preamble.data_preamble[2]    == 8'h55;

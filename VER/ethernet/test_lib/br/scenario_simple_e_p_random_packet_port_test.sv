@@ -56,12 +56,15 @@ semaphore sem;
 		    begin
 			 if(port_stimulus_s[index].packet_count==0)
 			   begin 
-			    forever
+			    forever begin
+				  #item_config0.packet_ipg[index];
 				  express_seq_do(index,item_config0.e_mac_vlan[index]);
+				  end
 			   end
 			 else
 		       for(int j=0;j<port_stimulus_s[index].packet_count;j++)
 		        begin
+				  #item_config0.packet_ipg[index];
 			      express_seq_do(index,item_config0.e_mac_vlan[index]);
 			    end
 		    end
@@ -73,12 +76,16 @@ semaphore sem;
 			   if(port_stimulus_s[index].packet_count==0)
 			     begin 
 			      forever
-				   preemptable_seq_do(index,frame_cnt%4,item_config0.p_mac_vlan[index]);
+				   begin
+				   #item_config0.packet_ipg[index];
+ 				   preemptable_seq_do(index,frame_cnt%4,item_config0.p_mac_vlan[index]);
 				   frame_cnt++;
+				   end
 				 end
 			   else
                 for(int k=0;k<port_stimulus_s[index].packet_count;k++)
                   begin
+				    #item_config0.packet_ipg[index];
 				    preemptable_seq_do(index,k%4,item_config0.p_mac_vlan[index]);
                   end				  
              end	
