@@ -69,7 +69,10 @@ endtask
 	   // end
 	   
 	   if(comp_success_count[test_port_index]!=(port_stimulus_s[2].packet_count+port_stimulus_s[3].packet_count))
-		  test_fail=1;
+		  begin
+		    test_fail=1;
+			$display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
+		  end
 	   else
 	      $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 	   
@@ -145,9 +148,10 @@ port_stimulus_s[8].e_p_packet_en  = 2'b01;
 port_stimulus_s[9].e_p_packet_en  = 2'b01;
 port_stimulus_s[10].e_p_packet_en = 2'b01;
 
-port_stimulus_s[2].packet_count = 1000; 
-port_stimulus_s[3].packet_count = 1000;
+port_stimulus_s[2].packet_count = 100; 
+port_stimulus_s[3].packet_count = 100;
 port_stimulus_s[4].packet_count = 1; 
+port_stimulus_s[4].fatal_error_bypass_port = 3;
 endfunction 
 
 virtual function set_item_config_value();
@@ -157,6 +161,7 @@ virtual function set_item_config_value();
  item_config0.p_mac_vlan[3] = {3'd2,1'b0,12'h500};
  item_config0.e_mac_vlan[3] = {3'd2,1'b0,12'h500};
  item_config0.packet_ipg[2] = 10us;
+ item_config0.packet_ipg[3] = 10us;
 endfunction
   
 

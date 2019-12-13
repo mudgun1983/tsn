@@ -130,6 +130,8 @@ virtual function set_item_config_value();
  item_config0.e_mac_vlan[2] = {3'd0,1'b0,12'h500};
  item_config0.p_mac_vlan[3] = {3'd0,1'b0,12'h500};
  item_config0.e_mac_vlan[3] = {3'd0,1'b0,12'h500};
+ item_config0.packet_ipg[2] = 10us;
+ item_config0.packet_ipg[3] = 10us;
 endfunction
   
 
