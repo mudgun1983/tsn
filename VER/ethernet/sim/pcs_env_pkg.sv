@@ -61,7 +61,7 @@ package pcs_env_pkg;
   `include "../env/scoreboard_p_e_out_of_order.sv"
   //`include "../uvc/sequence/pcs_base_seq.sv"    
   `include "../env/pcs_tx_rx_env.sv" 
-
+  `include "../env/tsn_switch_expect_model_qci.sv"
 //seq lib
   //stimulus sequence
   `include "../seq_lib/mac_user_seq_lib.sv"
@@ -73,6 +73,7 @@ package pcs_env_pkg;
   `include "../seq_lib/sub_ptp_reg_seq.sv"
   `include "../seq_lib/sub_switch_reg_seq.sv"
   `include "../seq_lib/br_reg_seq.sv"
+  `include "../seq_lib/qci_reg_seq.sv"
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
@@ -108,6 +109,10 @@ package pcs_env_pkg;
   `include "../test_lib/br/smd_v_trigger_port_test.sv"
   `include "../test_lib/br/e_n_packet_set_port_to_e_p_mac_test.sv"
   `include "../test_lib/br/e_p_packet_set_port_to_e_mac_test.sv"
+  
+  //QCI
+  `include "../test_lib/qci/simple_qci_smoke_test.sv"
+  `include "../test_lib/qci/test_qci_bypass_packet.sv"
 endpackage
 `endif
 

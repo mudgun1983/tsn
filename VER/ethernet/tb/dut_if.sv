@@ -18,4 +18,6 @@ interface dut_if();
  endtask
  `endif
 
+ task monitor_gate_status(input int gate_id);
+ endtask
 endinterface 

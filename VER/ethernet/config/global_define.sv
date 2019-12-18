@@ -25,6 +25,9 @@
 `define RANDOM_PAYLOAD    2'b01
 `define ASSIGN_FIRST_BYTE 2'b10		
 `define ASSIGN_ALL_BYTE   2'b11
+
+//QCI
+`define BYPASS_ETYPE 16'h1234
 typedef struct packed
 {
 bit        port_en;

@@ -1193,7 +1193,7 @@ class TIME_SLOT_TABLE_CONTENT extends uvm_object;
 typedef struct packed
 {
   //key----
-  bit [3:0] time_slot;
+  bit [7:0] time_slot;
   //--------
 } table_key_s;
 typedef struct packed
@@ -1219,7 +1219,10 @@ class TIME_SLOT_TABLE extends uvm_object;
 
 
 int unsigned table_size=2;
-
+bit [63:0] admin_base_time;
+bit [63:0] admin_cycle_time;
+bit [3:0]  admin_slot_num;
+  
 TIME_SLOT_TABLE_CONTENT table_index[];
 
 function new( string name = "" );

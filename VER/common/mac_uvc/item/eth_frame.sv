@@ -99,6 +99,7 @@ class eth_frame extends uvm_sequence_item;
   rand bit [31:0] init_crc;
   rand bit [31:0] xor_value;
   bit no_preamble;
+  int tag_cnt;
 //==================== Attribute =================//
 
 
@@ -332,7 +333,7 @@ class eth_frame extends uvm_sequence_item;
 //================================================//
   function void do_unpack(uvm_packer packer);
     int data_cnt;
-    int tag_cnt;
+   // int tag_cnt;
 	bit frag_ind;
     super.do_unpack(packer);
     
