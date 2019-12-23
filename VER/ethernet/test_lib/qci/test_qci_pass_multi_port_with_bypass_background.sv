@@ -18,10 +18,10 @@ class test_qci_pass_multi_port_with_bypass_background extends simple_qci_smoke_t
     function new(string name="test_qci_pass_multi_port_with_bypass_background" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
-		// auto_stop_en = 1;
+		 auto_stop_en = 0;
 		 test_port_index = 9;
 		 source_port     = 0;
-		 source_port1    = 1;
+		 source_port1    = 4;
 		 source_port2    = 2;
 		 source_port3    = 3;
 		// vid             = 'h500;
@@ -32,9 +32,9 @@ class test_qci_pass_multi_port_with_bypass_background extends simple_qci_smoke_t
 		ingress_flow_id3 = 'd1020;
 		// ingress_gate_id         = 'd511;
 		// base_time       =64'd200000;  //200us
-		// cycle_time      =64'd50000;
-		// time_slot_time0 =32'd25000;
-		// time_slot_time1 =32'd20000;
+		 cycle_time      =64'd65000;
+		 time_slot_time0 =32'd45000;
+		 time_slot_time1 =32'd20000;
 		// bypass_etype     =`BYPASS_ETYPE;
 		phb = 3;
      endfunction : new
@@ -55,7 +55,7 @@ class test_qci_pass_multi_port_with_bypass_background extends simple_qci_smoke_t
 	    mac_seq_array[key]=new();
 	  end
 	  
-	sem = new[4];
+	sem = new[`MAX_PORT_NUM];
 	foreach(sem[key])
 	  begin
 	    sem[key]=new(1);
@@ -99,6 +99,21 @@ endtask
 		 `uvm_error(get_type_name, "Randomize Failed!") 
 		end		
 		mac_user_sequence0.start(pcs_tx_rx_env0.mac_env0[dmac].mac_rx_agent0.sequencer);
+		
+		if ( !(mac_user_sequence0.randomize() with {
+	                                              mac_user_sequence0.c_da_cnt==(port_stimulus_s[dmac].da_index);
+							                      mac_user_sequence0.c_sa_cnt==(port_stimulus_s[dmac].sa_index);
+							                      mac_user_sequence0.c_packet_len == 'd46;
+							                      mac_user_sequence0.c_tpid == 'd46;
+							                      mac_user_sequence0.c_preemptable==0;
+							                      mac_user_sequence0.c_data_payload ==0;
+							                      mac_user_sequence0.c_vlan == {0,1'b0,vid};
+	                                             } )) 
+        begin
+		 `uvm_error(get_type_name, "Randomize Failed!") 
+		end		
+		mac_user_sequence0.start(pcs_tx_rx_env0.mac_env0[dmac].mac_rx_agent0.sequencer);
+		
 	 end	
 		
 	 //gen stimulus at source port
@@ -266,6 +281,7 @@ endtask
 	
 	begin
 	 if(port_stimulus_s[source_port].port_en)begin
+	 @packet_trigger
 	 forever
 	   begin
 	     data_len=$urandom_range(1518,46);
@@ -276,7 +292,7 @@ endtask
 							                      mac_seq_array[0].c_tpid == bypass_etype;//data_len[15:0];
 							                      mac_seq_array[0].c_preemptable==0;
 							                      mac_seq_array[0].c_data_payload ==data_sequence_id[source_port];
-							                      mac_seq_array[0].c_vlan == 0;
+							                      mac_seq_array[0].c_vlan == {0,1'b0,vid};
 	                                             } )) 
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
@@ -291,6 +307,7 @@ endtask
 	
 	begin
 	 if(port_stimulus_s[source_port1].port_en)begin
+	 @packet_trigger
 	 forever
 	   begin
 	     data_len=$urandom_range(1518,46);
@@ -301,7 +318,7 @@ endtask
 							                      mac_seq_array[1].c_tpid == bypass_etype;//data_len[15:0];
 							                      mac_seq_array[1].c_preemptable==0;
 							                      mac_seq_array[1].c_data_payload ==data_sequence_id[source_port1];
-							                      mac_seq_array[1].c_vlan == 0;
+							                      mac_seq_array[1].c_vlan == {0,1'b0,vid};
 	                                             } )) 
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
@@ -316,6 +333,7 @@ endtask
 	
 	begin
 	 if(port_stimulus_s[source_port2].port_en)begin
+	 @packet_trigger
 	 forever
 	   begin
 	     data_len=$urandom_range(1518,46);
@@ -326,7 +344,7 @@ endtask
 							                      mac_seq_array[2].c_tpid == bypass_etype;//data_len[15:0];
 							                      mac_seq_array[2].c_preemptable==0;
 							                      mac_seq_array[2].c_data_payload ==data_sequence_id[source_port2];
-							                      mac_seq_array[2].c_vlan == 0;
+							                      mac_seq_array[2].c_vlan == {0,1'b0,vid};
 	                                             } )) 
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
@@ -341,6 +359,7 @@ endtask
 	
 	begin
 	 if(port_stimulus_s[source_port3].port_en)begin
+	 @packet_trigger
 	 forever
 	   begin
 	     data_len=$urandom_range(1518,46);
@@ -351,7 +370,7 @@ endtask
 							                      mac_seq_array[3].c_tpid == bypass_etype;//data_len[15:0];
 							                      mac_seq_array[3].c_preemptable==0;
 							                      mac_seq_array[3].c_data_payload ==data_sequence_id[source_port3];
-							                      mac_seq_array[3].c_vlan == 0;
+							                      mac_seq_array[3].c_vlan == {0,1'b0,vid};
 	                                             } )) 
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
@@ -402,8 +421,8 @@ virtual function set_port_stimulus_value();
   
 port_stimulus_s[source_port].port_en = 1;
 port_stimulus_s[source_port1].port_en = 1;
-port_stimulus_s[source_port2].port_en = 0;
-port_stimulus_s[source_port3].port_en = 0;
+port_stimulus_s[source_port2].port_en = 1;
+port_stimulus_s[source_port3].port_en = 1;
 //port_stimulus_s[1].port_en = 1;
 //port_stimulus_s[2].port_en = 1;
 //port_stimulus_s[3].port_en = 1;
@@ -527,7 +546,7 @@ endfunction
   
 virtual function set_item_config_value();
  super.set_item_config_value();
- item_config0.eth_item_payload=`ASSIGN_FIRST_BYTE;
+ item_config0.eth_item_payload=`ASSIGN_ALL_BYTE;
 endfunction
 
 endclass 
