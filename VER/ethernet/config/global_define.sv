@@ -28,6 +28,8 @@
 
 //QCI
 `define BYPASS_ETYPE 16'h1234
+
+`define PACKET_COUNT 'd100
 typedef struct packed
 {
 bit        port_en;

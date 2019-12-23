@@ -98,7 +98,7 @@ eth_col_port_que_t;
 			  // end
 			// else
             // eth_col_que.push_back(eth_frame_col_tr);
-            `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_LOW);
+            `uvm_info(get_type_name(),{$psprintf("get eth_frame_col_trans:\n"),eth_frame_col_tr.sprint()},UVM_HIGH);
             
             write_col_data_fd=$fopen(tran_col,"a+"); 
 			$fwrite(write_exp_data_fd,$psprintf(" S preemptable=%0d\n",eth_frame_col_tr.preemptable));	

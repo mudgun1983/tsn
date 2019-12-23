@@ -167,7 +167,7 @@ class scoreboard extends uvm_scoreboard;
           	      	        if(exp_queue_size==0)          	      	        
           	                   begin
           	                    	write_comp_data_fd=$fopen(data_comp_result,"a+");                                               
-                     		      	$fwrite(write_comp_data_fd,$psprintf("FATAL ERROR, unexpected col frame eth_frame_col_tr.destination_address=%0h time=%0t\n",eth_frame_col_tr.destination_address,$time));   
+                     		      	$fwrite(write_comp_data_fd,$psprintf("FATAL ERROR, exp_queue_size=0,unexpected col frame eth_frame_col_tr.destination_address=%0h time=%0t\n",eth_frame_col_tr.destination_address,$time));   
                      		      	$fclose(write_comp_data_fd);
                      		      	comp_state = COM_FINISH;
 									->fatal_event;

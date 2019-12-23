@@ -75,7 +75,7 @@ endtask
 	 basic_run_monitor(phase);
 	 
 	 begin
-	 #100us;
+	 #140us;
 	   //use for L2 MAC learn
        if ( !(mac_user_sequence0.randomize() with {
 	                                              mac_user_sequence0.c_da_cnt==(port_stimulus_s[dmac].da_index);

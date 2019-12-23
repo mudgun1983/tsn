@@ -113,6 +113,11 @@ package pcs_env_pkg;
   //QCI
   `include "../test_lib/qci/simple_qci_smoke_test.sv"
   `include "../test_lib/qci/test_qci_bypass_packet.sv"
+  `include "../test_lib/qci/test_qci_bypass_multi_stream.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port.sv"
+  `include "../test_lib/qci/test_qci_bypass_multi_port.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_vid_one_port.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port_with_bypass_background.sv"
 endpackage
 `endif
 

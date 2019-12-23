@@ -21,7 +21,7 @@ class test_qci_bypass_packet extends simple_qci_smoke_test;
   
    virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);     
-    set_inst_override_by_type("*tsn_switch_model0*",  tsn_switch_model::get_type(), tsn_switch_expect_model_qci::get_type() );
+    set_inst_override_by_type("*tsn_switch_model0*",  tsn_switch_expect_model::get_type(), tsn_switch_expect_model_qci::get_type() );
 	
 	mac_user_sequence_bypass = mac_user_sequence::type_id::create("mac_user_sequence_bypass", this);  
    endfunction : build_phase
@@ -32,7 +32,7 @@ endtask
   
   function void end_of_elaboration();
     `uvm_info(get_type_name(),
-      $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_HIGH)
+      $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration    
     
    task run_phase(uvm_phase phase);
@@ -42,7 +42,7 @@ endtask
 	 basic_run_monitor(phase);
 	 
 	 begin
-	 #100us;
+	 #140us;
 	   //use for L2 MAC learn
        if ( !(mac_user_sequence0.randomize() with {
 	                                              mac_user_sequence0.c_da_cnt==(port_stimulus_s[dmac].da_index);
@@ -51,7 +51,7 @@ endtask
 							                      mac_user_sequence0.c_tpid == 'd46;
 							                      mac_user_sequence0.c_preemptable==0;
 							                      mac_user_sequence0.c_data_payload ==0;
-							                      mac_user_sequence0.c_vlan == {3'd7,1'b0,vid};
+							                      mac_user_sequence0.c_vlan == {phb,1'b0,vid};
 	                                             } )) 
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
@@ -62,6 +62,7 @@ endtask
 	 //gen stimulus at source port
 	 begin
 	 #base_time;
+	 #5us;
 	 while(1)
 	   begin
 	    -> packet_trigger;
@@ -71,6 +72,7 @@ endtask
 	 
 	 begin
 	 #base_time;
+	 #5us;
 	 #time_slot_time0;
 	 while(1)
 	   begin
@@ -97,7 +99,6 @@ endtask
 		 `uvm_error(get_type_name, "Randomize Failed!") 
 		end
 		mac_user_sequence_bypass.start(pcs_tx_rx_env0.mac_env0[source_port].mac_rx_agent0.sequencer);
-		data_payload++;
         end		
 	 end	 
 	 
