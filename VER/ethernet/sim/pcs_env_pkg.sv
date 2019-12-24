@@ -62,6 +62,7 @@ package pcs_env_pkg;
   //`include "../uvc/sequence/pcs_base_seq.sv"    
   `include "../env/pcs_tx_rx_env.sv" 
   `include "../env/tsn_switch_expect_model_qci.sv"
+  `include "../env/tsn_switch_monitor_model_qci.sv"
 //seq lib
   //stimulus sequence
   `include "../seq_lib/mac_user_seq_lib.sv"

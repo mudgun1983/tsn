@@ -19,7 +19,7 @@ class pcs_base_test extends uvm_test;
 	string global_test_log;
 	string test_result_file;
 	int test_port_index= 5'd2;
-	int    TIME_OUT_INTERVAL=50ms; 
+	int    TIME_OUT_INTERVAL=10ms; 
 	bit    test_pass;
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);

@@ -1,6 +1,6 @@
-class test_qci_pass_multi_port_with_bypass_background extends simple_qci_smoke_test;
+class test_qci_pass_multi_port_with_bypass_background_debug2 extends simple_qci_smoke_test;
  
-   `uvm_component_utils(test_qci_pass_multi_port_with_bypass_background)
+   `uvm_component_utils(test_qci_pass_multi_port_with_bypass_background_debug2)
     mac_user_sequence mac_user_sequence_array[];
 	mac_user_sequence mac_seq_array[];
 	semaphore sem[];
@@ -15,7 +15,7 @@ class test_qci_pass_multi_port_with_bypass_background extends simple_qci_smoke_t
 	int      ingress_flow_id3;
 	bit      init_finish;
 	bit  [7:0] data_sequence_id[20];
-    function new(string name="test_qci_pass_multi_port_with_bypass_background" ,  uvm_component parent=null);
+    function new(string name="test_qci_pass_multi_port_with_bypass_background_debug2" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
 		 auto_stop_en = 1;
