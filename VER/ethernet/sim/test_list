@@ -4,7 +4,7 @@
 #simple_e_p_mix_packet_test
 #simple_e_p_mix_random_test
 #full_throughput_test
-#full_throughput_switch_test 
+full_throughput_switch_test 
 #ptp_smoke_test 
 #ptp_rcv_smoke_test
 #ptp_slave_smoke_test
@@ -34,4 +34,4 @@
 #test_qci_pass_multi_port
 #test_qci_bypass_multi_port
 #test_qci_pass_multi_vid_one_port
-test_qci_pass_multi_port_with_bypass_background
+#test_qci_pass_multi_port_with_bypass_background

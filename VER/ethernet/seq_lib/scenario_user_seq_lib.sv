@@ -392,6 +392,7 @@ bit  [7:0] data_sequence_id[20];
 							  mac_seq.c_packet_len == data_len;
 							  mac_seq.c_tpid == data_len;
 							  mac_seq.c_preemptable==0;
+							  mac_seq.c_vlan == 'd500;
 							 })
               //local_da_cnt++; 	
               //local_sa_cnt++;		
@@ -482,6 +483,7 @@ bit  [47:0] da_index;
 			      				   mac_seq.c_packet_len == data_len;
 			      				   mac_seq.c_tpid == data_len;
 			      				   mac_seq.c_preemptable==0;
+								   mac_seq.c_vlan == 0;
 			      				 })
   endtask  
 endclass

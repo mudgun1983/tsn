@@ -438,3 +438,41 @@ class ipp_epp_table_reg_seq extends seq_reg_user_macro ;
 	   `uvm_info(get_type_name(),$psprintf("\n-----------------ipp_epp_table_reg_seq set end---------------",),UVM_LOW);
   endtask
 endclass
+
+class global_reg_seq extends seq_reg_user_macro ;
+	  
+  `uvm_sequence_utils(global_reg_seq, cpu_sequencer)
+  
+  function new(string name="global_reg_seq");
+    super.new(name);
+  endfunction : new
+  
+   // virtual task pre_body();/*{{{*/
+       // uvm_test_done.raise_objection(this);
+       // `uvm_info(get_type_name(),"[START_SEQUENCE]",UVM_LOW)
+  // endtask : pre_body
+
+  // virtual task post_body();
+      // uvm_test_done.drop_objection(this);
+      // `uvm_info(get_type_name(),"[STOP_SEQUENCE]",UVM_LOW)
+  // endtask : post_body
+  
+  virtual task body();
+      super.body();
+     #1us;
+	 `uvm_info(get_type_name(),$psprintf("\n-----------------global_reg_seq set begin---------------",),UVM_LOW);
+      
+	   begin   
+         `user_rgm_read_with(`GLOBAL_PCKT_DROP_EN	     )	   
+         `user_rgm_write_with(`GLOBAL_PCKT_DROP_EN,2'b1); //da_eq_sa_drop_en  ,pause_pckt_drop_en
+       end
+      
+      `uvm_info(get_type_name(),$psprintf("\n-----------------global_reg_seq set end---------------",),UVM_LOW);
+       
+  
+//      //*****************************************************************
+//      // 全局配置 
+//      //*****************************************************************
+     
+  endtask
+endclass

@@ -138,10 +138,11 @@ endclass
 class full_throughput_test extends pcs_base_test;
  
    `uvm_component_utils(full_throughput_test)
- 
-    parameter TIME_OUT_INTERVAL=1ms; 
+    global_reg_seq global_reg_seq0;
+   // parameter TIME_OUT_INTERVAL=1ms; 
     function new(string name="full_throughput_test" ,  uvm_component parent=null);
-        super.new(name,parent);  
+        super.new(name,parent); 
+        TIME_OUT_INTERVAL=1ms; 		
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -150,10 +151,16 @@ class full_throughput_test extends pcs_base_test;
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",
 	       		    	scenario_full_throughput_test::type_id::get());
-//==================================scenario============================================               
+//==================================scenario============================================   
+    global_reg_seq0 = new();            
    endfunction : build_phase
      
-    
+   task configure_phase( uvm_phase phase);
+     phase.raise_objection( this );
+	 #50us;
+     global_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
+	 phase.drop_objection( this );
+  endtask 
    // task run_phase(uvm_phase phase);
     // fork
 	   // begin
@@ -184,7 +191,9 @@ class full_throughput_test extends pcs_base_test;
 	   
 	// join
    // endtask:run_phase
-  
+  virtual function set_item_config_value();
+  item_config0.eth_item_payload=`ASSIGN_ALL_BYTE;
+endfunction
 endclass 
 
 class full_throughput_switch_test extends pcs_base_test;
@@ -194,6 +203,7 @@ class full_throughput_switch_test extends pcs_base_test;
 
     function new(string name="full_throughput_switch_test" ,  uvm_component parent=null);
         super.new(name,parent);  
+		TIME_OUT_INTERVAL=1ms; 	
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -217,27 +227,12 @@ class full_throughput_switch_test extends pcs_base_test;
       begin
        port_stimulus_s[i] = 0;
       end
- 
+    
+	for(int i=0;i<=dut_max_port;i++)
+	  port_stimulus_s[i].port_en = 1;
 // port_stimulus_s[0].port_en = 1;
 // port_stimulus_s[1].port_en = 1;
-port_stimulus_s[2].port_en = 1;
-port_stimulus_s[3].port_en = 1;
-port_stimulus_s[4].port_en = 1;
-port_stimulus_s[5].port_en = 1;
-port_stimulus_s[6].port_en = 1;
-port_stimulus_s[7].port_en = 1;
-port_stimulus_s[8].port_en = 1;
-port_stimulus_s[9].port_en = 1;
-port_stimulus_s[10].port_en = 1;
-port_stimulus_s[11].port_en = 1;
-port_stimulus_s[12].port_en = 1;
-port_stimulus_s[13].port_en = 1;
-port_stimulus_s[14].port_en = 1;
-port_stimulus_s[15].port_en = 1;
-port_stimulus_s[16].port_en = 1;
-port_stimulus_s[17].port_en = 1;
-port_stimulus_s[18].port_en = 1;
-port_stimulus_s[19].port_en = 1;
+
 
 port_stimulus_s[0].packet_count = 1;  //0: forever
 port_stimulus_s[1].packet_count = 1;
@@ -301,7 +296,11 @@ port_stimulus_s[16].da_index = (dut_max_port-16);
 port_stimulus_s[17].da_index = (dut_max_port-17);
 port_stimulus_s[18].da_index = (dut_max_port-18);
 port_stimulus_s[19].da_index = (dut_max_port-19);
-endfunction       
+endfunction      
+
+virtual function set_item_config_value();
+  item_config0.eth_item_payload=`ASSIGN_ALL_BYTE;
+endfunction 
 endclass
 
 
