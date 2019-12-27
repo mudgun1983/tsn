@@ -52,7 +52,8 @@ class tsn_switch_expect_model extends tsn_switch_model ;
 		      	if(merge_finish_array[index])
 				hash_cal_read_l2_table(eth_frame_exp_tr_array[index],index,index_o);
 				
-				if(eth_frame_exp_tr_array[index].tagged_data[1].tpid==`PTP_ETYPE)
+				//if(eth_frame_exp_tr_array[index].tagged_data[1].tpid==`PTP_ETYPE)
+				if(eth_frame_exp_tr_array[index].tagged_data[eth_frame_exp_tr_array[index].tag_cnt].tpid==`PTP_ETYPE)
 				  is_ptp[index] =1;
 				else
 				  is_ptp[index] =0;
@@ -79,6 +80,9 @@ class tsn_switch_expect_model extends tsn_switch_model ;
 	  bit[11:0] vlan;
 	  
 	  sa = eth_frame_exp_tr.source_address;
+	  if(eth_frame_exp_tr.tag_cnt<=1)
+	  vlan = 0;
+	  else
 	  vlan = {eth_frame_exp_tr.tagged_data[0].data[1][3:0],eth_frame_exp_tr.tagged_data[0].data[0]};
 	  hash_key[index] = do_crc12({sa,vlan},12'hfff);
 	  `uvm_info(get_type_name(),{$psprintf("hash_key_i[%0d]=%0h\n",index,hash_key[index])},UVM_LOW);
@@ -92,6 +96,9 @@ class tsn_switch_expect_model extends tsn_switch_model ;
 	  bit[11:0] vlan;
 	  
 	  sa = eth_frame_exp_tr.destination_address;
+	  if(eth_frame_exp_tr.tag_cnt<=1)
+	  vlan = 0;
+	  else
 	  vlan = {eth_frame_exp_tr.tagged_data[0].data[1][3:0],eth_frame_exp_tr.tagged_data[0].data[0]};;
 	  hash_key[index_i] = do_crc12({sa,vlan},12'hfff);
 	  sem.get(1);

@@ -272,10 +272,12 @@ nWaveOpenFsdbDirHistory = "\"/home/wangguobin/project/TSN/verification_git_debug
 pcs/sim\"" "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\""
 [Form]
 version = Verdi3_L-2016.06-1
-wave/restoreSig.fm = 100,100,723,530
-wave/unknownSave.fm = 100,100,520,275
 wave/openWFile.fm = 100,100,823,688
-wave/report.fm = 100,100,710,300
+wave/report.fm = 66,559,710,300
+wave/saveSig.fm = 100,100,723,530
+wave/unknownSave.fm = 100,100,520,275
+wave/restoreSig.fm = 100,100,723,530
+wave/usrMarker.fm = 100,100,718,273
 [General]
 TclAutoSource = 
 Find_Delimiter = 
@@ -380,10 +382,11 @@ savePropDtl = TRUE
 [QtDialog]
 importDesignForm = 633,242,634,611
 AMS_MAIN = 633,209,652,690
-QwInfoMsgDlg = 575,705,750,250
-QwWarnMsgDlg = 650,742,600,250
-QwUserAskDlg = 798,499,324,114
-qWaveSignalDialog = 527,157,1103,793
+QwInfoMsgDlg = 575,631,750,250
+QwUserAskDlg = 798,536,324,128
+ExpressionDialog = 570,308,778,493
+qWaveSignalDialog = 547,255,927,476
+QwWarnMsgDlg = 650,796,600,250
 [Relationship]
 hideRecursiceNode = FALSE
 [Session Cache]
@@ -937,7 +940,7 @@ autoConnectTBrowser = FALSE
 connectTBrowserInContainer = TRUE
 SEQShowComparisonIcon = TRUE
 SEQAddDriverLoadInSameGroup = TRUE
-getSignalForm = 337 -735 1103 793 476 695 573 340
+getSignalForm = 547 218 927 476 341 378 336 89
 [compile_design]
 DefaultLang = Verilog
 [eco]
@@ -1265,7 +1268,7 @@ AddImportArgument = FALSE
 LineBreakWithScope = TRUE
 StopAfterCompileOption = -s
 [wave.0]
-viewPort = 0 28 1440 86 214 65
+viewPort = 0 28 1920 587 526 65
 [wave.1]
 viewPort = 0 28 1920 852 526 65
 [wave.2]

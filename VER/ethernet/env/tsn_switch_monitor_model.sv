@@ -44,7 +44,8 @@ bit  is_ptp[];
 							   .index           (index),
 							   .merge_finish_o  (merge_finish_array[index]) );
 				
-				if(eth_frame_exp_tr_array[index].tagged_data[1].tpid==`PTP_ETYPE)
+				//if(eth_frame_exp_tr_array[index].tagged_data[1].tpid==`PTP_ETYPE)
+				if(eth_frame_exp_tr_array[index].tagged_data[eth_frame_exp_tr_array[index].tag_cnt].tpid==`PTP_ETYPE)
 				  is_ptp[index] =1;
 				else
 				  is_ptp[index] =0;

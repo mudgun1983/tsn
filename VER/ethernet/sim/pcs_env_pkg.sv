@@ -119,6 +119,8 @@ package pcs_env_pkg;
   `include "../test_lib/qci/test_qci_bypass_multi_port.sv"
   `include "../test_lib/qci/test_qci_pass_multi_vid_one_port.sv"
   `include "../test_lib/qci/test_qci_pass_multi_port_with_bypass_background.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port_multi_gate.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port_multi_gate_with_bypass_background.sv"
 endpackage
 `endif
 

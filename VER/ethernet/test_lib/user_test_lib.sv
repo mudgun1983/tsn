@@ -228,13 +228,13 @@ class full_throughput_switch_test extends pcs_base_test;
        port_stimulus_s[i] = 0;
       end
     
-	for(int i=0;i<=dut_max_port;i++)
+	for(int i=2;i<=dut_max_port;i++)
 	  port_stimulus_s[i].port_en = 1;
 // port_stimulus_s[0].port_en = 1;
 // port_stimulus_s[1].port_en = 1;
 
 
-port_stimulus_s[0].packet_count = 1;  //0: forever
+//port_stimulus_s[0].packet_count = 1;  //0: forever
 port_stimulus_s[1].packet_count = 1;
 //port_stimulus_s[2].packet_count = 1; //comment means no limit, it will generate packet forever
 //port_stimulus_s[3].packet_count = 1;

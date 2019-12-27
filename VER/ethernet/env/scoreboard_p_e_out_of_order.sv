@@ -283,21 +283,21 @@ eth_col_port_que_t;
           end
     endtask: eth_frame_compare
 
-function payload_compare(eth_frame eth_frame_exp_tr,         
-                         eth_frame eth_frame_col_tr,
-						 output bit match,
-						 output int payload_seq_id);
+// function payload_compare(eth_frame eth_frame_exp_tr,         
+                         // eth_frame eth_frame_col_tr,
+						 // output bit match,
+						 // output int payload_seq_id);
 
-match = 0;						 
-if(eth_frame_exp_tr.tagged_data[1].data[0] != eth_frame_col_tr.tagged_data[1].data[0])  // indicate collect side packet loss	
-	match = 0;	
-else
-   begin
-     match = 1;		
-	 ->comp_success;
-   end
+// match = 0;						 
+// if(eth_frame_exp_tr.tagged_data[1].data[0] != eth_frame_col_tr.tagged_data[1].data[0])  // indicate collect side packet loss	
+	// match = 0;	
+// else
+   // begin
+     // match = 1;		
+	 // ->comp_success;
+   // end
 
-payload_seq_id	 = eth_frame_exp_tr.tagged_data[1].data[0];
-endfunction
+// payload_seq_id	 = eth_frame_exp_tr.tagged_data[1].data[0];
+// endfunction
 
 endclass 

@@ -72,9 +72,10 @@ string timestamp_file;
 			`uvm_info(get_type_name(),{$psprintf("COMPARE START eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address)},UVM_LOW);
 			//============unpack ptp frame=============//
 			//eth_frame_col_tr.print();
-			data_tmp = new[eth_frame_col_tr.tagged_data[1].data.size];
-			foreach(eth_frame_col_tr.tagged_data[1].data[key])
-				data_tmp[key]=eth_frame_col_tr.tagged_data[1].data[key];
+			//data_tmp = new[eth_frame_col_tr.tagged_data[1].data.size];
+			data_tmp = new[eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data.size];
+			foreach(eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data[key])
+				data_tmp[key]=eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data[key];
 			//data_tmp =eth_frame_col_tr.tagged_data[1].data ;
 			//`uvm_info(get_type_name(),$psprintf("data_tmp size=%0d",data_tmp.size()),UVM_LOW);
 	        ptp_trans.unpack_bytes(data_tmp);
@@ -365,9 +366,9 @@ string timestamp_file;
 	
 	virtual function unpack_ptp(eth_frame eth_frame_trans,ref ptp_item ptp_trans);
 	  bit [7:0] data_tmp[];
-	  data_tmp = new[eth_frame_trans.tagged_data[1].data.size];
-	  foreach(eth_frame_trans.tagged_data[1].data[key])
-	    data_tmp[key]=eth_frame_trans.tagged_data[1].data[key];
+	  data_tmp = new[eth_frame_trans.tagged_data[eth_frame_trans.tag_cnt].data.size];
+	  foreach(eth_frame_trans.tagged_data[eth_frame_trans.tag_cnt].data[key])
+	    data_tmp[key]=eth_frame_trans.tagged_data[eth_frame_trans.tag_cnt].data[key];
 	   ptp_trans.unpack_bytes(data_tmp);
 	endfunction 
 	
@@ -407,6 +408,7 @@ string timestamp_file;
         if(eth_col_frame_trans.tagged_data[1].tpid != eth_exp_frame_trans.tagged_data[1].tpid)
 		   mismatch[3] = 1;
         
+		for(int i=0;i<eth_exp_frame_trans.tag_cnt-1;i++)
 		foreach(eth_col_frame_trans.tagged_data[0].data[key])
          begin
 		   if(eth_col_frame_trans.tagged_data[0].data[key] != eth_exp_frame_trans.tagged_data[0].data[key])
@@ -452,6 +454,9 @@ string timestamp_file;
 		      end		
             $fclose(write_exp_data_fd);
 			
+			if(ptp_col_trans.transportSpecific != ptp_exp_trans.transportSpecific)
+			   mismatch[11] = 1; 
+			   
 			write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 			if(|mismatch)  
 		     begin		                                                   

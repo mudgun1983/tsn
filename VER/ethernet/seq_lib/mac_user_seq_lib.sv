@@ -34,6 +34,7 @@ class mac_user_sequence extends mac_base_sequence;
   item_config item_config0;
   string scope_name = "";
   bit [1:0] eth_item_payload;
+  int       tagged_size;
   `ifdef GMII_RX_PUSH_MODE
     `uvm_sequence_utils(mac_user_sequence,mac_rx_base_push_sequencer)
   `else
@@ -90,10 +91,13 @@ class mac_user_sequence extends mac_base_sequence;
   endtask : pre_body
 
   virtual task body();
+     int i;
      get_config();
 	 //forever 
+	 i = 0;
      begin	  	 
 	 eth_item_payload = item_config0.eth_item_payload;
+	 tagged_size      = item_config0.tagged_size;
      	vlan_choose = $random;
      	//$display("T=%0t,test in mac seq",$time);
      `uvm_do_with(req,
@@ -128,22 +132,38 @@ class mac_user_sequence extends mac_base_sequence;
                    	
                    	req.destination_address          == c_da_cnt;//48'h01_02_03_04_05_06;//p_sequencer.static_cfg.da;
                    	req.source_address               == c_sa_cnt;//48'h07_08_09_0a_0b_0c;//p_sequencer.static_cfg.sa;
-                    req.tagged_data_size             == 2    ;//p_sequencer.static_cfg.cfg_tagged_data_size;
+                    req.tagged_data_size             == tagged_size    ;//p_sequencer.static_cfg.cfg_tagged_data_size;
                     //req.tagged_data[0].max_data_len  == 2    ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
-                   // req.tagged_data[0].min_data_len  == 2    ;//p_sequencer.static_cfg.cfg_min_tagged_data_len;    
-                   	req.tagged_data[0].vlan_tag_kind == eth_tagged_data::VLAN_TAG; 
-
-                   	//{
-                   	 req.tagged_data[0].data[0] == c_vlan[15:8] ;
-                     req.tagged_data[0].data[1] == c_vlan[7:0] ;
-                   	//}
+                   // req.tagged_data[0].min_data_len  == 2    ;//p_sequencer.static_cfg.cfg_min_tagged_data_len;  
+				   if(tagged_size!=0){
+                    //for(i=0;i<tagged_size-1;i++)	
+					foreach(req.tagged_data[key])
+                    {if(key<tagged_size-1){
+					 req.tagged_data[key].vlan_tag_kind == eth_tagged_data::VLAN_TAG; 
+					 req.tagged_data[key].data[0] == c_vlan[15:8] ;
+                     req.tagged_data[key].data[1] == c_vlan[7:0] ;
+					 }
+                    }				
+                    }					
+                   	/*
+					req.tagged_data[0].vlan_tag_kind == eth_tagged_data::VLAN_TAG;                    	
+                   	req.tagged_data[0].data[0] == c_vlan[15:8] ;
+                    req.tagged_data[0].data[1] == c_vlan[7:0] ;
+                   	
                    	req.tagged_data[1].max_data_len  == 1518   ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
                     req.tagged_data[1].min_data_len  == 46 ;//p_sequencer.static_cfg.cfg_min_tagged_data_len; 
                     
                    	req.tagged_data[1].data_tag_kind == eth_tagged_data::DATA_TAG;  
 					req.tagged_data[1].data_length   == c_packet_len;
                    	req.tagged_data[1].tpid   == c_tpid;
-					
+					*/
+					req.tagged_data[tagged_size-1].max_data_len  == 1518   ;//p_sequencer.static_cfg.cfg_max_tagged_data_len;
+                    req.tagged_data[tagged_size-1].min_data_len  == 46 ;//p_sequencer.static_cfg.cfg_min_tagged_data_len; 
+                    
+                   	req.tagged_data[tagged_size-1].data_tag_kind == eth_tagged_data::DATA_TAG;  
+					req.tagged_data[tagged_size-1].data_length   == c_packet_len;
+                   	req.tagged_data[tagged_size-1].tpid   == c_tpid;
+					/*
 					if(eth_item_payload == `INCREASE_PAYLOAD)
 					{
 					foreach(req.tagged_data[1].data[key])   
@@ -165,7 +185,7 @@ class mac_user_sequence extends mac_base_sequence;
                     {req.tagged_data[1].data[key]==c_data_payload;
                     }
 					}
-					
+					*/
                    	req.directed_protocol_error_size == 0;
                    	req.protocol_error_size          == 0;
                    	req.protocol_error_mode          == NO_PROT_ERROR;
@@ -176,7 +196,28 @@ class mac_user_sequence extends mac_base_sequence;
                     req.len_error                    == 1'b1;
                     req.long_frame_error             == 1'b0;
                     req.short_frame_error            == 1'b0;
-                                                                      
+                    
+					if(eth_item_payload == `INCREASE_PAYLOAD)
+					{
+					foreach(req.tagged_data[tagged_size-1].data[key])   
+                    {req.tagged_data[tagged_size-1].data[key]==key;
+                    }
+					}
+					else if(eth_item_payload == `ASSIGN_FIRST_BYTE)
+					{
+					foreach(req.tagged_data[tagged_size-1].data[key])   
+                    { if(key ==0)
+					   {req.tagged_data[tagged_size-1].data[key]==c_data_payload;}
+					  else
+					   {req.tagged_data[tagged_size-1].data[key]==key;}
+                    }
+					}
+					else if(eth_item_payload == `ASSIGN_ALL_BYTE)
+					{
+					foreach(req.tagged_data[tagged_size-1].data[key])   
+                    {req.tagged_data[tagged_size-1].data[key]==c_data_payload;
+                    }
+					}					
                    })
 
      `uvm_info(get_type_name(),"uvm_do done",UVM_HIGH)

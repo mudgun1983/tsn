@@ -303,7 +303,8 @@ function payload_compare(eth_frame eth_frame_exp_tr,
 						 output int payload_seq_id);
 
 match = 0;						 
-if(eth_frame_exp_tr.tagged_data[1].data[0] != eth_frame_col_tr.tagged_data[1].data[0])  // indicate collect side packet loss	
+//if(eth_frame_exp_tr.tagged_data[1].data[0] != eth_frame_col_tr.tagged_data[1].data[0])  // indicate collect side packet loss	
+if(eth_frame_exp_tr.tagged_data[eth_frame_exp_tr.tag_cnt].data[0] != eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data[0])
 	match = 0;	
 else
    begin
@@ -311,7 +312,8 @@ else
 	 ->comp_success;
    end
 
-payload_seq_id	 = eth_frame_exp_tr.tagged_data[1].data[0];
+//payload_seq_id	 = eth_frame_exp_tr.tagged_data[1].data[0];
+payload_seq_id	 = eth_frame_exp_tr.tagged_data[eth_frame_exp_tr.tag_cnt].data[0];
 endfunction
 
 endclass : scoreboard
