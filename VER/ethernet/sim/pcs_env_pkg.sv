@@ -121,6 +121,9 @@ package pcs_env_pkg;
   `include "../test_lib/qci/test_qci_pass_multi_port_with_bypass_background.sv"
   `include "../test_lib/qci/test_qci_pass_multi_port_multi_gate.sv"
   `include "../test_lib/qci/test_qci_pass_multi_port_multi_gate_with_bypass_background.sv"
+  
+  //switch
+  `include "../test_lib/switch/full_throughput_switch_vlan_random_test.sv"
 endpackage
 `endif
 

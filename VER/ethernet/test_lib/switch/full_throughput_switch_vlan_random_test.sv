@@ -1,0 +1,185 @@
+class full_throughput_switch_vlan_random_test extends pcs_base_test;
+ 
+   `uvm_component_utils(full_throughput_switch_vlan_random_test)
+ 
+    mac_user_sequence mac_seq_array[];
+	int data_len;
+	bit  [7:0] data_sequence_id[];
+    function new(string name="full_throughput_switch_vlan_random_test" ,  uvm_component parent=null);
+        super.new(name,parent);  
+		TIME_OUT_INTERVAL=1ms; 	
+
+     endfunction : new
+  
+   virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);       
+//==================================scenario============================================       
+       uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
+			            "default_sequence",
+	       		    	scenario_reg_test::type_id::get());
+//==================================scenario============================================    
+
+		mac_seq_array = new[topology_config0.mac_number];
+		foreach(mac_seq_array[key])
+		mac_seq_array[key]=new();     
+
+        data_sequence_id = new[topology_config0.mac_number]	;	
+   endfunction : build_phase
+   
+   function void end_of_elaboration();
+    `uvm_info(get_type_name(),
+      $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
+  endfunction : end_of_elaboration 
+  
+  task run_phase(uvm_phase phase);
+  
+   phase.raise_objection( this );
+	 fork
+	 basic_run_monitor(phase);
+	 
+	 begin
+	 #100us;
+	 for(int i =0; i<topology_config0.mac_number;i++)
+		//for(int i =2; i<4;i++)
+		  begin
+		  automatic int index;
+          index = i; 
+		  fork
+          //EXPRESS PACKET
+		   if(port_stimulus_s[index].port_en)
+		    begin
+			if(port_stimulus_s[index].packet_count==0)
+			  begin
+			    forever
+			      begin
+			       data_len=$urandom_range(1518,46);
+				   item_config0.tagged_size = $urandom_range(1,2);
+                   seq_do(index);		
+                   data_sequence_id[index]++;
+                  end
+              end	
+            else
+              begin
+			    for(int j=0;j<port_stimulus_s[index].packet_count;j++)
+			      begin
+			       data_len=$urandom_range(1518,46);
+				   item_config0.tagged_size = $urandom_range(1,2);
+                   seq_do(index);		
+                   data_sequence_id[index]++;
+                  end
+              end			  
+			end
+          join_none			
+          end	
+          wait fork;
+		  
+		  #100us;	   
+	 phase.drop_objection( this );
+	 end
+	 
+	 join
+	 
+   
+  endtask
+  
+
+  task seq_do(input int index);							 
+       if ( !(mac_seq_array[index].randomize() with {
+	                                              mac_seq_array[index].c_da_cnt==port_stimulus_s[index].da_index;
+							                      mac_seq_array[index].c_sa_cnt==port_stimulus_s[index].sa_index;
+							                      mac_seq_array[index].c_data_control == 1;
+							                      mac_seq_array[index].c_data_payload ==data_sequence_id[index];
+							                      mac_seq_array[index].c_packet_len == data_len;
+							                      mac_seq_array[index].c_tpid == data_len;
+							                      mac_seq_array[index].c_preemptable==0;
+												  mac_seq_array[index].c_vlan == 'h100;
+												  
+	                                             } )) 
+        begin
+		 `uvm_error(get_type_name, "Randomize Failed!") 
+		end		
+		mac_seq_array[index].start(pcs_tx_rx_env0.mac_env0[index].mac_rx_agent0.sequencer);
+  endtask  
+  
+ virtual function set_port_stimulus_value();
+   int dut_max_port;
+   dut_max_port = `DUT_MAX_PORT-1;
+    for(int i=0; i<20;i++)
+      begin
+       port_stimulus_s[i] = 0;
+      end
+    
+	for(int i=2;i<=dut_max_port;i++)
+	  port_stimulus_s[i].port_en = 1;
+ //port_stimulus_s[3].port_en = 1;
+ //port_stimulus_s[6].port_en = 1;
+
+
+//port_stimulus_s[0].packet_count = 1;  //0: forever
+port_stimulus_s[1].packet_count = 1;
+//port_stimulus_s[2].packet_count = 1; //comment means no limit, it will generate packet forever
+//port_stimulus_s[3].packet_count = 1;
+//port_stimulus_s[4].packet_count = 1;
+//port_stimulus_s[5].packet_count = 1;
+//port_stimulus_s[6].packet_count = 1;
+//port_stimulus_s[7].packet_count = 1;
+//port_stimulus_s[8].packet_count = 1;
+//port_stimulus_s[9].packet_count = 1;
+//port_stimulus_s[10].packet_count = 1;
+//port_stimulus_s[11].packet_count = 1;
+//port_stimulus_s[12].packet_count = 1;
+//port_stimulus_s[13].packet_count = 1;
+//port_stimulus_s[14].packet_count = 1;
+//port_stimulus_s[15].packet_count = 1;
+//port_stimulus_s[16].packet_count = 1;
+//port_stimulus_s[17].packet_count = 1;
+//port_stimulus_s[18].packet_count = 1;
+//port_stimulus_s[19].packet_count = 1;
+
+port_stimulus_s[0].sa_index = 0;   
+port_stimulus_s[1].sa_index = 1;
+port_stimulus_s[2].sa_index = 2;  
+port_stimulus_s[3].sa_index = 3;
+port_stimulus_s[4].sa_index = 4;
+port_stimulus_s[5].sa_index = 5;
+port_stimulus_s[6].sa_index = 6;
+port_stimulus_s[7].sa_index = 7;
+port_stimulus_s[8].sa_index = 8;
+port_stimulus_s[9].sa_index = 9;
+port_stimulus_s[10].sa_index = 10;
+port_stimulus_s[11].sa_index = 11;
+port_stimulus_s[12].sa_index = 12;
+port_stimulus_s[13].sa_index = 13;
+port_stimulus_s[14].sa_index = 14;
+port_stimulus_s[15].sa_index = 15;
+port_stimulus_s[16].sa_index = 16;
+port_stimulus_s[17].sa_index = 17;
+port_stimulus_s[18].sa_index = 18;
+port_stimulus_s[19].sa_index = 19;
+
+port_stimulus_s[0].da_index =  (dut_max_port- 0);   
+port_stimulus_s[1].da_index =  (dut_max_port- 1);
+port_stimulus_s[2].da_index =  (dut_max_port- 2);  
+port_stimulus_s[3].da_index =  (dut_max_port- 3);
+port_stimulus_s[4].da_index =  (dut_max_port- 4);
+port_stimulus_s[5].da_index =  (dut_max_port- 5);
+port_stimulus_s[6].da_index =  (dut_max_port- 6);
+port_stimulus_s[7].da_index =  (dut_max_port- 7);
+port_stimulus_s[8].da_index =  (dut_max_port- 8);
+port_stimulus_s[9].da_index =  (dut_max_port- 9);
+port_stimulus_s[10].da_index = (dut_max_port-10);
+port_stimulus_s[11].da_index = (dut_max_port-11);
+port_stimulus_s[12].da_index = (dut_max_port-12);
+port_stimulus_s[13].da_index = (dut_max_port-13);
+port_stimulus_s[14].da_index = (dut_max_port-14);
+port_stimulus_s[15].da_index = (dut_max_port-15);
+port_stimulus_s[16].da_index = (dut_max_port-16);
+port_stimulus_s[17].da_index = (dut_max_port-17);
+port_stimulus_s[18].da_index = (dut_max_port-18);
+port_stimulus_s[19].da_index = (dut_max_port-19);
+endfunction      
+
+virtual function set_item_config_value();
+  item_config0.eth_item_payload=`ASSIGN_ALL_BYTE;
+endfunction 
+endclass
