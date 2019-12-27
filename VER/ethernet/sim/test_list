@@ -28,8 +28,8 @@
 #smd_v_trigger_port_test
 #e_n_packet_set_port_to_e_p_mac_test
 #e_p_packet_set_port_to_e_mac_test
-simple_qci_smoke_test
-test_qci_bypass_packet
+#simple_qci_smoke_test
+#test_qci_bypass_packet
 test_qci_bypass_multi_stream
 test_qci_pass_multi_port
 test_qci_bypass_multi_port

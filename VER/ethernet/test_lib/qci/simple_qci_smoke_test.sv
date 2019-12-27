@@ -223,6 +223,7 @@ virtual function set_item_config_value();
  item_config0.e_mac_vlan[2] = {3'd0,1'b0,vid};
  item_config0.p_mac_vlan[4] = {3'd2,1'b0,vid};
  item_config0.e_mac_vlan[4] = {3'd0,1'b0,vid};
+ item_config0.tagged_size   = 2;
 endfunction
   
 virtual function set_i_epp_predefine_value();
