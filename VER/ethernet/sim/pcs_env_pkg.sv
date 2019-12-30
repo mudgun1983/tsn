@@ -98,6 +98,7 @@ package pcs_env_pkg;
   `include "../test_lib/ptp/full_instance_rcv_one_step_master.sv"
   `include "../test_lib/ptp/full_instance_rcv_two_step_master.sv"
   `include "../test_lib/ptp/full_instance_slave.sv"
+  `include "../test_lib/ptp/ptp_rcv_vlan_random_one_instance_test.sv"
   //BR
   `include "../test_lib/br/simple_n_packet_port_test.sv"  
   `include "../test_lib/br/simple_preemptable_packet_port_test.sv"  
