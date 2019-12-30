@@ -38,7 +38,7 @@ class scoreboard extends uvm_scoreboard;
     int write_col_data_fd        ;
     int write_comp_data_fd;
 	
-	int compare_start_flag = 0;
+	bit[1:0] compare_start_flag = 0;
 	int payload_seq_id;
 	int scoreboard_id;
 //================================================//
@@ -216,7 +216,7 @@ class scoreboard extends uvm_scoreboard;
 									      comp_state = EXP_QUEUE_CHECK;
 									      `uvm_info(get_type_name(),{$psprintf("WARNING, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time)},UVM_HIGH);
 										  
-										  if(compare_start_flag)
+										  if(compare_start_flag[(eth_frame_col_tr.tag_cnt-1)])
 										    begin
 											write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 										    $fwrite(write_comp_data_fd,$psprintf("FATAL, PACKET LOSS, Payload Sequence ID=%0h time=%0t\n",payload_seq_id,$time));   
@@ -229,7 +229,7 @@ class scoreboard extends uvm_scoreboard;
 									  end
 									else
 									  begin
-									    compare_start_flag = 1;
+									    compare_start_flag[(eth_frame_col_tr.tag_cnt-1)] = 1;
 										write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 										if(eth_frame_exp_tr.frame_data.size!=eth_frame_col_tr.frame_data.size)
 										  begin

@@ -5,9 +5,10 @@ class full_throughput_switch_vlan_random_test extends pcs_base_test;
     mac_user_sequence mac_seq_array[];
 	int data_len;
 	bit  [7:0] data_sequence_id[];
+	int        init_finish;
     function new(string name="full_throughput_switch_vlan_random_test" ,  uvm_component parent=null);
         super.new(name,parent);  
-		TIME_OUT_INTERVAL=1ms; 	
+		TIME_OUT_INTERVAL=5ms; 	
 
      endfunction : new
   
@@ -38,7 +39,12 @@ class full_throughput_switch_vlan_random_test extends pcs_base_test;
 	 basic_run_monitor(phase);
 	 
 	 begin
-	 #100us;
+	 //#100us;
+	 `ifndef DUMMY_DUT
+	 dut_if0.init_finish(init_finish);
+	 $display("init_finish=%0b",init_finish);
+	 `else
+	 `endif
 	 for(int i =0; i<topology_config0.mac_number;i++)
 		//for(int i =2; i<4;i++)
 		  begin
@@ -71,10 +77,14 @@ class full_throughput_switch_vlan_random_test extends pcs_base_test;
 			end
           join_none			
           end	
+		  $display("item done at %0t",$time);
+		  	  #100us;	   
+	       phase.drop_objection( this );
           wait fork;
 		  
-		  #100us;	   
-	 phase.drop_objection( this );
+	//	  #100us;	   
+	// phase.drop_objection( this );
+	 $display("phase.drop_objection at %0t",$time);
 	 end
 	 
 	 join
@@ -82,7 +92,41 @@ class full_throughput_switch_vlan_random_test extends pcs_base_test;
    
   endtask
   
-
+  virtual function void report_phase(uvm_phase phase);
+      bit [`MAX_ENV_MAC_NUM-1] port_en_array;
+	  test_pass = 1;
+	  port_en_array = 0;
+	  foreach(port_stimulus_s[key])begin
+	   if(port_stimulus_s[key].port_en)begin
+	   port_en_array[key]=1;
+	   if(comp_success_count[key]==0)
+	     begin
+           test_pass = 0;
+		   $display("comp_success_count[%0d]=%0d",key,comp_success_count[key]);		   
+		 end
+	   else
+	     begin
+           $display("comp_success_count[%0d]=%0d",key,comp_success_count[key]);
+		 end
+	   end
+	  end
+	  
+	  if(test_pass && (|port_en_array))begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
+		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		end
+	  else
+	    begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
+		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		end
+	  
+  endfunction
+  
   task seq_do(input int index);							 
        if ( !(mac_seq_array[index].randomize() with {
 	                                              mac_seq_array[index].c_da_cnt==port_stimulus_s[index].da_index;
@@ -116,15 +160,15 @@ class full_throughput_switch_vlan_random_test extends pcs_base_test;
 
 
 //port_stimulus_s[0].packet_count = 1;  //0: forever
-port_stimulus_s[1].packet_count = 1;
-//port_stimulus_s[2].packet_count = 1; //comment means no limit, it will generate packet forever
-//port_stimulus_s[3].packet_count = 1;
-//port_stimulus_s[4].packet_count = 1;
-//port_stimulus_s[5].packet_count = 1;
-//port_stimulus_s[6].packet_count = 1;
-//port_stimulus_s[7].packet_count = 1;
-//port_stimulus_s[8].packet_count = 1;
-//port_stimulus_s[9].packet_count = 1;
+//port_stimulus_s[1].packet_count = 1;
+port_stimulus_s[2].packet_count = 500; //comment means no limit, it will generate packet forever
+port_stimulus_s[3].packet_count = 500;
+port_stimulus_s[4].packet_count = 500;
+port_stimulus_s[5].packet_count = 500;
+port_stimulus_s[6].packet_count = 500;
+port_stimulus_s[7].packet_count = 500;
+port_stimulus_s[8].packet_count = 500;
+port_stimulus_s[9].packet_count = 500;
 //port_stimulus_s[10].packet_count = 1;
 //port_stimulus_s[11].packet_count = 1;
 //port_stimulus_s[12].packet_count = 1;
@@ -165,8 +209,8 @@ port_stimulus_s[4].da_index =  (dut_max_port- 4);
 port_stimulus_s[5].da_index =  (dut_max_port- 5);
 port_stimulus_s[6].da_index =  (dut_max_port- 6);
 port_stimulus_s[7].da_index =  (dut_max_port- 7);
-port_stimulus_s[8].da_index =  (dut_max_port- 8);
-port_stimulus_s[9].da_index =  (dut_max_port- 9);
+port_stimulus_s[8].da_index =  9;//(dut_max_port- 8);
+port_stimulus_s[9].da_index =  8;//(dut_max_port- 9);
 port_stimulus_s[10].da_index = (dut_max_port-10);
 port_stimulus_s[11].da_index = (dut_max_port-11);
 port_stimulus_s[12].da_index = (dut_max_port-12);

@@ -5,7 +5,7 @@ class pcs_base_test extends uvm_test;
    `uvm_component_utils(pcs_base_test)
  
     uvm_table_printer          printer;  
-
+    virtual dut_if dut_if0;
     pcs_tx_rx_env pcs_tx_rx_env0;
     register_config reg_config;
 	topology_config topology_config0;
@@ -56,6 +56,10 @@ class pcs_base_test extends uvm_test;
 	   set_port_stimulus_value();	// define in the global_define.sv
 	   set_port_ptp_instance_mapping();
 	   set_item_config_value();
+//=================================get dut if connected with DUT================================
+        if( !uvm_config_db #(virtual dut_if )::get( this , "" , "dut_vif" ,dut_if0 ) ) begin
+           `uvm_fatal(get_type_name(),"=============dut_if==========");
+		end	   
 //=================================set cpu agent config==========================================	
 	   set_cpu_config();
        uvm_config_db #(cpu_config)::set(this, "*", "cpu_config",
@@ -233,6 +237,7 @@ class pcs_base_test extends uvm_test;
 	   //#100us;
 	   if(comp_success_count[test_port_index]!=0)
 	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
 		   $fclose(file_id);
@@ -242,6 +247,7 @@ class pcs_base_test extends uvm_test;
 	   else
 	     begin
 		   file_id=$fopen(test_result_file,"a+"); 
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
 		   $fclose(file_id);
 		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
@@ -256,6 +262,7 @@ class pcs_base_test extends uvm_test;
   virtual function void report_phase(uvm_phase phase);
 	   if(comp_success_count[test_port_index]!=0)
 	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
 		   $fclose(file_id);
@@ -264,6 +271,7 @@ class pcs_base_test extends uvm_test;
 		 end
 	   else
 	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
 		   $fclose(file_id);
@@ -476,6 +484,7 @@ fork
 	   //#100us;
 	   if(comp_success_count[test_port_index]!=0)
 	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
 		   $fclose(file_id);
@@ -484,6 +493,7 @@ fork
 		 end
 	   else
 	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
 		   $fclose(file_id);
