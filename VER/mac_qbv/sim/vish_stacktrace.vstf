@@ -1,0 +1,50 @@
+# Current time Wed Sep 18 16:10:12 2019
+# QuestaSim Stack Trace
+# Program = vish
+# Id = "10.1d"
+# Version = "2012.11"
+# Date = "Nov  1 2012"
+# Platform = win64
+
+Exception c0000005 has occurred at address 40297f9b. Traceback:
+# 0    0x40297f9b: 'Ucdb_Init + 0x38f6b'
+# 1    0x40838e4c: 'Tclsqlite_Init + 0x3f510c'
+# 2    0x40838e4c: 'Tclsqlite_Init + 0x3f510c'
+# 3    0x028f1e30: '<unknown (@0x28f1e30)>'
+# 4    0x0000037f: '<unknown (@0x37f)>'
+# 5    0x04a013a0: '<unknown (@0x4a013a0)>'
+# 6    0xaa3c5e95: 'RtlReAllocateHeap + 0x21d5'
+# 7    0x04a34300: '<unknown (@0x4a34300)>'
+# 8    0x028f0000: '<unknown (@0x28f0000)>'
+# 9    0x00002219: '<unknown (@0x2219)>'
+# 10   0x049fce00: '<unknown (@0x49fce00)>'
+StackWalk failed 487
+# End of Stack Trace
+
+# Current time Wed Sep 18 16:48:05 2019
+# QuestaSim Stack Trace
+# Program = vish
+# Id = "10.1d"
+# Version = "2012.11"
+# Date = "Nov  1 2012"
+# Platform = win64
+
+Exception c0000005 has occurred at address 40297f9b. Traceback:
+# 0    0x40297f9b: 'Ucdb_Init + 0x38f6b'
+# 1    0x40838e4c: 'Tclsqlite_Init + 0x3f510c'
+# 2    0x40838e4c: 'Tclsqlite_Init + 0x3f510c'
+# 3    0x005fb9d0: '<unknown (@0x5fb9d0)>'
+# 4    0x00000001: '<unknown (@0x1)>'
+# 5    0x1000ee1c: 'TclEvalObjvInternal + 0x1c'
+# 6    0x100350dc: 'TclExprFloatError + 0xefc'
+# 7    0x00641200: '<unknown (@0x641200)>'
+# 8    0x00640cc0: '<unknown (@0x640cc0)>'
+# 9    0x00000027: '<unknown (@0x27)>'
+# 10   0x00000050: '<unknown (@0x50)>'
+# 11   0x59128820: 'exception::`vftable' + 0x1650'
+# 12   0x00000004: '<unknown (@0x4)>'
+# 13   0x1006e250: 'Tcl_DStringFree + 0x10'
+# 14   0x10057b5e: 'TclGetNamespaceForQualName + 0x38e'
+StackWalk failed 0
+# End of Stack Trace
+

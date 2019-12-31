@@ -1,0 +1,22 @@
+# Current time Thu Sep 19 11:27:14 2019
+# QuestaSim Stack Trace
+# Program = vsim
+# Id = "10.1d"
+# Version = "2012.11"
+# Date = "Nov  1 2012"
+# Platform = win64
+# 0    0x00000001402b3f84: '<unknown (@0x1402b3f84)>'
+# 1    0x00000001402b434c: '<unknown (@0x1402b434c)>'
+# 2    0x000000014013b0c4: '<unknown (@0x14013b0c4)>'
+# 3    0x000000014075dee8: '<unknown (@0x14075dee8)>'
+# 4    0x00000001400012ae: '<unknown (@0x1400012ae)>'
+# 5    0x000000014010131e: '<unknown (@0x14010131e)>'
+# 6    0x0000000140105191: '<unknown (@0x140105191)>'
+# 7    0x0000000140105224: '<unknown (@0x140105224)>'
+# 8    0x000000014035c974: '<unknown (@0x14035c974)>'
+# 9    0x000000014043ca73: '<unknown (@0x14043ca73)>'
+# 10   0x00007ff8aa4178d8: 'RtlInitializeCriticalSection + 0x1d8' in 'c:\windows\system32\ntdll.dll'
+# 11   0x00007ff8aa3bd4fa: 'RtlWalkFrameChain + 0x109a' in 'c:\windows\system32\ntdll.dll'
+# End of Stack Trace
+
+

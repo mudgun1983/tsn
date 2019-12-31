@@ -1,0 +1,2 @@
+xil_defaultlib : vcs_lib/xil_defaultlib
+OTHERS=/home/liaoyuan/vivado_2017_4_vcs_lib/synopsys_sim.setup

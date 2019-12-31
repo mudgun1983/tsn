@@ -1,0 +1,2 @@
+-f ../cfg/dut_filelist.f
+-f ../cfg/env_filelist.f

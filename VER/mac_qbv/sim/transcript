@@ -1,0 +1,644 @@
+# Reading E:/questasim64_10.1d/tcl/vsim/pref.tcl 
+# //  Questa Sim-64
+# //  Version 10.1d win64 Nov  1 2012
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+cd D:/workspace/VER/ethernet/sim
+# reading modelsim.ini
+do run_questa
+# E:/questasim64_10.1d/uvm-1.1b/win64
+# pcs_base_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(441): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(427): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(44): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# 
+# Top level modules:
+# 	pcs_tb_top
+# 	glbl
+# vsim +acc=rmb +UVM_TESTNAME=pcs_base_test -do vsim.do -c -voptargs=\"+acc\" -sv_seed 0 -sv_lib E:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(441): (vopt-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(427): (vopt-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(156): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vopt-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vopt-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Note: (vopt-143) Recognized 2 FSMs in module "ge_mac(fast)".
+# 
+# do vsim.do 
+# 0
+# 5000000
+# resume
+add wave sim:/pcs_tb_top/gmii_rx_if0/*
+# Break key hit 
+# Break in Function pcs_env_pkg/pcs_monitor::gen_trans_collected at ../uvc/component/pcs_monitor.sv line 127
+do run_questa
+# E:/questasim64_10.1d/uvm-1.1b/win64
+# pcs_base_test
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling module crc32_d8
+# -- Compiling module dcn_tx_shim
+# -- Compiling module packet_restore
+# -- Compiling module dcn_tx_top
+# -- Compiling module packet_classify
+# -- Compiling module block_to_shim_buf
+# -- Compiling module insert_s_t_block
+# -- Compiling module sync_fifo
+# -- Compiling module dcn_cpu_main
+# -- Compiling module sync_fifo_ctrl
+# -- Compiling module block_ram_no_reg
+# -- Compiling module data_latch
+# -- Compiling module dcn_rx_shim
+# -- Compiling module dcn_rx_top
+# -- Compiling module decode_64b66b_dcn
+# -- Compiling module delete_s_t_block
+# -- Compiling module packet_reassemble
+# ** Warning: ../../../SVN_CODE/dcn/dcn_rx/dcn_rx_top.v(20): (vlog-2275) 'dcn_rx_top' already exists and will be overwritten.
+# 
+# -- Compiling module dcn_rx_top
+# -- Compiling module dcn_top
+# -- Compiling module ge_mac
+# -- Compiling module mac_rx_crc32
+# -- Compiling module crc32_cal
+# 
+# Top level modules:
+# 	crc32_d8
+# 	dcn_top
+# 	ge_mac
+# QuestaSim-64 vlog 10.1d Compiler 2012.11 Nov  1 2012
+# -- Compiling package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface cpu_if
+# ** Warning: ../../common/cpu_uvc/interface//cpu_if.sv(1): (vlog-2275) 'cpu_if' already exists and will be overwritten.
+# 
+# -- Compiling interface cpu_if
+# -- Compiling package cpu_pkg
+# -- Importing package uvm_pkg (uvm-1.1b Built-in)
+# -- Compiling interface gmii_tx_if
+# -- Compiling interface gmii_rx_if
+# -- Compiling interface xgmii64_tx_if
+# -- Compiling interface xgmii64_rx_if
+# -- Compiling package mac_pkg
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(441): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/item/eth_frame.sv(427): (vlog-2240) Treating stand-alone use of function 'pack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_rx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/gmii_tx_monitor.sv(156): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_rx_monitor.sv(288): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: ../../common/mac_uvc/compoent/xgmii64_tx_monitor.sv(297): (vlog-2240) Treating stand-alone use of function 'unpack_bytes' as an implicit VOID cast.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_rx_driver.sv(58): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/gmii_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_rx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# ** Warning: (vlog-8491) ../../common/mac_uvc/compoent/xgmii64_tx_driver.sv(57): 'new' must be used to assign to a dynamic array; 'new' is not legal with a queue.
+# 
+# -- Compiling package pcs_env_pkg
+# -- Importing package cpu_pkg
+# -- Importing package mac_pkg
+# ** Warning: ../env/pcs_virtual_sequencer.sv(38): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
+# 
+# ** Warning: ../seq_lib/pcs_scenario_seq_lib.sv(44): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+# 
+# -- Compiling interface pcs_xilinx_serdes_if
+# -- Compiling module pcs_tb_top
+# -- Importing package pcs_env_pkg
+# -- Compiling module glbl
+# 
+# Top level modules:
+# 	pcs_tb_top
+# 	glbl
+# vsim +acc=rmb +UVM_TESTNAME=pcs_base_test -do vsim.do -c -voptargs=\"+acc\" -sv_seed 0 -sv_lib E:/questasim64_10.1d/uvm-1.1b/win64/uvm_dpi pcs_tb_top glbl 
+# do vsim.do 
+# 0
+# 5000000
+# resume
+# Break key hit 
+# Break in Function pcs_env_pkg/pcs_monitor::push_bit_queue at ../uvc/component/pcs_monitor.sv line 137
+vsim -help
+# Usage: vsim [options] [[<library>.]<primary>[(<secondary>)]]...
+#    -help                   Print this message
+#    -version                Print the version of the simulator
+#    -32                     Run in 32-bit mode
+#    -64                     Run in 64-bit mode
+# --------------------------- VHDL and Verilog options ---------------------------
+#    -assertcover            Keep assertion counts for coverage statistics
+#    -assertdebug            Keep data for debugging assertion failures
+#    -assertfile <filename>  Alternative file for recording assert messages
+#    -errorfile <filename>   Alternative file for recording error messages
+#    -assume                 Simulate PSL and Verilog assume directives same as assert directives
+#    -autoexclusionsdisable=fsm|assertions|all|none 
+#                            Turns on/off automatic fsm or assertions code coverage exclusions
+#    -attemptedimmedcovers   Exclude unattempted immediate covers to participate in coverage calculations
+#    -c                      Command line mode
+#    -capacity               Enable fine grain capacity analysis
+#    -compress_elab          In conjunction with -elab, enables compression of
+#                            the elab file
+#    -codelink=<path>        Specify the path to CODELINK_HOME directory
+#    -nocodelink             Ignore the CODELINK_HOME environment variable and
+#                            disable codelink loading.
+#    -coverage               Allows enabled coverage statistics to be kept
+#    -coverenhanced          Enables functionality which may change the appearance or content of coverage
+#                            metrics. A detailed list of these changes can be found by searching in the
+#                            release notes for 'coverenhanced'. This option only takes meaningful effect in
+#                            letter releases (e.g. 10.2b). It has no effect in initial major releases (e.g. 10.2).
+#    -do "<command>"         Execute <command> on startup; <command> can be
+#                            a macro filename
+#    -displaymsgmode <mode>  Controls transcripting of display system task messages.
+#                            Messages will appear in transcript and/or MsgViewer (.wlf file)
+#                            Valid modes - tran, wlf, both (Default: tran)
+#    +dumpports+direction    Provide port direction info in VCD file for dumpports
+#    +dumpports+unique       Provide unique Extended VCD identifier for each port
+#    +dumpports+no_strength_range
+#                            Ignore strength range when resolving conflicts
+#    +dumpports+collapse     Collapse dumpport vectors into single VCD ids
+#    +dumpports+nocollapse   Don't collapse dumpport vectors into single VCD ids
+#    +dumpports+force_direction
+#                            Ignore driver location. Use port direction for input and output ports
+#    -elab <filename>        Elaborate a design into a file
+#    -elab_cont <filename>   Elaborate a design into a file and simulate
+#    -elab_defer_fli         Defer calling FLI initialization routines
+#    -error <msgNumber>[,<msgNumber>...]  Change the severity of the listed
+#                            messages to Error
+#    -f <filename>           Read command line arguments from <filename>
+#    -fatal <msgNumber>[,<msgNumber>...]  Change the severity of the listed
+#                            messages to Fatal
+#    -filemap_elab <HDLfilename>=<NEWfilename>
+#                            Define a mapping used during -load_elab
+#    -g<Name>=<Value>        Specify generic/parameter default Value for Name
+#    -g <Name>=<Value>       Alternate way to specify generic/parameter default Value for Name
+#    -G<Name>=<Value>        Override generic/parameter with specified Value
+#    -G <Name>=<Value>       Alternate way to override generic/parameter with specified Value
+#    -gui                    Open the GUI without loading a design
+#    -i                      Force interactive mode
+#    -immedassert            Enable SystemVerilog and VHDL immediate assertions
+#    -keeploaded             Prevent the simulator from unloading/reloading
+#                            shared libraries
+#    -keeploadedrestart      Prevent the simulator from unloading/reloading
+#                            shared libraries during restart
+#    -keepstdout             Do not redirect stdout to transcript window
+#    -l <filename>           Write simulation log to <filename>
+#                            (Default: transcript)
+#    -learn <fname>          Learn the names of objects externally accessed at runtime
+#                            (by methods such as PLI, VPI, Signal Spy, or CLI).
+#                            <fname>.ocf, <fname>.ocm and <fname>.acc files created
+#    -lib <libname>          Load top-level design units from <libname>
+#                            (Default: work)
+#    -lic_nomti              Do not look for Model Technology Licenses
+#    -lic_noqueue            Do not wait in the license queue when a license
+#                            is not available
+#    -lic_plus               Immediately reserve a VHDL and Verilog license
+#    -lic_vhdl               Immediately reserve a VHDL license
+#    -lic_vlog               Immediately reserve a Verilog license
+#    -lic_no_slvhdl          Disable checkout of qhsimvh and vsim single
+#                            language VHDL license features
+#    -lic_no_slvlog          Disable checkout of qhsimvl and vsimvlog
+#                            single language Verilog license features
+#    -lic_no_mix             Disable checkout of msimhdlmix and hdlmix
+#                            second language only license features
+#    -lic_no_lnl             Disable checkout of msimhdlsim and hdlsim
+#                            language neutral license features
+#    -lic_mixed_only         Disable checkout of qhsimvh,qhsimvl,vsim,
+#                            vsimvlog single language license features
+#    -lic_lnl_only           Disable checkout of qhsimvh,qhsimvl,vsim,
+#                            vsimvlog,msimhdlmix,hdlmix license features
+#    -load_elab <filename>   Load simulation from previous elaboration
+#    -memprof                Collect memory allocation profile data for use with
+#                            current simulation
+#    -memprof[+file=<filename>]
+#                            Collect memory allocation profile data for use with
+#                            current simulation and copy raw data to <filename>
+#    -memprof[+fileonly=<filename>]
+#                            Collect memory allocation profile data in raw format
+#                            to <filename>
+#    -modelsimini <modelsim.ini>
+#                            Specify path to the modelsim.ini file
+#    -multisource_delay min|max|latest
+#                            Controls annotation of SDF INTERCONNECT construct
+#                            (Default: max)
+#    +multisource_int_delays Enable multisource interconnect delays
+#                            for both Verilog and VHDL
+#    -msglimit <msgNumber>[,<msgNumber>...]
+#                            Limit the listed messages to display five times
+#    -msgmode <mode>         Controls transcripting of elaboration/runtime messages.
+#                            Messages will appear in transcript and/or MsgViewer (.wlf file)
+#                            Valid modes - tran, wlf, both (Default: tran)
+#    -mvchome  <path>        Location of Questa Verification IP installation.
+#                            Overrides 'MvcHome' modelsim.ini setting
+#    -nocompress             Create/restore uncompressed checkpoint file
+#    -nocoverage             Passed to vopt to turn off code coverage compile options
+#    +no_notifier            Disable notifier toggling for timing constraint
+#                            violations
+#    -noassertcover          Do not keep assertion counts for coverage statistics
+#    -noassertdebug          Do not keep data for debugging assertion failures
+#    -noassume               Do not simulate PSL and Verilog assume directives
+#    -nocapacity             Do not display capacity related information
+#    -noexcludehiz           Do not automatically exclude rows with Hi-Z for
+#                            expression coverage
+#    -nopsl                  Disable PSL assertions
+#    -noschematic            Used with -debugdb, generate debugdb for Dataflow only
+#    -nostdout               Do not write transcript to stdout (batch mode only)
+#    +no_tchk_msg            Disable timing constraint error messages
+#    -note <msgNumber>[,<msgNumber>...]  Change the severity of the listed
+#                            messages to Note
+#    +notimingchecks         Disable Verilog and VITAL timing checks
+#    -novhdlvariablelogging  Disables higher performance VHDL variable logging
+#    -novopt                 Force incremental mode (pre-6.0 behavior)
+#    -onfinish <mode>        Customize the kernel shutdown behavior at the end of simulation
+#                            Valid modes - ask, stop, exit, final (Default: ask)
+#    -pduignore[=<instpath>] Ignore Preoptimized Design Unit.
+#                            If optional <instpath> is not specified all PDUs found in
+#                            compiled libraries will be ignored. Otherwise the PDU
+#                            specified by <instpath> will be ignored. This option may
+#                            be specified multiple times with different <instpath>s.
+#                            (Equivalent to the deprecated "-ignore_bbox" option).
+#    -pa                     Enable PowerAware RTL mode
+#    -pa_lib <libname>       Use PA specific dumps from <libname> library. (Default: work)
+#    -pa_top <dut path>      Allow vsim to use different top level hierarchy for PA
+#                            (Example: -pa_top /tb2/dut_inst
+#    -debugdb[=<dbname>]     To create or use Schematic Debug database (Default: vsim.dbg)
+#    -pedanticerrors         Enforce strict language checks
+#    -permissive             Relax some language error checks to warnings.
+#    -printsimstats[=value]  Print simstats results
+#    			Possible values: 0 - disable simstats, 1 - end of simulation
+#    			Possible values: 2 - end of each run,  3 - end of run and simulation
+#    -psl                    Enable PSL assertions
+#    -psloneattempt          Force single PSL assertion coverage attempt
+#    -pslinfinitythreshold   Redefine infinite clock tick for strong operators
+#    -quiet                  Do not report 'Loading...' messages
+#    -restore <filename>     Restore simulation from previous checkpoint
+#    -runinit                Execute run -init before command prompt or running -do files.
+#    -sdfmax[@<delayScale>] [<instance>=]<sdffile>
+#                            Annotate VITAL or Verilog <instance> with maximum
+#                            timing from <sdffile>, scaled by <delayScale>
+#    -sdfmaxerrors <n>       Max number of missing instances reported (default is 5)
+#    -sdfmin[@<delayScale>] [<instance>=]<sdffile>
+#                            Annotate VITAL or Verilog <instance> with minimum
+#                            timing from <sdffile>, scaled by <delayScale>
+#    -sdfnoerror             Treat SDF errors as warnings
+#    -sdfnowarn              Disable warnings from SDF annotator
+#    -sdftyp[@<delayScale>] [<instance>=]<sdffile>
+#                            Annotate VITAL or Verilog <instance> with typical
+#                            timing from <sdffile>, scaled by <delayScale>
+#    +sdf_verbose            Display SDF annotator status messages
+#    -suppress <msgNumber>[,<msgNumber>...]  Suppress the listed messages
+#    -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
+#                            (VHDL default: resolution setting from .ini file)
+#                            (Verilog default: minimum time_precision in the
+#                            design)
+#    -tag <string>           Set tag for FLI/PLI tracing to <string>
+#    -notoggleints           Excludes VHDL integers from toggle coverage
+#    -togglemaxintvalues     Sets max number of values saved for VHDL integers
+#    -togglemaxrealvalues    Sets max number of values saved for SystemVerilog reals
+#    -togglemaxfixedsizearray <size>
+#                            Sets the limit on the size of Verilog unpacked fixed-size arrays
+#                            that are included for toggle coverage
+#    -togglecountlimit       Sets max count saved for a toggle node
+#    -togglewidthlimit       Sets max width for vectors counted for toggles
+#    -togglevlogreal         Includes Verilog real type in toggle coverage
+#    -togglefixedsizearray   Includes Verilog unpacked fixed-size arrays, VHDL multi-d arrays and VHDL arrays-of-arrays in toggle coverage
+#    -togglevlogints         Includes Verilog integers for toggle coverage
+#    -togglevhdlrecords      Includes VHDL records for toggle coverage
+#    -notogglevlogints       Excludes Verilog integers from toggle coverage
+#    -notogglevlogreal       Excludes Verilog real type in toggle coverage
+#    -notogglefixedsizearray Excludes Verilog unpacked fixed-size arrays, VHDL multi-d arrays and VHDL arrays-of-arrays in toggle coverage
+#    -notogglevhdlrecords    Excludes VHDL records from toggle coverage
+#    -togglepackedasvec      Treat SystemVerilog packed structures and multi-d arrays as flattened vectors
+#    -togglevlogenumbits     Treat SystemVerilog enums as reg-vectors for toggle coverage
+#    -extendedtogglemode [1|2|3]
+#                            Change the level of support for extended toggles.
+#                            The levels of support are:
+#                            1 - 0L->1H & 1H->0L & any one 'Z' transition (to/from 'Z')
+#                            2 - 0L->1H & 1H->0L & one transition to 'Z' & one transition from 'Z'
+#                            3 - 0L->1H & 1H->0L & all 'Z' transitions
+#    -toggleportsonly        Enable toggle statistics collection only for ports
+#    -title <string>         Optional title for the Main window
+#    -trace_foreign <n>      Set FLI/PLI tracing to level <n>
+#    -ucdbteststatusmsgfilter <TCL style regular expression>
+#                            Matching messages do not propagate their status to UCDB TESTSTATUS
+#    -unattemptedimmed       Include immediate assertions to participate in assertion coverage calculations
+#    -vcdstim [<instance>=]<filename>  Stimulate the top-level design or instances
+#                            from an Extended VCD file
+#    -vhdlvariablelogging    Enables higher performance VHDL variable logging
+#    -view [<dataset>=]<filename>  View the contents of a WLF file
+#    -viewcov [<dataset>=]<ucdbfilename>  View the contents of the coverage ucdb file
+#    -vopt                   Run vopt optimization before elaborating the simulator
+#    -voptargs="<arglist>"   Pass the specified arguments to vopt
+#    -warning <msgNumber>[,<msgNumber>...]  Change the severity of the listed
+#                            messages to Warning
+#    -wlf <filename>         Specify the name of the WLF file (Default: vsim.wlf)
+#    -wlfopt                 Turn on WLF file optimizations (default)
+#    -nowlfopt               Turn off WLF file optimizations
+#    -nowlfcompress          Turn off WLF file compression
+#    -nowlflock              Turn off WLF file locking
+#    -wlfslim <size>         Specify maximum number of Megabytes to be saved in
+#                            WLF file (Default: infinite)
+#    -wlftlim <duration>     Specify maximum duration of time to be saved in
+#                            WLF file (Default: all)
+#    -wlfcachesize <n>       Specify WLF reader cache size (per WLF file.)
+#                            (Default: no reader cache)
+#    -wlfsimcachesize <n>    Specify WLF reader cache size for current simulation
+#                            (Default: no reader cache)
+#    -wlfdeleteonquit        Delete WLF file when simulation quits.
+#    -nowlfcollapse          Log every item event and preserve event order.
+#    -wlfcollapsedelta       Log item values only at end of iteration. (default)
+#    -wlfcollapsetime        Log item values only at end of time step.
+# --------------------------------- VHDL options ---------------------------------
+#    -absentisempty          Treat non-existent VHDL files opened for read
+#                            as empty
+#    -foreign "<C_init_func> <shared_lib>"  Load a foreign module
+#    -nocollapse             Disable optimization of internal port map connections
+#    -nofileshare            Do not share file descriptors for VHDL files opened
+#                            for write or append that have identical names
+#    -noglitch               Disable VITAL glitch generation
+#    +no_glitch_msg          Disable glitch error messages
+#    -std_input <filename>   Use filename for VHDL textio STD_INPUT file
+#    -std_output <filename>  Use filename for VHDL textio STD_OUTPUT file
+#    -strictvital            Sacrifice performance for strict VITAL compliance
+#    -vcdread <filename>     Stimulate the VHDL top-level design from a VCD file
+#    -vital2.2b              Select SDF mapping for VITAL 2.2b (Default: VITAL 95)
+#    -vital_fix_negative_setup_hold_sum
+#                            Set negative time to zero when setuphold sum is negative
+# -------------------------------- Verilog options -------------------------------
+#    +alt_path_delays        Use current output value instead of pending value
+#                            when selecting inertial specify path output delay
+#    +bitblast[=[iopath|tcheck]] Bit-blast Verilog specify paths and/or tchecks with wide ports.
+#                            Without the optional qualifiers operates on specify paths and tchecks.
+#                            +bitblast=iopath bit-blasts specify paths with wide ports.
+#                            +bitblast=tcheck bit-blasts tchecks with wide ports.
+#    -checkvifacedrivers 1|0 Include assignments through virtual interfaces in the multiple-driver analysis.
+#    -classdebug             Enable class debug features.
+#    -cvgcollapseembeddedinstances Collapse embedded covergroup instances and track coverage data
+#                            at per type level when option.per_instance is set to 0.
+#    -cvgmaxrptrhscross      Set the maximum cross bin BINRHS terms in coverage report.
+#    -cvgperinstance         Force the option.per_instance control in all covergroup declarations to 1.
+#    -cvgsingledefaultbin    Collapse a Covergroup default array bin into a scalar bin
+#    -cvghaltillbin          Halt simulation when an illegal cover/cross bin gets hit
+#    -cvgmergeinstances      Set the default value of covergroup type_option.merge_instances to 1
+#    -cvgsparsecross         Force modelling of Covergroup cross bins in a sparse fashion.
+#    -cvgsparsearraybin      Force modelling of Covergroup unsize array bins in a sparse fashion.
+#    -cvgzwnocollect <1|0>   Turn on/off the coverage data collection of zero-weight coverage items.
+#    -cvgbintstamp           Record simulation timestamp when a covergroup bin is covered during simulation run
+#    -nocrossautobins        Avoid generating auto bins in cross coverage computation.
+#    -dpicpppath </path/to/gcc> Specify desired GCC path for DPI compilation
+#    -dpicppinstall <[gcc|g++] version> 
+#                            Specify the version of the desired GNU compiler supported and
+#                            distributed by Mentor for the DPI compilation
+#    -dpiexportcheckref      (Deprecated) Check the staleness of exportwrapper source file generated previously.
+#    -dpiexportonly          (Deprecated) Quit simulation after exportwrapper compilation. This is to support locked work library flow.
+#    -dpiexportobj <filename> (Deprecated) Generate specified DPI export object file then quit
+#    -dpilib    <libname>    Specify the library that contains DPI exports and object files
+#    -ldflags   <linkopts>   Specify in quotes the option for linking auto compiled DPI object files
+#    -dpiforceheader         Force generation of dpi header file even when empty
+#                            of function prototypes
+#    -dpiheader <filename>   Generate specified DPI C header file
+#    -dpioutoftheblue 1|0    Turn on/off DPI out-of-the-blue call from C function
+#    -nodpiexports           (Deprecated) Turn off the exportwrapper generation.
+#    -nodpimasking           Turn off masking of unused bits of bit vectors from user C data. 
+#    -extend_tcheck_data_limit <percent relaxation> Relax data limit for convergence
+#    -extend_tcheck_ref_limit  <percent relaxation> Relax ref limit for convergence
+#    +autofindloop           Find the infinite zero-delay loop when Iteration Limit is exceeded.
+#                            This option should be used with full design visibility e.g. vopt +acc
+#    -hazards                Enable hazard checking
+#    +initmem+<seed>         Specify seed value to be used for randomizing
+#                            fixed-size arrays marked for randomization by vlog/vopt.
+#    +initreg+<seed>         Specify seed value to be used for randomizing
+#                            variables marked for randomization by vlog/vopt.
+#    -initreport <filename>  Report initial values generated due to
+#                            applying +initreg/+initmem options to vlog/vopt
+#    +int_delays             Optimize annotation of interconnect delays
+#    -L <libname>            Search library for design units instantiated from
+#                            Verilog and for VHDL default component binding
+#    -Lf <libname>           Same as -L, but libraries are searched before `uselib
+#    +maxdelays              Use maximum timing from min:typ:max expressions
+#    +mindelays              Use minimum timing from min:typ:max expressions
+#    +no_cancelled_e_msg     Disable negative pulse warning messages
+#    -noimmedca              Revert to pre-6.5 continuous assignment event ordering
+#    +no_neg_tchk            Set negative timing check limits to zero
+#    +no_path_edge           Ignore the input edge specification on path delays
+#    +no_pulse_msg           Disable path pulse error warning messages
+#    +nosdferror             Treat SDF errors as warnings
+#    +nosdfwarn              Disable warnings from SDF annotator
+#    +no_show_cancelled_e    Cancel negative pulse (Default)
+#    +nospecify              Disable specify path delays and timing checks
+#    -nosva                  Disable SystemVerilog concurrent assertions
+#    -noimmedassert          Disable SystemVerilog and VHDL immediate assertions
+#    -nocvg                  Disable Covergroup object construction and builtin calls
+#    -nocvgmergeinstances    Set the default value of covergroup type_option.merge_instances to 0
+#    -nocvgperinstance       Force the option.per_instance control in all covergroup declarations to 0.
+#    +nowarn<CODE | Number>  Disable specified warning message
+#                            (Example: +nowarnTFMPC)
+#    +ntc_warn               Enable warnings from negative timing constraint
+#                            algorithm
+#    +ntcnotchks             Disable timing checks while maintaining NTC delays
+#    -pli "<object list>"    Load the list of PLI shared objects
+#    +<plusarg>              Option accessible by PLI routine mc_scan_plusargs
+#    +pulse_e/<percent>      Set path pulse error limit as percentage of
+#                            path delay
+#    +pulse_e_style_ondetect Drive pulse error state immediately on detection
+#    +pulse_e_style_onevent  Drive pulse error state on time of pending event
+#                            (Default)
+#    +pulse_int_e/<percent>  Set interconnect pulse error limit as percentage
+#                            of delay
+#    +pulse_int_r/<percent>  Set interconnect pulse rejection limit as
+#                            percentage of delay
+#    +pulse_r/<percent>      Set path pulse rejection limit as percentage of
+#                            path delay
+#    +sdf_nocheck_celltype   Disable check between SDF celltype name and
+#                            module name
+#    +show_cancelled_e       Drive pulse error state on negative pulse
+#    -solveengine <engine>   Use specified solver engine to evaluate randomize() scenarios
+#                            Valid engines - auto, bdd, act
+#    -solvefaildebug         Display constraint conflicts on randomize() failure
+#    -solveflags=<flags>     Modify constraint solver behavior for specific testcases
+#                            (Example: -solveflags=ri)
+#    -solverev <version>     Specify random sequence compatibility with <version>
+#                            (Example: -solverev 6.2a)
+#    -sv_lib <shared_obj>    DPI shared object, without extension
+#    -sv_root <dirname>      Directory name to use as prefix for DPI
+#                            shared object lookups
+#    -sv_liblist <filename>  The name of a bootstrap file containing names
+#                            of DPI shared objects to load
+#    -sv_seed <seed>         Specify a seed for the Random Number Generator
+#                            (RNG) of the root thread (SystemVerilog)
+#    -sva                    Enable SystemVerilog concurrent assertions
+#    -tab <filename>         Specify PLI TAB file
+#    +transport_int_delays   Use transport mode for interconnect delays
+#    +transport_path_delays  Use transport mode for path delays
+#                            (Default: inertial)
+#    +typdelays              Use typical timing from min:typ:max expressions
+#                            (Default)
+#    -uvmcontrol=[all,disable,struct,msglog,trlog,certe]
+#                            Control specific UVM-aware debug options (default: -uvmcontrol=struct)
+#    -v2k_int_delays         Use Verilog 2000 style interconnect delays
+#    -wreal_resolution <resolver>
+#                            Specify resolve behavior for AMS wreal net
+#                            with multiple drivers, where <resolver> is
+#                            default, 4state, sum, avg, min, or max.
+# -------------------------------- SystemC options -------------------------------
+#    -cpppath </path/to/[gcc|g++]> 
+#                            Specify path to the desired GNU compiler.
+#                            Use same compiler path as specified on the sccom
+#                            command line.
+#    -cppinstall <[gcc|g++] version> 
+#                            Specify the version of the desired GNU compiler
+#                            supported and distributed by Mentor.
+#                            Use same compiler path as specified on the sccom command line.
+#    -noautoldlibpath        Disable setting of LD_LIBRARY_PATH set internally.
+#    -sc_arg <arg>           Specify a SystemC command line argument
+#                            accessible using sc_main(), sc_argc() and
+#                            sc_argv()
+#    -scdpidebug             Turn on debugging for SystemC DPI export function call
+#    -sclib <libname>        Load the SystemC shared library from <libname>
+#                            By default the systemc.so shared library is loaded
+#                            from the library in which the top level SystemC design
+#                            unit is compiled. This option should be used when systemc.so 
+#                            is not in the same library as the top level SystemC design unit.
+#    -noscmainscopename      Strip sc_main() scope from the hierarchical path.
