@@ -8,12 +8,12 @@
 #full_throughput_switch_vlan_random_test
 #ptp_smoke_test 
 #ptp_rcv_smoke_test
-ptp_rcv_vlan_random_one_instance_test
+#ptp_rcv_vlan_random_one_instance_test
 #ptp_slave_smoke_test
 #full_instance_one_step_master
 #full_instance_two_step_master
-#ptp_master_slave_base_test
-#ptp_master_slave_two_step_test
+##ptp_master_slave_base_test
+##ptp_master_slave_two_step_test
 #full_instance_one_step_master
 #full_instance_two_step_master
 #full_instance_rcv_one_step_master
@@ -36,6 +36,6 @@ ptp_rcv_vlan_random_one_instance_test
 #test_qci_pass_multi_port
 #test_qci_bypass_multi_port
 #test_qci_pass_multi_vid_one_port
-#test_qci_pass_multi_port_with_bypass_background
+test_qci_pass_multi_port_with_bypass_background
 #test_qci_pass_multi_port_multi_gate
 #test_qci_pass_multi_port_multi_gate_with_bypass_background

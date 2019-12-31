@@ -245,7 +245,7 @@ constraint c_controlField {
 			               originTimestamp= packer.unpack_field(80);//packer.pack_field (originTimestamp,80);
 						   reserved       = packer.unpack_field(80);//packer.pack_field (reserved,80);
 						 end
-			 Pdelay_Resp:begin
+	        Pdelay_Resp,Pdelay_Resp_Follow_Up:begin
 			               requestReceiptTimestamp= packer.unpack_field(80);// packer.pack_field (requestReceiptTimestamp,80);
 						   requestingPortIdentity = packer.unpack_field(80);// packer.pack_field (requestingPortIdentity,80);
 			             end

@@ -9,6 +9,20 @@ class  full_instance_rcv_two_step_master extends full_instance_rcv_one_step_mast
 		one_two_step=1;
      endfunction : new
 
+task run_phase(uvm_phase phase);
+   fork
+     super.run_phase(phase);
+	 
+	 begin
+	   while(1)
+	    begin
+		 #1us;
+	     item_config0.tagged_size = $urandom_range(1,2);
+		end
+	 end
+   join
+endtask
+
 virtual function set_ptp_predefine_value();
      super.set_ptp_predefine_value();
 	 `PTP_CONFIG.table_size =1;
@@ -51,4 +65,7 @@ for(int i=0; i<`MAX_PORT_NUM;i++)
        port_stimulus_s[18].da_index = `PTP_PEER_MULTI_DA;
 endfunction     
 
+virtual function set_item_config_value();
+   super.set_item_config_value();
+endfunction
 endclass	 
