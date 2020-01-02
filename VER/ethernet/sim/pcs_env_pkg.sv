@@ -125,6 +125,7 @@ package pcs_env_pkg;
   
   //switch
   `include "../test_lib/switch/full_throughput_switch_vlan_random_test.sv"
+  `include "../test_lib/switch/test_throughput_single_xge_64_1518.sv"
 endpackage
 `endif
 

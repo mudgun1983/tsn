@@ -6,6 +6,7 @@
 #full_throughput_test
 #full_throughput_switch_test 
 #full_throughput_switch_vlan_random_test
+test_throughput_single_xge_64_1518
 #ptp_smoke_test 
 #ptp_rcv_smoke_test
 #ptp_rcv_vlan_random_one_instance_test
@@ -36,6 +37,6 @@
 #test_qci_pass_multi_port
 #test_qci_bypass_multi_port
 #test_qci_pass_multi_vid_one_port
-test_qci_pass_multi_port_with_bypass_background
+#test_qci_pass_multi_port_with_bypass_background
 #test_qci_pass_multi_port_multi_gate
 #test_qci_pass_multi_port_multi_gate_with_bypass_background
