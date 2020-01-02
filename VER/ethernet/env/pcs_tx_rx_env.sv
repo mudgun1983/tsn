@@ -106,6 +106,7 @@ class pcs_tx_rx_env extends uvm_env;
           begin
 		    index = $sformatf("%0d",i);//string'(i);
 		    scb0[i]                 =  scoreboard::type_id::create({"scb0[",index,"]"},this);
+			scb0[i].scoreboard_id   =  i;
 		  end
 		
         ptp_scb0 = new[topology_config0.mac_number];     

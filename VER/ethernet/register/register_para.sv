@@ -28,6 +28,8 @@
 `define O_PHY_PORT_PRO_TABLE_CONTENT   reg_config.o_phy_port_pro_table.table_index
 `define GATHER_INIT_TABLE_CONTENT      reg_config.gather_init_table.table_index
 `define PTP_CONFIG_CONTENT             reg_config.ptp_config.table_index
+`define OBM_CONFIG_CONTENT             reg_config.obm_content_table.table_index
+`define MAC_CONFIG_CONTENT             reg_config.mac_config_table.table_index
 
 `define PHY_PORT_TABLE          reg_config.phy_port_table 
 `define LOGIC_PORT_TABLE        reg_config.logic_port_table 
@@ -59,6 +61,8 @@
 `define O_PHY_PORT_PRO_TABLE    reg_config.o_phy_port_pro_table 
 `define GATHER_INIT_TABLE       reg_config.gather_init_table 
 `define PTP_CONFIG              reg_config.ptp_config 
+`define OBM_CONFIG              reg_config.obm_content_table 
+`define MAC_CONFIG              reg_config.mac_config_table 
 
 `define   SUB sub_
 `define   SUB_PTP_CONFIG_CONTENT             `SUB```PTP_CONFIG_CONTENT
@@ -74,9 +78,29 @@
 `define BASE_OFFSET          16'b0000_0000_0000_0000
 `define BASE_OFFSET_GATHER   16'b0011_0000_0000_0000
 `define BASE_OFFSET_PTP      16'b0001_1101_0000_0000  //1d00
+`define BASE_OFFSET_XGE_0    16'h2000  
+`define BASE_OFFSET_XGE_1    16'h2200  
+`define BASE_OFFSET_GE_2     16'h2400  
+`define BASE_OFFSET_GE_3     16'h2600  
+`define BASE_OFFSET_GE_4     16'h2800  
+`define BASE_OFFSET_GE_5     16'h2a00  
+`define BASE_OFFSET_GE_6     16'h2c00  
+`define BASE_OFFSET_GE_7     16'h2e00  
+`define BASE_OFFSET_GE_8     16'h3000  
+`define BASE_OFFSET_GE_9     16'h3200  
 `define BASE_OFFSET_GE_29    16'b0101_1010_0000_0000  //5a00
 `define BASE_OFFSET_IPP      16'b1000_0000_0000_0000  //8000
 `define BASE_OFFSET_EPP      16'b1010_0000_0000_0000  //a000
+`define BASE_OFFSET_OBUF_0   16'hC000  
+`define BASE_OFFSET_OBUF_1   16'hC100
+`define BASE_OFFSET_OBUF_2   16'hC200
+`define BASE_OFFSET_OBUF_3   16'hC300
+`define BASE_OFFSET_OBUF_4   16'hC400
+`define BASE_OFFSET_OBUF_5   16'hC500
+`define BASE_OFFSET_OBUF_6   16'hC600
+`define BASE_OFFSET_OBUF_7   16'hC700
+`define BASE_OFFSET_OBUF_8   16'hC800
+`define BASE_OFFSET_OBUF_9   16'hC900
 //IPP
 `define PP_VER_YEAR	        (`BASE_OFFSET_IPP+'h0000)
 `define PP_VER_MONTH_DAY	(`BASE_OFFSET_IPP+'h0002)
@@ -125,7 +149,7 @@
 `define L2_PROTOCOL_TABLE_DIN_1	    (`BASE_OFFSET_IPP+'h0246)
 `define L2_PROTOCOL_TABLE_DOUT_0	(`BASE_OFFSET_IPP+'h0248)	
 `define L2_PROTOCOL_TABLE_DOUT_1	(`BASE_OFFSET_IPP+'h024a)	
-`define PAUSE_PCKT_DROP_EN	        (`BASE_OFFSET_IPP+'h0400)	
+`define GLOBAL_PCKT_DROP_EN	        (`BASE_OFFSET_IPP+'h0400)	
 `define CRC_ERR_DROP_R_TRIG	        (`BASE_OFFSET_IPP+'h0402)	
 `define CRC_ERR_DROP_ROUT_H	        (`BASE_OFFSET_IPP+'h0404)	
 `define CRC_ERR_DROP_ROUT_L	        (`BASE_OFFSET_IPP+'h0406)
@@ -504,3 +528,10 @@
 
 //GE
 `define SYS_HEADER                    'h006
+
+//obm
+`define QUEUE_MAP 'h000
+//GE
+`define VFRAME_TRIG 'h000
+`define PMAC_CFG_FRAGSIZE 'h00C
+`define PMAC_MPKT_SIZE 'h00E

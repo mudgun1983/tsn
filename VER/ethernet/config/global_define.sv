@@ -18,13 +18,26 @@
 `define Announce               4'hB //ptp_item::Announce             //General B
 `define Signaling              4'hC //ptp_item::Signaling            //General C
 `define Management             4'hD //ptp_item::Management           //General D
-`define DUT_MAX_PORT 'd10			  
+`define DUT_MAX_PORT 'd10	
+
+//ITEM_CONFIG
+`define INCREASE_PAYLOAD  2'b00
+`define RANDOM_PAYLOAD    2'b01
+`define ASSIGN_FIRST_BYTE 2'b10		
+`define ASSIGN_ALL_BYTE   2'b11
+
+//QCI
+`define BYPASS_ETYPE 16'h1234
+
+`define PACKET_COUNT 'd100
 typedef struct packed
 {
 bit        port_en;
+bit [1:0]  e_p_packet_en; //bit0: 1 issue e packet //bit1: 1 issue p packet
 int        packet_count;
 bit [47:0] da_index;
 bit [47:0] sa_index;
+int        fatal_error_bypass_port;
 } port_stimulus_t;
 
 port_stimulus_t port_stimulus_s[`MAX_ENV_MAC_NUM];

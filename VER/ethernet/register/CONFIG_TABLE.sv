@@ -1193,7 +1193,7 @@ class TIME_SLOT_TABLE_CONTENT extends uvm_object;
 typedef struct packed
 {
   //key----
-  bit [3:0] time_slot;
+  bit [7:0] time_slot;
   //--------
 } table_key_s;
 typedef struct packed
@@ -1219,7 +1219,10 @@ class TIME_SLOT_TABLE extends uvm_object;
 
 
 int unsigned table_size=2;
-
+bit [63:0] admin_base_time;
+bit [63:0] admin_cycle_time;
+bit [3:0]  admin_slot_num;
+  
 TIME_SLOT_TABLE_CONTENT table_index[];
 
 function new( string name = "" );
@@ -1878,3 +1881,76 @@ endfunction
 
 endclass
 //----------------------------------- GATHER_INIT_TABLE-------------------------------//
+
+
+
+//----------------------------------- OBM-------------------------------//
+class OBM_CONTENT extends uvm_object;
+
+bit[7:0] queue_map;
+
+`uvm_object_utils_begin(OBM_CONTENT);
+`uvm_object_utils_end
+
+function new( string name = "" );
+super.new( name );
+endfunction
+
+endclass
+
+class OBM_CONTENT_TABLE extends uvm_object;
+`uvm_object_utils( OBM_CONTENT_TABLE );
+
+int unsigned table_size=10;
+
+OBM_CONTENT table_index[];
+
+function new( string name = "" );
+super.new( name );
+table_index = new[table_size];
+for(int i=0;i<table_size;i++)
+  table_index[i] = new();
+set_config();
+endfunction
+
+function void set_config();
+endfunction
+
+endclass
+//----------------------------------- OBM-------------------------------//
+
+//----------------------------------- MAC-------------------------------//
+class MAC_CONTENT extends uvm_object;
+
+bit[1:0]  cfg_fragsize;
+bit[15:0] mpkt_size;
+
+`uvm_object_utils_begin(MAC_CONTENT);
+`uvm_object_utils_end
+
+function new( string name = "" );
+super.new( name );
+endfunction
+
+endclass
+
+class MAC_CONFIG_TABLE extends uvm_object;
+`uvm_object_utils( MAC_CONFIG_TABLE );
+
+int unsigned table_size=1;
+
+MAC_CONTENT table_index[];
+
+function new( string name = "" );
+super.new( name );
+table_index = new[table_size];
+for(int i=0;i<table_size;i++)
+  table_index[i] = new();
+set_config();
+endfunction
+
+function void set_config();
+endfunction
+
+endclass
+//----------------------------------- MAC-------------------------------//

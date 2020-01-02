@@ -58,9 +58,11 @@ package pcs_env_pkg;
   `include "../env/tsn_switch_monitor_model.sv"
   `include "../env/scoreboard.sv" 
   `include "../env/ptp_scoreboard.sv"
+  `include "../env/scoreboard_p_e_out_of_order.sv"
   //`include "../uvc/sequence/pcs_base_seq.sv"    
   `include "../env/pcs_tx_rx_env.sv" 
-
+  `include "../env/tsn_switch_expect_model_qci.sv"
+  `include "../env/tsn_switch_monitor_model_qci.sv"
 //seq lib
   //stimulus sequence
   `include "../seq_lib/mac_user_seq_lib.sv"
@@ -71,15 +73,21 @@ package pcs_env_pkg;
   `include "../seq_lib/ptp_reg_seq.sv"
   `include "../seq_lib/sub_ptp_reg_seq.sv"
   `include "../seq_lib/sub_switch_reg_seq.sv"
+  `include "../seq_lib/br_reg_seq.sv"
+  `include "../seq_lib/qci_reg_seq.sv"
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
   
+  `include "../test_lib/br/scenario_simple_preemptable_packet_port_test.sv"
+  `include "../test_lib/br/scenario_simple_e_p_mix_packet_port_test.sv"
+  `include "../test_lib/br/scenario_simple_e_p_random_packet_port_test.sv"
 //test
   `include "../test_lib/pcs_base_test.sv"
   `include "../test_lib/user_test_lib.sv"
 
 //append test case here  
+  //PTP
   `include "../test_lib/ptp/scenario_ptp_rcv_smoke_test.sv"
   `include "../test_lib/ptp/ptp_rcv_smoke_test.sv"
   `include "../test_lib/ptp/ptp_slave_smoke_test.sv"
@@ -90,6 +98,33 @@ package pcs_env_pkg;
   `include "../test_lib/ptp/full_instance_rcv_one_step_master.sv"
   `include "../test_lib/ptp/full_instance_rcv_two_step_master.sv"
   `include "../test_lib/ptp/full_instance_slave.sv"
+  `include "../test_lib/ptp/ptp_rcv_vlan_random_one_instance_test.sv"
+  //BR
+  `include "../test_lib/br/simple_n_packet_port_test.sv"  
+  `include "../test_lib/br/simple_preemptable_packet_port_test.sv"  
+  `include "../test_lib/br/simple_e_p_mix_packet_port_test.sv" 
+  `include "../test_lib/br/simple_e_p_random_packet_port_test.sv"
+  `include "../test_lib/br/simple_p_packet_port_test.sv"
+  `include "../test_lib/br/e_n_packet_multi_port_to_e_p_mac_test.sv"
+  `include "../test_lib/br/e_p_packet_multi_port_to_e_mac_test.sv"
+  `include "../test_lib/br/smd_r_response_port_test.sv"
+  `include "../test_lib/br/smd_v_trigger_port_test.sv"
+  `include "../test_lib/br/e_n_packet_set_port_to_e_p_mac_test.sv"
+  `include "../test_lib/br/e_p_packet_set_port_to_e_mac_test.sv"
+  
+  //QCI
+  `include "../test_lib/qci/simple_qci_smoke_test.sv"
+  `include "../test_lib/qci/test_qci_bypass_packet.sv"
+  `include "../test_lib/qci/test_qci_bypass_multi_stream.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port.sv"
+  `include "../test_lib/qci/test_qci_bypass_multi_port.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_vid_one_port.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port_with_bypass_background.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port_multi_gate.sv"
+  `include "../test_lib/qci/test_qci_pass_multi_port_multi_gate_with_bypass_background.sv"
+  
+  //switch
+  `include "../test_lib/switch/full_throughput_switch_vlan_random_test.sv"
 endpackage
 `endif
 

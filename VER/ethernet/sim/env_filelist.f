@@ -1,6 +1,6 @@
 
-#+incdir+../../common/uvm-1.2/src 
-#../../common/uvm-1.2/src/uvm_pkg.sv
++incdir+../../common/uvm-1.1b/src 
+../../common/uvm-1.1b/src/uvm_pkg.sv
 +incdir+../../common/cpu_uvc/
 +incdir+../../common/cpu_uvc/compoent
 +incdir+../../common/cpu_uvc/env

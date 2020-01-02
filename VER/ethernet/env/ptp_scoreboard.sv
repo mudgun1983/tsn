@@ -9,7 +9,7 @@ int last_message_type = 0;
 int last_correctionField;
 int last_OriginTimestamp;
 int last_preciseOriginTimestamp;
-
+eth_frame eth_frame_exp_tr_global;
 string timestamp_file;
 //typedef ptp_scoreboard #(port_id) this_t;
 `uvm_component_utils_begin(ptp_scoreboard)
@@ -72,9 +72,10 @@ string timestamp_file;
 			`uvm_info(get_type_name(),{$psprintf("COMPARE START eth_frame_col_tr.destination_address=%0h\n",eth_frame_col_tr.destination_address)},UVM_LOW);
 			//============unpack ptp frame=============//
 			//eth_frame_col_tr.print();
-			data_tmp = new[eth_frame_col_tr.tagged_data[1].data.size];
-			foreach(eth_frame_col_tr.tagged_data[1].data[key])
-				data_tmp[key]=eth_frame_col_tr.tagged_data[1].data[key];
+			//data_tmp = new[eth_frame_col_tr.tagged_data[1].data.size];
+			data_tmp = new[eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data.size];
+			foreach(eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data[key])
+				data_tmp[key]=eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data[key];
 			//data_tmp =eth_frame_col_tr.tagged_data[1].data ;
 			//`uvm_info(get_type_name(),$psprintf("data_tmp size=%0d",data_tmp.size()),UVM_LOW);
 	        ptp_trans.unpack_bytes(data_tmp);
@@ -328,18 +329,25 @@ string timestamp_file;
 	
 	virtual function field_compare_2(eth_frame eth_frame_trans,ptp_item ptp_trans, output bit match);
 	   //pop expect packet
-	    eth_frame eth_frame_exp_tr;
+	    bit pdelay_resp_follow_up_indicate;
+	    //eth_frame eth_frame_exp_tr;
 		ptp_item  ptp_exp_trans;
+		pdelay_resp_follow_up_indicate = (ptp_trans.messageType=='ha);
+		
+		
 		ptp_exp_trans = new();
-	    pop_exp(eth_frame_exp_tr);
+		if(!pdelay_resp_follow_up_indicate)begin
+	    pop_exp(eth_frame_exp_tr_global);
 		//unpack eth_frame_exp;
-		unpack_ptp(eth_frame_exp_tr,ptp_exp_trans);
+		end
+		unpack_ptp(eth_frame_exp_tr_global,ptp_exp_trans);
+		
 		`uvm_info(get_type_name(),{$psprintf("field_compare_2 start\n",$time)},UVM_LOW);
 		if(ptp_trans.sequenceId == ptp_exp_trans.sequenceId)
 		   begin
 		   ->comp_start;	   
 		   //compare ptp_exp_trans and ptp_col_trans
-		   field_compare_2_imp(eth_frame_exp_tr,eth_frame_trans,ptp_exp_trans,ptp_trans,match);
+		   field_compare_2_imp(eth_frame_exp_tr_global,eth_frame_trans,ptp_exp_trans,ptp_trans,match);
 		   end
 		else
 		   begin
@@ -365,17 +373,20 @@ string timestamp_file;
 	
 	virtual function unpack_ptp(eth_frame eth_frame_trans,ref ptp_item ptp_trans);
 	  bit [7:0] data_tmp[];
-	  data_tmp = new[eth_frame_trans.tagged_data[1].data.size];
-	  foreach(eth_frame_trans.tagged_data[1].data[key])
-	    data_tmp[key]=eth_frame_trans.tagged_data[1].data[key];
+	  data_tmp = new[eth_frame_trans.tagged_data[eth_frame_trans.tag_cnt].data.size];
+	  foreach(eth_frame_trans.tagged_data[eth_frame_trans.tag_cnt].data[key])
+	    data_tmp[key]=eth_frame_trans.tagged_data[eth_frame_trans.tag_cnt].data[key];
 	   ptp_trans.unpack_bytes(data_tmp);
 	endfunction 
 	
-    virtual function transform_pdelay_req(ref ptp_item ptp_trans);
+    virtual function transform_pdelay_req(ref ptp_item ptp_trans,input bit follow_up_indicate);
 	   int real_port_id;
 	   real_port_id = port_ptp_instance_mapping_table[port_id];
 	   `uvm_info(get_type_name(),{$psprintf("REAL_PORT_ID=%0d PORT_ID=%0d \n",real_port_id,port_id)},UVM_LOW);
 	   ptp_trans.packet_type = ptp_item::Pdelay_Resp;
+	   if(follow_up_indicate)
+	   ptp_trans.messageType = `Pdelay_Resp_Follow_Up;
+	   else
 	   ptp_trans.messageType = `Pdelay_Resp;
 	   ptp_trans.requestingPortIdentity = ptp_trans.sourcePortIdentity;
 	   ptp_trans.sourcePortIdentity = {`PTP_CONFIG.src_mac,real_port_id[31:0]};
@@ -387,13 +398,15 @@ string timestamp_file;
 	  int compare_index;
 	  bit [255:0]mismatch;
 	  bit one_two_step;
-	  
-	  `uvm_info(get_type_name(),{$psprintf("field_compare_2_imp start",$time)},UVM_LOW);
+	  bit pdelay_resp_follow_up_indicate;
+	 
 	  mismatch = 0;
 	  match = 0;	
 	  one_two_step = `PTP_CONFIG.two_step;
+	  pdelay_resp_follow_up_indicate = (ptp_col_trans.messageType=='ha);
+	   `uvm_info(get_type_name(),$psprintf("field_compare_2_imp start pdelay_resp_follow_up_indicate=%0b ,%0t",pdelay_resp_follow_up_indicate,$time),UVM_LOW);
 		//transform the pdelay req to pdelay_resp
-		   transform_pdelay_req(ptp_exp_trans);		
+		   transform_pdelay_req(ptp_exp_trans,(one_two_step&&pdelay_resp_follow_up_indicate));		
         //compare ethernet
        	if(eth_col_frame_trans.destination_address != eth_exp_frame_trans.destination_address)
 		   mismatch[0] = 1;
@@ -407,6 +420,7 @@ string timestamp_file;
         if(eth_col_frame_trans.tagged_data[1].tpid != eth_exp_frame_trans.tagged_data[1].tpid)
 		   mismatch[3] = 1;
         
+		for(int i=0;i<eth_exp_frame_trans.tag_cnt-1;i++)
 		foreach(eth_col_frame_trans.tagged_data[0].data[key])
          begin
 		   if(eth_col_frame_trans.tagged_data[0].data[key] != eth_exp_frame_trans.tagged_data[0].data[key])
@@ -448,10 +462,14 @@ string timestamp_file;
 				if(ptp_col_trans.requestReceiptTimestamp == last_OriginTimestamp)			   
 			       mismatch[10] = 1; 
 				end
+				//if(pdelay_resp_follow_up_indicate)
 			    last_OriginTimestamp = ptp_col_trans.requestReceiptTimestamp;
 		      end		
             $fclose(write_exp_data_fd);
 			
+			if(ptp_col_trans.transportSpecific != ptp_exp_trans.transportSpecific)
+			   mismatch[11] = 1; 
+			   
 			write_comp_data_fd=$fopen(data_comp_result,"a+"); 
 			if(|mismatch)  
 		     begin		                                                   

@@ -26,7 +26,8 @@ class simple_preemptable_packet_test extends pcs_base_test;
  
 
     function new(string name="simple_preemptable_packet_test" ,  uvm_component parent=null);
-        super.new(name,parent);  
+        super.new(name,parent); 
+        //TIME_OUT_INTERVAL = 10us;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -43,21 +44,12 @@ class simple_preemptable_packet_test extends pcs_base_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration    
     
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #10us;
-       $stop;
+  // task run_phase(uvm_phase phase);
+  //     phase.phase_done.set_drain_time(this, 50000);
+  //     #10us;
+  //     $stop;
        
-   endtask:run_phase
-
-  function void report_phase(uvm_phase phase);
-    if(1) begin
-      `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
-    end
-    else begin
-      `uvm_error(get_type_name(), "** UVM TEST FAIL **")
-    end
-  endfunction
+  // endtask:run_phase
   
 endclass : simple_preemptable_packet_test
 
@@ -69,6 +61,7 @@ class simple_express_packet_test extends pcs_base_test;
 
     function new(string name="simple_express_packet_test" ,  uvm_component parent=null);
         super.new(name,parent);  
+		//TIME_OUT_INTERVAL = 10us;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -85,21 +78,13 @@ class simple_express_packet_test extends pcs_base_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration    
     
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
-       $stop;      
-   endtask:run_phase
+  // task run_phase(uvm_phase phase);
+  //     phase.phase_done.set_drain_time(this, 50000);
+  //     #20ms;
+  //     $stop;      
+  // endtask:run_phase
 
-  function void report_phase(uvm_phase phase);
-    if(1) begin
-      `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
-    end
-    else begin
-      `uvm_error(get_type_name(), "** UVM TEST FAIL **")
-    end
-  endfunction
-  
+ 
 endclass : simple_express_packet_test
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,6 +95,7 @@ class simple_e_p_mix_packet_test extends pcs_base_test;
 
     function new(string name="simple_e_p_mix_packet_test" ,  uvm_component parent=null);
         super.new(name,parent);  
+		TIME_OUT_INTERVAL = 10us;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -126,20 +112,6 @@ class simple_e_p_mix_packet_test extends pcs_base_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_LOW)
   endfunction : end_of_elaboration    
     
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
-       $stop;      
-   endtask:run_phase
-
-  function void report_phase(uvm_phase phase);
-    if(1) begin
-      `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
-    end
-    else begin
-      `uvm_error(get_type_name(), "** UVM TEST FAIL **")
-    end
-  endfunction
   
 endclass : simple_e_p_mix_packet_test
 
@@ -161,22 +133,16 @@ class simple_e_p_mix_random_test extends pcs_base_test;
 //==================================scenario============================================               
    endfunction : build_phase
      
-    
-   task run_phase(uvm_phase phase);
-       phase.phase_done.set_drain_time(this, 50000);
-       #20ms;
-       $stop;      
-   endtask:run_phase
-  
 endclass 
 
 class full_throughput_test extends pcs_base_test;
  
    `uvm_component_utils(full_throughput_test)
- 
-    parameter TIME_OUT_INTERVAL=1ms; 
+    global_reg_seq global_reg_seq0;
+   // parameter TIME_OUT_INTERVAL=1ms; 
     function new(string name="full_throughput_test" ,  uvm_component parent=null);
-        super.new(name,parent);  
+        super.new(name,parent); 
+        TIME_OUT_INTERVAL=1ms; 		
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -185,10 +151,16 @@ class full_throughput_test extends pcs_base_test;
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
 			            "default_sequence",
 	       		    	scenario_full_throughput_test::type_id::get());
-//==================================scenario============================================               
+//==================================scenario============================================   
+    global_reg_seq0 = new();            
    endfunction : build_phase
      
-    
+   task configure_phase( uvm_phase phase);
+     phase.raise_objection( this );
+	 #50us;
+     global_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
+	 phase.drop_objection( this );
+  endtask 
    // task run_phase(uvm_phase phase);
     // fork
 	   // begin
@@ -219,7 +191,9 @@ class full_throughput_test extends pcs_base_test;
 	   
 	// join
    // endtask:run_phase
-  
+  virtual function set_item_config_value();
+  item_config0.eth_item_payload=`ASSIGN_ALL_BYTE;
+endfunction
 endclass 
 
 class full_throughput_switch_test extends pcs_base_test;
@@ -229,6 +203,7 @@ class full_throughput_switch_test extends pcs_base_test;
 
     function new(string name="full_throughput_switch_test" ,  uvm_component parent=null);
         super.new(name,parent);  
+		TIME_OUT_INTERVAL=1ms; 	
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -252,29 +227,14 @@ class full_throughput_switch_test extends pcs_base_test;
       begin
        port_stimulus_s[i] = 0;
       end
- 
+    
+	for(int i=2;i<=dut_max_port;i++)
+	  port_stimulus_s[i].port_en = 1;
 // port_stimulus_s[0].port_en = 1;
 // port_stimulus_s[1].port_en = 1;
-port_stimulus_s[2].port_en = 1;
-port_stimulus_s[3].port_en = 1;
-port_stimulus_s[4].port_en = 1;
-port_stimulus_s[5].port_en = 1;
-port_stimulus_s[6].port_en = 1;
-port_stimulus_s[7].port_en = 1;
-port_stimulus_s[8].port_en = 1;
-port_stimulus_s[9].port_en = 1;
-port_stimulus_s[10].port_en = 1;
-port_stimulus_s[11].port_en = 1;
-port_stimulus_s[12].port_en = 1;
-port_stimulus_s[13].port_en = 1;
-port_stimulus_s[14].port_en = 1;
-port_stimulus_s[15].port_en = 1;
-port_stimulus_s[16].port_en = 1;
-port_stimulus_s[17].port_en = 1;
-port_stimulus_s[18].port_en = 1;
-port_stimulus_s[19].port_en = 1;
 
-port_stimulus_s[0].packet_count = 1;  //0: forever
+
+//port_stimulus_s[0].packet_count = 1;  //0: forever
 port_stimulus_s[1].packet_count = 1;
 //port_stimulus_s[2].packet_count = 1; //comment means no limit, it will generate packet forever
 //port_stimulus_s[3].packet_count = 1;
@@ -336,7 +296,11 @@ port_stimulus_s[16].da_index = (dut_max_port-16);
 port_stimulus_s[17].da_index = (dut_max_port-17);
 port_stimulus_s[18].da_index = (dut_max_port-18);
 port_stimulus_s[19].da_index = (dut_max_port-19);
-endfunction       
+endfunction      
+
+virtual function set_item_config_value();
+  item_config0.eth_item_payload=`ASSIGN_ALL_BYTE;
+endfunction 
 endclass
 
 
@@ -444,11 +408,11 @@ class ptp_smoke_test extends pcs_base_test;
   //modify the config	
   `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_valid = 1;
   `PTP_CONFIG_CONTENT[0].descriptor_trans.inst_type = 0; //master
-  `PTP_CONFIG_CONTENT[0].descriptor_trans.two_step = 1; //1： two step  0: one step
+  `PTP_CONFIG_CONTENT[0].descriptor_trans.two_step = 1; //1锛� two step  0: one step
   
   `PTP_CONFIG_CONTENT[0].ptp_trans.packet_type     =    ptp_item::Sync;
   `PTP_CONFIG_CONTENT[0].ptp_trans.messageType     =    `Sync;
-  `PTP_CONFIG_CONTENT[0].ptp_trans.flagField[1]     =    1; //1： two step  0: one step
+  `PTP_CONFIG_CONTENT[0].ptp_trans.flagField[1]     =    1; //1锛� two step  0: one step
   
   `PTP_CONFIG_CONTENT[0].eth_trans.destination_address = `PTP_NON_PEER_MULTI_DA;
   `PTP_CONFIG_CONTENT[0].sys_trans.destination =  test_port_index;

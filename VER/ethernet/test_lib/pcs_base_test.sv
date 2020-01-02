@@ -5,11 +5,12 @@ class pcs_base_test extends uvm_test;
    `uvm_component_utils(pcs_base_test)
  
     uvm_table_printer          printer;  
-
+    virtual dut_if dut_if0;
     pcs_tx_rx_env pcs_tx_rx_env0;
     register_config reg_config;
 	topology_config topology_config0;
 	cpu_config      cpu_config0;
+	item_config     item_config0;
     integer file_id;
     event tc_finish;
     event tc_fail;
@@ -17,14 +18,16 @@ class pcs_base_test extends uvm_test;
     int comp_success_count[];
 	string global_test_log;
 	string test_result_file;
-	parameter test_port_index= 5'd2;
-	int    TIME_OUT_INTERVAL=50ms; 
+	int test_port_index= 5'd2;
+	int    TIME_OUT_INTERVAL=10ms; 
+	bit    test_pass;
     function new(string name="pcs_base_test" ,  uvm_component parent=null);
         super.new(name,parent);
 //       env_ec         = env_static_config::type_id::create("env_ec", this); 
-//       set_config_object("*","static_cfg",env_ec,0);     
+//       set_config_object("*","static_cfg",env_ec,0);   
+         topology_config0 =new();  
          reg_config = new();
-		 
+		 item_config0 = new();
 		 test_result_file = `test_result_file;
 		 global_test_log = {get_type_name(),"_log.txt"};
 		 file_id=$fopen(global_test_log,"w+");                                               
@@ -33,7 +36,7 @@ class pcs_base_test extends uvm_test;
      endfunction : new
   
   virtual function void set_topology_config();
-    topology_config0 =new();
+    //topology_config0.compare_enable = 0;
   endfunction
   
   virtual function void set_cpu_config();
@@ -52,6 +55,11 @@ class pcs_base_test extends uvm_test;
 	   set_ptp_predefine_value();
 	   set_port_stimulus_value();	// define in the global_define.sv
 	   set_port_ptp_instance_mapping();
+	   set_item_config_value();
+//=================================get dut if connected with DUT================================
+        if( !uvm_config_db #(virtual dut_if )::get( this , "" , "dut_vif" ,dut_if0 ) ) begin
+           `uvm_fatal(get_type_name(),"=============dut_if==========");
+		end	   
 //=================================set cpu agent config==========================================	
 	   set_cpu_config();
        uvm_config_db #(cpu_config)::set(this, "*", "cpu_config",
@@ -61,13 +69,17 @@ class pcs_base_test extends uvm_test;
        set_topology_config();
        uvm_config_db #(topology_config)::set(this, "*", "topology_config",
        topology_config0);
-	   
+
+//=================================set register config==========================================
+       uvm_config_db #(item_config)::set(this, "*", "item_config",
+       item_config0);
+	   	   
        pcs_tx_rx_env0 = pcs_tx_rx_env::type_id::create("pcs_tx_rx_env0", this); 
 
 //=================================set register config==========================================
-
        uvm_config_db #(register_config)::set(this, "*", "register_config",
        reg_config);
+
 
 //==================================scenario============================================       
        uvm_config_db#(uvm_object_wrapper)::set(this,"pcs_tx_rx_env0.virt_seqr.run_phase", 
@@ -131,6 +143,30 @@ class pcs_base_test extends uvm_test;
     
    task run_phase(uvm_phase phase);
     fork
+	   while(1)
+	   begin
+	    @this.pcs_tx_rx_env0.scb0_dbg.fatal_event;
+		file_id=$fopen(global_test_log,"a+"); 
+		$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard_dbg\n"));	
+		$fclose(file_id);
+		if(auto_stop_en)
+		  begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		      $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
+		      $fclose(file_id);
+		  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scoreboard_dbg"));
+		  end
+	   end
+	   
+	   while(1)
+	   begin
+		@this.pcs_tx_rx_env0.scb0_dbg.comp_success;
+		comp_success_count[test_port_index]++;
+		file_id=$fopen(global_test_log,"a+"); 
+		$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard_dbg \n",comp_success_count[test_port_index]));	
+		$fclose(file_id);
+	   end
+	   
 	   begin
 	    for(int i=0;i<topology_config0.mac_number;i++)
 		 begin
@@ -148,7 +184,7 @@ class pcs_base_test extends uvm_test;
 				   file_id=$fopen(test_result_file,"a+"); 
 		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
 		    	   $fclose(file_id);
-				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR ptp_scb0[%0d]",index));
+				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scoreboard[%0d]",index));
 				  end
 		       end
 		   join_none
@@ -201,15 +237,21 @@ class pcs_base_test extends uvm_test;
 	   //#100us;
 	   if(comp_success_count[test_port_index]!=0)
 	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
 		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		   test_pass=1;
 		 end
 	   else
 	     begin
 		   file_id=$fopen(test_result_file,"a+"); 
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
 		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		   test_pass=0;
 		 end
        $finish;      
 	   end
@@ -217,13 +259,25 @@ class pcs_base_test extends uvm_test;
 	join
    endtask:run_phase
 
-  function void report_phase(uvm_phase phase);
-    if(1) begin
-      `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
-    end
-    else begin
-      `uvm_error(get_type_name(), "** UVM TEST FAIL **")
-    end
+  virtual function void report_phase(uvm_phase phase);
+	   if(comp_success_count[test_port_index]!=0)
+	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
+		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		   test_pass=1;
+		 end
+	   else
+	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
+		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		   test_pass=0;
+		 end
   endfunction
 
  virtual function set_port_stimulus_value();
@@ -315,6 +369,9 @@ port_stimulus_s[16].da_index = 16;//(19-16);
 port_stimulus_s[17].da_index = 17;//(19-17);
 port_stimulus_s[18].da_index = 18;//(19-18);
 port_stimulus_s[19].da_index = 19;//(19-19);
+
+foreach(port_stimulus_s[key])
+ port_stimulus_s[key].e_p_packet_en  = 2'b11;
 endfunction     
 
 virtual function set_ptp_predefine_value();
@@ -327,5 +384,126 @@ virtual function set_port_ptp_instance_mapping();
   foreach(port_ptp_instance_mapping_table[key])
      port_ptp_instance_mapping_table[key] = key;
 endfunction 
+
+virtual function set_item_config_value();
+endfunction
+
+virtual task basic_run_monitor(uvm_phase phase);
+fork
+	   while(1)
+	   begin
+	    @this.pcs_tx_rx_env0.scb0_dbg.fatal_event;
+		file_id=$fopen(global_test_log,"a+"); 
+		$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard_dbg\n"));	
+		$fclose(file_id);
+		if(auto_stop_en)
+		  begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		      $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
+		      $fclose(file_id);
+		  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scoreboard_dbg"));
+		  end
+	   end
+	   
+	   while(1)
+	   begin
+		@this.pcs_tx_rx_env0.scb0_dbg.comp_success;
+		comp_success_count[test_port_index]++;
+		file_id=$fopen(global_test_log,"a+"); 
+		$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard_dbg \n",comp_success_count[test_port_index]));	
+		$fclose(file_id);
+	   end
+	   
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.scb0[index].fatal_event;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
+		    	$fclose(file_id);
+				if(auto_stop_en)
+				  begin
+				   file_id=$fopen(test_result_file,"a+"); 
+		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
+		    	   $fclose(file_id);
+				  `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR scoreboard[%0d]",index));
+				  end
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+	   
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.scb0[index].comp_success;
+				comp_success_count[index]++;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard[%0d] \n",comp_success_count[index],index));	
+		    	$fclose(file_id);
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+	   
+       begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.ptp_scb0[index].comp_success;
+				comp_success_count[index]++;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard[%0d] \n",comp_success_count[index],index));	
+		    	$fclose(file_id);
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+	   
+	
+	   begin
+       phase.phase_done.set_drain_time(this, 50000);
+       #TIME_OUT_INTERVAL;
+	   //#100us;
+	   if(comp_success_count[test_port_index]!=0)
+	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
+		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		   test_pass=1;
+		 end
+	   else
+	     begin
+		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
+		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		   test_pass=0;
+		 end
+       $finish;      
+	   end
+	   
+	join
+endtask
 endclass : pcs_base_test
 
