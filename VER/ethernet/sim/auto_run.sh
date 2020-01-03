@@ -8,6 +8,6 @@ if [ $firstbyte == "#" ]; then
 else
  #echo "valid case"
   echo $LINE
-	./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=$LINE 
+	./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=$LINE -cm line+cond+fsm+tgl
 fi
 done  < test_list

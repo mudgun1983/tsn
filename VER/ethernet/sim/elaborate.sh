@@ -21,7 +21,7 @@ bin_path="/usr/synopsys/L-2016.06/bin"
 
 # set vcs command line args
 vcs_opts="-full64 -debug_pp -t ps -licqueue -l elaborate.log"
-
+cov_opts="-cm line+cond+fsm+tgl"
 # run elaboration
 #$bin_path/vcs $vcs_opts xil_defaultlib.fifo_generator_0_tb xil_defaultlib.glbl -o fifo_generator_0_tb_simv
 #$bin_path/vcs $vcs_opts xil_defaultlib.tsn_sw_top  xil_defaultlib.glbl -o fifo_generator_0_tb_simv
@@ -35,4 +35,4 @@ vcs -full64  \
 	+error+10 \
 	-P ${VERDI_PATH}/novas.tab \
         ${VERDI_PATH}/pli.a \
-	-l comp.log -CFLAGS -DVCS 
+	-l comp.log -CFLAGS -DVCS $cov_opts
