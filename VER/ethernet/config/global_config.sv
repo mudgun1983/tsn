@@ -16,6 +16,7 @@ class item_config extends uvm_object;
 
 bit [1:0]  eth_item_payload = `INCREASE_PAYLOAD;//20;
 int        tagged_size = 2;
+int        selfdefine_tagged_size = 1;//<=tagged_size
 bit [2:0]  p_mac_pri;
 bit        p_mac_c;
 bit [15:0] p_mac_vlan[`MAX_ENV_MAC_NUM];
@@ -31,4 +32,16 @@ foreach(packet_ipg[key])
         packet_ipg[key]=0us;
 endfunction
 
+endclass
+
+class debug_item_config extends uvm_object;
+rand int data_len;
+
+function new( string name = "" );
+super.new( name );
+endfunction
+
+constraint c_data_len{
+ data_len dist{46:/97,46:/3};
+}
 endclass

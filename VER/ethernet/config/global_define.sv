@@ -28,6 +28,8 @@
 
 //QCI
 `define BYPASS_ETYPE 16'h1234
+//1CB
+`define CB_ETYPE 16'hF1C1
 
 `define PACKET_COUNT 'd100
 typedef struct packed

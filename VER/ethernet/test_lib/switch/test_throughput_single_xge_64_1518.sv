@@ -1,15 +1,3 @@
-class debug_item_config extends uvm_object;
-rand int data_len;
-
-function new( string name = "" );
-super.new( name );
-endfunction
-
-constraint c_data_len{
- data_len dist{46:/97,46:/3};
-}
-endclass
-
 class test_throughput_single_xge_64_1518 extends pcs_base_test;
  
    `uvm_component_utils(test_throughput_single_xge_64_1518)

@@ -71,7 +71,7 @@ eth_col_port_que_t;
 			$fwrite(write_exp_data_fd,$psprintf(" S preemptable=%0d\n",eth_frame_exp_tr.preemptable));	
             foreach(eth_frame_exp_tr.frame_data[key])
               //$fwrite(write_exp_data_fd,$psprintf("eth_frame_exp_trans.data[%0d]=%0h\n",key,eth_frame_exp_tr.frame_data[key])); 
-              $fwrite(write_exp_data_fd,$psprintf("%2h\n",eth_frame_exp_tr.frame_data[key]));			  
+              $fwrite(write_exp_data_fd,$psprintf("[%0d]%2h\n",key,eth_frame_exp_tr.frame_data[key]));			  
             $fclose(write_exp_data_fd);
         end
     endtask:get_exp_trans
@@ -227,18 +227,18 @@ eth_col_port_que_t;
 									    foreach(eth_frame_exp_tr.frame_data[key])
                      		      	      begin
                      		      	      	if(eth_frame_exp_tr.frame_data[key]!=eth_frame_col_tr.frame_data[key])
-                     		      	      	   begin $fwrite(write_comp_data_fd,$psprintf("FATAL ERROR!eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
-                     		      	      	                                          key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key],$time)); 
+                     		      	      	   begin $fwrite(write_comp_data_fd,$psprintf("FATAL ERROR!payload_seq_id=%0d,eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
+                     		      	      	                                          payload_seq_id,key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key],$time)); 
 											mismatch = 1;
-											`uvm_info(get_type_name(),$psprintf("FATAL ERROR!eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
-                     		      	      	                                          key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key],$time),UVM_LOW);
+											`uvm_info(get_type_name(),$psprintf("FATAL ERROR!payload_seq_id=%0d,eth_frame_exp_tr.frame_data[%0d]=%0h  != eth_frame_col_tr.frame_data[%0d]=%0h time=%0t\n",
+                     		      	      	                                          payload_seq_id,key,eth_frame_exp_tr.frame_data[key],key,eth_frame_col_tr.frame_data[key],$time),UVM_LOW);
 											->fatal_event;			
                                               end											
                      		      	      end
                      		      	    if(eth_frame_exp_tr.fcs!=eth_frame_col_tr.fcs)
                      		      	        begin
- 											 $fwrite(write_comp_data_fd,$psprintf("FCS_ERROR!,eth_frame_exp_tr.fcs=%0h != eth_frame_col_tr.fcs=%0h time=%0t\n",
-                     		      	                                                   eth_frame_exp_tr.fcs,eth_frame_col_tr.fcs,$time));  
+ 											 $fwrite(write_comp_data_fd,$psprintf("FCS_ERROR!payload_seq_id=%0d,,eth_frame_exp_tr.fcs=%0h != eth_frame_col_tr.fcs=%0h time=%0t\n",
+                     		      	                                                   payload_seq_id,eth_frame_exp_tr.fcs,eth_frame_col_tr.fcs,$time));  
                                             //->fatal_event;	 																					   
                                             end																					   
                      		      	    $fclose(write_comp_data_fd);             		  	
@@ -283,21 +283,36 @@ eth_col_port_que_t;
           end
     endtask: eth_frame_compare
 
-// function payload_compare(eth_frame eth_frame_exp_tr,         
-                         // eth_frame eth_frame_col_tr,
-						 // output bit match,
-						 // output int payload_seq_id);
+virtual function payload_compare(eth_frame eth_frame_exp_tr,         
+                         eth_frame eth_frame_col_tr,
+						 output bit match,
+						 output int payload_seq_id);
 
-// match = 0;						 
-// if(eth_frame_exp_tr.tagged_data[1].data[0] != eth_frame_col_tr.tagged_data[1].data[0])  // indicate collect side packet loss	
-	// match = 0;	
-// else
-   // begin
-     // match = 1;		
-	 // ->comp_success;
-   // end
+match = 0;						 
+//if(eth_frame_exp_tr.tagged_data[1].data[0] != eth_frame_col_tr.tagged_data[1].data[0])  // indicate collect side packet loss	
+if(eth_frame_exp_tr.tagged_data[eth_frame_exp_tr.tag_cnt].tpid==`CB_ETYPE) begin
+  if(eth_frame_exp_tr.tagged_data[eth_frame_exp_tr.tag_cnt].data[3] != eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data[3])  //sqr number in the R-TAG
+	match = 0;	
+  else
+   begin
+     match = 1;		
+	 ->comp_success;
+   end
+   payload_seq_id	 = eth_frame_exp_tr.tagged_data[eth_frame_exp_tr.tag_cnt].data[3];
+ end
+else begin
+if(eth_frame_exp_tr.tagged_data[eth_frame_exp_tr.tag_cnt].data[0] != eth_frame_col_tr.tagged_data[eth_frame_col_tr.tag_cnt].data[0])
+	match = 0;	
+else
+   begin
+     match = 1;		
+	 ->comp_success;
+   end
+   payload_seq_id	 = eth_frame_exp_tr.tagged_data[eth_frame_exp_tr.tag_cnt].data[0];
+end
 
-// payload_seq_id	 = eth_frame_exp_tr.tagged_data[1].data[0];
-// endfunction
+//payload_seq_id	 = eth_frame_exp_tr.tagged_data[1].data[0];
+
+endfunction
 
 endclass 

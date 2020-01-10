@@ -134,7 +134,7 @@ class eth_frame extends uvm_sequence_item;
     `uvm_field_int          (port_num                    , UVM_ALL_ON|UVM_NOPACK)
 	`uvm_field_int          (init_crc                    , UVM_ALL_ON|UVM_NOPACK)
     `uvm_field_int          (xor_value                   , UVM_ALL_ON|UVM_NOPACK)
-    
+    `uvm_field_int          (tag_cnt                     , UVM_ALL_ON|UVM_NOPACK)
     `uvm_field_object       (preamble                    , UVM_ALL_ON|UVM_NOPACK)
     `uvm_field_array_object (tagged_data                 , UVM_ALL_ON|UVM_NOPACK)
     `uvm_field_array_object (protocol_errors             , UVM_ALL_ON|UVM_NOPACK|UVM_NOPRINT)

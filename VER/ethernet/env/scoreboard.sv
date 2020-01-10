@@ -108,7 +108,7 @@ class scoreboard extends uvm_scoreboard;
 			$fwrite(write_exp_data_fd,$psprintf(" S preemptable=%0d\n",eth_frame_exp_tr.preemptable));	
             foreach(eth_frame_exp_tr.frame_data[key])
               //$fwrite(write_exp_data_fd,$psprintf("eth_frame_exp_trans.data[%0d]=%0h\n",key,eth_frame_exp_tr.frame_data[key])); 
-              $fwrite(write_exp_data_fd,$psprintf("%2h\n",eth_frame_exp_tr.frame_data[key]));			  
+              $fwrite(write_exp_data_fd,$psprintf("[%0d]%2h\n",key,eth_frame_exp_tr.frame_data[key]));			  
             $fclose(write_exp_data_fd);
         end
     endtask:get_exp_trans
@@ -297,7 +297,7 @@ class scoreboard extends uvm_scoreboard;
           end
     endtask: eth_frame_compare
 
-function payload_compare(eth_frame eth_frame_exp_tr,         
+virtual function payload_compare(eth_frame eth_frame_exp_tr,         
                          eth_frame eth_frame_col_tr,
 						 output bit match,
 						 output int payload_seq_id);

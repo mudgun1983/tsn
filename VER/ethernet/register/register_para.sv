@@ -30,6 +30,7 @@
 `define PTP_CONFIG_CONTENT             reg_config.ptp_config.table_index
 `define OBM_CONFIG_CONTENT             reg_config.obm_content_table.table_index
 `define MAC_CONFIG_CONTENT             reg_config.mac_config_table.table_index
+`define CB_CONFIG_CONTENT              reg_config.cb_content_table.table_index
 
 `define PHY_PORT_TABLE          reg_config.phy_port_table 
 `define LOGIC_PORT_TABLE        reg_config.logic_port_table 
@@ -63,6 +64,7 @@
 `define PTP_CONFIG              reg_config.ptp_config 
 `define OBM_CONFIG              reg_config.obm_content_table 
 `define MAC_CONFIG              reg_config.mac_config_table 
+`define CB_CONFIG               reg_config.cb_content_table 
 
 `define   SUB sub_
 `define   SUB_PTP_CONFIG_CONTENT             `SUB```PTP_CONFIG_CONTENT

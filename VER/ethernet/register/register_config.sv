@@ -33,6 +33,7 @@ GATHER_INIT_TABLE        gather_init_table     ;
 PTP_CONFIG               ptp_config;
 OBM_CONTENT_TABLE        obm_content_table;
 MAC_CONFIG_TABLE         mac_config_table ;
+CB_CONTENT_TABLE         cb_content_table ;
   function new (string name = "register_config");
     super.new(name);
 	phy_port_table        = new();
@@ -68,6 +69,7 @@ MAC_CONFIG_TABLE         mac_config_table ;
 	ptp_config            = new();
 	obm_content_table     = new();
 	mac_config_table      = new();
+	cb_content_table      = new();
   endfunction : new
   
 endclass

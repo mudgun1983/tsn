@@ -80,27 +80,28 @@ class tsn_switch_expect_model extends tsn_switch_model ;
 	  bit[11:0] vlan;
 	  
 	  sa = eth_frame_exp_tr.source_address;
-	  if(eth_frame_exp_tr.tag_cnt<=1)
+	  if(eth_frame_exp_tr.tag_cnt==0)
 	  vlan = 0;
 	  else
 	  vlan = {eth_frame_exp_tr.tagged_data[0].data[1][3:0],eth_frame_exp_tr.tagged_data[0].data[0]};
 	  hash_key[index] = do_crc12({sa,vlan},12'hfff);
-	  `uvm_info(get_type_name(),{$psprintf("hash_key_i[%0d]=%0h\n",index,hash_key[index])},UVM_LOW);
+	  `uvm_info(get_type_name(),{$psprintf("sa=%0h,vlan=%0h,hash_key_i[%0d]=%0h\n",sa,vlan,index,hash_key[index])},UVM_LOW);
 	  sem.get(1);
 	  l2_table[hash_key[index]]=index;
 	  sem.put(1);
 	endtask
     
 	virtual task hash_cal_read_l2_table(eth_frame eth_frame_exp_tr,input int index_i,output int index_o);
-	  bit[47:0] sa;
+	  bit[47:0] da;
 	  bit[11:0] vlan;
 	  
-	  sa = eth_frame_exp_tr.destination_address;
-	  if(eth_frame_exp_tr.tag_cnt<=1)
+	  da = eth_frame_exp_tr.destination_address;
+	  if(eth_frame_exp_tr.tag_cnt==0)
 	  vlan = 0;
 	  else
 	  vlan = {eth_frame_exp_tr.tagged_data[0].data[1][3:0],eth_frame_exp_tr.tagged_data[0].data[0]};;
-	  hash_key[index_i] = do_crc12({sa,vlan},12'hfff);
+	  hash_key[index_i] = do_crc12({da,vlan},12'hfff);
+	  `uvm_info(get_type_name(),{$psprintf("da=%0h,vlan=%0h,hash_key_i[%0d]=%0h\n",da,vlan,index_i,hash_key[index_i])},UVM_LOW);
 	  sem.get(1);
 	  index_o= l2_table[hash_key[index_i]];
 	  sem.put(1);

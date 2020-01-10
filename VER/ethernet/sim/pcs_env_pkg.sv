@@ -48,6 +48,7 @@ package pcs_env_pkg;
   `include "../register/register_para.sv"
   `include "../register/CONFIG_TABLE.sv"
   `include "../register/PTP_CONFIG.sv"
+  `include "../register/CB_CONFIG.sv"
   `include "../register/register_config.sv"
   
 //componet  
@@ -63,10 +64,12 @@ package pcs_env_pkg;
   `include "../env/pcs_tx_rx_env.sv" 
   `include "../env/tsn_switch_expect_model_qci.sv"
   `include "../env/tsn_switch_monitor_model_qci.sv"
+  `include "../env/tsn_switch_expect_model_1cb.sv"
 //seq lib
   //stimulus sequence
   `include "../seq_lib/mac_user_seq_lib.sv"
   `include "../seq_lib/mac_ptp_sequence.sv"
+  `include "../seq_lib/mac_multi_tag_seq.sv"
   //register sequence
   `include "../seq_lib/rgm_seq_lib.sv"
   `include "../seq_lib/rgm_user_seq_lib.sv"
@@ -75,6 +78,7 @@ package pcs_env_pkg;
   `include "../seq_lib/sub_switch_reg_seq.sv"
   `include "../seq_lib/br_reg_seq.sv"
   `include "../seq_lib/qci_reg_seq.sv"
+  `include "../seq_lib/cb_reg_seq.sv"
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
@@ -126,6 +130,13 @@ package pcs_env_pkg;
   //switch
   `include "../test_lib/switch/full_throughput_switch_vlan_random_test.sv"
   `include "../test_lib/switch/test_throughput_single_xge_64_1518.sv"
+  
+  //1CB
+  `include "../test_lib/1cb/simple_1cb_smoke_test.sv"
+  `include "../test_lib/1cb/test_1cb_case0.sv"
+  `include "../test_lib/1cb/test_1cb_case1.sv"
+  `include "../test_lib/1cb/test_1cb_case2.sv"
+  `include "../test_lib/1cb/test_1cb_case2_1.sv"
 endpackage
 `endif
 

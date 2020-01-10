@@ -36,7 +36,7 @@ string file_name;
 
 //attribute    
 topology_config       topology_config0;
-
+register_config       reg_config;
 typedef enum bit[7:0]{
     SMD_S0    = 8'hE6,
     SMD_S1    = 8'h4C,
@@ -92,6 +92,10 @@ typedef enum bit[7:0]{
 		
 		if( !uvm_config_db #( topology_config )::get( this , "" , "topology_config" ,topology_config0 ) ) begin
            `uvm_fatal(get_type_name(),"=============topology_config==========");
+		end
+		
+		if( !uvm_config_db #( register_config )::get( this , "" , "register_config" ,reg_config ) ) begin
+           `uvm_fatal(get_type_name(),"=============register_config==========");
 		end
 		
 		get_port_dbg            = new("get_port_dbg",this);
