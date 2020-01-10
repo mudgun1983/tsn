@@ -9,27 +9,27 @@ class mac_multi_tag_seq extends mac_base_sequence;
   rand bit [47:0] frame_cnt;
   rand bit [47:0] da_frame_cnt;
   rand bit [47:0] sa_frame_cnt;
-  rand bit vlan_choose;
+  rand bit        vlan_choose;
   rand bit           c_data_control   ;
   rand bit [7:0]     c_data_payload   ;
   rand int unsigned  c_packet_len     ;
   rand bit [15:0]    c_tpid     ;
   rand bit [7:0]     c_smd            ;
   rand bit [7:0]     c_frag_cnt       ;
-  bit           c_preemptable  =0  ;
+  bit                c_preemptable  =0  ;
   rand bit           c_start_or_frag  ;
   rand bit           c_last_frag      ;
   rand int unsigned  c_preamble_length;
   rand bit [31:0]    c_init_crc;
   rand bit [31:0]    c_xor_value;
-  int unsigned  c_packet_ipg=12;
+  int unsigned       c_packet_ipg=12;
   
   rand bit [15:0]    c_selfdefine_tag_data[]       ;
   rand int unsigned  c_selfdefine_tag_len  ;
   rand bit [15:0]    c_selfdefine_tpid;
-  rand bit [47:0] c_da_cnt;
-  rand bit [47:0] c_sa_cnt;
-  rand bit [15:0] c_vlan;
+  rand bit [47:0]    c_da_cnt;
+  rand bit [47:0]    c_sa_cnt;
+  rand bit [15:0]    c_vlan;
   item_config item_config0;
   string scope_name = "";
   bit [1:0] eth_item_payload;
@@ -38,14 +38,46 @@ class mac_multi_tag_seq extends mac_base_sequence;
   `ifdef GMII_RX_PUSH_MODE
     `uvm_sequence_utils(mac_multi_tag_seq,mac_rx_base_push_sequencer)
   `else
-    `uvm_sequence_utils(mac_multi_tag_seq,mac_rx_base_sequencer)
+    `uvm_sequence_utils_begin(mac_multi_tag_seq,mac_rx_base_sequencer)
+	`uvm_field_int          (frame_cnt             , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (da_frame_cnt          , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (sa_frame_cnt          , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (vlan_choose           , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_data_control             , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_data_payload             , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_packet_len               , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_tpid                     , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_smd                      , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_frag_cnt                 , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_preemptable              , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_start_or_frag            , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_last_frag                , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_preamble_length          , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_init_crc          , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_xor_value         , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_array_int    (c_selfdefine_tag_data    , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_selfdefine_tag_len     , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_selfdefine_tpid        , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_da_cnt                , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_sa_cnt                , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_int          (c_vlan                  , UVM_ALL_ON|UVM_NOPACK)
+	`uvm_field_object       (item_config0  , UVM_ALL_ON|UVM_NOPACK)	
+	`uvm_sequence_utils_end
   `endif
 
 //==================== Constraint ================//
   constraint c_preamble_len{ 
       c_preamble_length inside {[1:7]};//== 7;
   }
+
+  constraint selfdefine_tag_len{ 
+      c_selfdefine_tag_len inside {[0:100]};//== 7;
+  }
  
+  constraint packet_len{ 
+      c_packet_len inside {[46:1518]};//== 7;
+  }
+  
 constraint c_data_size 
              {
              	 c_selfdefine_tag_data.size() == c_selfdefine_tag_len;

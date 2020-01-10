@@ -1,6 +1,6 @@
 class tsn_switch_expect_model_1cb extends tsn_switch_expect_model ;
 
-parameter SQR_BOARD_SIZE = 2**8;
+parameter SQR_BOARD_SIZE = 2**16;
 bit [15:0] sequence_id[`MAX_PORT_NUM];
 `uvm_component_utils_begin(tsn_switch_expect_model_1cb) 
    `uvm_component_utils_end
@@ -18,7 +18,7 @@ typedef struct
 typedef struct 
 {
   //key----
-  bit  packet_seen[SQR_BOARD_SIZE];
+  bit  SequenceHistory[SQR_BOARD_SIZE];
   //--------
 } sqr_board_t;
 
@@ -50,7 +50,7 @@ int bypass;
                  get_port[index].get(eth_frame_exp_tr_array[index]);
 				 //hash cal and store l2 table
 				 hash_cal_store_l2_table(eth_frame_exp_tr_array[index],index);
-		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr_array[index].sprint()},UVM_LOW);
+		      	`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),eth_frame_exp_tr_array[index].sprint()},UVM_HIGH);
 		      	//classify and merge the packet
 		      	//classify_merge(eth_frame_exp_tr_array[index],merge_finish_array[index]);
 				classify_merge(.eth_frame_exp_tr(eth_frame_exp_tr_array[index]),
@@ -190,15 +190,15 @@ int bypass;
 				end
 		  
 		  //SequenceRecovery and listener_agent
-	      if(sqr_board_s[source_port].packet_seen[sqr_num]==1 &&(talker_agent_add_r_tag || r_tag_seen))
+	      if(sqr_board_s[source_port].SequenceHistory[sqr_num]==1 &&(talker_agent_add_r_tag || r_tag_seen))
 		    begin
-		     sqr_board_s[source_port].packet_seen[sqr_num]=0;
+		     sqr_board_s[source_port].SequenceHistory[sqr_num]=0;
 			 `uvm_info(get_type_name(),{$psprintf("SequenceRecovery discard sqr_num=%0h",sqr_num)},UVM_LOW);
 		     return;//SequenceRecovery discard the  duplicate frame with the same sqr_num in R-TAG;
 		    end
 		  else
 		    begin
-		      sqr_board_s[source_port].packet_seen[sqr_num]=1;
+		      sqr_board_s[source_port].SequenceHistory[sqr_num]=1;
 			  //modify the item
 			  if(listener_agent==1 && r_tag_seen)
 			  //delete the R-TAG  6bytes(actually, delete first 6 bytes,and repalce the tpid value)

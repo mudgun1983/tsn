@@ -39,7 +39,13 @@
 #test_qci_pass_multi_port_multi_gate
 #test_qci_pass_multi_port_multi_gate_with_bypass_background
 simple_1cb_smoke_test
-test_1cb_case0
-test_1cb_case1
+#test_1cb_case0
+#test_1cb_case1
 test_1cb_case2
 test_1cb_case2_1
+test_1cb_case2_2
+test_1cb_case2_3
+test_1cb_case3
+test_1cb_case3_1
+test_1cb_case3_2
+test_1cb_case3_3

@@ -1,26 +1,29 @@
-class test_1cb_case1 extends simple_1cb_smoke_test;
+class test_1cb_case3_3 extends test_1cb_case3;
  
-   `uvm_component_utils(test_1cb_case1)
-    mac_multi_tag_seq mac_multi_tag_seq1;
-    function new(string name="test_1cb_case1" ,  uvm_component parent=null);
+   `uvm_component_utils(test_1cb_case3_3)
+
+    function new(string name="test_1cb_case3_3" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
 		auto_stop_en = 1;
-		test_port_index = 1;
 		source_port     = 2;
 		source_port1    = 3;
 		vid             = 'h500;
 		dmac            = 1;
+		dmac1           = 4;
 		ingress_flow_id         = 'd1023;
 		ingress_gate_id         = 'd511;
 		phb             =3'd3;
 		virtual_port    = 9'd511;		
-		packet_count    = 'd100;
+		
+		test_port_index = dmac;
+		test_port_index1 = dmac1;
+		
+		packet_cnt = 'd100;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);   
-	mac_multi_tag_seq1=mac_multi_tag_seq::type_id::create("mac_multi_tag_seq1", this);  
    endfunction : build_phase
 
   function void end_of_elaboration();
@@ -28,13 +31,6 @@ class test_1cb_case1 extends simple_1cb_smoke_test;
       $psprintf("Printing the test topology :\n%s", this.sprint(printer)), UVM_HIGH)
   endfunction : end_of_elaboration  
   
-task configure_phase( uvm_phase phase);
-     phase.raise_objection( this );
-	 #150us;
-     cb_reg_seq0.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
-	 phase.drop_objection( this );
-endtask
-
 virtual task main_phase(uvm_phase phase);
      bit[15:0] vlan = item_config0.e_mac_vlan[dmac];
      phase.raise_objection( this );
@@ -93,15 +89,11 @@ virtual task main_phase(uvm_phase phase);
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
 		end	
-        
-		//mac_multi_tag_seq1.randomize();
-        mac_multi_tag_seq1.copy(mac_multi_tag_seq0);
-		`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),mac_multi_tag_seq1.sprint()},UVM_HIGH);
-        fork		
+        if(port_stimulus_s[source_port].port_en==1)			
 		mac_multi_tag_seq0.start(pcs_tx_rx_env0.mac_env0[source_port].mac_rx_agent0.sequencer);
-		//mac_multi_tag_seq0.start(pcs_tx_rx_env0.mac_env0[source_port1].mac_rx_agent0.sequencer);
-		mac_multi_tag_seq1.start(pcs_tx_rx_env0.mac_env0[source_port1].mac_rx_agent0.sequencer);
-		join
+		if(port_stimulus_s[source_port1].port_en==1)	
+		mac_multi_tag_seq0.start(pcs_tx_rx_env0.mac_env0[source_port1].mac_rx_agent0.sequencer);
+		
 		sequence_id[source_port]++;
 		data_payload[source_port]++;
 	 end
@@ -117,7 +109,32 @@ endtask
    endtask:run_phase
 
  virtual function void report_phase(uvm_phase phase);
-    super.report_phase(phase);
+    bit test_fail;
+	   
+	   if(comp_success_count[test_port_index]!=packet_cnt || comp_success_count[test_port_index1]!=packet_cnt)
+		  begin
+		  test_fail=1;
+		  $display("comp_success_count[%0d]=%0d,comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index],test_port_index1,comp_success_count[test_port_index1]);
+		  end
+	   else
+	      $display("comp_success_count[%0d]=%0d,comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index],test_port_index1,comp_success_count[test_port_index1]);
+	   
+	   if(~test_fail)
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
+		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		   test_pass=1;
+		 end
+	   else
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
+		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		   test_pass=0;
+		 end
   endfunction
   
 virtual function set_port_stimulus_value();
@@ -141,8 +158,8 @@ port_stimulus_s[source_port1].da_index =   dmac;//(19- 0);
 port_stimulus_s[dmac].da_index =   source_port;//(19- 0);   
 
 
-port_stimulus_s[source_port].packet_count = packet_count; 
-port_stimulus_s[source_port1].packet_count = packet_count; 
+port_stimulus_s[source_port].packet_count = packet_cnt; 
+port_stimulus_s[source_port1].packet_count = packet_cnt; 
 port_stimulus_s[dmac].packet_count = 1; 
 endfunction 
 
@@ -154,14 +171,16 @@ endfunction
 virtual function set_i_epp_predefine_value();
   super.set_i_epp_predefine_value(); 
 endfunction  
-
-  virtual function void set_topology_config();
-    topology_config0.compare_enable = 0;
-	topology_config0.compare_enable[test_port_index] = 1;
-  endfunction
   
   virtual function void set_1cb_config();
      super.set_1cb_config();
+    `CB_CONFIG_CONTENT[0].cb_valid       =1;
+	`CB_CONFIG_CONTENT[0].rec_algorithm  =0;
     `CB_CONFIG_CONTENT[0].listener_agent =1;
+    `CB_CONFIG_CONTENT[0].sq_en          =0;
+    `CB_CONFIG_CONTENT[0].w_valid        =1;
+    `CB_CONFIG_CONTENT[0].w_fp_oport     =dmac;
+    `CB_CONFIG_CONTENT[0].p_valid        =1;
+    `CB_CONFIG_CONTENT[0].p_fp_oport     =dmac1;
   endfunction
 endclass 

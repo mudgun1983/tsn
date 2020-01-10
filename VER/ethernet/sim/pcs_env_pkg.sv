@@ -137,6 +137,12 @@ package pcs_env_pkg;
   `include "../test_lib/1cb/test_1cb_case1.sv"
   `include "../test_lib/1cb/test_1cb_case2.sv"
   `include "../test_lib/1cb/test_1cb_case2_1.sv"
+  `include "../test_lib/1cb/test_1cb_case2_2.sv"
+  `include "../test_lib/1cb/test_1cb_case2_3.sv"
+  `include "../test_lib/1cb/test_1cb_case3.sv"
+  `include "../test_lib/1cb/test_1cb_case3_1.sv"
+  `include "../test_lib/1cb/test_1cb_case3_2.sv"
+  `include "../test_lib/1cb/test_1cb_case3_3.sv"
 endpackage
 `endif
 

@@ -29,6 +29,7 @@ class simple_1cb_smoke_test extends pcs_base_test;
 	bit        init_finish;
 	event      packet_trigger;
 	event      packet_trigger2;
+	int        packet_count;
     function new(string name="simple_1cb_smoke_test" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
@@ -149,7 +150,7 @@ endtask
  virtual function void report_phase(uvm_phase phase);
     bit test_fail;
 	   
-	   if(comp_success_count[test_port_index]==0)
+	   if(comp_success_count[test_port_index]!=packet_count)
 		  test_fail=1;
 	   else
 	      $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
@@ -190,7 +191,7 @@ port_stimulus_s[source_port].da_index =   dmac;//(19- 0);
 port_stimulus_s[dmac].da_index =   source_port;//(19- 0);   
 
 
-port_stimulus_s[source_port].packet_count = 100; 
+port_stimulus_s[source_port].packet_count = packet_count; 
 port_stimulus_s[dmac].packet_count = 1; 
 endfunction 
 

@@ -1,7 +1,7 @@
 class test_1cb_case0 extends simple_1cb_smoke_test;
  
    `uvm_component_utils(test_1cb_case0)
-
+    mac_multi_tag_seq mac_multi_tag_seq1;
     function new(string name="test_1cb_case0" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
@@ -19,6 +19,7 @@ class test_1cb_case0 extends simple_1cb_smoke_test;
   
    virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);   
+	mac_multi_tag_seq1=mac_multi_tag_seq::type_id::create("mac_multi_tag_seq1", this);  
    endfunction : build_phase
 
   function void end_of_elaboration();
@@ -90,8 +91,14 @@ virtual task main_phase(uvm_phase phase);
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
 		end		
+		//mac_multi_tag_seq1.randomize();
+        mac_multi_tag_seq1.copy(mac_multi_tag_seq0);
+		`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),mac_multi_tag_seq1.sprint()},UVM_HIGH);
+        fork		
 		mac_multi_tag_seq0.start(pcs_tx_rx_env0.mac_env0[source_port].mac_rx_agent0.sequencer);
-		mac_multi_tag_seq0.start(pcs_tx_rx_env0.mac_env0[source_port1].mac_rx_agent0.sequencer);
+		//mac_multi_tag_seq0.start(pcs_tx_rx_env0.mac_env0[source_port1].mac_rx_agent0.sequencer);
+		mac_multi_tag_seq1.start(pcs_tx_rx_env0.mac_env0[source_port1].mac_rx_agent0.sequencer);
+		join
 		sequence_id[source_port]++;
 		data_payload[source_port]++;
 	 end
@@ -131,8 +138,8 @@ port_stimulus_s[source_port1].da_index =   dmac;//(19- 0);
 port_stimulus_s[dmac].da_index =   source_port;//(19- 0);   
 
 
-port_stimulus_s[source_port].packet_count = 100; 
-port_stimulus_s[source_port1].packet_count = 100; 
+port_stimulus_s[source_port].packet_count = packet_count; 
+port_stimulus_s[source_port1].packet_count = packet_count; 
 port_stimulus_s[dmac].packet_count = 1; 
 endfunction 
 

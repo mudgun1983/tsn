@@ -2,6 +2,24 @@ class test_1cb_case2_2 extends test_1cb_case2;
  
    `uvm_component_utils(test_1cb_case2_2)
 
+    function new(string name="test_1cb_case2_2" ,  uvm_component parent=null);
+        super.new(name,parent); 
+        //TIME_OUT_INTERVAL = 10us;
+		auto_stop_en = 1;
+		source_port     = 2;
+		source_port1    = 3;
+		vid             = 'h500;
+		dmac            = 1;
+		dmac1           = 4;
+		ingress_flow_id         = 'd1023;
+		ingress_gate_id         = 'd511;
+		phb             =3'd3;
+		virtual_port    = 9'd511;		
+		
+		test_port_index = dmac;
+		test_port_index1 = dmac1;
+     endfunction : new
+	 
 virtual task main_phase(uvm_phase phase);
      bit[15:0] vlan = item_config0.e_mac_vlan[dmac];
      phase.raise_objection( this );
