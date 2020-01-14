@@ -27,6 +27,9 @@ virtual task body();
        end	
 	   
 	   //FRER_REC_TABLE
+	   `user_rgm_write_with(`AGE_COUNTER_UNIT_H,`FRER_REC_TABLE.age_counter_unit[31:16]);
+	   `user_rgm_write_with(`AGE_COUNTER_UNIT_L,`FRER_REC_TABLE.age_counter_unit[15:0]);
+	   `user_rgm_write_with(`FRER_AGE_TIMER    ,`FRER_REC_TABLE.frer_age_timer_cfg);
 	   for(int i=0;i<`FRER_REC_TABLE.table_size;i++)
 	   begin
 	     `user_rgm_write_with((`FRER_REC_TABLE_CONTROL),({{16{1'b1}} ,`FRER_REC_TABLE_CONTENT[i].table_key_t})); 

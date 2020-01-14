@@ -43,6 +43,7 @@ class simple_1cb_smoke_test extends pcs_base_test;
 		phb             =3'd3;
 		virtual_port    = 9'd511;	
 		default_vid     = 0;
+		packet_count   =100;
      endfunction : new
   
    virtual function void build_phase(uvm_phase phase);
@@ -150,8 +151,11 @@ endtask
  virtual function void report_phase(uvm_phase phase);
     bit test_fail;
 	   
-	   if(comp_success_count[test_port_index]!=packet_count)
-		  test_fail=1;
+	   if(comp_success_count[test_port_index]!=packet_count || packet_count==0)
+		  begin
+		    test_fail=1;
+			$display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
+		  end
 	   else
 	      $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 	   
@@ -215,10 +219,12 @@ virtual function set_i_epp_predefine_value();
   `ING_FLOW_TABLE_CONTENT[3].table_key_t={source_port1[4:0],default_vid[11:0],dmac[47:0]};     //ivlan
   `ING_FLOW_TABLE_CONTENT[3].table_t={1'b1,4'b0,ingress_flow_id[9:0]};     //"1'b1-配置有效,保留,ingress flow_id
 
+  `FRER_REC_TABLE.age_counter_unit   = {16'h0773,16'h593f};
+  `FRER_REC_TABLE.frer_age_timer_cfg = 'h3f0;
   `FRER_REC_TABLE.table_size=1;
   `FRER_REC_TABLE.table_index = new[`FRER_REC_TABLE.table_size];
    foreach(`FRER_REC_TABLE.table_index[key])
-      `FRER_REC_TABLE.table_index[key] = new();	  
+      `FRER_REC_TABLE.table_index[key] = new();	 	  
   `FRER_REC_TABLE_CONTENT[0].table_key_t={ingress_flow_id};     // 
   `FRER_REC_TABLE_CONTENT[0].table_t={1'b1,5'b0,rec_algorithm,listener_agent,136'b0};     //[143]    :valid
                                                 //[142:138]:rsv[4:0]

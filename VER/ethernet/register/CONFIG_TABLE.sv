@@ -991,7 +991,8 @@ endclass
 class FRER_REC_TABLE extends uvm_object;
 `uvm_object_utils( FRER_REC_TABLE );
 
-
+bit [9:0]  frer_age_timer_cfg;
+bit [31:0] age_counter_unit;
 int unsigned table_size=2;
 
 FRER_REC_TABLE_CONTENT table_index[];

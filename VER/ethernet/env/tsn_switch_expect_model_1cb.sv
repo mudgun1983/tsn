@@ -159,7 +159,8 @@ int bypass;
 			  sqr_num     =  sequence_id[source_port];
 			 end
 			 
-		if(rec_algorithm  ==0) begin//match_alg
+		//if(rec_algorithm  ==0) //match_alg
+		begin
 		//talker agent
 		if(sq_en==1)
 			    begin
