@@ -145,6 +145,8 @@ package pcs_env_pkg;
   `include "../test_lib/1cb/test_1cb_case3_3.sv"
   `include "../test_lib/1cb/test_1cb_case0_match_alg.sv"
   `include "../test_lib/1cb/test_1cb_case0_vector_alg.sv"
+  `include "../test_lib/1cb/test_1cb_case0_match_alg_reset.sv"
+  `include "../test_lib/1cb/test_1cb_case0_vector_alg_reset.sv"
 endpackage
 `endif
 

@@ -37,6 +37,8 @@ interface dut_if();
 
  task monitor_gate_status(input int gate_id);
  endtask
+ 
+ 
 `else
 `endif
 endinterface 

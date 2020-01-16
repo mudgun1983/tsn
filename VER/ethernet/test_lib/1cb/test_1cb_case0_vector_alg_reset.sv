@@ -1,13 +1,13 @@
-class test_1cb_case0_vector_alg extends simple_1cb_smoke_test;
+class test_1cb_case0_vector_alg_reset extends simple_1cb_smoke_test;
  
-   `uvm_component_utils(test_1cb_case0_vector_alg)
+   `uvm_component_utils(test_1cb_case0_vector_alg_reset)
     mac_multi_tag_seq mac_multi_tag_seq1;
 	bit [15:0] sequence_id_another_stream[`MAX_PORT_NUM];
 	event      packet_trigger;
 	int        TIME_INTERVAL;
 	int        TIME_INTERVAL1;
 	int        frerSeqRcvyHistoryLength;
-    function new(string name="test_1cb_case0_vector_alg" ,  uvm_component parent=null);
+    function new(string name="test_1cb_case0_vector_alg_reset" ,  uvm_component parent=null);
         super.new(name,parent); 
         //TIME_OUT_INTERVAL = 10us;
 		auto_stop_en = 1;
@@ -15,7 +15,7 @@ class test_1cb_case0_vector_alg extends simple_1cb_smoke_test;
 		source_port     = 2;
 		source_port1    = 3;
 		vid             = 'h500;
-		dmac            = 1;
+		dmac            = 4;
 		test_port_index = dmac;
 		ingress_flow_id         = 'd1023;
 		ingress_gate_id         = 'd511;
@@ -90,10 +90,18 @@ virtual task main_phase(uvm_phase phase);
 		mac_multi_tag_seq1.c_selfdefine_tag_data[3] = sequence_id_another_stream[source_port1][7:0];
         
 		//@packet_trigger;
+		port_stimulus_s[source_port].port_en = $random;
+		port_stimulus_s[source_port1].port_en = ~port_stimulus_s[source_port].port_en;
 		fork		
+		begin
+		if(port_stimulus_s[source_port].port_en == 1)
 		mac_multi_tag_seq0.start(pcs_tx_rx_env0.mac_env0[source_port].mac_rx_agent0.sequencer);
+		end
 		//#TIME_INTERVAL1;
+		begin
+		if(port_stimulus_s[source_port1].port_en == 1)
 		mac_multi_tag_seq1.start(pcs_tx_rx_env0.mac_env0[source_port1].mac_rx_agent0.sequencer);
+		end
         join
 		
 		sequence_id[source_port]++;
@@ -125,7 +133,7 @@ endtask
  virtual function void report_phase(uvm_phase phase);
     bit test_fail;
 	   
-	   if(comp_success_count[test_port_index]!=packet_count*2 || packet_count==0)
+	   if(comp_success_count[test_port_index]!=packet_count || packet_count==0)
 		  begin
 		    test_fail=1;
 			$display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
