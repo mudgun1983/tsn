@@ -87,12 +87,16 @@ package pcs_env_pkg;
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
+  //add by liaoyuan
+  `include "../seq_lib/qbv_reg_seq.sv"
+  //ended by liaoyuan
   
 //test
-  `include "../test_lib/pcs_base_test.sv"
+  `include "../../ethernet/test_lib/pcs_base_test.sv"
   `include "../test_lib/user_test_lib.sv"
   //add by liaoyuan
   `include "../tc/tc_qbv.sv"
+  `include "../test_lib/qbv/qbv_base_test.sv"
   //ended by liaoyuan
 
 //append test case here  

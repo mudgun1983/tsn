@@ -11,6 +11,12 @@ import uvm_pkg::*;
 import pcs_env_pkg::*; 
 import cpu_pkg::*;
 import mac_pkg::*;
+//added by liaoyuan
+import scatter_obm_package::*;
+import obm_mac_package::*;
+import crllist_chk_package::*;
+//ended by liaoyuan
+
 /* `include "gmii_rx_vif.sv"
 `include "gmii_tx_vif.sv"
 `include "xgmii64_rx_vif.sv"
@@ -235,7 +241,67 @@ always #(CLOCK_100M/2)
 
 
 //--------- interface begin-----------//
-  
+
+ //added by liaoyuan
+ obm_mac_interface u_obm_mac_if[2](
+       .clk(`U_SCATTER.syc_clk_250m),
+      .rst_n(~sys_rst)
+);
+
+ scatter_obm_interface u_scatter_obm_if[1](
+       .clk(`U_SCATTER.syc_clk_250m),
+       .rst_n(~sys_rst)
+ );
+
+ crllist_chk_interface u_crllist_chk_if[1](
+       .clk(`U_SCATTER.syc_clk_250m),
+       .rst_n(~sys_rst)
+ );
+ //here is for data assign
+ assign u_scatter_obm_if[0].m_scatter_obm_data    = `U_SCATTER.D;
+ assign u_scatter_obm_if[0].m_scatter_obm_mod     = `U_SCATTER.scatter_2_obm_mod;
+ assign u_scatter_obm_if[0].m_scatter_obm_valid   = `U_SCATTER.scatter_2_obm_data_valid[2];
+ assign u_scatter_obm_if[0].m_scatter_obm_sop     = `U_SCATTER.scatter_2_obm_sop;
+ assign u_scatter_obm_if[0].m_scatter_obm_eop     = `U_SCATTER.scatter_2_obm_eop;
+ assign u_scatter_obm_if[0].m_scatter_obm_err     = `U_SCATTER.scatter_2_obm_err;
+ assign u_scatter_obm_if[0].m_scatter_obm_ophb    = `U_SCATTER.scatter_2_obm_ophb_0;
+
+ assign u_obm_mac_if[0].m_obm_mac_data            = `U_OBM(2).pmac_tx_data;
+ assign u_obm_mac_if[0].m_obm_mac_mod             = `U_OBM(2).pmac_tx_be;
+ assign u_obm_mac_if[0].m_obm_mac_valid           = `U_OBM(2).p_queue_eop_valid;
+ assign u_obm_mac_if[0].m_obm_mac_eop             = `U_OBM(2).p_queue_eop;
+ assign u_obm_mac_if[0].m_obm_mac_sop             = `U_OBM(2).pmac_tx_sop;
+ assign u_obm_mac_if[0].m_obm_mac_err             = `U_OBM(2).pmac_tx_crc_err;
+ assign u_obm_mac_if[0].m_mac_obm_rdy             = (~`U_OBM(2).pmac_tx_alfull);
+ assign #0.1ns u_obm_mac_if[0].m_obm_mac_ptp      = `U_OBM(2).timestamp_ptp;
+ assign u_obm_mac_if[0].m_obm_mac_gate_state      = `U_OBM(2).gate_state;
+
+
+ assign u_obm_mac_if[1].m_obm_mac_data            = `U_OBM(2).emac_tx_data;
+ assign u_obm_mac_if[1].m_obm_mac_mod             = `U_OBM(2).emac_tx_be;
+ assign u_obm_mac_if[1].m_obm_mac_valid           = `U_OBM(2).e_queue_eop_valid;
+ assign u_obm_mac_if[1].m_obm_mac_eop             = `U_OBM(2).e_queue_eop;
+ assign u_obm_mac_if[1].m_obm_mac_sop             = `U_OBM(2).emac_tx_sop;
+ assign u_obm_mac_if[1].m_obm_mac_err             = `U_OBM(2).emac_tx_crc_err;
+ assign u_obm_mac_if[1].m_mac_obm_rdy             = (~`U_OBM(2).emac_tx_alfull);
+ assign #0.1ns u_obm_mac_if[1].m_obm_mac_ptp      = `U_OBM(2).timestamp_ptp;
+ assign u_obm_mac_if[1].m_obm_mac_gate_state      = `U_OBM(2).gate_state;
+
+ assign #0.1ns u_crllist_chk_if[0].m_timestamp           = `U_OBM(2).timestamp_ptp;
+ assign #0.1ns u_crllist_chk_if[0].m_cpu_wr_b            = `U_OBM(2).cpu_wr_b;
+ assign #0.1ns u_crllist_chk_if[0].m_cpu_addr            = `U_OBM(2).cpu_addr;
+ assign #0.1ns u_crllist_chk_if[0].m_cpu_data_in         = `U_OBM(2).cpu_data_in;
+ assign        u_crllist_chk_if[0].m_gate_state          = `U_OBM(2).gate_state;
+//always @(posedge `U_SCATTER.syc_clk_250m)begin
+//	u_crllist_chk_if[0].m_gate_state <= #0.1 `U_OBM(2).gate_state;
+//end
+
+ initial begin
+     //9:unit_num 5:precesion_num,ns:suffix;10:mimum_width
+   $timeformat(-9,3,"ns",10);
+ end
+//ended by liaoyuan
+
 initial
   begin
   	gmii_rx_if0.clk=1;
@@ -341,6 +407,20 @@ endgenerate
 
 //=======================TEST START======================  
     initial begin
+     //added by liaoyuan
+     virtual scatter_obm_interface v_scatter_obm_if[1];
+     virtual obm_mac_interface     v_obm_mac_if[2];
+	 virtual crllist_chk_interface v_crllist_chk_if[1];
+     v_scatter_obm_if[0] = u_scatter_obm_if[0];
+     v_obm_mac_if[0]     = u_obm_mac_if[0];
+     v_obm_mac_if[1]     = u_obm_mac_if[1];
+	 v_crllist_chk_if[0] = u_crllist_chk_if[0];
+     uvm_config_db#(virtual scatter_obm_interface)::set(null,"*m_scatter_obm_if*","bus",v_scatter_obm_if[0]);
+     uvm_config_db#(virtual obm_mac_interface)::set(null,"*m_obm_mac_if_0*","bus",v_obm_mac_if[0]);
+     uvm_config_db#(virtual obm_mac_interface)::set(null,"*m_obm_mac_if_1*","bus",v_obm_mac_if[1]);
+     uvm_config_db#(virtual crllist_chk_interface)::set(null,"*m_crllist_mon_0*","bus",v_crllist_chk_if[0]);
+     //ended by liaoyuan
+
 	$display("test start");
         run_test();
     end

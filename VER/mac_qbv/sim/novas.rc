@@ -268,16 +268,16 @@ Orientation = Landscape
 [FileBrowser]
 LoadSimulationResults = /home/xuruofan/designs/test/counter16/sim/modelsim/routed,
 ImportDesign = /home/xuruofan/designs/test/counter16/sim/modelsim/routed/logic.v,/home/xuruofan/bin,/home/xuruofan/designs/test/counter16/alta/routed.v,/home/xuruofan/designs/test/counter16/tb.v,/home/xuruofan/cvs/alta/src/doc/,
-nWaveOpenFsdbDirHistory = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/full_throughput_switch_test_20191230.fsdb\"" "\"/home/wangguobin/project/TSN/verification_git_debug_2/tsn/VER/ethernet/sim\"" "\"/home/wgb/project/609/VER/pcs/sim/sim_000.fsdb\"" "\"/home/wgb/project/\
-609/VER/pcs/sim\"" "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\""
 nWaveRestoreRCDirHistory = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/obm.rc\"" "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave\""
+nWaveOpenFsdbDirHistory = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/full_throughput_switch_test_20191231.fsdb\"" "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\"" "\"/home/wgb/project/609/VER/pcs/sim\"" "\"/home/wgb/project/609\
+/VER/pcs/sim/sim_000.fsdb\"" "\"/home/wangguobin/project/TSN/verification_git_debug_2/tsn/VER/ethernet/sim\""
 [Form]
 version = Verdi3_L-2016.06-1
 wave/unknownSave.fm = 100,100,520,275
 wave/report.fm = 100,100,710,300
-wave/openWFile.fm = 100,100,823,696
 wave/saveSig.fm = 100,100,723,532
 wave/restoreSig.fm = 100,100,723,530
+wave/openWFile.fm = 100,100,823,696
 [General]
 TclAutoSource = 
 Find_Delimiter = 
@@ -382,10 +382,10 @@ savePropDtl = TRUE
 [QtDialog]
 importDesignForm = 633,242,634,611
 AMS_MAIN = 633,209,652,690
-QwWarnMsgDlg = 650,631,600,250
 QwInfoMsgDlg = 575,631,750,250
-qWaveSignalDialog = 138,161,1518,734
 ExpressionDialog = 350,320,778,493
+QwWarnMsgDlg = 494,534,600,250
+qWaveSignalDialog = 128,167,1518,734
 QwUserAskDlg = 798,499,324,134
 [Relationship]
 hideRecursiceNode = FALSE
@@ -558,7 +558,7 @@ pdmlCommand = ID_BLACK
 pdmlMacro = ID_BLACK
 font = FIXED20
 [Text.1]
-viewport = 98 91 1504 886 45
+viewport = 0 23 1920 1017 45
 [TextPrinter]
 Orientation = Landscape
 Indicator = FALSE
@@ -660,8 +660,8 @@ open_rc_file_dir
 getSignalSignalListBackgroundColor = -c ID_GRAY5
 filter_out_synthesized_net = off n
 filter_out_synthesized_instance = off
-getSignalForm = 138 161 1518 734 394 636 1070 138
-viewPort = 0 28 1504 450 614 65
+getSignalForm = 128 167 1518 734 394 636 1070 138
+viewPort = 0 28 1920 412 614 65
 signalSpacing = 3
 digitalSignalHeight = 15
 analogSignalHeight = 98
@@ -909,11 +909,11 @@ curveWindow_Drag&Drop_Mode = TRUE
 hspiceIncOpenMode = TRUE
 pcSelectMode = TRUE
 hierarchyDelimiter = /
-RecentFile1 = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/obm.rc\""
-RecentFile2 = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/full_throughput_switch_test_20191230.fsdb\""
-RecentFile3 = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/full_throughput_switch_test_.fsdb\""
-RecentFile4 = "\"/home/wangguobin/project/TSN/verification_git_debug_2/tsn/VER/ethernet/sim/tb_top.fsdb\""
-RecentFile5 = "\"/home/wangguobin/project/TSN/verification_git_debug/tsn/VER/ethernet/sim/tb_top.fsdb\""
+RecentFile1 = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/full_throughput_switch_test_20191231.fsdb\""
+RecentFile2 = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/obm.rc\""
+RecentFile3 = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/full_throughput_switch_test_20191230.fsdb\""
+RecentFile4 = "\"/home/liaoyuan/qbv/tsn/VER/mac_qbv/sim/base_fun/wave/full_throughput_switch_test_.fsdb\""
+RecentFile5 = "\"/home/wangguobin/project/TSN/verification_git_debug_2/tsn/VER/ethernet/sim/tb_top.fsdb\""
 open_file_time_range = FALSE
 value_window_aligment = Right
 signal_window_alignment = Auto
@@ -1270,7 +1270,7 @@ AddImportArgument = FALSE
 LineBreakWithScope = TRUE
 StopAfterCompileOption = -s
 [wave.0]
-viewPort = 0 28 1504 450 614 65
+viewPort = 0 28 1920 412 614 65
 [wave.1]
 viewPort = 0 28 1920 852 526 65
 [wave.2]

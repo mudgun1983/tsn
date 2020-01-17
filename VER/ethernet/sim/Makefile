@@ -1,55 +1,57 @@
-UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
-#TEST_NAME= basic_reg_test
-#TEST_NAME= simple_preemptable_packet_test
-#TEST_NAME= simple_express_packet_test
-#TEST_NAME= simple_e_p_mix_packet_test
-#TEST_NAME= simple_e_p_mix_random_test
-#TEST_NAME= full_throughput_test
-#TEST_NAME= full_throughput_switch_test 
-#TEST_NAME= ptp_smoke_test 
-#TEST_NAME=ptp_rcv_smoke_test
-TEST_NAME=ptp_slave_smoke_test
-
-all:clean create setup compile elaborate auto_run
-
-setup:
+.PHONY:compile run
+#export COMP_OPTS := vcs -full64 -sverilog -ntb_opts uvm-1.1 -timescale=1ns/1ps
+export COMP_OPTS := vcs -full64 -sverilog -licqueue -timescale=1ns/1ps
+export VERDI_PATH := /home/liaoyuan/synopsys/verdi_2016.06-1/share/PLI/VCS/LINUX64
+#export UVM_HOME := /home/liaoyuan/synopsys/vcs_2016.06/etc/uvm-1.1
+export UVM_HOME := /home/liaoyuan/mac_1588/tsn/VER/common/uvm-1.1b
+set_up:
 	./setup.sh
-	
-compile:
-	 ./compile.sh
-	
-elaborate:
-	./elaborate.sh
-	
-comp:
-	vcs -full64 -work xil_defaultlib \
-	-sverilog \
-	+define+SVT_UVM_TECHNOLOGY \
-	+define+SYNOPSYS_SV  \
+
+lib_vlogan:
+	./compile.sh
+
+compile:set_up mk_dir remove_vlogan lib_vlogan
+	$(COMP_OPTS) \
+	xil_defaultlib.pcs_tb_top xil_defaultlib.glbl \
 	+vpi \
-	+define+UVM_PACKER_MAX_BYTES=1500000 \
-	+define+UVM_DISABLE_AUTO_ITEM_RECORDING \
-	+incdir+${UVM_HOME}/src \
-	${UVM_HOME}/src/dpi/uvm_dpi.cc \
-    ${UVM_HOME}/src/uvm_pkg.sv \
-	-f pcs_env_filelist.f -f dut_filelist.f \
-	-timescale=1ns/1ps \
 	-debug_access+all \
-	+error+10 \
-	-l comp.log -CFLAGS -DVCS 
+	${UVM_HOME}/src/dpi/uvm_dpi.cc \
+	-P ${VERDI_PATH}/novas.tab \
+	${VERDI_PATH}/pli.a \
+	-o $(EXE_PATH)/simv -l $(LOG_PATH)/uvm_test.log \
+	-fsdb xil_defaultlib.pcs_tb_top \
+	-CFLAGS -DVCS
 
-run:
-	./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=${TEST_NAME} 
-	#./simv  +UVM_VERBOSITY=UVM_LOW -l run.log  +UVM_TESTNAME=simple_express_packet_test 
+export mode := base_fun
+export EXE_PATH := $(mode)/exec
+export LOG_PATH := $(mode)/log
+export WAVE_PATH := $(mode)/wave
+export tc := simple_e_p_mix_random_test
+export seed := 
 
-clean: 
-	rm -rf *.log *.txt *.bak *.fsdb data 
-#	\rm -rf csrc *.log simv* core ucli.key vcdplus.vpd DVEfiles vc_hdrs.h ucli.key
+ifeq (,$(seed))
+	seed := $(shell date +'%Y%m%d')
+endif
+
+mk_dir:
+	$(shell if [ ! -e $(EXE_PATH) ];then mkdir -p $(EXE_PATH); fi)
+	$(shell if [ ! -e $(LOG_PATH) ];then mkdir -p $(LOG_PATH); fi)
+	$(shell if [ ! -e $(WAVE_PATH) ];then mkdir -p $(WAVE_PATH); fi)
+run:compile
+	$(EXE_PATH)/simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc)_$(seed).log +UVM_TESTNAME=$(tc) -ucli -do ./wave.do +fsdbfile+$(WAVE_PATH)/$(tc)_$(seed).fsdb +ntb_random_seed=$(seed)
+
 verdi:
-	 verdi +v2k -sverilog -f dut_filelist.f -f filelist_hw_engine.f -vcs_assert off -ssf tb_top.fsdb
+	verdi +v2k -sverilog -f ../../mac_qbv/cfg/dut_filelist.f -f ../../mac_qbv/cfg/filelist_hw_engine.f -vcs_assert off -ssf tb_top.fsdb
+remove_vlogan:
+	`rm -rf ./vlogan.log`
+clean_all:
+	`rm -rf ./vlogan.log $(mode) *.txt csrc novas*`
 
-create:
-	mkdir data	
-	touch data/test_result.txt
-auto_run:
-	./auto_run.sh
+print_date:
+	`date +"%y%m%d"`
+
+
+
+#$(EXE_PATH)/simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc).log +UVM_TESTNAME=$(tc)
+#./simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc).log +UVM_TESTNAME=$(tc)
+#-o $(EXE_PATH)/simv -l $(LOG_PATH)/compile.log \

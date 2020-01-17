@@ -32,8 +32,20 @@ package pcs_env_pkg;
   import cpu_pkg::*;
   import mac_pkg::*;
 
+  //add by liaoyuan
+  import base_package::*;
+  import obm_mac_package::*;
+  import scatter_obm_package::*;
+  import obm_dut_cfg_package::*;
+  import crllist_chk_package::*;
+  //ended by liaoyuan
+
 //global define
   `include "../config/global_define.sv"
+  //add by liaoyuan
+  `include "../../mac_qbv/env/obm_define.sv"
+  //ended by liaoyuan
+   
 
 //top config 
   `include "../config/global_config.sv"
@@ -60,6 +72,15 @@ package pcs_env_pkg;
   `include "../env/ptp_scoreboard.sv"
   `include "../env/scoreboard_p_e_out_of_order.sv"
   //`include "../uvc/sequence/pcs_base_seq.sv"    
+ //add by liaoyuan
+ `include "../../mac_qbv/env/obm_cmp_xaction.sv"
+ `include "../../mac_qbv/env/base_scoreboard.sv"
+ `include "../../mac_qbv/env/obm_rm.sv"
+ //`include "../../mac_qbv/env/obm_dut_cfg.sv"
+  `include "../../mac_qbv/env/obm_scoreboard.sv"
+  `include "../../mac_qbv/env/obm_env.sv"
+  //ended by liaoyuan
+
   `include "../env/pcs_tx_rx_env.sv" 
   `include "../env/tsn_switch_expect_model_qci.sv"
   `include "../env/tsn_switch_monitor_model_qci.sv"
@@ -78,6 +99,10 @@ package pcs_env_pkg;
   //scenario sequence
   `include "../seq_lib/pcs_scenario_seq_lib.sv"
   `include "../seq_lib/scenario_user_seq_lib.sv"
+  //add by liaoyuan
+  `include "../../mac_qbv/seq_lib/qbv_reg_seq.sv"
+  //ended by liaoyuan
+
   
   `include "../test_lib/br/scenario_simple_preemptable_packet_port_test.sv"
   `include "../test_lib/br/scenario_simple_e_p_mix_packet_port_test.sv"
@@ -85,6 +110,11 @@ package pcs_env_pkg;
 //test
   `include "../test_lib/pcs_base_test.sv"
   `include "../test_lib/user_test_lib.sv"
+  //add by liaoyuan
+  `include "../../mac_qbv/tc/tc_qbv.sv"
+ `include "../../mac_qbv/test_lib/qbv/qbv_base_test.sv"
+ `include "../../mac_qbv/test_lib/qbv/qbv_test_case0.sv"
+ //ended by liaoyuan
 
 //append test case here  
   //PTP
@@ -126,5 +156,7 @@ package pcs_env_pkg;
   //switch
   `include "../test_lib/switch/full_throughput_switch_vlan_random_test.sv"
 endpackage
+
+import pcs_env_pkg::*;
 `endif
 

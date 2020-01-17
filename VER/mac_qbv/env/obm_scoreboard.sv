@@ -3,8 +3,16 @@
 class obm_scoreboard #(RM_NUM = 1,DUT_NUM = 2) extends base_scoreboard #(RM_NUM,DUT_NUM); 
 	obm_mac_xaction          m_obm_mac_rm_q[8][$];
 	obm_mac_xaction          m_obm_mac_dut_q[8][$];
+	int                      m_obm_mac_rm_cnt[8];
+	int                      m_obm_mac_dut_cnt[8];
+	obm_dut_cfg              m_dut_cfg;
+	//this is for check relation between pkt and gate_state
+	//this gets from crllistmonitor
+	obm_cmp_xaction          m_cmp_xaction;
 	function new(string name = "obm_scoreboard",uvm_component parent);
 		super.new(name,parent);
+		//m_dut_cfg = new("m_dut_cfg");
+		m_cmp_xaction = new("m_cmp_xaction");
 	endfunction
 
 	extern virtual function void build_phase(uvm_phase phase);
@@ -14,7 +22,7 @@ class obm_scoreboard #(RM_NUM = 1,DUT_NUM = 2) extends base_scoreboard #(RM_NUM,
 	extern virtual task get_dut_pdata();
 	extern virtual task get_dut_edata();
 	extern virtual task cmp_data_with_loss(int q_num);
-	`uvm_component_utils(obm_scoreboard)
+	
 endclass:obm_scoreboard
 
 function void obm_scoreboard::build_phase(uvm_phase phase);
@@ -60,9 +68,10 @@ task obm_scoreboard::get_rm_data();
 		mac_xaction.m_obm_mac_err  = sca_xaction.m_scatter_obm_err;
 		mac_xaction.m_obm_mac_ophb = sca_xaction.m_scatter_obm_ophb;
 		//here we need basing on reg cfg
-		mac_xaction.m_obm_mac_en   = 1'b0;
+		mac_xaction.m_obm_mac_en   = m_dut_cfg.m_queue_map[mac_xaction.m_obm_mac_ophb];
 		`uvm_info(get_type_name(),$psprintf("get_rm_data get one xaction"),UVM_NONE);
 		mac_xaction.print();
+        m_obm_mac_rm_cnt[mac_xaction.m_obm_mac_ophb] ++;
 		m_obm_mac_rm_q[mac_xaction.m_obm_mac_ophb].push_back(mac_xaction);
 	end
 endtask
@@ -77,9 +86,15 @@ task obm_scoreboard::get_dut_pdata();
 		if(!$cast(mac_xaction,seq_item))begin 
 			`uvm_fatal(get_type_name(),$psprintf("seq_item should be a extention of obm_mac_xaction"));
 		end
-		mac_xaction.m_obm_mac_ophb = mac_xaction.m_obm_mac_data[14][7:5];
+		//mac_xaction.m_obm_mac_ophb = mac_xaction.m_obm_mac_data[14][7:5];
+        m_obm_mac_dut_cnt[mac_xaction.m_obm_mac_ophb] ++;
 		`uvm_info(get_type_name(),$psprintf("get_dut_pdata get one xaction"),UVM_NONE);
 		m_obm_mac_dut_q[mac_xaction.m_obm_mac_ophb].push_back(mac_xaction);
+
+		//here is for data num check
+		for(int i=0;i<mac_xaction.m_obm_mac_ptp.size();i++)begin 
+			m_cmp_xaction.store_data_base_ptp(mac_xaction.m_obm_mac_ptp[i],mac_xaction.m_obm_mac_ophb);
+		end
 	end
 endtask:get_dut_pdata
 
@@ -93,10 +108,16 @@ task obm_scoreboard::get_dut_edata();
 		if(!$cast(mac_xaction,seq_item))begin 
 			`uvm_fatal(get_type_name(),$psprintf("seq_item should be a extention of obm_mac_xaction"));
 		end
-		mac_xaction.m_obm_mac_ophb = mac_xaction.m_obm_mac_data[14][7:5];
+		//mac_xaction.m_obm_mac_ophb = mac_xaction.m_obm_mac_data[14][7:5];
 		`uvm_info(get_type_name(),$psprintf("get_dut_edata get one xaction"),UVM_NONE);
 		mac_xaction.print();
+        m_obm_mac_dut_cnt[mac_xaction.m_obm_mac_ophb] ++;
 		m_obm_mac_dut_q[mac_xaction.m_obm_mac_ophb].push_back(mac_xaction);
+
+		//here is for data num check
+		for(int i=0;i<mac_xaction.m_obm_mac_ptp.size();i++)begin 
+			m_cmp_xaction.store_data_base_ptp(mac_xaction.m_obm_mac_ptp[i],mac_xaction.m_obm_mac_ophb);
+		end
 	end
 endtask:get_dut_edata
 
@@ -138,4 +159,5 @@ task obm_scoreboard::cmp_data_with_loss(int q_num);
 		end
 	end
 endtask:cmp_data_with_loss
+
 `endif

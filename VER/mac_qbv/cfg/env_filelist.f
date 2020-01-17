@@ -12,9 +12,12 @@
 ../../common/cpu_uvc/cpu_pkg.svh
 
 #../../common/comps/base_package.sv
++incdir+../../mac_qbv/env
+../../mac_qbv/env/obm_dut_cfg_package.sv
 -F ../../common/comps/interface_agent_base.list
 -F ../../common/scatter_obm_utils/scatter_obm_interface_list.f
 -F ../../common/obm_mac_utils/obm_mac_interface_list.f
+-F ../../common/crllist_chk_utils/crllist_chk_interface_list.f
 
 
 

@@ -14,9 +14,12 @@
 # usage: compile.sh
 #
 # ****************************************************************************
-UVM_HOME=../../common/uvm-1.1b
+#UVM_HOME=/home/wangguobin/project/TSN/verfication/tsn/VER/common/uvm-1.1b
+#UVM_HOME=/home/liaoyuan/synopsys/vcs_2016.06/etc/uvm-1.1
+UVM_HOME=/home/liaoyuan/mac_1588/tsn/VER/common/uvm-1.1b
 # installation path setting
-bin_path="/usr/synopsys/L-2016.06/bin"
+#bin_path="/usr/synopsys/L-2016.06/bin"
+bin_path="/home/liaoyuan/synopsys/vcs_2016.06/bin"
 
 # directory path for design sources and include directories (if any) wrt this path
 origin_dir="."
@@ -31,7 +34,7 @@ vlogan_define="SIM+BOTH"
 #+VERDI"
 
 # compile glbl module
-$bin_path/vlogan $vlogan_opts   +define+$vlogan_define +v2k -sverilog -work xil_defaultlib -f dut_filelist.f -f filelist_hw_engine.f 2>&1 | tee -a vlogan.log
+$bin_path/vlogan $vlogan_opts   +define+$vlogan_define +v2k -sverilog -work xil_defaultlib -f ../../mac_qbv/cfg/dut_filelist.f -f ../../mac_qbv/cfg/filelist_hw_engine.f 2>&1 | tee -a vlogan.log
 
 $bin_path/vlogan $vlogan_opts +define+$vlogan_define -sverilog -work xil_defaultlib +define+SVT_UVM_TECHNOLOGY \
 	+define+SYNOPSYS_SV  \
@@ -41,4 +44,4 @@ $bin_path/vlogan $vlogan_opts +define+$vlogan_define -sverilog -work xil_default
 	${UVM_HOME}/src/dpi/uvm_dpi.cc \
     ${UVM_HOME}/src/uvm_pkg.sv \
 	-timescale=1ns/1ps \
-    -f env_filelist.f  2>&1 | tee -a vlogan.log
+    -f ../../mac_qbv/cfg/env_filelist.f  2>&1 | tee -a vlogan.log

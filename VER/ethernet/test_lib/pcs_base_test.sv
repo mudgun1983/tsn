@@ -260,7 +260,7 @@ class pcs_base_test extends uvm_test;
    endtask:run_phase
 
   virtual function void report_phase(uvm_phase phase);
-	   if(comp_success_count[test_port_index]!=0)
+	   /*if(comp_success_count[test_port_index]!=0)
 	     begin
 		   $display("comp_success_count[%0d]=%0d",test_port_index,comp_success_count[test_port_index]);
 		   file_id=$fopen(test_result_file,"a+"); 
@@ -277,7 +277,7 @@ class pcs_base_test extends uvm_test;
 		   $fclose(file_id);
 		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
 		   test_pass=0;
-		 end
+		 end*/
   endfunction
 
  virtual function set_port_stimulus_value();

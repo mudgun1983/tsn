@@ -44,12 +44,25 @@ class pcs_tx_rx_env extends uvm_env;
 	
 	uvm_tlm_analysis_fifo#(eth_frame)       ptp_expect_fifo_pre[],ptp_expect_fifo_post[];
 	uvm_tlm_analysis_fifo#(eth_frame)       ptp_monitor_fifo_pre[],ptp_monitor_fifo_post[];
-	
+
+    //add by liaoyuan
+    obm_env                                 m_obm_env;
+	obm_dut_cfg                             m_obm_dut_cfg;
+    //ended by liaoyuan
+
    `uvm_component_utils_begin(pcs_tx_rx_env) 
    `uvm_component_utils_end
 
   function new (string name, uvm_component parent);
     super.new(name, parent);
+/*	//add by liaoyuan
+	//m_obm_dut_cfg            = new("m_obm_dut_cfg");
+	m_obm_dut_cfg = obm_dut_cfg::type_id::create("m_obm_dut_cfg");
+	if(!m_obm_dut_cfg.randomize())begin 
+		`uvm_fatal(get_type_name(),$psprintf("m_obm_dut_cfg randomize failed"));
+	end
+	m_obm_dut_cfg.print();
+	//ended by liaoyuan*/
   endfunction : new
 
   // build
@@ -121,6 +134,19 @@ class pcs_tx_rx_env extends uvm_env;
 		  
 		tsn_switch_model0        =  tsn_switch_model ::type_id::create("tsn_switch_model0",this);
 		tsn_switch_model_monitor =  tsn_switch_model ::type_id::create("tsn_switch_model_monitor",this);
+		//add by liaoyuan
+		//m_obm_dut_cfg            = new("m_obm_dut_cfg");
+		m_obm_dut_cfg = obm_dut_cfg::type_id::create("m_obm_dut_cfg");
+		if(!m_obm_dut_cfg.randomize())begin 
+			`uvm_fatal(get_type_name(),$psprintf("m_obm_dut_cfg randomize failed"));
+		end
+		m_obm_dut_cfg.print();
+	//ended by liaoyuan
+		//add by liaoyuan
+		m_obm_env                =  obm_env::type_id::create("m_obm_env",this);
+		m_obm_env.m_dut_cfg = m_obm_dut_cfg;
+		//ended by liaoyuan
+
  //       pcs_tx_env0        =  pcs_env::type_id::create("pcs_tx_env0",this);
         //pcs_rgm_model_env0 =  rgm_model_tb::type_id::create("pcs_rgm_model_env0",this);        
     endfunction : build
@@ -184,6 +210,11 @@ class pcs_tx_rx_env extends uvm_env;
 		       tsn_switch_model_monitor.ptp_item_collected_port[i].connect(ptp_monitor_fifo_post[i].analysis_export);
 		       ptp_scb0[i].monitor_get_port.connect(ptp_monitor_fifo_post[i].blocking_get_export);
 			 end		
+     //add by liaoyuan
+     m_obm_env.m_obm_mac_if[0].obm_mac_mon.m_obm_mac_en = 1'b1;
+     m_obm_env.m_obm_mac_if[1].obm_mac_mon.m_obm_mac_en = 1'b0;
+    //ended by liaoyuan
+
     endfunction : connect
   
   

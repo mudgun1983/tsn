@@ -234,26 +234,26 @@ class full_throughput_switch_test extends pcs_base_test;
 // port_stimulus_s[1].port_en = 1;
 
 
-//port_stimulus_s[0].packet_count = 1;  //0: forever
-port_stimulus_s[1].packet_count = 1;
-//port_stimulus_s[2].packet_count = 1; //comment means no limit, it will generate packet forever
-//port_stimulus_s[3].packet_count = 1;
-//port_stimulus_s[4].packet_count = 1;
-//port_stimulus_s[5].packet_count = 1;
-//port_stimulus_s[6].packet_count = 1;
-//port_stimulus_s[7].packet_count = 1;
-//port_stimulus_s[8].packet_count = 1;
-//port_stimulus_s[9].packet_count = 1;
-//port_stimulus_s[10].packet_count = 1;
-//port_stimulus_s[11].packet_count = 1;
-//port_stimulus_s[12].packet_count = 1;
-//port_stimulus_s[13].packet_count = 1;
-//port_stimulus_s[14].packet_count = 1;
-//port_stimulus_s[15].packet_count = 1;
-//port_stimulus_s[16].packet_count = 1;
-//port_stimulus_s[17].packet_count = 1;
-//port_stimulus_s[18].packet_count = 1;
-//port_stimulus_s[19].packet_count = 1;
+port_stimulus_s[0].packet_count = 50;  //0: forever
+port_stimulus_s[1].packet_count = 50;
+port_stimulus_s[2].packet_count = 10; //comment means no limit, it will generate packet forever
+port_stimulus_s[3].packet_count = 50;
+port_stimulus_s[4].packet_count = 50;
+port_stimulus_s[5].packet_count = 50;
+port_stimulus_s[6].packet_count = 50;
+port_stimulus_s[7].packet_count = 50;
+port_stimulus_s[8].packet_count = 50;
+port_stimulus_s[9].packet_count = 50;
+port_stimulus_s[10].packet_count = 50;
+port_stimulus_s[11].packet_count = 50;
+port_stimulus_s[12].packet_count = 50;
+port_stimulus_s[13].packet_count = 50;
+port_stimulus_s[14].packet_count = 50;
+port_stimulus_s[15].packet_count = 50;
+port_stimulus_s[16].packet_count = 50;
+port_stimulus_s[17].packet_count = 50;
+port_stimulus_s[18].packet_count = 50;
+port_stimulus_s[19].packet_count = 50;
 
 port_stimulus_s[0].sa_index = 0;   
 port_stimulus_s[1].sa_index = 1;

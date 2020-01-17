@@ -30,4 +30,3 @@ bit [47:0] sa_index;
 port_stimulus_t port_stimulus_s[`MAX_ENV_MAC_NUM];
 
 int port_ptp_instance_mapping_table[`MAX_ENV_MAC_NUM];
-
