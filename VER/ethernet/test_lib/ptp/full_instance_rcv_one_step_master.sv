@@ -30,6 +30,86 @@ virtual task main_phase(uvm_phase phase);
   
 endtask
 
+  task run_phase(uvm_phase phase);
+    bit test_fail;
+    fork
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.ptp_scb0[index].fatal_event;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" FATAL ERROR in scoreboard[%0d] \n",index));	
+		    	$fclose(file_id);
+				if(auto_stop_en)
+				  begin
+				   file_id=$fopen(test_result_file,"a+"); 
+		    	   $fwrite(file_id,$psprintf({get_type_name()," FATAL FAIL\n"}));	
+		    	   $fclose(file_id);
+				   `uvm_fatal(get_type_name(),$psprintf("FATAL ERROR ptp_scb0[%0d]",index));
+				  end
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+			   
+	   begin
+	    for(int i=0;i<topology_config0.mac_number;i++)
+		 begin
+		   automatic int index;
+           index = i;
+	       fork
+	         while(1)
+		       begin
+		        @this.pcs_tx_rx_env0.ptp_scb0[index].comp_success;
+				comp_success_count[index]++;
+		    	file_id=$fopen(global_test_log,"a+"); 
+		    	$fwrite(file_id,$psprintf(" SUCCESS=%0d in scoreboard[%0d] \n",comp_success_count[index],index));	
+		    	$fclose(file_id);
+		       end
+		   join_none
+		 end
+		  wait fork ;
+	   end
+	   
+	   begin
+       phase.phase_done.set_drain_time(this, 50000);
+       #5ms;
+         //#100us;
+	   foreach(port_stimulus_s[key])	 
+	      if(port_stimulus_s[key].port_en)
+		    if(comp_success_count[key]==0)
+			   test_fail=1;
+	   if(port_stimulus_s[18].port_en)
+		    if(comp_success_count[18]==0)
+			   test_fail=1;
+			
+	   //if(comp_success_count[test_port_index]!=0)
+	   if(test_fail==1)
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
+		   $fclose(file_id);
+		   `uvm_info(get_type_name(), "** UVM TEST PASSED **", UVM_NONE)
+		 end
+	   else
+	     begin
+		   file_id=$fopen(test_result_file,"a+"); 
+		   $fwrite(file_id,$psprintf({get_type_name()," FAIL\n"}));	
+		   $fclose(file_id);
+		   `uvm_error(get_type_name(), "** UVM TEST FAIL **")
+		 end
+       $finish;      
+	   end
+	   
+	join
+   endtask:run_phase
+   
 virtual function set_port_stimulus_value();
     for(int i=0; i<`MAX_PORT_NUM;i++)
       begin
@@ -69,7 +149,7 @@ for(int i=0; i<`MAX_PORT_NUM;i++)
 endfunction     
 
 virtual function set_ptp_predefine_value();
-  `PTP_CONFIG.table_size =1;
+  `PTP_CONFIG.table_size =32;
   `PTP_CONFIG.src_mac = 48'h8000_0000_0000;
   `PTP_CONFIG.two_step = 0;//1： two step  0: one step
   //enable all the instance

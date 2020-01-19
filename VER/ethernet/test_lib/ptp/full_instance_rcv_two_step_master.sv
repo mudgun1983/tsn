@@ -33,10 +33,10 @@ endfunction
 virtual function set_port_stimulus_value();
     for(int i=0; i<`MAX_PORT_NUM;i++)
       begin
-       port_stimulus_s[i].port_en = 0;
+       port_stimulus_s[i].port_en = 1;
       end
         port_stimulus_s[test_port_index].port_en = 1;
-	   port_stimulus_s[18].port_en = 0;
+	   port_stimulus_s[18].port_en = 1;
 //port_stimulus_s[0].packet_count = 1;  //0: forever
 //port_stimulus_s[1].packet_count = 1;
 //port_stimulus_s[2].packet_count = 1; //comment means no limit, it will generate packet forever
@@ -61,8 +61,10 @@ virtual function set_port_stimulus_value();
 for(int i=0; i<`MAX_PORT_NUM;i++)
       begin
        port_stimulus_s[i].da_index = `PTP_PEER_MULTI_DA;
+	   port_stimulus_s[i].sa_index = i;
       end
        port_stimulus_s[18].da_index = `PTP_PEER_MULTI_DA;
+	   port_stimulus_s[18].sa_index = 18;
 endfunction     
 
 virtual function set_item_config_value();

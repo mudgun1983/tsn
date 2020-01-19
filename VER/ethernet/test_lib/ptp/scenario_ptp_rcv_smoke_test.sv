@@ -1,6 +1,6 @@
 class scenario_ptp_rcv_smoke_test extends scenario_reg_test;
 int  data_len;
-parameter INTERVAL=10us;
+parameter INTERVAL=100us;
 mac_ptp_sequence  mac_seq;  
 reg_test_seq      reg_test_seq0;
 ptp_reg_seq       ptp_reg_seq0;
