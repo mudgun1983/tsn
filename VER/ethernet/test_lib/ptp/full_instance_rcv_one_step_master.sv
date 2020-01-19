@@ -26,6 +26,10 @@ class  full_instance_rcv_one_step_master extends full_instance_one_step_master;
   //static config         
    endfunction : build_phase
 
+virtual task main_phase(uvm_phase phase);
+  
+endtask
+
 virtual function set_port_stimulus_value();
     for(int i=0; i<`MAX_PORT_NUM;i++)
       begin
@@ -33,6 +37,7 @@ virtual function set_port_stimulus_value();
       end
        
 	   port_stimulus_s[18].port_en = 1;
+	  // port_stimulus_s[3].port_en = 1;
 //port_stimulus_s[0].packet_count = 1;  //0: forever
 //port_stimulus_s[1].packet_count = 1;
 //port_stimulus_s[2].packet_count = 1; //comment means no limit, it will generate packet forever
@@ -57,12 +62,14 @@ virtual function set_port_stimulus_value();
 for(int i=0; i<`MAX_PORT_NUM;i++)
       begin
        port_stimulus_s[i].da_index = `PTP_PEER_MULTI_DA;
+	   port_stimulus_s[i].sa_index = i;
       end
        port_stimulus_s[18].da_index = `PTP_PEER_MULTI_DA;
+	   port_stimulus_s[18].sa_index = 18;
 endfunction     
 
 virtual function set_ptp_predefine_value();
-  `PTP_CONFIG.table_size =32;
+  `PTP_CONFIG.table_size =1;
   `PTP_CONFIG.src_mac = 48'h8000_0000_0000;
   `PTP_CONFIG.two_step = 0;//1： two step  0: one step
   //enable all the instance

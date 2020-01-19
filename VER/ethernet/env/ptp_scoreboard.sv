@@ -256,12 +256,12 @@ string timestamp_file;
 					end
 
 		   
-		 if(`PTP_CONFIG_CONTENT[compare_index].ptp_trans.controlField        != ptp_trans.controlField       )
+/* 		 if(`PTP_CONFIG_CONTENT[compare_index].ptp_trans.controlField        != ptp_trans.controlField       )    //The use of this field by the receiver is deprecated base IEEE1588-2008 p127
 		 begin
 		    mismatch = 1;
 			$fwrite(write_comp_data_fd,$psprintf("T=%0t\n expect controlField=%h\n  col controlField=%h\n",$time,
 			        `PTP_CONFIG_CONTENT[compare_index].ptp_trans.controlField,ptp_trans.controlField));
-					end
+					end */
 		
 		if(`PTP_CONFIG_CONTENT[compare_index].ptp_trans.logMessageInterval  != ptp_trans.logMessageInterval )
 		   begin
@@ -290,7 +290,7 @@ string timestamp_file;
 			//correctionField
 			if(ptp_trans.messageType==0) //sync
               begin
-			   $fwrite(write_exp_data_fd,$psprintf("T=%0t,sequenceId=%0d,RCV correctionField =%0h\n",$time,ptp_trans.sequenceId,ptp_trans.correctionField));
+			   $fwrite(write_exp_data_fd,$psprintf("T=%0t,sequenceId=%0h,RCV correctionField =%0h\n",$time,ptp_trans.sequenceId,ptp_trans.correctionField));
                if(ptp_trans.correctionField == 0)
 			   //last_correctionField)			   
 			      mismatch = 1; 
@@ -300,7 +300,7 @@ string timestamp_file;
 			//originTimestamp
 			if(one_two_step==0) //one step
 			  begin
-			    $fwrite(write_exp_data_fd,$psprintf("T=%0t,sequenceId=%0d,RCV originTimestamp =%0h\n",$time,ptp_trans.sequenceId,ptp_trans.originTimestamp));	
+			    $fwrite(write_exp_data_fd,$psprintf("T=%0t,sequenceId=%0h,RCV originTimestamp =%0h\n",$time,ptp_trans.sequenceId,ptp_trans.originTimestamp));	
 				if(ptp_trans.originTimestamp == last_OriginTimestamp)			   
 			      mismatch = 1; 
 			    last_OriginTimestamp = ptp_trans.originTimestamp;
@@ -351,7 +351,9 @@ string timestamp_file;
 		   end
 		else
 		   begin
-		    `uvm_info(get_type_name(),{$psprintf("FATAL ERROR, sequenceId mismatch col sequenceId=%0d ,exp sequenceId=%0d time=%0t\n",ptp_trans.sequenceId,ptp_exp_trans.sequenceId,$time)},UVM_LOW);
+		    `uvm_info(get_type_name(),{$psprintf("FATAL ERROR, sequenceId mismatch col sequenceId=%0h ,exp sequenceId=%0h time=%0t\n",ptp_trans.sequenceId,ptp_exp_trans.sequenceId,$time)},UVM_LOW);
+			`uvm_info(get_type_name(),{$psprintf("get exp ptp trans:\n"),ptp_exp_trans.sprint()},UVM_LOW);
+			`uvm_info(get_type_name(),{$psprintf("get col ptp trans:\n"),ptp_trans.sprint()},UVM_LOW);
 			   ->fatal_event;
 		   end
 	endfunction 

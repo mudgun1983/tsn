@@ -87,6 +87,7 @@ virtual task post_body();
   task seq_do(input int index);
                      `uvm_do_on_with(mac_seq,p_sequencer.mac_sqr_array[index],
                                   {mac_seq.c_packet_type == `Pdelay_Req;//ptp_item::Pdelay_Req;
+								   mac_seq.c_transportSpecific == port_stimulus_s[index].sa_index[3:0];
 								   mac_seq.c_da_cnt==port_stimulus_s[index].da_index;
 			      				   mac_seq.c_sa_cnt==port_stimulus_s[index].sa_index;
 			      				   mac_seq.c_data_control == 1;

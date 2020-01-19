@@ -6,6 +6,7 @@ rand ptp_item::packet_kind c_packet_type;
 ptp_item upper_req;
 int       tagged_size;
 int       data_len;
+rand bit[3:0] c_transportSpecific;
 //================================================//
 //FUNCTION    : pre_do
 //DESCRIPTION : construct
@@ -16,7 +17,8 @@ int       data_len;
 	 
      `uvm_info(get_type_name(),"start",UVM_HIGH)
 
-	 if ( !(upper_req.randomize() with {upper_req.packet_type == local::c_packet_type;} )) 
+	 if ( !(upper_req.randomize() with {upper_req.packet_type == local::c_packet_type;
+	                                    upper_req.transportSpecific == c_transportSpecific;} )) 
         begin
 		 `uvm_error(get_type_name, "Randomize Failed!") 
 		end
