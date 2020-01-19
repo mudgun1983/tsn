@@ -8,6 +8,7 @@ class crllist_chk_monitor #(type VIF = virtual crllist_chk_interface) extends mo
 	int                          m_cmp_list_num;
 	//this changes because the qbv base test need this to decide when to send pkt
 	bit [1:0]                    m_start_chk_en;
+	int                          m_amd2opr_cnt;
 	function new(string name,uvm_component parent);
 		super.new(name,parent);
 		//m_cfg = new("m_cfg");
@@ -47,7 +48,7 @@ function void crllist_chk_monitor::connect_phase(uvm_phase phase);
 endfunction
 task crllist_chk_monitor:: run_phase(uvm_phase phase);
 	//for in test we support cfg twice
-	int            amd2opr_cnt;
+	//int            m_amd2opr_cnt;
 	bit [1:0]      amd2opr_done;
 	bit            cpu_wr_b_dly; 
 	bit [63:0]     rm_base_time;
@@ -70,21 +71,21 @@ task crllist_chk_monitor:: run_phase(uvm_phase phase);
 			continue;
 		end
 		if((cpu_wr_b_dly == 1'b1)&&(bus.m_cpu_wr_b == 1'b0)&&(bus.m_cpu_addr == ((m_base_addr + 16'h42)/2))&&(bus.m_cpu_data_in == 16'h55AA))begin 
-			amd2opr_cnt ++;
+			m_amd2opr_cnt ++;
 			cfg_data_en = 1'b1;
-			`uvm_info(get_type_name(),$psprintf("amd2opr_cnt is %0d",amd2opr_cnt),UVM_NONE);
+			`uvm_info(get_type_name(),$psprintf("m_amd2opr_cnt is %0d",m_amd2opr_cnt),UVM_NONE);
 			//here we need to change the base time if the start base is small than the ptp now
-			if(amd2opr_cnt == 1)begin 
+			if(m_amd2opr_cnt == 1)begin 
 				//here change spare and spare_total base time 
 				if(bus.m_timestamp > m_cfg.m_spare_base_time)begin
 					chn_cfg_for_base_time_low(bus.m_timestamp);
 				end
 			end
-			else if(amd2opr_cnt == 2)begin 
+			else if(m_amd2opr_cnt == 2)begin 
 				//here change main
 			end
 		end
-		if(amd2opr_cnt == 1)begin 
+		if(m_amd2opr_cnt == 1)begin 
         	rm_base_time = time_change(m_local_cfg.m_spare_base_time,crllist_chk_dec::GATE_LATENCY);
 			if(bus.m_timestamp == rm_base_time)begin 
 				m_start_chk_en = 2'b1;
@@ -92,7 +93,7 @@ task crllist_chk_monitor:: run_phase(uvm_phase phase);
 				`uvm_info(get_type_name(),$psprintf("start to spare time"),UVM_NONE);
 			end
 		end
-		else if(amd2opr_cnt == 2)begin 
+		else if(m_amd2opr_cnt == 2)begin 
         	rm_base_time = time_change(m_local_cfg.m_main_base_time,crllist_chk_dec::GATE_LATENCY);
 			if(bus.m_timestamp == rm_base_time)begin 
 				m_start_chk_en = 2'b10;

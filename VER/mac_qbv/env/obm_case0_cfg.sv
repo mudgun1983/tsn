@@ -2,31 +2,9 @@
 `define OBM_CASE0_CFG__SV
 class obm_case0_cfg extends obm_dut_cfg;
 	`uvm_object_utils(obm_case0_cfg)
-	constraint main_list_len_cons{
-		m_main_list_len dist{
-			8'h1:/0,
-			[8'h2:8'h6]:/0,
-			[8'h10:8'h10]:/10
-		};
-	};
 
-	/*constraint spare_list_len_cons{
-		if(m_spare_cyc_time_mode == 2'h2){
-			m_spare_list_len dist{
-				8'h1:/0,
-				[8'h5:8'h6]:/10,
-				[8'h7:8'hf0]:/0,
-				[8'hfe:8'hfe]:/0
-			};
-		}
-		else {
-			m_spare_list_len dist{
-				8'h2:/0,
-				[8'h5:8'h6]:/10,
-				[8'h7:8'hf0]:/0,
-				[8'hff:8'hff]:/0
-			};
-		}
+	constraint spare_list_len_cons{
+		m_spare_list_len == 8'h8;
 
 		solve m_spare_list_len before m_list_time_interval;
 
@@ -38,36 +16,18 @@ class obm_case0_cfg extends obm_dut_cfg;
 
         //now the time_interval is at least 8ns
 		foreach(m_list_time_interval[i]){
-			if(m_spare_list_len >= 8'h40){
-				m_list_time_interval[i] dist{
-					[32'h80:32'h100]:/10
-				};
-			}
-			else {
-				m_list_time_interval[i] dist{
-					[32'h300:32'h400]:/10,
-					[32'h30:32'h40]:/0
-				};
-			}
+			m_list_time_interval[i] inside {[13000:15000]};
 			(m_list_time_interval[i] % 8) == 0;
 		}
 
 		m_list_gate_state.size() == m_spare_list_len;
 
 		foreach(m_list_gate_state[i]){
-			if(m_spare_cyc_time_mode == 2'h2){
-				m_list_gate_state[i] > 8'h0;
+			if(i == 0){
+				m_list_gate_state[i] == 8'h1;
 			}
 			else {
-				if(i == (m_spare_list_len - 1)){
-					m_list_gate_state[i] dist{
-						8'hff :/10,
-						[8'h0:8'hff]:/0
-					};
-				}	
-				else {
-					m_list_gate_state[i] > 8'h0;
-				}
+				m_list_gate_state[i] == 8'h0;
 			}
 		}
 		m_spare_cyc_time_mode dist{
@@ -128,10 +88,11 @@ class obm_case0_cfg extends obm_dut_cfg;
 			2'h0:/10,
 			2'h1:/0
 		};
+		//for in case0,we want to send learn pkt at the gate_state both open,so we add some delay for this
 		m_spare_base_time[63:32] == 32'h0;
 		if(m_spare_base_mode == 2'h0){
 			m_spare_base_time[31:0] dist{
-				[32'd150001 + 32'd1000*m_spare_list_len:32'd170000 + 32'd1000*m_spare_list_len]:/10
+				[32'd150001 + 32'd1000*(m_spare_list_len + 10):32'd170000 + 32'd1000*(m_spare_list_len + 10)]:/10
 			};
 		}
 		else if(m_spare_base_mode == 2'h1){
@@ -142,7 +103,7 @@ class obm_case0_cfg extends obm_dut_cfg;
 		(m_spare_base_time[31:0]%8) == 0;
 		solve m_spare_base_time before m_spare_total_base_time; 
 		m_spare_total_base_time == (({32'h0,m_spare_base_time[63:32]}*64'h1_000_000_000) + {32'h0,m_spare_base_time[31:0]});
-	};*/
+	};
 
 	extern function new(string name="obm_case0_cfg");
 endclass:obm_case0_cfg

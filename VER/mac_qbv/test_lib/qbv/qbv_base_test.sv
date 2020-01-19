@@ -4,6 +4,7 @@ class qbv_base_test extends pcs_base_test;
 	`uvm_component_utils(qbv_base_test)
 	qbv_reg_seq        reg_seq;
 	mac_user_sequence mac_user_sequence0;
+	obm_pkt_cfg        m_pkt_cfg;
      bit [4:0] 	source_port;
      bit [11:0]	vid;
 	 bit [47:0] dmac;
@@ -29,6 +30,7 @@ function qbv_base_test::new(string name = "qbv_base_test",uvm_component parent);
 	phb         = 3;
 	reg_seq    = qbv_reg_seq::type_id::create("reg_seq", this);
 	mac_user_sequence0=mac_user_sequence::type_id::create("mac_user_sequence0", this);
+	m_pkt_cfg = new("m_pkt_cfg");
 endfunction
 
 function void qbv_base_test::build_phase(uvm_phase phase);

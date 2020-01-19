@@ -28,6 +28,8 @@ export LOG_PATH := $(mode)/log
 export WAVE_PATH := $(mode)/wave
 export tc := simple_e_p_mix_random_test
 export seed := 
+export OBM_CFG_PATH := ../../mac_qbv/test_lib/qbv
+export cfg := pkt_len_64B
 
 ifeq (,$(seed))
 	seed := $(shell date +'%Y%m%d')
@@ -38,7 +40,7 @@ mk_dir:
 	$(shell if [ ! -e $(LOG_PATH) ];then mkdir -p $(LOG_PATH); fi)
 	$(shell if [ ! -e $(WAVE_PATH) ];then mkdir -p $(WAVE_PATH); fi)
 run:compile
-	$(EXE_PATH)/simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc)_$(seed).log +UVM_TESTNAME=$(tc) -ucli -do ./wave.do +fsdbfile+$(WAVE_PATH)/$(tc)_$(seed).fsdb +ntb_random_seed=$(seed)
+	$(EXE_PATH)/simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc)_$(seed)_$(cfg).log +UVM_TESTNAME=$(tc) -ucli -do ./wave.do +fsdbfile+$(WAVE_PATH)/$(tc)_$(seed)_$(cfg).fsdb +ntb_random_seed=$(seed) -f $(OBM_CFG_PATH)/$(cfg).cfg
 
 verdi:
 	verdi +v2k -sverilog -f ../../mac_qbv/cfg/dut_filelist.f -f ../../mac_qbv/cfg/filelist_hw_engine.f -vcs_assert off -ssf tb_top.fsdb
