@@ -81,16 +81,22 @@ endtask
        phase.phase_done.set_drain_time(this, 50000);
        #5ms;
          //#100us;
-	   foreach(port_stimulus_s[key])	 
-	      if(port_stimulus_s[key].port_en)
-		    if(comp_success_count[key]==0)
-			   test_fail=1;
-	   if(port_stimulus_s[18].port_en)
+	   foreach(port_stimulus_s[key])begin	 
+	      if(port_stimulus_s[key].port_en)begin
+		      if(comp_success_count[key]==0)
+			     test_fail=1;
+			  $display("comp_success_count[%0d]=%0d,test_fail=%0d",key,comp_success_count[key],test_fail);
+			   end
+		end
+			   
+/* 	   if(port_stimulus_s[18].port_en)begin
 		    if(comp_success_count[18]==0)
-			   test_fail=1;
+			   test_fail=1;			
+			$display("comp_success_count[18]=%0d",comp_success_count[18]);
+		end */
 			
 	   //if(comp_success_count[test_port_index]!=0)
-	   if(test_fail==1)
+	   if(test_fail==0)
 	     begin
 		   file_id=$fopen(test_result_file,"a+"); 
 		   $fwrite(file_id,$psprintf({get_type_name()," PASS\n"}));	
