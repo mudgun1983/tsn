@@ -193,7 +193,7 @@ int bypass;
 		  //SequenceRecovery and listener_agent
 	      if(sqr_board_s[source_port].SequenceHistory[sqr_num]==1 &&(talker_agent_add_r_tag || r_tag_seen))
 		    begin
-		     sqr_board_s[source_port].SequenceHistory[sqr_num]=0;
+		     //sqr_board_s[source_port].SequenceHistory[sqr_num]=0;
 			 `uvm_info(get_type_name(),{$psprintf("SequenceRecovery discard sqr_num=%0h",sqr_num)},UVM_LOW);
 		     return;//SequenceRecovery discard the  duplicate frame with the same sqr_num in R-TAG;
 		    end

@@ -207,9 +207,9 @@ endfunction
 virtual function set_i_epp_predefine_value();
 
  `ING_FLOW_TABLE.table_size=4;
- `ING_FLOW_PRO_TABLE.table_index = new[`ING_FLOW_PRO_TABLE.table_size];
-   foreach(`ING_FLOW_PRO_TABLE.table_index[key])
-      `ING_FLOW_PRO_TABLE.table_index[key] = new();	  
+ `ING_FLOW_TABLE.table_index = new[`ING_FLOW_TABLE.table_size];
+   foreach(`ING_FLOW_TABLE.table_index[key])
+      `ING_FLOW_TABLE.table_index[key] = new();	  
   `ING_FLOW_TABLE_CONTENT[0].table_key_t={source_port[4:0],vid[11:0],dmac[47:0]};     //ivlan
   `ING_FLOW_TABLE_CONTENT[0].table_t={1'b1,4'b0,ingress_flow_id[9:0]};     //"1'b1-配置有效,保留,ingress flow_id
   `ING_FLOW_TABLE_CONTENT[1].table_key_t={source_port1[4:0],vid[11:0],dmac[47:0]};     //ivlan
