@@ -102,7 +102,7 @@ virtual task main_phase(uvm_phase phase);
 		foreach(mac_multi_tag_seq_array[key])
 		  begin
             mac_multi_tag_seq_array[key].copy(mac_multi_tag_seq0);
-			mac_multi_tag_seq_array[key].c_sa_cnt = key/2;
+			mac_multi_tag_seq_array[key].c_sa_cnt = port_stimulus_s[key].sa_index;
 		  end
 		`uvm_info(get_type_name(),{$psprintf("get tran eth_frame_trans:\n"),mac_multi_tag_seq1.sprint()},UVM_HIGH);
 		
@@ -175,13 +175,29 @@ virtual function set_port_stimulus_value();
        port_stimulus_s[i] = 0;
       end
     for(int i =2;i<`MAX_PORT_NUM;i++)
-	  port_stimulus_s[i].port_en = 1; 
+	  port_stimulus_s[i].port_en = 0; 
 
     port_stimulus_s[dmac].port_en = 0;
+	port_stimulus_s[2].port_en = 1;
+	port_stimulus_s[3].port_en = 1;
+        port_stimulus_s[4].port_en = 1;
+        port_stimulus_s[5].port_en = 1;
+        port_stimulus_s[6].port_en = 1;
+        port_stimulus_s[7].port_en = 1;
+        port_stimulus_s[8].port_en = 1;
+        port_stimulus_s[9].port_en = 1;
 
     foreach(port_stimulus_s[key])
        port_stimulus_s[key].sa_index = key;   
 
+	port_stimulus_s[2].sa_index= 2;
+	port_stimulus_s[3].sa_index= 2;
+	port_stimulus_s[4].sa_index= 4;
+	port_stimulus_s[5].sa_index= 4;
+	port_stimulus_s[6].sa_index= 6;
+	port_stimulus_s[7].sa_index= 6;
+	port_stimulus_s[8].sa_index= 8;
+	port_stimulus_s[9].sa_index= 8;
     port_stimulus_s[dmac].sa_index = dmac; 
 
     foreach(port_stimulus_s[key])
