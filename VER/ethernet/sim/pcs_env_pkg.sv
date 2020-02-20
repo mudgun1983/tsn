@@ -115,6 +115,7 @@ package pcs_env_pkg;
   `include "../../mac_qbv/tc/tc_qbv.sv"
  `include "../../mac_qbv/test_lib/qbv/qbv_base_test.sv"
  `include "../../mac_qbv/test_lib/qbv/qbv_test_case0.sv"
+ `include "../../mac_qbv/test_lib/qbv/qbv_test_case1.sv"
  //ended by liaoyuan
 
 //append test case here  

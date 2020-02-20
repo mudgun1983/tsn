@@ -24,7 +24,7 @@ function qbv_test_case1::set_port_stimulus_value();
  port_stimulus_s[dmac].port_en = 1;
 
  port_stimulus_s[dmac].packet_count = 1;  //0: forever
- port_stimulus_s[source_port].packet_count = m_pkt_cfg.m_pkt_num;
+ port_stimulus_s[source_port].packet_count = m_pkt_cfg.m_cycle_round_num;
 
  port_stimulus_s[source_port].sa_index = source_port;
  port_stimulus_s[dmac].sa_index = dmac;
@@ -99,6 +99,9 @@ phase.raise_objection( this );
 	`uvm_info(get_type_name(),$psprintf("start to wait time"),UVM_NONE);
 	delay_time = $urandom_range(20,50);
 	#delay_time;
+
+	//in the case1,we send more than one pkt in the interval,the pkt num is in the range of (2,5)
+	//the max pky len is 1518,so we need to 
 	fork 
 		begin 
 			while(1)begin 
@@ -114,7 +117,7 @@ phase.raise_objection( this );
 			end
 		end
 		begin 
-			wait((pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].change_second_to_ns(pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].bus.m_timestamp) - 4000) >= pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].m_local_cfg.m_spare_total_base_time);
+			wait((pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].change_second_to_ns(pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].bus.m_timestamp) + 7000) >= (pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].m_local_cfg.m_spare_total_base_time));
 			send_en = 1'b1;
 			`uvm_info(get_type_name(),$psprintf("has waitted time to send pkt"),UVM_NONE);
 		end
@@ -123,26 +126,28 @@ phase.raise_objection( this );
 	fork 
 		for(int i=0;i<port_stimulus_s[source_port].packet_count; i++)begin
 			//data_len = $urandom_range(1500,1500);
-			data_len = m_pkt_cfg.m_pkt_len;
-			vlan_pri = $urandom_range(3'h0,3'h0);
-       		if ( !(mac_user_sequence0.randomize() with {
-            	                               mac_user_sequence0.c_da_cnt==(port_stimulus_s[source_port].da_index);
-                	                           mac_user_sequence0.c_sa_cnt==(port_stimulus_s[source_port].sa_index);
-                    	                       mac_user_sequence0.c_packet_len == data_len;
-                        	                   mac_user_sequence0.c_tpid == data_len[15:0];
-                            	               mac_user_sequence0.c_preemptable==0;
-                                	           mac_user_sequence0.c_data_payload == data_payload;
-                                    	       //mac_user_sequence0.c_vlan == {phb,1'b0,vid};
-                                    	       mac_user_sequence0.c_vlan == {vlan_pri,1'b0,vid};
-                                        	   } ))
-       		begin
-        		  `uvm_error(get_type_name(), "Randomize Failed!")
-       		end
-			data_payload ++;
-       		mac_user_sequence0.start(pcs_tx_rx_env0.mac_env0[source_port].mac_rx_agent0.sequencer);
-			`uvm_info(get_type_name(),$psprintf("start to send pkt_num is %0d,wait time is 0x%0h",i,pcs_tx_rx_env0.m_obm_dut_cfg.m_spare_total_cyc_time),UVM_NONE);
-			//here dec 5000 is for send pkt need time
-			#(pcs_tx_rx_env0.m_obm_dut_cfg.m_spare_total_cyc_time - 5000);
+			for(int j=0;j<m_pkt_cfg.m_pkt_num;j++)begin
+    			data_len = m_pkt_cfg.m_pkt_len;
+    			vlan_pri = $urandom_range(3'h0,3'h0);
+           		if ( !(mac_user_sequence0.randomize() with {
+                	                               mac_user_sequence0.c_da_cnt==(port_stimulus_s[source_port].da_index);
+                    	                           mac_user_sequence0.c_sa_cnt==(port_stimulus_s[source_port].sa_index);
+                        	                       mac_user_sequence0.c_packet_len == data_len;
+                            	                   mac_user_sequence0.c_tpid == data_len[15:0];
+                                	               mac_user_sequence0.c_preemptable==0;
+                                    	           mac_user_sequence0.c_data_payload == data_payload;
+                                        	       //mac_user_sequence0.c_vlan == {phb,1'b0,vid};
+                                        	       mac_user_sequence0.c_vlan == {vlan_pri,1'b0,vid};
+                                            	   } ))
+           		begin
+            		  `uvm_error(get_type_name(), "Randomize Failed!")
+           		end
+    			data_payload ++;
+           		mac_user_sequence0.start(pcs_tx_rx_env0.mac_env0[source_port].mac_rx_agent0.sequencer);
+    			`uvm_info(get_type_name(),$psprintf("start to send round_num is %0d,pkt_num is %0d,wait time is 0x%0h",i,j,pcs_tx_rx_env0.m_obm_dut_cfg.m_spare_total_cyc_time),UVM_NONE);
+    			//here dec 5000 is for send pkt need time
+			end
+			#(pcs_tx_rx_env0.m_obm_dut_cfg.m_spare_total_cyc_time - 100);
 			`uvm_info(get_type_name(),$psprintf("send pkt_num is %0d done",i),UVM_NONE);
 		end
 		begin 
