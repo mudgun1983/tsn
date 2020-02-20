@@ -257,6 +257,11 @@ always #(CLOCK_100M/2)
        .clk(`U_SCATTER.syc_clk_250m),
        .rst_n(~sys_rst)
  );
+
+ mac_tx_interface u_mac_tx_if[1](
+       .clk(`U_MAC_TX(2).gtx_clk_2),
+       .rst_n(~sys_rst)
+ );
  //here is for data assign
  assign u_scatter_obm_if[0].m_scatter_obm_data    = `U_SCATTER.D;
  assign u_scatter_obm_if[0].m_scatter_obm_mod     = `U_SCATTER.scatter_2_obm_mod;
@@ -292,6 +297,10 @@ always #(CLOCK_100M/2)
  assign #0.1ns u_crllist_chk_if[0].m_cpu_addr            = `U_OBM(2).cpu_addr;
  assign #0.1ns u_crllist_chk_if[0].m_cpu_data_in         = `U_OBM(2).cpu_data_in;
  assign        u_crllist_chk_if[0].m_gate_state          = `U_OBM(2).gate_state;
+
+ assign        u_mac_tx_if[0].m_gate_state               = `U_OBM(2).gate_state;
+ assign        u_mac_tx_if[0].m_mac_tx_en                = `U_MAC_TX(2).tx_en_2;
+ assign        u_mac_tx_if[0].m_mac_tx_d                 = `U_MAC_TX(2).txd_2;
 //always @(posedge `U_SCATTER.syc_clk_250m)begin
 //	u_crllist_chk_if[0].m_gate_state <= #0.1 `U_OBM(2).gate_state;
 //end
@@ -411,14 +420,17 @@ endgenerate
      virtual scatter_obm_interface v_scatter_obm_if[1];
      virtual obm_mac_interface     v_obm_mac_if[2];
 	 virtual crllist_chk_interface v_crllist_chk_if[1];
+	 virtual mac_tx_interface      v_mac_tx_if[1];
      v_scatter_obm_if[0] = u_scatter_obm_if[0];
      v_obm_mac_if[0]     = u_obm_mac_if[0];
      v_obm_mac_if[1]     = u_obm_mac_if[1];
 	 v_crllist_chk_if[0] = u_crllist_chk_if[0];
+	 v_mac_tx_if[0]      = u_mac_tx_if[0];
      uvm_config_db#(virtual scatter_obm_interface)::set(null,"*m_scatter_obm_if*","bus",v_scatter_obm_if[0]);
      uvm_config_db#(virtual obm_mac_interface)::set(null,"*m_obm_mac_if_0*","bus",v_obm_mac_if[0]);
      uvm_config_db#(virtual obm_mac_interface)::set(null,"*m_obm_mac_if_1*","bus",v_obm_mac_if[1]);
      uvm_config_db#(virtual crllist_chk_interface)::set(null,"*m_crllist_mon_0*","bus",v_crllist_chk_if[0]);
+     uvm_config_db#(virtual mac_tx_interface)::set(null,"*m_mac_tx_mon_0*","bus",v_mac_tx_if[0]);
      //ended by liaoyuan
 
 	$display("test start");

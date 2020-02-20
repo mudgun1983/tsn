@@ -38,6 +38,7 @@ package pcs_env_pkg;
   import scatter_obm_package::*;
   import obm_dut_cfg_package::*;
   import crllist_chk_package::*;
+  import mac_tx_package::*;
   //ended by liaoyuan
 
 //global define

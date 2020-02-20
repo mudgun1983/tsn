@@ -10,5 +10,6 @@
 `define ADMIN_LIST_ENTRY_LEN     16'h54
 `define ADMIN_LIST_ENTRY_CFG     16'h62
 `define ADMIN_LIST_ENTRY_DATA(REG_NUM)  (12'h64 + 12'h2*REG_NUM)
+`define U_MAC_TX(MAC_NUM) pcs_tb_top.UUT.tsn_sw_top.ge_top_``MAC_NUM``
 
 

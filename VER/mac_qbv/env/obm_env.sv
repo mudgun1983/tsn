@@ -12,12 +12,15 @@ class obm_env extends uvm_env;
 	obm_mac_interface_agent                    m_obm_mac_if[2];
 	crllist_chk_monitor                        m_crllist_mon[1];
 	obm_dut_cfg                                m_dut_cfg;
+	obm_pkt_cfg                                m_pkt_cfg;
+	mac_tx_monitor                             m_mac_tx_mon[1];
 	`uvm_component_utils_begin(obm_env)
 	`uvm_component_utils_end
 	function new(string name = "obm_env",uvm_component parent);
 		super.new(name,parent);
 		//m_dut_cfg = new("m_dut_cfg");
 		m_dut_cfg = obm_dut_cfg::type_id::create("m_dut_cfg");
+		m_pkt_cfg = obm_pkt_cfg::type_id::create("m_pkt_cfg");
 	endfunction
 	extern virtual function void build_phase(uvm_phase phase);
 	extern virtual function void connect_phase(uvm_phase phase);
@@ -53,6 +56,13 @@ function void obm_env::build_phase(uvm_phase phase);
 	m_crllist_mon[0].m_cfg = m_dut_cfg;
 	m_crllist_mon[0].m_base_addr = 16'h200;
 	m_dut_cfg.print();
+	//for mac_tx_chk
+	if(m_pkt_cfg.m_mac_tx_chk_en == 1'b1)begin 
+		`uvm_info(get_type_name(),$psprintf("start to create mac_tx_monitor"),UVM_NONE);
+		foreach(m_mac_tx_mon[i])begin 
+			m_mac_tx_mon[i] = mac_tx_monitor::type_id::create($sformatf("m_mac_tx_mon_%0d",i),this);
+		end
+	end
 endfunction:build_phase
 
 function void obm_env::connect_phase(uvm_phase phase);

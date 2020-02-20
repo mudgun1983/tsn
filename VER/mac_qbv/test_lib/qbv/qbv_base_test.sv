@@ -20,6 +20,7 @@ class qbv_base_test extends pcs_base_test;
 	extern virtual function set_i_epp_predefine_value();
 	extern virtual task run_phase(uvm_phase phase);
 	extern virtual function void end_of_elaboration_phase(uvm_phase phase);
+	extern virtual function void get_mac_tx_dly();
 endclass
 
 function qbv_base_test::new(string name = "qbv_base_test",uvm_component parent);
@@ -67,7 +68,7 @@ function qbv_base_test::set_port_stimulus_value();
  port_stimulus_s[dmac].port_en = 1;
 
  port_stimulus_s[dmac].packet_count = 1;  //0: forever
- port_stimulus_s[source_port].packet_count = 10;
+ port_stimulus_s[source_port].packet_count = m_pkt_cfg.m_pkt_num;
 
  port_stimulus_s[source_port].sa_index = source_port;
  port_stimulus_s[dmac].sa_index = dmac;
@@ -183,5 +184,28 @@ phase.drop_objection(this);
 
 endtask:run_phase
 
+function void qbv_base_test::get_mac_tx_dly();
+	int   min_lat,max_lat;
+	foreach(pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i])begin 
+		for(int j=0;j<m_pkt_cfg.m_pkt_num;j++)begin 
+            pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q.push_back(pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_q[j] - pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_gate_open_q[j]);
+			`uvm_info(get_type_name(),$psprintf("pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[%0d].m_mac_tx_lat_q[%0d] is %0d",i,j,pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q[j]),UVM_NONE);
+		end
+	end
+	//
+	foreach(pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i])begin 
+		min_lat = pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q[0];
+		max_lat = pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q[0];
+		for(int j=1;j<m_pkt_cfg.m_pkt_num;j++)begin 
+			if(pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q[j] < min_lat)begin 
+				min_lat = pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q[j];
+			end
+			if(pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q[j] > max_lat)begin 
+				max_lat = pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q[j];
+			end
+		end
+		`uvm_info(get_type_name(),$psprintf("min_lat is %0d,max_lat is %0d",min_lat,max_lat),UVM_NONE);
+	end
+endfunction:get_mac_tx_dly
 `endif
 

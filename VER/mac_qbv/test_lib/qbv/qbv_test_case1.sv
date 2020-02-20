@@ -1,18 +1,18 @@
-`ifndef QBV_TEST_CASE0__SV
-`define QBV_TEST_CASE0__SV
+`ifndef QBV_TEST_CASE1__SV
+`define QBV_TEST_CASE1__SV
 //in the case0,we aim to test that ,firstly we send one pkt,after 
 //a certain time the gate open,so the pkt can send out,repeately
-class qbv_test_case0 extends qbv_base_test;
-	`uvm_component_utils(qbv_test_case0)
-	extern function new(string name = "qbv_test_case0",uvm_component parent);
+class qbv_test_case1 extends qbv_base_test;
+	`uvm_component_utils(qbv_test_case1)
+	extern function new(string name = "qbv_test_case1",uvm_component parent);
 	extern virtual function set_port_stimulus_value();
 	extern virtual function void build_phase(uvm_phase phase);
 	extern virtual task run_phase(uvm_phase phase);
-endclass:qbv_test_case0
-function qbv_test_case0::new(string name = "qbv_test_case0",uvm_component parent);
+endclass:qbv_test_case1
+function qbv_test_case1::new(string name = "qbv_test_case1",uvm_component parent);
 	super.new(name,parent);
 endfunction
-function qbv_test_case0::set_port_stimulus_value();
+function qbv_test_case1::set_port_stimulus_value();
     int dut_max_port;
     dut_max_port = `DUT_MAX_PORT-1;
      for(int i=0; i<20;i++)
@@ -33,7 +33,7 @@ function qbv_test_case0::set_port_stimulus_value();
  port_stimulus_s[dmac].da_index =  source_port;
  endfunction
 
- function void qbv_test_case0::build_phase(uvm_phase phase);
+ function void qbv_test_case1::build_phase(uvm_phase phase);
  	obm_dut_cfg test_cfg;
  	super.build_phase(phase);
 	set_type_override_by_type(obm_dut_cfg::get_type(),obm_case0_cfg::get_type());
@@ -43,7 +43,7 @@ function qbv_test_case0::set_port_stimulus_value();
 	test_cfg.print();*/
  endfunction:build_phase
 
-task qbv_test_case0::run_phase(uvm_phase phase);
+task qbv_test_case1::run_phase(uvm_phase phase);
 
 bit[15:0] vlan = item_config0.e_mac_vlan[dmac];
 bit[2:0]  vlan_pri;
