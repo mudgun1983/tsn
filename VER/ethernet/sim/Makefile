@@ -57,3 +57,5 @@ print_date:
 #$(EXE_PATH)/simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc).log +UVM_TESTNAME=$(tc)
 #./simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc).log +UVM_TESTNAME=$(tc)
 #-o $(EXE_PATH)/simv -l $(LOG_PATH)/compile.log \
+
+#for back
