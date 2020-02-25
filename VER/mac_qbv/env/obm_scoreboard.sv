@@ -5,6 +5,10 @@ class obm_scoreboard #(RM_NUM = 1,DUT_NUM = 2) extends base_scoreboard #(RM_NUM,
 	obm_mac_xaction          m_obm_mac_dut_q[8][$];
 	int                      m_obm_mac_rm_cnt[8];
 	int                      m_obm_mac_dut_cnt[8];
+	int                      m_obm_tx_pmac_pkt_cnt[8];
+	int                      m_obm_tx_emac_pkt_cnt[8];
+	int                      m_obm_tx_pmac_pkt_byte[8];
+	int                      m_obm_tx_emac_pkt_byte[8];
 	obm_dut_cfg              m_dut_cfg;
 	//this is for check relation between pkt and gate_state
 	//this gets from crllistmonitor
@@ -69,9 +73,9 @@ task obm_scoreboard::get_rm_data();
 		mac_xaction.m_obm_mac_ophb = sca_xaction.m_scatter_obm_ophb;
 		//here we need basing on reg cfg
 		mac_xaction.m_obm_mac_en   = m_dut_cfg.m_queue_map[mac_xaction.m_obm_mac_ophb];
-		`uvm_info(get_type_name(),$psprintf("get_rm_data get one xaction"),UVM_NONE);
-		mac_xaction.print();
         m_obm_mac_rm_cnt[mac_xaction.m_obm_mac_ophb] ++;
+		`uvm_info(get_type_name(),$psprintf("get_rm_data get one xaction,m_obm_mac_rm_cnt[%0d] is %0d",mac_xaction.m_obm_mac_ophb,m_obm_mac_rm_cnt[mac_xaction.m_obm_mac_ophb]),UVM_NONE);
+		mac_xaction.print();
 		m_obm_mac_rm_q[mac_xaction.m_obm_mac_ophb].push_back(mac_xaction);
 	end
 endtask
@@ -88,6 +92,8 @@ task obm_scoreboard::get_dut_pdata();
 		end
 		//mac_xaction.m_obm_mac_ophb = mac_xaction.m_obm_mac_data[14][7:5];
         m_obm_mac_dut_cnt[mac_xaction.m_obm_mac_ophb] ++;
+		m_obm_tx_pmac_pkt_cnt[mac_xaction.m_obm_mac_ophb]++;
+		m_obm_tx_pmac_pkt_byte[mac_xaction.m_obm_mac_ophb] = (m_obm_tx_pmac_pkt_byte[mac_xaction.m_obm_mac_ophb] + mac_xaction.m_obm_mac_data.size());
 		`uvm_info(get_type_name(),$psprintf("get_dut_pdata get one xaction"),UVM_NONE);
 		m_obm_mac_dut_q[mac_xaction.m_obm_mac_ophb].push_back(mac_xaction);
 
@@ -112,6 +118,8 @@ task obm_scoreboard::get_dut_edata();
 		`uvm_info(get_type_name(),$psprintf("get_dut_edata get one xaction"),UVM_NONE);
 		mac_xaction.print();
         m_obm_mac_dut_cnt[mac_xaction.m_obm_mac_ophb] ++;
+		m_obm_tx_emac_pkt_cnt[mac_xaction.m_obm_mac_ophb]++;
+		m_obm_tx_emac_pkt_byte[mac_xaction.m_obm_mac_ophb] = (m_obm_tx_emac_pkt_byte[mac_xaction.m_obm_mac_ophb] + mac_xaction.m_obm_mac_data.size());
 		m_obm_mac_dut_q[mac_xaction.m_obm_mac_ophb].push_back(mac_xaction);
 
 		//here is for data num check

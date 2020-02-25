@@ -16,7 +16,7 @@ class obm_case0_cfg extends obm_dut_cfg;
 
         //now the time_interval is at least 8ns
 		foreach(m_list_time_interval[i]){
-			m_list_time_interval[i] inside {[13000:15000]};
+			m_list_time_interval[i] inside {[45000:50000]};
 			(m_list_time_interval[i] % 8) == 0;
 		}
 
@@ -92,7 +92,7 @@ class obm_case0_cfg extends obm_dut_cfg;
 		m_spare_base_time[63:32] == 32'h0;
 		if(m_spare_base_mode == 2'h0){
 			m_spare_base_time[31:0] dist{
-				[32'd150001 + 32'd1000*(m_spare_list_len + 10):32'd170000 + 32'd1000*(m_spare_list_len + 10)]:/10
+				[32'd200001 + 32'd2000*(m_spare_list_len + 10):32'd210000 + 32'd2000*(m_spare_list_len + 10)]:/10
 			};
 		}
 		else if(m_spare_base_mode == 2'h1){

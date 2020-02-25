@@ -117,7 +117,7 @@ phase.raise_objection( this );
 			end
 		end
 		begin 
-			wait((pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].change_second_to_ns(pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].bus.m_timestamp) + 7000) >= (pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].m_local_cfg.m_spare_total_base_time));
+			wait((pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].change_second_to_ns(pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].bus.m_timestamp) + 25000) >= (pcs_tx_rx_env0.m_obm_env.m_crllist_mon[0].m_local_cfg.m_spare_total_base_time));
 			send_en = 1'b1;
 			`uvm_info(get_type_name(),$psprintf("has waitted time to send pkt"),UVM_NONE);
 		end
@@ -147,7 +147,7 @@ phase.raise_objection( this );
     			`uvm_info(get_type_name(),$psprintf("start to send round_num is %0d,pkt_num is %0d,wait time is 0x%0h",i,j,pcs_tx_rx_env0.m_obm_dut_cfg.m_spare_total_cyc_time),UVM_NONE);
     			//here dec 5000 is for send pkt need time
 			end
-			#(pcs_tx_rx_env0.m_obm_dut_cfg.m_spare_total_cyc_time - 100);
+			#(pcs_tx_rx_env0.m_obm_dut_cfg.m_spare_total_cyc_time - 500);
 			`uvm_info(get_type_name(),$psprintf("send pkt_num is %0d done",i),UVM_NONE);
 		end
 		begin 
@@ -165,6 +165,10 @@ phase.raise_objection( this );
 		end
 	end
 	get_mac_tx_dly();
+    m_cnt_seq.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
+	//we need to adding some delay
+	#100000ns;
+	pkt_cnt_cmp();
 phase.drop_objection(this);
 
 endtask:run_phase

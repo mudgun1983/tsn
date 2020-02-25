@@ -53,7 +53,7 @@ virtual task body();
 
 	  `uvm_info(get_type_name(),$psprintf("--------------qbv_reg_seq end----------------"),UVM_NONE);
 endtask
-	  
+
 endclass
 `endif
 

@@ -5,6 +5,8 @@ class qbv_base_test extends pcs_base_test;
 	qbv_reg_seq        reg_seq;
 	mac_user_sequence mac_user_sequence0;
 	obm_pkt_cfg        m_pkt_cfg;
+	qbv_cnt_seq        m_cnt_seq;
+	bit [31:0]         m_dut_rx_pkt_cnt[8];
      bit [4:0] 	source_port;
      bit [11:0]	vid;
 	 bit [47:0] dmac;
@@ -21,6 +23,7 @@ class qbv_base_test extends pcs_base_test;
 	extern virtual task run_phase(uvm_phase phase);
 	extern virtual function void end_of_elaboration_phase(uvm_phase phase);
 	extern virtual function void get_mac_tx_dly();
+	extern virtual function void pkt_cnt_cmp();
 endclass
 
 function qbv_base_test::new(string name = "qbv_base_test",uvm_component parent);
@@ -32,6 +35,7 @@ function qbv_base_test::new(string name = "qbv_base_test",uvm_component parent);
 	reg_seq    = qbv_reg_seq::type_id::create("reg_seq", this);
 	mac_user_sequence0=mac_user_sequence::type_id::create("mac_user_sequence0", this);
 	m_pkt_cfg = new("m_pkt_cfg");
+	m_cnt_seq    = qbv_cnt_seq::type_id::create("m_cnt_seq", this);
 endfunction
 
 function void qbv_base_test::build_phase(uvm_phase phase);
@@ -180,6 +184,11 @@ phase.raise_objection( this );
 			`uvm_info(get_type_name(),$psprintf("m_cmp_list_num is %0d",pcs_tx_rx_env0.m_obm_env.m_crllist_mon[i].m_cmp_list_num),UVM_NONE);
 		end
 	end
+
+	m_cnt_seq.start(pcs_tx_rx_env0.cpu_agent0.sequencer);
+	//we need to adding some delay
+	#100000ns;
+	pkt_cnt_cmp();
 phase.drop_objection(this);
 
 endtask:run_phase
@@ -207,5 +216,38 @@ function void qbv_base_test::get_mac_tx_dly();
 		`uvm_info(get_type_name(),$psprintf("min_lat is %0d,max_lat is %0d",min_lat,max_lat),UVM_NONE);
 	end
 endfunction:get_mac_tx_dly
+
+function void qbv_base_test::pkt_cnt_cmp();
+	foreach(pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_mac_rm_cnt[i])begin 
+		if(pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_mac_rm_cnt[i] != m_cnt_seq.m_obm_reg_rx_pkt[i])begin 
+			`uvm_error(get_type_name(),$psprintf("pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_mac_rm_cnt[%0d] is 0x%0h,m_cnt_seq.m_obm_reg_rx_pkt[%0d] is 0x%0h",i,pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_mac_rm_cnt[i],i,m_cnt_seq.m_obm_reg_rx_pkt[i]));
+		end
+	end
+
+	foreach(m_cnt_seq.m_obm_reg_tx_emac_pkt[i])begin 
+		if(m_cnt_seq.m_obm_reg_tx_emac_pkt[i] != pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_emac_pkt_cnt[i])begin 
+			`uvm_error(get_type_name(),$psprintf("m_cnt_seq.m_obm_reg_tx_emac_pkt[%0d] is 0x%0h,m_cnt_seq.m_obm_tx_emac_pkt_cnt[%0d] is 0x%0h",i,m_cnt_seq.m_obm_reg_tx_emac_pkt[i],i,pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_emac_pkt_cnt[i]));
+		end
+	end
+
+	foreach(m_cnt_seq.m_obm_reg_tx_emac_byte[i])begin 
+		if(m_cnt_seq.m_obm_reg_tx_emac_byte[i] != pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_emac_pkt_byte[i])begin 
+			`uvm_error(get_type_name(),$psprintf("m_cnt_seq.m_obm_reg_tx_emac_byte[%0d] is 0x%0h,m_cnt_seq.m_obm_tx_emac_pkt_byte[%0d] is 0x%0h",i,m_cnt_seq.m_obm_reg_tx_emac_byte[i],i,pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_emac_pkt_byte[i]));
+		end
+	end
+
+	foreach(m_cnt_seq.m_obm_reg_tx_pmac_pkt[i])begin 
+		if(m_cnt_seq.m_obm_reg_tx_pmac_pkt[i] != pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_pmac_pkt_cnt[i])begin 
+			`uvm_error(get_type_name(),$psprintf("m_cnt_seq.m_obm_reg_tx_pmac_pkt[%0d] is 0x%0h,m_cnt_seq.m_obm_tx_pmac_pkt_cnt[%0d] is 0x%0h",i,m_cnt_seq.m_obm_reg_tx_pmac_pkt[i],i,pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_pmac_pkt_cnt[i]));
+		end
+	end
+
+	foreach(m_cnt_seq.m_obm_reg_tx_pmac_byte[i])begin 
+		if(m_cnt_seq.m_obm_reg_tx_pmac_byte[i] != pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_pmac_pkt_byte[i])begin 
+			`uvm_error(get_type_name(),$psprintf("m_cnt_seq.m_obm_reg_tx_pmac_byte[%0d] is 0x%0h,m_cnt_seq.m_obm_tx_pmac_pkt_byte[%0d] is 0x%0h",i,m_cnt_seq.m_obm_reg_tx_pmac_byte[i],i,pcs_tx_rx_env0.m_obm_env.m_obm_sb.m_obm_tx_pmac_pkt_byte[i]));
+		end
+	end
+endfunction:pkt_cnt_cmp
+
 `endif
 
