@@ -56,3 +56,5 @@ print_date:
 #./simv +UVM_VERBOSITY=UVM_LOW -l $(LOG_PATH)/$(tc).log +UVM_TESTNAME=$(tc)
 #-o $(EXE_PATH)/simv -l $(LOG_PATH)/compile.log \
 
+#add new data
+#new base
