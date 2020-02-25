@@ -29,6 +29,7 @@ class obm_dut_cfg extends uvm_sequence_item;
 	rand bit [1:0]      m_spare_cyc_time_mode;
 	//00:initial 01:sel_spare 10:sel_main
 		 bit [1:0]      m_sel_spare_en;
+		 bit            m_crllist_chk_en=1'b1;
 
 	constraint queue_map_cons{
 		m_queue_map inside{[0:255]};
@@ -225,6 +226,7 @@ class obm_dut_cfg extends uvm_sequence_item;
 	`uvm_object_utils_end
 	function new(string name ="obm_dut_cfg");
 		super.new(name);
+		$value$plusargs("m_crllist_chk_en=%d",m_crllist_chk_en);
 	endfunction
 endclass
 `endif
