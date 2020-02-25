@@ -63,11 +63,11 @@ task crllist_chk_monitor:: run_phase(uvm_phase phase);
 
 	super.run_phase(phase);
 	#10ns;
-	`uvm_info(get_type_name(),$psprintf("enter crllist_chk_monitor run_phase"),UVM_NONE);
+	`uvm_info(get_type_name(),$psprintf("enter crllist_chk_monitor run_phase,m_cfg.m_crllist_chk_en is %0d",m_cfg.m_crllist_chk_en),UVM_NONE);
 	while(1)begin 
 		cpu_wr_b_dly = bus.m_cpu_wr_b;
 		@(posedge bus.clk);
-		if(bus.rst_n == 1'b0)begin 
+		if((bus.rst_n == 1'b0))begin 
 			continue;
 		end
 		if((cpu_wr_b_dly == 1'b1)&&(bus.m_cpu_wr_b == 1'b0)&&(bus.m_cpu_addr == ((m_base_addr + 16'h42)/2))&&(bus.m_cpu_data_in == 16'h55AA))begin 
@@ -103,7 +103,7 @@ task crllist_chk_monitor:: run_phase(uvm_phase phase);
 		end
         
 		//now we only consider after cfg,the rm_base_time is greater than the dut ptp time
-	    if(m_start_chk_en[0] == 1'b1)begin 
+	    if((m_start_chk_en[0] == 1'b1)&&(m_cfg.m_crllist_chk_en == 1'b1))begin 
 			dut_ns_time = change_second_to_ns(bus.m_timestamp);
 			chk_gate_state(m_start_chk_en,dut_ns_time,bus.m_gate_state);
 		end

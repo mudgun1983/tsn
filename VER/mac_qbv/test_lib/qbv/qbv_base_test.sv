@@ -6,6 +6,7 @@ class qbv_base_test extends pcs_base_test;
 	mac_user_sequence mac_user_sequence0;
 	obm_pkt_cfg        m_pkt_cfg;
 	qbv_cnt_seq        m_cnt_seq;
+	qbv_gate_crl_seq   m_gate_crl_seq;
 	bit [31:0]         m_dut_rx_pkt_cnt[8];
      bit [4:0] 	source_port;
      bit [11:0]	vid;
@@ -36,6 +37,7 @@ function qbv_base_test::new(string name = "qbv_base_test",uvm_component parent);
 	mac_user_sequence0=mac_user_sequence::type_id::create("mac_user_sequence0", this);
 	m_pkt_cfg = new("m_pkt_cfg");
 	m_cnt_seq    = qbv_cnt_seq::type_id::create("m_cnt_seq", this);
+	m_gate_crl_seq    = qbv_gate_crl_seq::type_id::create("m_gate_crl_seq", this);
 endfunction
 
 function void qbv_base_test::build_phase(uvm_phase phase);
@@ -46,6 +48,7 @@ endfunction:build_phase
 function void qbv_base_test::end_of_elaboration_phase(uvm_phase phase);
 	super.end_of_elaboration_phase(phase);
     reg_seq.m_obm_dut_cfg =  pcs_tx_rx_env0.m_obm_dut_cfg;
+    m_gate_crl_seq.m_obm_dut_cfg =  pcs_tx_rx_env0.m_obm_dut_cfg;
 endfunction:end_of_elaboration_phase
 
 
@@ -195,6 +198,9 @@ endtask:run_phase
 
 function void qbv_base_test::get_mac_tx_dly();
 	int   min_lat,max_lat;
+	if(pcs_tx_rx_env0.m_obm_env.m_pkt_cfg.m_mac_tx_chk_en == 1'b0)begin 
+		return;
+	end
 	foreach(pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i])begin 
 		for(int j=0;j<m_pkt_cfg.m_pkt_num;j++)begin 
             pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_lat_q.push_back(pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_mac_tx_q[j] - pcs_tx_rx_env0.m_obm_env.m_mac_tx_mon[i].m_gate_open_q[j]);

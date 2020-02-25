@@ -102,6 +102,8 @@ package pcs_env_pkg;
   `include "../seq_lib/scenario_user_seq_lib.sv"
   //add by liaoyuan
   `include "../../mac_qbv/seq_lib/qbv_reg_seq.sv"
+  `include "../../mac_qbv/seq_lib/qbv_cnt_seq.sv"
+  `include "../../mac_qbv/seq_lib/qbv_gate_crl_seq.sv"
   //ended by liaoyuan
 
   
@@ -116,6 +118,7 @@ package pcs_env_pkg;
  `include "../../mac_qbv/test_lib/qbv/qbv_base_test.sv"
  `include "../../mac_qbv/test_lib/qbv/qbv_test_case0.sv"
  `include "../../mac_qbv/test_lib/qbv/qbv_test_case1.sv"
+ `include "../../mac_qbv/test_lib/qbv/qbv_pkt_drop.sv"
  //ended by liaoyuan
 
 //append test case here  
