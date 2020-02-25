@@ -31,7 +31,7 @@ class obm_dut_cfg extends uvm_sequence_item;
 		 bit [1:0]      m_sel_spare_en;
 
 	constraint queue_map_cons{
-		m_queue_map == 8'h0;
+		m_queue_map inside{[0:255]};
 	};
 
 	//we change change it later after basic test case pass

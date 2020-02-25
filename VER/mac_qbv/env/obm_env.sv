@@ -112,7 +112,7 @@ task obm_env::wait_end_sim();
 	int timeout_cnt;
 	while(1)begin 
 		//repeat(50)@(posedge `U_SCATTER.syc_clk_250m);
-		#350ns;
+		#550ns;
 		total_cnt = 0;
 		foreach(m_obm_sb.m_obm_mac_rm_cnt[i])begin 
 			total_cnt = (total_cnt + m_obm_sb.m_obm_mac_rm_cnt[i]);
@@ -145,5 +145,22 @@ task obm_env::wait_end_sim();
 			end
 		end
 	end
+	//here is for cnt display
+	foreach(m_obm_sb.m_obm_tx_pmac_pkt_cnt[i])begin 
+		`uvm_info(get_type_name(),$psprintf("m_obm_sb.m_obm_tx_pmac_pkt_cnt[%0d] is %0d",i,m_obm_sb.m_obm_tx_pmac_pkt_cnt[i]),UVM_NONE);
+	end
+	foreach(m_obm_sb.m_obm_tx_emac_pkt_cnt[i])begin 
+		`uvm_info(get_type_name(),$psprintf("m_obm_sb.m_obm_tx_emac_pkt_cnt[%0d] is %0d",i,m_obm_sb.m_obm_tx_emac_pkt_cnt[i]),UVM_NONE);
+	end
+	foreach(m_obm_sb.m_obm_tx_pmac_pkt_byte[i])begin 
+		`uvm_info(get_type_name(),$psprintf("m_obm_sb.m_obm_tx_pmac_pkt_byte[%0d] is %0d",i,m_obm_sb.m_obm_tx_pmac_pkt_byte[i]),UVM_NONE);
+	end
+	foreach(m_obm_sb.m_obm_tx_emac_pkt_byte[i])begin 
+		`uvm_info(get_type_name(),$psprintf("m_obm_sb.m_obm_tx_emac_pkt_byte[%0d] is %0d",i,m_obm_sb.m_obm_tx_emac_pkt_byte[i]),UVM_NONE);
+	end
+	foreach(m_obm_sb.m_obm_mac_rm_cnt[i])begin 
+		`uvm_info(get_type_name(),$psprintf("m_obm_sb.m_obm_mac_rm_cnt[%0d] is %0d",i,m_obm_sb.m_obm_mac_rm_cnt[i]),UVM_NONE);
+	end
 endtask
+
 `endif
