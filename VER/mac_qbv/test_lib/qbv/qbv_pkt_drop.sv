@@ -3,6 +3,7 @@
 //in the case0,we aim to test that ,firstly we send one pkt,after 
 //a certain time the gate open,so the pkt can send out,repeately
 class qbv_pkt_drop extends qbv_base_test;
+	bit [3:0]   m_sel_pri;
 	`uvm_component_utils(qbv_pkt_drop)
 	extern function new(string name = "qbv_pkt_drop",uvm_component parent);
 	extern virtual function set_port_stimulus_value();
@@ -11,6 +12,7 @@ class qbv_pkt_drop extends qbv_base_test;
 endclass:qbv_pkt_drop
 function qbv_pkt_drop::new(string name = "qbv_pkt_drop",uvm_component parent);
 	super.new(name,parent);
+	m_sel_pri = $urandom_range(3'h0,3'h7);
 endfunction
 function qbv_pkt_drop::set_port_stimulus_value();
     int dut_max_port;
@@ -144,9 +146,11 @@ phase.raise_objection( this );
 	end
 
     fork
-        for(int i=0;i<port_stimulus_s[source_port].packet_count; i++)begin
+        //for(int i=0;i<port_stimulus_s[source_port].packet_count; i++)begin
+        for(int i=0;i<550; i++)begin
 			data_len = m_pkt_cfg.m_pkt_len;
             vlan_pri = $urandom_range(3'h0,3'h7);
+            vlan_pri = m_sel_pri;
             if ( !(mac_user_sequence0.randomize() with {
                                                mac_user_sequence0.c_da_cnt==(port_stimulus_s[source_port].da_index);
                                                mac_user_sequence0.c_sa_cnt==(port_stimulus_s[source_port].sa_index);
